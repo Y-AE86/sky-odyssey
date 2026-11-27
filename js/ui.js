@@ -5,6 +5,7 @@
   const overlay = document.getElementById('overlay'), notice = document.getElementById('toast');
   let state, invalidSave = false, lastFocus, toastTimer, lineIndex = 0, lobbyTimer;
   let pendingPoster;
+  const lobbyVideos=new Map();
   const lines = {
     h01:['今夜的梅，开得正好。陪我再看一会儿？','这盏灯照过忘川，也认得你的归途。','星港的风里，有一缕梅香。'],
     h02:['把手给我。星海再冷，也有霜华为你引路。','听，落在杖尖的星光也有声音。','云层散开了。我们该起航了。'],
@@ -15,6 +16,8 @@
   };
   const bleed = document.getElementById('bleed');
   const image = (url,cls='ico') => '<img class="'+cls+'" alt="" draggable="false" src="'+url+'">';
+  const codexMeta = (h,status='') => '<small class="codex-meta"><span>'+h.rarity+'</span><span class="codex-faction-label">'+
+    image(S.art.faction(h.faction),'codex-faction')+h.faction+'</span>'+(status?'<span>'+status+'</span>':'')+'</small>';
   const icon = key => image(S.art.icon(key));
   const item = key => image(S.art.item(key),'item-icon');
   const tilePaint = key => image(S.art.banner(key),'tile-paint');
@@ -38,11 +41,11 @@
     overlay.querySelector('h2').textContent=title;overlay.querySelector('header button').focus({preventScroll:true});
     return overlay.querySelector('.dialog-content');
   }
-  overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
+  overlay.addEventListener('click',e=>{if(e.target===overlay){S.sound('back');close();}});
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape'){
-      if(!overlay.hidden)close();
-      else if(root.classList.contains('clean'))clean(false);
+      if(!overlay.hidden){S.sound('back');close();}
+      else if(root.classList.contains('clean')){S.sound('back');clean(false);}
     }
     if(e.key==='Tab'&&!overlay.hidden){
       const focusable=[...overlay.querySelectorAll('button:not(:disabled),input:not([hidden]),textarea,a[href]')].filter(el=>el.getClientRects().length);
@@ -56,27 +59,78 @@
     if(invalidSave){toast('当前为临时进度，请导入有效存档后保存');return;}
     try{V.write(state);}catch(e){toast(e.message);}
   }
+  const masterAudioOn=s=>!s.muted && ((s.music && s.musicVolume>0) || (s.sound && s.soundVolume>0));
+  const audioLabel=on=>on?'音频已开启，点击静音':'音频已静音，点击开启';
+  function audioButton(){
+    const on=masterAudioOn(state.settings), label=audioLabel(on);
+    return '<button type="button" class="audio-toggle" data-action="audio-mute" aria-pressed="'+on+'" aria-label="'+label+
+      '" title="'+label+'"><span class="audio-note" aria-hidden="true">♫</span></button>';
+  }
+  function syncAudio(){
+    S.audio.configure(state.settings);
+    const on=masterAudioOn(state.settings), label=audioLabel(on);
+    for(const button of root.querySelectorAll('[data-action="audio-mute"]')){
+      button.setAttribute('aria-pressed',String(on));
+      button.setAttribute('aria-label',label);
+      button.title=label;
+    }
+  }
+  function toggleAudio(){
+    const s=state.settings;
+    s.muted=masterAudioOn(s);
+    if(!s.muted && !masterAudioOn(s)){
+      s.music=true;
+      if(!s.musicVolume)s.musicVolume=V.audioDefaults.musicVolume;
+    }
+    syncAudio();
+    save();
+    if(!s.muted)S.sound('tap');
+    toast(s.muted?'已静音':'音频已开启');
+  }
   const format = n=>n.toLocaleString('zh-CN');
   const navButton=(action,key,label)=>'<button data-action="'+action+'">'+icon(key)+'<span>'+label+'</span></button>';
-  function background(page){
+  function releaseLobbyVideo(layer){
+    lobbyVideos.get(layer)?.release();
+    lobbyVideos.delete(layer);
+  }
+  function syncLobbyVideo(){
+    if(state.settings.powerSave){
+      for(const layer of lobbyVideos.keys())releaseLobbyVideo(layer);
+      return;
+    }
+    const poster=bleed.querySelector('.backdrop.current');
+    if(!poster || lobbyVideos.has(poster.parentElement))return;
+    const layer=poster.parentElement;
+    const video=S.lobbyVideo.mount(layer,poster.dataset.poster);
+    if(video)lobbyVideos.set(layer,video);
+  }
+  function sceneForPage(page,{kind,id=1}){
+    if(page==='campaign')return 'worldmap';
+    if(page!=='battle')return page;
+    if(kind==='boss')return 'battle_boss';
+    return kind==='campaign' && D.stages[id-1]?.chapter===2 ? 'battle_ch2' : 'battle';
+  }
+  function background(page,options){
     pendingPoster=null;
+    for(const layer of lobbyVideos.keys())releaseLobbyVideo(layer);
     bleed.dataset.page=page;
     bleed.classList.remove('clean');
     bleed.replaceChildren();
     bleed.style.backgroundImage='';
     if(page==='lobby'){
       const id=state.settings.poster;
-      bleed.innerHTML='<div class="lobby-art"><img class="backdrop current" alt="" data-poster="'+id+'" fetchpriority="high" src="'+S.art(id,'poster')+'"></div><div class="lobby-shade"></div>';
+      bleed.innerHTML='<div class="lobby-art"><div class="lobby-media"><img class="backdrop current" alt="" data-poster="'+id+'" fetchpriority="high" src="'+S.art(id,'poster')+'"></div></div><div class="lobby-shade"></div>';
+      syncLobbyVideo();
     } else {
-      bleed.style.backgroundImage='url("'+S.scene(page==='campaign'?'worldmap':page)+'")';
+      bleed.style.backgroundImage='url("'+S.scene(sceneForPage(page,options))+'")';
     }
   }
-  function cinematic(url){
+  function cinematic(url,matte=false){
     const prior=bleed.querySelector('.cinema-wing');
     if(!url){prior?.remove();return;}
     const wings=prior || document.createElement('div');
-    wings.className='cinema-wing';
-    wings.style.backgroundImage='url("'+url+'")';
+    wings.className='cinema-wing'+(matte?' cinema-matte':'');
+    wings.style.backgroundImage=matte?'':'url("'+url+'")';
     if(!prior)bleed.append(wings);
   }
   function lobby(){
@@ -84,12 +138,13 @@
     root.innerHTML='<button class="lobby-interact" aria-label="与看板星灵交谈" data-action="line"></button>'+
       '<header class="lobby-top"><div class="commander"><span class="commander-badge"><img src="'+S.art('h02','avatar')+'" alt=""><i></i></span><div><b>星航指挥官</b><div><span>Lv. '+state.level+'</span>　战力 '+format(V.power(state))+'</div></div></div>'+
       '<div class="top-resources">'+[['gem',state.diamonds,'星钻'],['coin',state.coins,'星币'],['ticket',state.tickets,'唤星券']].map(([i,n,label])=>'<button title="'+label+'" aria-label="'+label+' '+n+'" data-action="bag">'+item(i)+'<b>'+format(n)+'</b></button>').join('')+'</div>'+
-      '<div class="quick-settings"><button data-action="settings" title="画质、音效与存档设置" aria-label="画质、音效与存档设置">'+icon('settings')+'<span>'+(state.settings.powerSave?'省电静态':'极致画质')+'</span></button></div></header>'+
+      '<div class="quick-settings">'+audioButton()+'<button data-action="settings" title="画质、音效与存档设置" aria-label="画质、音效与存档设置">'+icon('settings')+'<span>'+(state.settings.powerSave?'省电静态':'极致画质')+'</span></button></div></header>'+
       '<nav class="side-tools" aria-label="主城服务">'+[['quests','quest','任务'],['welfare','reward','福利'],['atlas','codex','图鉴'],['bag','bag','背包']].map(x=>navButton(...x)).join('')+'</nav>'+
       '<div class="city-title"><i></i><span>浮空星途</span><em>SKY ODYSSEY</em></div>'+
       '<section class="lobby-tiles" aria-label="航行中心"><button class="route-tile" data-action="campaign">'+tilePaint('campaign')+'<span class="tile-inside"><small>第'+(st.chapter===1?'一':'二')+'章　'+D.chapters[st.chapter-1]+'</small><strong>主线航线</strong><span>'+st.code+'　'+st.name+'</span></span><i class="tile-arrow" aria-hidden="true">›</i></button>'+
       '<div class="tile-middle"><button class="trial-tile" data-action="trials">'+tilePaint('tower')+image(S.art.icon('formation'),'trial-emblem')+'<strong>星穹试炼</strong></button><button class="idle-tile" data-action="idle">'+tilePaint('idle')+'<span class="idle-emblem">'+item('chest')+'</span><strong>星匣挂机</strong><small id="idle-count"></small></button></div>'+
-      '<div class="small-tiles">'+navButton('event','reward','限时活动')+'<button data-action="shop">'+tilePaint('shop')+icon('shop')+'<span>星港商店</span></button></div></section>'+
+      '<div class="small-tiles"><button data-action="event">'+tilePaint('event')+icon('reward')+'<span>限时活动</span></button>'+
+      '<button data-action="shop">'+tilePaint('shop')+icon('shop')+'<span>星港商店</span></button></div></section>'+
       '<section class="poster-info"><div class="hero-sigil">'+image(S.art.emblem('star'),'hero-star')+'<span class="hero-faction"></span></div><h1></h1><p class="hero-line" data-action="line"></p><div class="poster-controls"><button data-action="poster">切换看板</button><button data-action="clean">净屏赏图</button><span class="poster-dots" aria-hidden="true"></span></div></section>'+
       '<nav class="main-dock" aria-label="主功能">'+navButton('formation','formation','编队')+navButton('roster','roster','星灵')+navButton('gacha','gacha','星穹召唤')+'</nav>';
     posterText();tickIdle();
@@ -123,12 +178,16 @@
     if(pendingPoster!==next)return;
     pendingPoster=null;
     const previous=[...art.children];
-    for(const img of previous)img.classList.remove('current');
-    art.append(next);
+    for(const layer of previous)layer.firstElementChild.classList.remove('current');
+    const layer=document.createElement('div');
+    layer.className='lobby-media';
+    layer.append(next);
+    art.append(layer);
     state.settings.poster=id;lineIndex=0;posterText();save();
-    const retire=()=>previous.forEach(img=>img.remove());
+    syncLobbyVideo();
+    const retire=()=>previous.forEach(layer=>{releaseLobbyVideo(layer);layer.remove();});
     if(state.settings.powerSave || matchMedia('(prefers-reduced-motion:reduce)').matches)retire();
-    else next.animate([{opacity:0},{opacity:1}],{duration:620,easing:'ease-in-out'}).finished.then(retire,retire);
+    else layer.animate([{opacity:0},{opacity:1}],{duration:620,easing:'ease-in-out'}).finished.then(retire,retire);
   }
   function clean(on){root.classList.toggle('clean',on);bleed.classList.toggle('clean',on);const layer=root.querySelector('.lobby-interact');layer.setAttribute('aria-label',on?'退出净屏赏图':'与看板星灵交谈');if(on)layer.focus({preventScroll:true});}
   function speak(e){
@@ -145,17 +204,26 @@
     close();clearInterval(lobbyTimer);clearTimeout(toastTimer);notice.hidden=true;
     if(root.dataset.page==='battle')S.battlePage?.destroy();
     else if(root.dataset.page && root.dataset.page!=='lobby')S.panels?.destroy();
-    root.className='';root.replaceChildren();root.dataset.page=page;background(page);
+    root.className='';root.replaceChildren();root.dataset.page=page;background(page,options);
+    S.audio.scene(page);
     if(page==='lobby')lobby();
     else if(page==='battle')S.battlePage.start(options);
     else S.panels.render(page,options);
   }
+  function audioSetting(label,key){
+    const s=state.settings, volumeKey=key+'Volume', percent=Math.round(s[volumeKey]*100);
+    return '<div class="dialog-row audio-setting"><div><b>'+label+'</b><label class="audio-volume">音量 '+
+      '<input aria-label="'+label+'音量" type="range" min="0" max="100" step="1" value="'+percent+'" data-audio-volume="'+volumeKey+'">'+
+      '<output>'+percent+'%</output></label></div><button type="button" class="gem-btn dark" data-action="'+key+
+      '" aria-label="'+label+'" aria-pressed="'+s[key]+'">'+(s[key]?'已开启':'已关闭')+'</button></div>';
+  }
   function settings(){
     const s=state.settings;
     modal('航行设置','<div class="dialog-row"><div><b>画质模式</b><small>原生像素密度 · 粒子与动态流光</small></div>'+btn(s.powerSave?'省电静态':'极致画质','power','cyan')+'</div>'+
-    '<div class="dialog-row"><div><b>界面与战斗音效</b></div>'+btn(s.sound?'已开启':'已关闭','sound','dark')+'</div>'+
+    audioSetting('背景音乐','music')+audioSetting('界面与战斗音效','sound')+
     '<div class="dialog-row"><div><b>指挥官存档</b><small>HTTP 与双击入口之间可用 JSON 转移进度。</small></div></div>'+
-    '<div class="dialog-actions">'+btn('导出 JSON','export','gold')+btn('导入 JSON','import','dark')+'</div>');
+    '<div class="dialog-actions">'+btn('导出 JSON','export','gold')+btn('导入 JSON','import','dark')+'</div>'+
+    '<p class="audio-credit">部分战斗配乐来源：PeriTune (<a href="https://peritune.com/" target="_blank" rel="noopener noreferrer">peritune.com</a>)</p>');
   }
   function service(action){
     if(action==='settings'){settings();return;}
@@ -167,7 +235,7 @@
     }
     if(action==='welfare'){modal('开服福利','<div class="dialog-row"><div><b>启航补给</b><small>每位指挥官可领取一次。</small></div><strong>'+amount('ticket','× 6','唤星券')+'</strong></div><div class="dialog-actions">'+(state.welfare?'补给已领取':btn('领取补给','claim-welfare'))+'</div>');return;}
     if(action==='shop'){modal('星港商店','<div class="dialog-row"><div><b>'+amount('ticket','× 1','唤星券')+'</b><small>持有 '+format(state.diamonds)+' 星钻</small></div><strong>'+amount('gem','160','星钻')+'</strong></div><div class="dialog-actions">'+btn('兑换 1 张','exchange')+'</div>');return;}
-    if(action==='atlas'){modal('星灵图鉴','<div class="catalog">'+D.heroes.map(h=>'<button data-entry="'+h.id+'">'+frame(h.id)+'<b>'+h.name+'</b><small>'+h.rarity+' · '+h.faction+' · '+(state.owned.includes(h.id)?'已结识':'未结识')+'</small></button>').join('')+'</div>');return;}
+    if(action==='atlas'){modal('星灵图鉴','<div class="catalog">'+D.heroes.map(h=>'<button data-entry="'+h.id+'">'+frame(h.id)+'<b>'+h.name+'</b>'+codexMeta(h,state.owned.includes(h.id)?'已结识':'未结识')+'</button>').join('')+'</div>');return;}
     if(action==='bag'){bag();return;}
   }
   function bag(tab='items'){
@@ -197,14 +265,27 @@
     const text=V.exportJSON(state),url=URL.createObjectURL(new Blob([text],{type:'application/json'}));
     const link=document.createElement('a');link.href=url;link.download='sky_odyssey_save_v1.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),15000);toast('已导出当前存档');
   }
+  overlay.addEventListener('input',event=>{
+    const slider=event.target, key=slider.dataset.audioVolume;
+    if(key!=='musicVolume' && key!=='soundVolume')return;
+    const percent=Number(slider.value);
+    state.settings[key]=percent/100;
+    slider.nextElementSibling.value=percent+'%';
+    syncAudio();
+    save();
+  });
+  const actionSound={home:'back',close:'back',campaign:'tab',roster:'tab',gacha:'tab',formation:'tab',trials:'tab',poster:'tab'};
+  const claims={
+    'claim-idle':V.claimIdle,'claim-daily':V.claimDaily,'claim-welfare':V.claimWelfare,'claim-event':V.claimEvent
+  };
   document.addEventListener('click',e=>{
-    if(e.target===document.body && root.dataset.page==='lobby' && overlay.hidden){speak(e);return;}
-    const bagTab=e.target.closest('[data-bag-tab]');if(bagTab){bag(bagTab.dataset.bagTab);return;}
-    const entry=e.target.closest('[data-entry]');if(entry){const h=D.hero(entry.dataset.entry);modal(h.name,'<div class="dialog-row">'+frame(h.id)+'<div><b>'+h.role+'</b><small>'+h.rarity+' · '+h.faction+'</small></div></div><p class="dialog-copy">'+h.ult+'　'+h.skills[1].desc+'</p><div class="dialog-actions">'+btn('返回图鉴','atlas','dark')+'</div>');return;}
+    if(e.target===document.body && root.dataset.page==='lobby' && overlay.hidden){S.sound('tap');speak(e);return;}
+    const bagTab=e.target.closest('[data-bag-tab]');if(bagTab){S.sound('tab');bag(bagTab.dataset.bagTab);return;}
+    const entry=e.target.closest('[data-entry]');if(entry){const h=D.hero(entry.dataset.entry);S.sound('tap');modal(h.name,'<div class="dialog-row">'+frame(h.id)+'<div><b>'+h.role+'</b>'+codexMeta(h)+'</div></div><p class="dialog-copy">'+h.ult+'　'+h.skills[1].desc+'</p><div class="dialog-actions">'+btn('返回图鉴','atlas','dark')+'</div>');return;}
     const el=e.target.closest('[data-action]');if(!el)return;
     const a=el.dataset.action;
     try{
-      if(a!=='sound')S.sound('tap');
+      if(a!=='audio-mute' && a!=='sound' && a!=='music' && !Object.hasOwn(claims,a))S.sound(actionSound[a] || 'tap');
       switch(a){
         case 'close':close();break;
         case 'home':go();break;
@@ -214,27 +295,37 @@
         case 'line':speak(e);break;
         case 'clean':clean(true);break;
         case 'poster':switchPoster();break;
-        case 'sound':case 'power':{
-          const key=a==='sound'?'sound':'powerSave',wasDialog=!overlay.hidden;state.settings[key]=!state.settings[key];save();
-          if(a==='sound')S.sound('tap');
+        case 'audio-mute':toggleAudio();break;
+        case 'sound':case 'music':{
+          const s=state.settings;
+          s[a]=!s[a];
+          syncAudio();save();
+          el.setAttribute('aria-pressed',String(s[a]));
+          el.textContent=s[a]?'已开启':'已关闭';
+          S.sound('tap');break;}
+        case 'power':{
+          const wasDialog=!overlay.hidden;
+          state.settings.powerSave=!state.settings.powerSave;save();
+          syncLobbyVideo();
           if(root.dataset.page==='lobby'){clearInterval(lobbyTimer);lobby();}
-          if(wasDialog)settings();else toast(a==='power'?(state.settings.powerSave?'省电静态已开启':'极致画质已开启'):(state.settings.sound?'音效已开启':'音效已关闭'));break;}
+          if(wasDialog)settings();else toast(state.settings.powerSave?'省电静态已开启':'极致画质已开启');break;}
         case 'claim-idle':case 'claim-daily':case 'claim-welfare':case 'claim-event':{
-          const loot=({ 'claim-idle':V.claimIdle,'claim-daily':V.claimDaily,'claim-welfare':V.claimWelfare,'claim-event':V.claimEvent })[a](state);
+          const loot=claims[a](state);
           const items=[['coins','星币'],['cores','晶核'],['tickets','唤星券'],['diamonds','星钻']].filter(([k])=>loot[k]).map(([k,n])=>n+' +'+loot[k]);
           save();go();S.sound('collect');toast(items.join('　'));break;}
         case 'exchange':V.exchange(state,1);save();go();service('shop');toast('唤星券 +1');break;
         case 'export':exportSave();break;
         case 'import':importDialog();break;
         case 'choose-file':document.querySelector('#save-file').click();break;
-        case 'confirm-import':{const imported=V.importJSON(document.querySelector('#save-json').value);V.write(imported);state=imported;invalidSave=false;save();go();toast('存档已导入');break;}
+        case 'confirm-import':{const imported=V.importJSON(document.querySelector('#save-json').value);V.write(imported);state=imported;invalidSave=false;syncAudio();save();go();toast('存档已导入');break;}
         default:service(a);
       }
     }catch(err){toast(err.message);}
   });
-  S.ui={root,go,cinematic,close,modal,toast,save,frame,bar,btn,icon,get state(){return state;},
+  S.ui={root,go,cinematic,close,modal,toast,save,frame,bar,btn,icon,audioButton,get state(){return state;},
     boot(){
       try{state=V.load();}catch{state=V.fresh();invalidSave=true;}
+      syncAudio();
       stage.classList.toggle('power-save',state.settings.powerSave);go();
       if(invalidSave)toast('原存档未通过校验，正在临时游玩。可在设置中导入备份。');else save();
     }

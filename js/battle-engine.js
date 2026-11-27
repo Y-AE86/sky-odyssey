@@ -57,24 +57,31 @@
       settled:false,order,cursor:0,rng};
   }
   const attackOf = u => u.atk*(u.status.curse ? .80 : 1)*(u.status.encourage ? 1.15 : 1);
-  function addHit(event,target,kind,amount) {
-    event.hits.push({target:target.key,kind,amount,hp:target.hp,shield:target.shield});
+  function addHit(event,target,kind,amount,details={}) {
+    event.hits.push({target:target.key,kind,amount,hp:target.hp,shield:target.shield,rage:target.rage,...details});
+  }
+  function statusOnImpact(event,unit) {
+    // A turn is simulated ahead of playback. Apply a freeze/cleanse to the stage
+    // with that target's own hit, even if a shield reflected damage immediately after it.
+    const hit=event.hits.findLast(hit=>hit.target===unit.key);
+    if(hit)hit.status={...unit.status};
   }
   function damage(b,actor,target,factor,event) {
     // Armor softens each individual hit. Only damage that really crossed a shield counts.
     const faction=counter(D.hero(actor.heroId).faction,D.hero(target.heroId).faction);
     const def=target.def*(target.status.breakArmor ? .8 : 1);
-    const raw=Math.max(1,Math.round(attackOf(actor)*factor*faction*(.94+b.rng()*.12)*(280/(280+def))));
+    const roll=b.rng();
+    const raw=Math.max(1,Math.round(attackOf(actor)*factor*faction*(.94+roll*.12)*(280/(280+def))));
     const absorbed=Math.min(target.shield,raw);
     target.shield-=absorbed;
     const dealt=Math.min(target.hp,raw-absorbed);
     target.hp-=dealt; actor.damage+=dealt;
     if (dealt>0 && alive(target)) target.rage=Math.min(100,target.rage+9);
-    addHit(event,target,'damage',dealt);
+    addHit(event,target,'damage',dealt,{source:actor.key,crit:dealt>0 && roll>=.75});
     if (absorbed>0) {
       const reflected=Math.min(actor.hp,Math.round(absorbed*.30));
       actor.hp-=reflected; target.damage+=reflected;
-      addHit(event,actor,'damage',reflected);
+      addHit(event,actor,'damage',reflected,{source:target.key,crit:false});
     }
     return dealt;
   }
@@ -94,18 +101,21 @@
       case 'h01':
         for (let i=0;i<3 && alive(actor) && alive(primary);i++) strike(primary,1.05);
         primary.status.curse=2;
+        statusOnImpact(event,primary);
         break;
       case 'h02':
         for (const u of opponents) {
           if (!alive(actor)) break;
           strike(u,1.18);
           if (alive(u) && b.rng()<.25) u.status.freeze=1;
+          statusOnImpact(event,u);
         }
         break;
       case 'h03':
         for (const u of friends) {
           heal(actor,u,magic*1.45,event);
           u.status.freeze=0; u.status.curse=0; u.status.breakArmor=0;
+          statusOnImpact(event,u);
         }
         break;
       case 'h04':
@@ -140,6 +150,7 @@
         for (const u of frontOnly(opponents)) {
           if (!alive(actor)) break;
           strike(u,1.38); u.status.breakArmor=2;
+          statusOnImpact(event,u);
         }
         break;
     }

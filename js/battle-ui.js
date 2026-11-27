@@ -5,43 +5,67 @@
   const shortName=name=>name.split(' · ')[0];
   const pretty=n=>Number(n).toLocaleString('zh-CN');
   const amountPrefix={damage:'−',heal:'+',shield:'盾 +' };
+  const shortCutMs=850, ultimateSeconds=[3,1.9,1.25], ultimateHitDelay=80;
   let current;
 
   function control(action,label) {
     return '<button type="button" data-battle="'+action+'">'+label+'</button>';
   }
-  function bars(u) {
-    return Sky.ui.bar(u.hp/u.maxHp*100,'cyan')+Sky.ui.bar(u.rage,'gold');
-  }
   function card(u) {
     const h=Sky.D.hero(u.heroId);
-    return '<button class="battle-card" type="button" data-cast="'+u.slot+'" aria-label="'+h.name+'释放必杀">'+
-      Sky.ui.frame(h.id)+'<span class="battle-card-info"><strong>'+shortName(h.name)+'</strong><span class="battle-card-bars">'+bars(u)+
-      '</span><small class="battle-rage">'+u.rage+' / 100</small></span></button>';
+    return '<button class="battle-card" type="button" data-cast="'+u.slot+'"><span class="battle-badge">'+
+      Sky.ui.frame(h.id)+'<span class="battle-star" aria-hidden="true">✦</span>'+
+      '<span class="badge-hp meter cyan" aria-hidden="true"><i></i></span>'+
+      '<span class="badge-rage meter gold" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span></button>';
   }
   function refreshUI(s) {
     const allies=s.battle.units.filter(u=>u.side==='ally');
     allies.forEach((u,i)=>{
       const button=s.cards[i], display=s.scene.byKey[u.key];
-      const hp=display.hp, rage=s.rage[u.key];
-      const stamp=[hp,rage,s.auto,s.queued.has(i)].join('/');
+      const hp=display.hp, rage=s.rage[u.key], queued=s.queued.has(u.slot);
+      const acting=s.action?.actor===u.key && ['motion','cutin'].includes(s.phase);
+      const frozen=!!display.status?.freeze;
+      const stamp=[hp,rage,s.auto,queued,acting,frozen].join('/');
       if(button.dataset.state===stamp) return;
       button.dataset.state=stamp;
-      const ready=hp>0 && rage===100;
-      button.disabled=s.auto || !ready;
-      button.classList.toggle('is-charged',ready);
-      button.classList.toggle('ready',ready && !s.auto);
+      const charged=hp>0 && rage===100, canCast=charged && !frozen;
+      button.disabled=s.auto || !canCast;
+      button.classList.toggle('is-charged',charged);
+      button.classList.toggle('is-frozen',frozen);
+      button.classList.toggle('ready',canCast && !s.auto);
       button.classList.toggle('lost',hp<=0);
-      button.querySelector('.battle-card-bars').innerHTML=bars({...u,hp,rage});
-      button.querySelector('.battle-rage').textContent=s.queued.has(i)?'待释放':ready?'必杀就绪':rage+' / 100';
+      button.classList.toggle('acting',acting && hp>0);
+      button.querySelector('.badge-hp i').style.width=(100*hp/u.maxHp)+'%';
+      button.querySelectorAll('.badge-rage i').forEach((pip,p)=>{
+        const charge=Math.max(0,Math.min(1,rage/25-p));
+        pip.style.setProperty('--charge',charge*100+'%');
+        pip.classList.toggle('lit',charge===1);
+      });
+      const availability=hp<=0?'阵亡':frozen?'冰冻中':queued?'必杀已排队':canCast?'可释放必杀':'必杀蓄能中';
+      button.setAttribute('aria-label',Sky.D.hero(u.heroId).name+'，生命 '+hp+' / '+u.maxHp+'，怒气 '+rage+'，'+availability);
+      button.title=Sky.D.hero(u.heroId).name+' · '+availability;
     });
-    const nodes=s.scene.nodes;
-    s.groupCount.textContent='我方 '+nodes.filter(n=>n.side==='ally'&&n.hp>0).length+' / 6　·　敌方 '+nodes.filter(n=>n.side==='enemy'&&n.hp>0).length+' / 6';
     s.round.textContent=String(s.battle.round).padStart(2,'0');
-    s.root.querySelector('[data-battle="auto"]').textContent=s.auto?'自动':'手动';
-    s.root.querySelector('[data-battle="speed"]').textContent=s.speed+'×';
+    s.autoButton.textContent=s.auto?'自动':'手动';
+    s.autoButton.setAttribute('aria-pressed',String(s.auto));
+    s.speedButton.textContent=s.speed+'×';
+    s.speedButton.setAttribute('aria-label','切换倍速，当前 '+s.speed+' 倍');
   }
-  function speak(s,text) {s.log.textContent=text;}
+  function announceSkill(s,action) {
+    if(action.kind==='stun')return;
+    const side=s.scene.byKey[action.actor].side;
+    const ribbon=s.ribbons[side];
+    ribbon.textContent=action.kind==='ultimate'?s.hero.ult:s.hero.basic;
+    ribbon.dataset.kind=action.kind;
+    ribbon.getAnimations().forEach(animation=>animation.cancel());
+    const from=side==='ally'?-22:22;
+    ribbon.animate([
+      {offset:0,opacity:0,transform:'translateX('+from+'%)'},
+      {offset:.12,opacity:1,transform:'translateX(0)'},
+      {offset:.84,opacity:1,transform:'translateX(0)'},
+      {offset:1,opacity:0,transform:'translateX('+(-from*.32)+'%)'}
+    ],{duration:1250,easing:'linear'});
+  }
   function sync(s) {
     s.scene.state(s.battle.units);
     for(const u of s.battle.units) s.rage[u.key]=u.rage;
@@ -49,68 +73,220 @@
   }
   function popup(s,n,hit) {
     const number=document.createElement('span');
-    number.className='battle-float '+hit.kind;
-    number.textContent=hit.kind==='damage' && !hit.amount?'抵挡':amountPrefix[hit.kind]+pretty(hit.amount);
-    // Each hit on the same target gets its own column during the short combo.
+    const resisted=hit.kind==='damage' && !hit.amount, critical=hit.crit && !resisted;
+    number.className='battle-float '+hit.kind+(resisted?' resist':'')+(critical?' critical':'');
+    number.dataset.target=n.key;
+    if(critical) {
+      const prefix=document.createElement('small');
+      prefix.textContent='暴击'; number.append(prefix);
+    }
+    const value=document.createElement('b');
+    value.textContent=resisted?'抵挡':amountPrefix[hit.kind]+pretty(hit.amount);
+    value.dataset.value=value.textContent;
+    number.append(value);
     const group=s.action.hits.filter(other=>other.target===hit.target);
     const index=group.indexOf(hit);
     if(group.length>1)number.classList.add('combo-hit');
-    const longest=Math.max(...group.map(other=>pretty(other.amount).length));
-    const pitch=Math.max(6.3,(longest+1)*1.43+1);
-    const half=(group.length-1)*pitch/2;
-    const center=Math.max(half+pitch/2,Math.min(100-half-pitch/2,n.x*100));
-    number.style.left=(center-half+index*pitch)+'%';
-    number.style.top=(n.y*100-18-(index%2)*2)+'%';
     s.numbers.append(number);
-    number.addEventListener('animationend',()=>number.remove(),{once:true});
+    s.labels.push({node:number,key:n.key,start:s.hudClock,fan:index-(group.length-1)/2,
+      group:group.length,wide:group.some(other=>other.crit),width:number.offsetWidth,height:number.offsetHeight});
+  }
+  function placeNumbers(s) {
+    if(!s.labels.length)return;
+    const {w,h}=s.scene;
+    const flags=new Map(), obstacles=[];
+    for(const n of s.scene.nodes){
+      const point=s.scene.flagPoint(n.key);
+      flags.set(n.key,point);
+      if(n.hp>0)obstacles.push({left:point.x-w*.022,right:point.x+w*.022,top:point.y,bottom:point.y+h*.018});
+    }
+    obstacles.sort((a,b)=>b.top-a.top);
+    for(const label of s.labels) {
+      const age=s.hudClock-label.start;
+      if(age>=770){label.node.remove();continue;}
+      const anchor=flags.get(label.key);
+      const t=age/770;
+      const zoom=age<85?.4+1.15*(1-(1-age/85)**2):1+.55*(Math.max(0,1-(age-85)/155))**2;
+      const half=label.width*zoom/2, height=label.height*zoom;
+      const pitch=w*(label.wide?.126:.079);
+      const margin=Math.min(w*.46,w*.025+pitch*label.group/2);
+      const center=Math.max(margin,Math.min(w-margin,anchor.x));
+      const x=Math.max(half+2,Math.min(w-half-2,center+label.fan*pitch*(1+.10*t)));
+      let y=anchor.y-h*(.025+.014*Math.abs(label.fan)+t*.063);
+      // Lift over the current camera-projected gauges and preceding labels.
+      // Earlier labels stay readable when a second target shares the same lane.
+      for(const box of obstacles) {
+        if(x+half>=box.left && x-half<=box.right && y>box.top-h*.007 && y-height<box.bottom)
+          y=box.top-h*.007;
+      }
+      const box={left:x-half,right:x+half,top:y-height,bottom:y};
+      const at=obstacles.findIndex(other=>other.top<box.top);
+      obstacles.splice(at<0?obstacles.length:at,0,box);
+      label.node.style.left=x+'px'; label.node.style.top=y+'px';
+      label.node.style.transform='translate(-50%,-100%) scale('+zoom+')';
+      label.node.style.opacity=String(Math.min(1,(1-t)/.27));
+    }
+    s.labels=s.labels.filter(label=>label.node.isConnected);
   }
   function posterImage(s,id) {
     if(!s.posters.has(id)){
       const image=new Image();
       image.decoding='async';
       image.src=Sky.art(id,'poster');
+      image.decode().catch(()=>{});
       s.posters.set(id,image);
     }
     return s.posters.get(id);
   }
-  async function showCutin(s) {
-    s.phase='loading-cutin';
+  function showCutin(s) {
     const image=posterImage(s,s.hero.id);
-    try {
-      await image.decode();
-    } catch {
-      if(current===s && s.phase==='loading-cutin') startImpact(s);
-      return;
+    const hero=s.hero, element=document.createElement('div');
+    const media=s.videos.get(hero.id);
+    const dedicated=media?.ultimate && !media.ultimate.failed;
+    element.className='battle-cutin';
+    element.dataset.hero=hero.id;
+    const poster=image.src, hasPoster=image.complete && image.naturalWidth>0;
+    if(hasPoster)element.classList.add('has-poster');
+    if(dedicated)Sky.ui.cinematic(poster,true);
+    element.style.setProperty('--cut-image','url("'+poster+'")');
+    element.innerHTML='<div class="battle-cut-content"><div class="battle-cut-image"></div><div class="battle-cut-streak"></div>'+
+      '<div class="battle-cut-title"><span>'+hero.faction+'　/　'+hero.name+'</span><strong>'+hero.ult+'</strong></div></div>'+
+      '<button class="battle-cut-skip" type="button" aria-label="跳过必杀演出"><span>跳过演出 <i aria-hidden="true">››</i></span></button>';
+    const events=new AbortController();
+    const cut=s.cutin={element,events,started:performance.now()}, target=element.querySelector('.battle-cut-image');
+    s.phase='cutin'; s.cutins++;
+    s.root.append(element);
+    const active=()=>current===s && s.cutin===cut;
+    const complete=()=>{
+      if(!active())return;
+      clearCutin(s);
+      startImpact(s);
+    };
+    element.querySelector('.battle-cut-skip').addEventListener('click',complete,{once:true});
+    document.addEventListener('click',event=>{
+      if(event.target===document.body || event.target===document.documentElement)complete();
+    },{signal:events.signal});
+    function useShortCut(){
+      if(!active())return;
+      Sky.audio.duck(false);
+      clearTimeout(cut.timer);
+      clearTimeout(cut.startup);
+      cut.video?.rewind();
+      cut.video=null;
+      const remaining=shortCutMs-(performance.now()-cut.started);
+      if(remaining<=0){complete();return;}
+      element.dataset.media='poster';
+      Sky.ui.cinematic(hasPoster?poster:null);
+      if(media && !media.lobby)media.lobby=Sky.posterVideo.preload(hero.id);
+      if(media?.lobby?.ready){
+        cut.video=media.lobby;
+        element.dataset.media='lobby';
+        cut.video.play(target,{onError:()=>{if(active())element.dataset.media='poster';}});
+      }
+      cut.timer=setTimeout(complete,remaining);
     }
-    if(current!==s || s.phase!=='loading-cutin') return;
-    const hero=s.hero, cut=document.createElement('div');
-    cut.className='battle-cutin';
-    cut.dataset.hero=hero.id;
-    const poster=image.src;
-    Sky.ui.cinematic(poster);
-    cut.style.setProperty('--cut-image','url("'+poster+'")');
-    cut.innerHTML='<div class="battle-cut-image"></div><div class="battle-cut-streak"></div><div class="battle-cut-title"><span>'+
-      hero.faction+'　/　'+hero.name+'</span><strong>'+hero.ult+'</strong></div>';
-    s.root.append(cut);
-    s.phase='cutin'; s.cutStart=performance.now(); s.cutins++; s.cutin=cut;
-    Sky.sound('ultimate');
+    if(!dedicated){useShortCut();return;}
+
+    // The original poster is visible while playback starts. Bound both the
+    // wait for the first decoded frame and the total cinematic time.
+    const speed=s.speed, seconds=ultimateSeconds[speed-1];
+    element.dataset.media='ultimate';
+    cut.video=media.ultimate;
+    cut.timer=setTimeout(complete,seconds*1000+300);
+    cut.startup=setTimeout(useShortCut,550);
+    const voice=Sky.audio.voiceVolume();
+    cut.video.play(target,{
+      audible:voice>0 && navigator.userActivation?.hasBeenActive!==false,
+      volume:voice,
+      rate:duration=>speed===1 ? 1 : duration/seconds,
+      onFrame:video=>{
+        clearTimeout(cut.startup);
+        if(active())Sky.audio.duck(!video.muted && video.volume>0);
+      },
+      onEnd:complete,
+      onError:useShortCut
+    });
+  }
+  function clearCutin(s){
+    const cut=s.cutin;
+    if(!cut)return;
+    s.cutin=null;
+    Sky.audio.duck(false);
+    cut.events.abort();
+    clearTimeout(cut.timer);
+    clearTimeout(cut.startup);
+    cut.video?.rewind();
+    cut.element.remove();
+    Sky.ui.cinematic(null);
+  }
+  function releaseVideos(s){
+    clearCutin(s);
+    for(const {ultimate,lobby} of s.videos.values()){
+      ultimate?.release();
+      lobby?.release();
+    }
+    s.videos.clear();
+  }
+  function hideTotal(s,linger=false) {
+    s.totalFade?.cancel();
+    if(!linger || s.total.hidden){s.total.hidden=true;return;}
+    s.totalFade=s.total.animate([
+      {opacity:1,translate:'-50% 0'},
+      {opacity:0,translate:'-50% -14px'}
+    ],{delay:600,duration:220,fill:'forwards',easing:'ease-out'});
+    s.totalFade.onfinish=()=>{s.total.hidden=true;};
+  }
+  function countImpact(s,hit,finisher) {
+    if(!s.hitsShown) {
+      hideTotal(s);
+      s.total.dataset.kind=s.countKind;
+      s.total.querySelector('small').textContent={heal:'总治疗',shield:'总护盾',damage:'总伤害'}[s.countKind];
+      s.total.hidden=false;
+    }
+    s.sum+=hit.amount;
+    const value=s.total.querySelector('strong');
+    value.dataset.value=value.textContent=pretty(s.sum);
+    s.hitsShown++;
+    s.total.querySelector('.battle-hits').textContent=s.countKind==='damage'?
+      s.hitsShown+(s.hitsShown===1?' HIT':' HITS'):s.hitsShown+' 次施加';
+    if(!s.powerSave){
+      value.getAnimations().forEach(animation=>animation.cancel());
+      const first=s.hitsShown===1;
+      const pulse=first?[{scale:'1.35'},{scale:'1'}]:
+        [{scale:'1'},{scale:finisher?'1.32':'1.18',offset:.32},{scale:'1'}];
+      value.animate(pulse,{duration:220,easing:'cubic-bezier(.2,.8,.25,1)'});
+    }
+    s.totalUpdates++;
   }
   function startImpact(s) {
     s.phase='motion'; s.elapsed=0; s.hitIndex=0; s.sum=0; s.hitsShown=0;
+    s.attackCue=false;
     const action=s.action, ultimate=action.kind==='ultimate',hits=action.hits;
     s.duration=action.kind==='stun'?230:ultimate?610+Math.max(0,hits.length-1)*108:430;
+    s.impactPlan=ultimate ? s.scene.planUltimate(action,s.effectClock) : null;
+    s.scene.beginAction(action,s.effectClock);
+    announceSkill(s,action);
     if(ultimate) {
+      if(s.impactPlan)s.duration=s.impactPlan.duration;
       s.burstCount++;
       s.scene.focus=new Set([action.actor,...hits.map(h=>h.target)]);
       s.root.classList.add('spotlight');
-      const node=s.scene.byKey[action.actor];
-      s.root.style.setProperty('--spot-x',node.x*100+'%');
-      s.root.style.setProperty('--spot-y',(node.y-.11)*100+'%');
-      s.total.hidden=false;
-      s.total.querySelector('small').textContent=hits.every(h=>h.kind==='heal')?'总治疗':hits.every(h=>h.kind==='shield')?'总护盾':'总伤害';
-      s.total.querySelector('strong').textContent='0';
-      s.total.querySelector('.battle-hits').textContent='';
+      const actor=s.scene.byKey[action.actor];
+      s.countKind=hits.every(h=>h.kind==='heal')?'heal':hits.every(h=>h.kind==='shield')?'shield':'damage';
+      s.primaryHits=hits.map((hit,index)=>hit.kind===s.countKind &&
+        (hit.kind!=='damage'||actor.side!==s.scene.byKey[hit.target].side)?index:-1).filter(i=>i>=0);
+      const targets=[...new Set(s.primaryHits.map(i=>s.scene.byKey[hits[i].target]))];
+      if(targets.length){
+        const x=targets.reduce((sum,target)=>sum+target.x,0)/targets.length;
+        const y=targets.reduce((sum,target)=>sum+target.y,0)/targets.length;
+        const stage=s.root.getBoundingClientRect(), backdrop=s.backdrop.getBoundingClientRect();
+        const px=stage.left-backdrop.left+stage.width*(actor.x+x)/2;
+        const py=stage.top-backdrop.top+stage.height*(actor.y+y-.22)/2;
+        s.backdrop.style.setProperty('--spot-x',100*px/backdrop.width+'%');
+        s.backdrop.style.setProperty('--spot-y',100*py/backdrop.height+'%');
+      }
     }
+    refreshUI(s);
   }
   function nextAction(s) {
     if(s.battle.done) {finish(s);return;}
@@ -125,54 +301,76 @@
     const unit=s.battle.units.find(u=>u.key===action.actor);
     s.hero=Sky.D.hero(unit.heroId);
     s.rage[unit.key]=unit.rage;
+    s.scene.byKey[unit.key].rage=unit.rage;
     s.round.textContent=String(action.round).padStart(2,'0');
-    speak(s,(unit.side==='ally'?'我方 · ':'敌方 · ')+shortName(s.hero.name)+'　'+
-      (action.kind==='ultimate'?s.hero.ult:action.kind==='stun'?'冰冻':'普攻'));
-    refreshUI(s);
+    if(action.kind==='ultimate')Sky.sound('ult_start');
     if(action.kind==='ultimate' && unit.side==='ally') showCutin(s);
     else startImpact(s);
+    refreshUI(s);
   }
   function advance(s,dt,now) {
-    if(s.phase==='cutin') {
-      if(now-s.cutStart<850) return;
-      s.cutin.remove(); s.cutin=null; Sky.ui.cinematic(null); startImpact(s);
-      return;
+    const scaled=dt*s.speed;
+    s.hudClock+=scaled;
+    const available=s.scene.advanceClock(scaled);
+    let elapsed=available;
+    if(available>0){
+      elapsed+=s.carry; s.carry=0;
     }
-    s.elapsed+=dt*s.speed;
+    const a=s.action, ultimate=a?.kind==='ultimate';
+    const due=s.phase==='motion' && s.hitIndex<a.hits.length ?
+      (s.impactPlan?.due[s.hitIndex] ?? (ultimate?ultimateHitDelay+s.hitIndex*108:s.scene.basicHitMs+s.hitIndex*36)):Infinity;
+    // Present each real contact before spending the rest of a slow frame.
+    // Carried motion resumes only after the live feedback ticker releases hitstop.
+    const reached=Number.isFinite(due) && elapsed+s.elapsed>=due-.000001;
+    if(reached) {
+      const toHit=Math.max(0,due-s.elapsed);
+      s.carry+=Math.max(0,elapsed-toHit); elapsed=toHit;
+    }
+    s.effectClock+=elapsed;
+    if(s.phase==='cutin')return;
+    s.elapsed=reached?due:s.elapsed+elapsed;
     if(s.phase==='ready') {
       if(s.elapsed>=s.duration) nextAction(s);
       return;
     }
     if(s.phase!=='motion') return;
-    const a=s.action, ultimate=a.kind==='ultimate';
     const progress=Math.min(1,s.elapsed/s.duration);
     const target=a.hits[0]?.target;
-    if(target) s.scene.elapsedAction(a.actor,target,progress,a.kind==='basic');
-    while(s.hitIndex<a.hits.length) {
-      const due=ultimate?80+s.hitIndex*108:174+s.hitIndex*36;
-      if(s.elapsed<due) break;
+    if(target) s.scene.elapsedAction(a.actor,target,progress,a.kind==='basic',s.elapsed,s.speed);
+    if(a.kind==='basic' && !s.attackCue && s.elapsed>=s.scene.basicWindupMs){
+      s.attackCue=true;
+      Sky.sound(s.scene.attackSound(a.actor));
+    }
+    if(reached) {
       const hit=a.hits[s.hitIndex];
-      s.scene.hit(a.actor,hit,s.hero.element,ultimate,now);
+      const primary=ultimate?s.primaryHits.indexOf(s.hitIndex):-1;
+      const beats=ultimate?Math.min(4,s.primaryHits.length):1;
+      const beat=primary<0?0:Math.round(primary*(beats-1)/Math.max(1,s.primaryHits.length-1))+1;
+      const finisher=ultimate && primary>=0 && primary===s.primaryHits.length-1;
+      s.scene.hit(a.actor,hit,s.hero.element,ultimate,now,s.effectClock,s.hitIndex,due,{finisher,beat,beats});
       popup(s,s.scene.byKey[hit.target],hit);
-      if(ultimate) {
-        const kind=s.total.querySelector('small').textContent==='总治疗'?'heal':
-          s.total.querySelector('small').textContent==='总护盾'?'shield':'damage';
-        if(hit.kind===kind && (kind!=='damage' || s.scene.byKey[a.actor].side!==s.scene.byKey[hit.target].side)) {
-          s.sum+=hit.amount;
-          s.total.querySelector('strong').textContent=pretty(s.sum);
-          s.hitsShown++;
-          s.total.querySelector('.battle-hits').textContent=kind==='damage'
-            ? s.hitsShown+(s.hitsShown===1?' HIT':' HITS') : s.hitsShown+' 次施加';
-          s.totalUpdates++;
-        }
+      if(hit.rage!==undefined)s.rage[hit.target]=hit.rage;
+      if(hit.kind==='damage' && s.scene.byKey[hit.target].side==='ally' && !s.powerSave) {
+        const button=s.cards[s.scene.byKey[hit.target].slot];
+        button.classList.add('taking-hit');
+        const badge=button.querySelector('.battle-badge');
+        button.hitFlash?.cancel();
+        button.hitFlash=badge.animate([
+          {translate:'0',filter:'drop-shadow(0 0 4px #ff3e52)'},
+          {translate:'3% 0',offset:.22},{translate:'-3% 0',offset:.5},{translate:'0',filter:'none'}
+        ],{duration:180});
+        button.hitFlash.onfinish=()=>button.classList.remove('taking-hit');
       }
-      if(!s.hitIndex && !ultimate) Sky.sound('hit');
+      if(primary>=0)countImpact(s,hit,finisher);
+      if(hit.kind==='damage')Sky.sound(hit.amount===0?'shield':hit.crit?'crit':'hit');
+      else if(hit.amount>0)Sky.sound(hit.kind);
       s.hitIndex++; refreshUI(s);
     }
     if(progress===1) {
       s.scene.resetMotion(); s.root.classList.remove('spotlight');
-      s.total.hidden=true; sync(s);
       s.phase='ready'; s.duration=ultimate?185:75; s.elapsed=0;
+      if(ultimate && s.hitsShown)hideTotal(s,true);
+      sync(s);
     }
   }
   function loop(s,now) {
@@ -186,7 +384,8 @@
       s.due+=Math.max(1,Math.floor((now+.25-s.due)/period)+1)*period;
       advance(s,Math.min(300,gap),now);
       if(s.phase!=='result') {
-        s.scene.render(now);
+        s.scene.render(now,s.effectClock);
+        placeNumbers(s);
         if(s.scene.ready) {s.presentedFrames++; s.renderedMs+=gap;}
       }
     }
@@ -201,8 +400,8 @@
     s.phase='result';
     cancelAnimationFrame(s.frame);
     Sky.Battle.finish(s.battle);
-    s.scene.resetMotion(); s.scene.state(s.battle.units); s.scene.render(performance.now());
-    s.cutin?.remove(); Sky.ui.cinematic(null); s.total.hidden=true; s.numbers.replaceChildren();
+    s.scene.resetMotion(true); s.scene.state(s.battle.units); s.scene.render(performance.now(),s.effectClock);
+    releaseVideos(s); hideTotal(s); s.numbers.replaceChildren(); s.labels.length=0;
     s.root.classList.remove('spotlight');
     const loot=Sky.Save.settle(Sky.ui.state,s.battle);
     Sky.ui.save();
@@ -211,7 +410,7 @@
     const win=s.battle.win;
     const alive=team.filter(u=>u.hp>0).length;
     const stars=win ? 1+Number(alive>=4)+Number(alive===6) : 0;
-    if(win) Sky.sound('win');
+    Sky.sound(win?'win':'lose');
     const report=team.map((u,i)=>{
       const h=Sky.D.hero(u.heroId);
       return '<div class="battle-contrib" data-hero="'+h.id+'" data-damage="'+u.damage+'">'+Sky.ui.frame(h.id)+'<b>'+shortName(h.name)+
@@ -247,12 +446,14 @@
   function click(s,event) {
     const cast=event.target.closest('[data-cast]');
     if(cast && !s.auto && !cast.disabled && s.phase!=='result') {
+      Sky.sound('tap');
       s.queued.add(Number(cast.dataset.cast)); refreshUI(s);
       if(s.phase==='ready') s.elapsed=s.duration;
       return;
     }
     const key=event.target.closest('[data-battle]')?.dataset.battle;
     if(!key) return;
+    Sky.sound(key==='return'?'back':'tap');
     if(key==='auto'||key==='speed') {
       if(s.phase==='result') return;
       if(key==='auto'){s.auto=!s.auto;s.queued.clear();}
@@ -272,38 +473,47 @@
     destroy();
     const ui=Sky.ui, battle=Sky.Battle.create(ui.state,spec);
     ui.root.innerHTML='<section class="battle-page" aria-label="六对六星盘战斗">'+
-      '<div class="battle-shade"></div><div class="battle-stage"></div><div class="battle-numbers"></div>'+
-      '<header class="battle-head"><div class="battle-allegiance"><b>'+labels[spec.kind]+'</b><small></small></div>'+
-      '<div class="battle-round"><b>'+battle.title+'</b><span>回合 <strong>01</strong> / 20</span></div>'+
-      '<nav aria-label="战斗控制">'+control('speed','1×')+control('auto','自动')+control('skip','跳过战斗')+'</nav></header>'+
-      '<div class="battle-log">舰队入阵</div><div class="battle-total" hidden><small>总伤害</small><strong>0</strong><span class="battle-hits"></span></div>'+
+      '<div class="battle-stage"></div><div class="battle-numbers"></div>'+
+      '<header class="battle-head"><div class="battle-round">回合 <strong>01</strong> / 20</div>'+
+      '<h1 class="battle-title">'+battle.title+'</h1>'+
+      '<nav aria-label="战斗控制">'+control('speed','1×')+control('auto','自动')+control('skip','跳过')+ui.audioButton()+'</nav></header>'+
+      '<div class="battle-skill" data-side="ally"></div><div class="battle-skill" data-side="enemy"></div>'+
+      '<div class="battle-total" hidden><small>总伤害</small><strong>0</strong><span class="battle-hits"></span></div>'+
       '<div class="battle-bottom">'+battle.units.filter(u=>u.side==='ally').map(card).join('')+'</div></section>';
     const root=ui.root.querySelector('.battle-page');
     const powerSave=ui.state.settings.powerSave;
     const scene=new Sky.BattleScene(root.querySelector('.battle-stage'),battle.units,powerSave);
-    const s={root,battle,scene,powerSave,auto:true,speed:1,queued:new Set(),posters:new Map(),phase:'loading',elapsed:0,duration:450,
-      cards:[...root.querySelectorAll('.battle-card')],groupCount:root.querySelector('.battle-allegiance small'),
-      round:root.querySelector('.battle-round strong'),log:root.querySelector('.battle-log'),total:root.querySelector('.battle-total'),
+    const s={root,battle,scene,backdrop:document.getElementById('bleed'),powerSave,auto:true,speed:1,queued:new Set(),posters:new Map(),videos:new Map(),phase:'loading',elapsed:0,effectClock:0,hudClock:0,carry:0,labels:[],duration:450,
+      cards:[...root.querySelectorAll('.battle-card')],autoButton:root.querySelector('[data-battle="auto"]'),speedButton:root.querySelector('[data-battle="speed"]'),
+      round:root.querySelector('.battle-round strong'),total:root.querySelector('.battle-total'),
+      ribbons:Object.fromEntries([...root.querySelectorAll('.battle-skill')].map(el=>[el.dataset.side,el])),
       numbers:root.querySelector('.battle-numbers'),rage:{},cutins:0,burstCount:0,totalUpdates:0,presentedFrames:0,renderedMs:0};
     current=s;
     root.addEventListener('click',e=>click(s,e));
     sync(s);
+    for(const id of ui.state.formation){
+      posterImage(s,id);
+      if(powerSave)continue;
+      const ultimate=Sky.posterVideo.preload(id,'ultimate');
+      const lobby=ultimate ? null : Sky.posterVideo.preload(id);
+      if(ultimate || lobby)s.videos.set(id,{ultimate,lobby});
+    }
     scene.load().then(()=>{
       if(current!==s || s.phase==='result') return;
       s.phase='ready'; s.last=performance.now(); s.due=s.last+1000/(powerSave?30:60); scene.render(s.last);
       s.frame=requestAnimationFrame(t=>loop(s,t));
-      for(const id of ui.state.formation) if(Sky.D.illustrated.includes(id)) posterImage(s,id);
     }).catch(error=>{
       if(current!==s || s.phase==='result') return;
       // Surface a missing/replaced artwork to the player while preserving the
       // deterministic engine and settlement buttons on the battlefield.
-      speak(s,error.message); ui.toast(error.message);
+      ui.toast(error.message);
       s.phase='ready'; s.last=performance.now(); s.due=s.last+1000/(powerSave?30:60); s.frame=requestAnimationFrame(t=>loop(s,t));
     });
   }
   function destroy() {
     if(!current)return;
-    Sky.ui.cinematic(null);
+    releaseVideos(current);
+    hideTotal(current);
     cancelAnimationFrame(current.frame);
     current.scene.destroy();
     current=null;

@@ -1,5 +1,5 @@
 'use strict';
-// Run with Node and Playwright installed. Optional --root, --chrome, --out, --baseline and --case values.
+// Run with Node and Playwright installed. --vfx-only and --hud-only run focused battle suites.
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
@@ -12,6 +12,9 @@ const args=process.argv.slice(2);
 const option=(name,fallback)=>args.includes('--'+name) ? args[args.indexOf('--'+name)+1] : fallback;
 const root=path.resolve(option('root',path.resolve(__dirname,'..')));
 const out=option('out',null),selected=option('case',null);
+const vfxOnly=args.includes('--vfx-only');
+const hudOnly=args.includes('--hud-only');
+const {exerciseHud,checkPowerHud}=require('./battle-hud.cjs');
 const chrome=option('chrome',process.env.CHROME_PATH);
 const presets=[
   {name:'desktop',width:1280,height:720,dpr:1,full:true},
@@ -60,6 +63,32 @@ if(baseline) {
 const visualChecks=new WeakMap();
 const mobileEdges=new WeakMap();
 const wave2Checks=new WeakMap();
+const wave4Checks=new WeakMap();
+const vfxPaths={...Object.fromEntries(leads.map(id=>[id,'assets/vfx/vfx_ult_'+id+'.png'])),spark:'assets/vfx/vfx_hit_spark.png'};
+const battleArtPaths=Object.fromEntries([...leads.map(id=>'proj_'+id),'status_shield','status_freeze','status_curse','status_heal_ring']
+  .map(key=>[key,'assets/vfx/'+key+'.png']));
+const factionStems={东煌:'donghuang',圣辉:'shenghui',机巧:'jiqiao',秘影:'miying'};
+
+async function badge(p,scope,name,placement) {
+  const file='assets/badges/'+name+'.png';
+  assert.deepEqual(originalSize(file),[440,440]);
+  await decoded(p,scope.locator('img[src$="/'+name+'.png"]'),file);
+  const entries=wave4Checks.get(p).badges;
+  if(!entries[name])entries[name]=[];
+  if(!entries[name].includes(placement))entries[name].push(placement);
+}
+
+async function sceneBackdrop(p,name,placement) {
+  const file='assets/scenes/bg_'+name+'.png';
+  const size=await p.locator('#bleed').evaluate(async(node,file)=>{
+    const url=new URL(file,document.baseURI).href;
+    if(!getComputedStyle(node).backgroundImage.includes(url))return null;
+    const image=new Image();image.src=url;await image.decode();
+    return [image.naturalWidth,image.naturalHeight];
+  },file);
+  assert.deepEqual(size,[1672,941],placement+' should show '+file);
+  wave4Checks.get(p).scenes[placement]=file;
+}
 
 async function banner(p,selector,filename) {
   const relative='assets/banners/'+filename+'.png';
@@ -87,12 +116,19 @@ async function banner(p,selector,filename) {
 
 // Sample the actual composited art beneath the title and subtitle, including the
 // browser's crop and gradient. Removing the ink for one screenshot preserves layout.
-async function bannerContrast(p,label,selector) {
-  const boxes=await p.locator(selector).evaluateAll(nodes=>nodes.map(el=>{
-    const range=document.createRange();range.selectNodeContents(el);
-    const b=range.getBoundingClientRect();
-    return {text:el.textContent.trim(),rgb:getComputedStyle(el).color.match(/[\d.]+/g).slice(0,3).map(Number),
-      x:b.left,y:b.top,right:b.right,bottom:b.bottom};
+async function bannerContrast(p,label,selector,results=wave2Checks.get(p).contrast) {
+  const boxes=await p.locator(selector).evaluateAll(nodes=>nodes.flatMap(el=>{
+    const text=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
+    const boxes=[];
+    while(text.nextNode()){
+      const node=text.currentNode;
+      if(!node.data.trim())continue;
+      const range=document.createRange();range.selectNodeContents(node);
+      const b=range.getBoundingClientRect();
+      boxes.push({text:node.data.trim(),rgb:getComputedStyle(node.parentElement).color.match(/[\d.]+/g).slice(0,3).map(Number),
+        x:b.left,y:b.top,right:b.right,bottom:b.bottom});
+    }
+    return boxes;
   }).filter(x=>x.text && x.right>x.x && x.bottom>x.y));
   assert(boxes.length,'no banner titles inspected at '+label);
   const x=Math.floor(Math.min(...boxes.map(b=>b.x))),y=Math.floor(Math.min(...boxes.map(b=>b.y)));
@@ -119,7 +155,7 @@ async function bannerContrast(p,label,selector) {
     });
   },{encoded:shot.toString('base64'),boxes,x,y});
   assert(values.every(v=>v.minimum>=4.5),label+' banner contrast '+JSON.stringify(values));
-  wave2Checks.get(p).contrast[label]=values;
+  results[label]=values;
 }
 
 async function modalCoverage(p,spec,selector,content) {
@@ -217,10 +253,33 @@ function serve(siteRoot=root) {
   const server=http.createServer((req,res)=>{
     const uri=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
     const file=path.resolve(siteRoot,'.'+(uri==='/' ? '/index.html' : uri));
-    if (!file.startsWith(siteRoot+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()) {res.writeHead(404).end();return;}
-    const types={'.html':'text/html; charset=utf-8','.png':'image/png','.css':'text/css','.js':'text/javascript','.svg':'image/svg+xml'};
-    res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream'});
-    fs.createReadStream(file).pipe(res);
+    const stat=file.startsWith(siteRoot+path.sep) && fs.statSync(file,{throwIfNoEntry:false});
+    if (!stat || !stat.isFile()) {res.writeHead(404).end();return;}
+    const ext=path.extname(file);
+    const types={'.html':'text/html; charset=utf-8','.png':'image/png','.css':'text/css','.js':'text/javascript',
+      '.svg':'image/svg+xml','.mp4':'video/mp4'};
+    const headers={'Content-Type':types[ext]||'application/octet-stream','Content-Length':stat.size};
+    let range;
+    if(ext==='.mp4'){
+      headers['Accept-Ranges']='bytes';
+      if(req.headers.range){
+        const parts=/^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+        const start=parts?.[1] ? Number(parts[1]) : Math.max(0,stat.size-Number(parts?.[2]));
+        const end=parts?.[1] && parts[2] ? Math.min(Number(parts[2]),stat.size-1) : stat.size-1;
+        if(!parts || !(parts[1] || parts[2]) || !Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start>end){
+          res.writeHead(416,{'Content-Range':'bytes */'+stat.size}).end();return;
+        }
+        range={start,end};
+        headers['Content-Range']='bytes '+start+'-'+end+'/'+stat.size;
+        headers['Content-Length']=end-start+1;
+      }
+    }
+    res.writeHead(range?206:200,headers);
+    if(req.method==='HEAD'){res.end();return;}
+    const stream=fs.createReadStream(file,range);
+    res.once('close',()=>stream.destroy());
+    stream.on('error',()=>res.destroy());
+    stream.pipe(res);
   });
   return new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',()=>resolve(server));});
 }
@@ -287,6 +346,10 @@ async function runLobby(p,spec) {
   assert.equal(initial.formation.length,6);assert.equal(initial.tickets,30);assert.equal(initial.diamonds,4800);
   assert.equal(initial.settings.powerSave,false);
   for(const [selector,name] of [['.route-tile','tile_campaign'],['.trial-tile','banner_tower'],['.idle-tile','tile_idle_box'],['.small-tiles [data-action=shop]','tile_shop']])await banner(p,selector,name);
+  const event='assets/banners/tile_event.png';
+  assert.deepEqual(originalSize(event),[1672,941]);
+  await decoded(p,action(p,'event').locator('.tile-paint'),event);
+  wave4Checks.get(p).lobby=['tile_campaign','banner_tower','tile_idle_box','tile_shop','tile_event'];
   await bannerContrast(p,'lobby','.tile-inside small,.tile-inside strong,.tile-inside>span,.trial-tile strong,.idle-tile strong,#idle-count,.small-tiles button>span');
   await auditArt(p,'lobby','#view',['item_gem','item_coin','item_ticket','item_chest','icon_quest','icon_reward','icon_codex','icon_bag','icon_shop','icon_formation','icon_roster','icon_gacha','icon_settings']);
   assert.equal(await p.locator('.main-dock [data-action=trials]').count(),0);
@@ -321,8 +384,11 @@ async function runLobby(p,spec) {
         return lines;
       });
       assert.equal(new Set(lines).size,3,id+' interactive dialogue');
-      if(spec.name==='desktop' || spec.mobile && id==='h05'){
-        await p.waitForFunction(id=>Number(getComputedStyle(document.querySelector('.backdrop.current[data-poster="'+id+'"]')).opacity)>.99,id);
+      if(spec.name==='desktop' || spec.mobile && id==='h05' || spec.name==='retina' && id==='h06'){
+        await p.waitForFunction(id=>{
+          const media=document.querySelector('.backdrop.current[data-poster="'+id+'"]')?.closest('.lobby-media');
+          return media && Number(getComputedStyle(media).opacity)>.99;
+        },id);
         await screenshot(p,spec,'lobby-'+id);
       }
     }
@@ -340,6 +406,10 @@ async function runLobby(p,spec) {
 }
 async function runRoster(p,spec) {
   await action(p,'roster').click();await waitPage(p,'roster');
+  await badge(p,p.locator('.pn-resonance'),'badge_resonance','resonance');
+  for(const [name,stem] of Object.entries(factionStems)){
+    await badge(p,panel(p,'filter',name),'faction_'+stem,'roster filter');
+  }
   await auditArt(p,'roster','#view',['item_coin','item_core','item_shard','ui_tab_active','ui_tab_idle']);
   assert(await panel(p,'star').isDisabled(),'new commander has no fragments to spend');
   await checkBleed(p,spec,'roster');
@@ -366,11 +436,22 @@ async function runRoster(p,spec) {
   assert.equal((await state(p)).bag.find(x=>x.uid===equipped[0]).level,1);
   await panel(p,'dismiss').click();await panel(p,'roster-tab',2).click();
   await p.locator('.pn-weapon-emblem img').waitFor();await panel(p,'roster-tab',3).click();
+  for(const [index,[name,label]] of [['basic','普攻'],['ult','必杀'],['passive','被动'],['awaken','觉醒']].entries()){
+    const button=panel(p,'skill',index);
+    await badge(p,button,'skill_'+name,'skill card');
+    assert.equal(await button.locator('img').count(),1,'skill card should only show its own badge');
+    await button.click();
+    assert((await p.locator('.pn-skill-detail').innerText()).includes(label));
+  }
   await panel(p,'skill',1).click();assert((await p.locator('.pn-skill-detail').innerText()).includes('九幽墨莲斩'));
+  await screenshot(p,spec,'wave4-skills');
   await panel(p,'filter','圣辉').click();assert.equal(await p.locator('.pn-hero-pick').count(),1);
   await panel(p,'formation').click();assert.equal(await p.locator('.pn-position').count(),6);
   await modalCoverage(p,spec,'.pn-scrim','.pn-dialog');
   await auditArt(p,'formation','.pn-formation-layout');
+  for(const [name,stem] of Object.entries(factionStems)){
+    await badge(p,p.locator('.pn-bond').filter({hasText:name}),'faction_'+stem,'formation bond');
+  }
   const orderText=await p.locator('.pn-form-side').innerText();assert(/[246]/.test(orderText) && ['2','4','6'].every(n=>orderText.includes(n)),'bond thresholds');
   const expectedOrder=await p.evaluate(()=>Sky.ui.state.formation.map((id,slot)=>({
     slot,role:Sky.D.hero(id).role,speed:Sky.Save.stats(Sky.ui.state,id).speed
@@ -452,8 +533,14 @@ async function runSaveDialog(p,spec) {
   await auditArt(p,'shop','[role=dialog]',['item_gem','item_ticket']);
   await action(p,'close').click();
   await action(p,'atlas').click();assert.equal(await p.locator('[data-entry]').count(),8);
+  const catalog=await p.evaluate(()=>Sky.D.heroes.map(({id,faction})=>({id,faction})));
+  for(const {id,faction} of catalog){
+    await badge(p,p.locator('[data-entry="'+id+'"]'),'faction_'+factionStems[faction],'codex list');
+  }
+  await screenshot(p,spec,'wave4-codex');
   await p.locator('[data-entry="h06"]').click();
   assert((await p.getByRole('dialog').innerText()).includes('猩红月蚀'));
+  await badge(p,p.getByRole('dialog'),'faction_miying','codex details');
   await action(p,'close').click();await action(p,'bag').click();
   assert((await p.getByRole('dialog').innerText()).includes('星币'));
   await auditArt(p,'bag-materials','[role=dialog]',['item_gem','item_ticket','item_core','item_coin','item_dust','item_dew','item_stamina','item_shard']);
@@ -525,7 +612,7 @@ async function inspectBattle(p,spec) {
     spriteCount:info.positions.filter(n=>n.source==='pixi-texture').length};
 }
 async function recordMotion(p) {
-  // Observe the real DOM throughout a fight, including transient 850 ms cut-ins and per-hit totals.
+  // Observe the transient cut-ins, actual media playback, and per-hit totals.
   await p.evaluate(()=>{
     const root=document.querySelector('.battle-page');
     const log=window.__skyQaMotion={cuts:[],totals:[],segments:[],spots:0,hits:0,drawTimes:[],started:performance.now()};
@@ -546,13 +633,14 @@ async function recordMotion(p) {
         }
         for(const node of mutation.addedNodes) {
           if(node.nodeType!==1)continue;
-          if(node.matches('.battle-cutin')) starts.set(node,performance.now());
+          if(node.matches('.battle-cutin')) starts.set(node,{at:performance.now(),media:[]});
           if(node.matches('.battle-float')) log.hits++;
         }
         for(const node of mutation.removedNodes) {
           if(starts.has(node)) {
-            log.cuts.push({hero:node.dataset.hero,duration:performance.now()-starts.get(node),
-              image:node.style.getPropertyValue('--cut-image')});starts.delete(node);
+            const {at,media}=starts.get(node);
+            log.cuts.push({hero:node.dataset.hero,duration:performance.now()-at,
+              image:node.style.getPropertyValue('--cut-image'),media});starts.delete(node);
           }
         }
         if(mutation.target.parentElement?.closest('.battle-total') || mutation.target.closest?.('.battle-total')) {
@@ -566,7 +654,157 @@ async function recordMotion(p) {
       }
     });
     observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+    root.addEventListener('playing',event=>{
+      const video=event.target;
+      if(!(video instanceof HTMLVideoElement))return;
+      starts.get(video.closest('.battle-cutin'))?.media.push({
+        source:new URL(video.currentSrc || video.src).pathname.split('/').pop(),
+        muted:video.muted,rate:video.playbackRate,length:video.duration
+      });
+    },true);
   });
+}
+async function recordUltimateVfx(p) {
+  await p.evaluate(()=>{
+    window.__skyVfxProbeRestore?.();
+    const root=document.querySelector('.battle-page'), numbers=root.querySelector('.battle-numbers');
+    const log=window.__skyVfxProbe={hits:[],frames:[],atlases:{},mediaEnded:[],voices:[],cutSkips:[]};
+    const proto=Sky.BattleScene.prototype, originalHit=proto.hit, originalRender=proto.render;
+    const pending=[],seen=new Map();
+    const watch=new AbortController();
+    root.addEventListener('playing',event=>{
+      const v=event.target,id=v.closest?.('.battle-cutin')?.dataset.hero;
+      if(id)log.voices.push({id,clip:new URL(v.currentSrc).pathname.split('/').pop(),muted:v.muted,
+        rate:v.playbackRate,start:performance.now(),duration:v.duration});
+    },{capture:true,signal:watch.signal});
+    root.addEventListener('ended',event=>{
+      const heroId=event.target.closest?.('.battle-cutin')?.dataset.hero;
+      if(heroId){
+        log.mediaEnded.push(heroId);
+        const voice=log.voices.findLast(v=>v.id===heroId);
+        if(voice){voice.playedMs=Math.round(performance.now()-voice.start);voice.audioBytes=event.target.webkitAudioDecodedByteCount;}
+      }
+    },{capture:true,signal:watch.signal});
+    root.addEventListener('click',event=>{
+      const cut=event.target.closest('.battle-cut-skip')?.closest('.battle-cutin');
+      if(cut)log.cutSkips.push(cut.dataset.hero);
+    },{capture:true,signal:watch.signal});
+    proto.hit=function(actor,hit,element,ultimate,clock){
+      if(root.contains(this.host)){
+        pending.push({clock,actor,heroId:this.byKey[actor].heroId,target:hit.target,kind:hit.kind,amount:hit.amount,ultimate,
+          oldLabels:new Set(numbers.children)});
+      }
+      return originalHit.apply(this,arguments);
+    };
+    proto.render=function(clock,effectClock){
+      const result=originalRender.apply(this,arguments);
+      if(!root.contains(this.host))return result;
+      const active=this.inspect().vfx?.active || [];
+      const cutVisible=!!root.querySelector('.battle-cutin');
+      for(const [key,atlas] of this.vfx?.atlases || []){
+        if(log.atlases[key])continue;
+        const pixel=atlas.base.resource.source.getContext('2d').getImageData(0,0,1,1).data;
+        log.atlases[key]={frameMs:atlas.layout.frameMs,cornerAlpha:pixel[3],frames:atlas.frames.map(texture=>
+          [texture.frame.x,texture.frame.y,texture.frame.width,texture.frame.height])};
+      }
+      const sprites=new Map([...(this.vfx?.active || [])].map(entry=>[entry.info,entry.sprite]));
+      for(const frame of active){
+        const id=[frame.key,frame.role,frame.startedAt,frame.actor,frame.target,frame.hitIndex].join('/');
+        const stamp=[frame.frame,frame.impactAt,frame.renderedImpactAt].join('/');
+        if(seen.get(id)===stamp)continue;
+        seen.set(id,stamp);
+        const sprite=sprites.get(frame);
+        log.frames.push({...frame,frames:[...frame.frames],cutVisible,drawClock:clock,effectClock,
+          position:sprite?.visible ? {x:sprite.x,y:sprite.y,scale:Math.abs(sprite.scale.x)} : null});
+      }
+      const counter=root.querySelector('.battle-total strong');
+      for(const {oldLabels,...hit} of pending.splice(0)){
+        const labels=[...numbers.children].filter(el=>!oldLabels.has(el) && el.classList.contains(hit.kind));
+        const atImpact=active.filter(effect=>effect.actor===hit.actor && effect.impactAt===hit.clock &&
+          (effect.target===hit.target || effect.targets?.includes(hit.target)));
+        log.hits.push({...hit,drawClock:clock,cutVisible,labels:labels.map(el=>el.textContent),
+          counter:counter ? Number(counter.textContent.replaceAll(',','')) : null,
+          procedural:this.effects.some(effect=>effect.actor===hit.actor&&effect.target===hit.target&&effect.start===hit.clock),
+          effects:atImpact.map(effect=>({...effect,frames:[...effect.frames]})),
+          camera:this.inspect().camera,impact:this.inspect().impact,kickPower:this.camera?.kick?.power || 0});
+      }
+      return result;
+    };
+    window.__skyVfxProbeRestore=()=>{
+      watch.abort();proto.hit=originalHit;proto.render=originalRender;
+      window.__skyVfxProbeRestore=null;
+    };
+  });
+}
+async function checkUltimateVfx(p,spec,label) {
+  await p.waitForFunction(()=>window.__skyVfxProbe.hits.some(hit=>hit.heroId==='h06' && hit.ultimate &&
+    hit.kind==='damage' && hit.actor[0]==='a' && hit.target[0]==='e'),null,{timeout:50000});
+  if(out)await screenshot(p,spec,label);
+  const probe=await p.evaluate(()=>window.__skyVfxProbe);
+  const hit=probe.hits.find(hit=>hit.heroId==='h06' && hit.ultimate && hit.kind==='damage' && hit.actor[0]==='a' && hit.target[0]==='e');
+  assert(hit.amount>0 && hit.labels.some(label=>Number(label.replace(/\D/g,''))===hit.amount),'real floating damage label');
+  assert(!hit.cutVisible && hit.actor[0]==='a' && hit.target[0]==='e','allied impact follows the cut-in');
+  const atlas=assertVfxPeak(hit,'h06','single',3,spec);
+  assert(!hit.procedural,'the old red arc must not cover the new effect');
+  const frames=probe.frames.filter(frame=>frame.startedAt===atlas.startedAt);
+  assert(frames.length && frames.every(frame=>!frame.cutVisible),'no frame may appear under the cut-in');
+  return {hit,framesAtCapture:frames.map(frame=>frame.frame),mediaEnded:probe.mediaEnded.includes('h06'),
+    cutSkips:probe.cutSkips.filter(id=>id==='h06').length};
+}
+function assertVfxPeak(hit,key,role,frame,spec) {
+  const atlas=hit.effects.find(effect=>effect.key===key && effect.role===role);
+  assert(atlas?.active,JSON.stringify({key,role,hit}));
+  assert.equal(atlas.source,spec.file?'embedded':'png');
+  assert.equal(atlas.blendMode,1,'the rendered atlas sprite uses Pixi ADD');
+  assert.equal(atlas.frame,frame,'the designated cel is drawn at the hit');
+  assert.equal(atlas.frames.at(-1),frame);
+  assert.equal(atlas.impactAt,hit.clock);
+  assert.equal(atlas.renderedImpactAt,hit.drawClock);
+  assert.equal(hit.clock,hit.drawClock,'impact art and flying number must share a draw frame');
+  assert(!hit.cutVisible);
+  return atlas;
+}
+async function startVfxFixture(p) {
+  const fixture=await p.evaluate(()=>{
+    const fresh=Sky.Save.fresh();
+    fresh.owned=[...new Set([...fresh.owned,'h06'])];
+    fresh.formation=['h04','h05','h06','h01','h02','h03'];
+    return fresh;
+  });
+  await importProgress(p,fixture);
+  await action(p,'trials').click();await panel(p,'trial','boss').click();
+  // Start with full rage and a health deficit so the targeted check can observe
+  // the real cast, target selection, damage, lifesteal, media and settlement.
+  await panel(p,'start-trial','boss').evaluate(button=>{
+    const original=Sky.Battle.create;
+    try {
+      Sky.Battle.create=(...args)=>{
+        const b=original(...args);
+        const lily=b.units.find(unit=>unit.side==='ally' && unit.heroId==='h06');
+        lily.rage=100;
+        lily.hp=Math.floor(lily.maxHp*.7);
+        return b;
+      };
+      button.click();
+    } finally {Sky.Battle.create=original;}
+  });
+  return fixture.formation.indexOf('h06');
+}
+async function castAndSkipVfx(p,slot) {
+  await recordUltimateVfx(p);
+  await battle(p,'auto').click();
+  await p.locator('[data-cast="'+slot+'"]:enabled').click();
+  await p.waitForFunction(()=>[...document.querySelectorAll('.battle-cutin[data-hero="h06"] video')].some(video=>
+    video.src.includes('/ult_h06.mp4') && video.currentTime>0.08 && !video.paused));
+  await p.locator('.battle-cutin[data-hero="h06"] .battle-cut-skip').click();
+}
+async function assertCut(p,cut,id) {
+  assert(cut && cut.duration>=800 && cut.image.includes(artPath(id,'poster')),id+' actual theatrical cut-in');
+  const dedicated=await p.evaluate(id=>Sky.art.ultVideo(id),id);
+  if(dedicated){
+    assert(cut.media.some(media=>dedicated.endsWith('/'+media.source)),id+' dedicated clip did not play: '+JSON.stringify(cut));
+    assert(cut.duration>=1000 && cut.duration<3700,id+' dedicated clip runtime: '+cut.duration);
+  }
 }
 async function checkSettlement(p,won) {
   const result=p.locator('.battle-result');
@@ -622,6 +860,7 @@ async function exerciseLateGameArt(p,spec) {
 }
 async function runCampaign(p,spec) {
   await action(p,'campaign').click();await waitPage(p,'campaign');
+  await sceneBackdrop(p,'worldmap','campaign map');
   await auditArt(p,'route','#view',['item_gem','item_ticket','ui_btn_gold']);
   await checkBleed(p,spec,'campaign');
   await screenForReview(p,spec,'campaign');
@@ -629,26 +868,33 @@ async function runCampaign(p,spec) {
   await panel(p,'chapter',2).click();assert.equal(await p.locator('.pn-route-node:disabled').count(),5);
   assert(!(await p.locator('.pn-route-node:disabled i').allTextContents()).some(s=>s.trim()==='锁'),'locked nodes need a lock icon');
   await panel(p,'chapter',1).click();await panel(p,'stage',1).click();assert.equal(await p.locator('.pn-enemies>div').count(),6);
+  await bannerContrast(p,'route intel','.pn-intel-title h2,.pn-enemy-title small,.pn-enemies>div>small,.pn-reward>small,.pn-reward>span,.pn-intel [data-panel=start-route]',wave4Checks.get(p).contrast);
+  await screenshot(p,spec,'wave4-worldmap');
   const enemies=await p.locator('.pn-enemies>div').evaluateAll(async cells=>Promise.all(cells.map(async cell=>{
     const id=cell.dataset.hero;
     const avatar=cell.querySelector('img.portrait'),frame=cell.querySelector('img.rim');
     if(!avatar||!frame)return null;
     await Promise.all([avatar.decode(),frame.decode()]);
     const inner=avatar.getBoundingClientRect(),outer=frame.getBoundingClientRect();
-    return {id,img:avatar.currentSrc,frame:frame.currentSrc,visible:inner.width>10 && inner.height>10 && getComputedStyle(avatar).opacity!=='0',
-      centered:Math.abs(inner.x+inner.width/2-outer.x-outer.width/2)<2 && Math.abs(inner.y+inner.height/2-outer.y-outer.height/2)<2};
+    const skin=getComputedStyle(avatar);
+    const shift=skin.transform==='none'?0:new DOMMatrixReadOnly(skin.transform).m42;
+    const centered=Math.abs(inner.x+inner.width/2-outer.x-outer.width/2)<2 &&
+      Math.abs(inner.y+inner.height/2-shift-outer.y-outer.height/2)<2;
+    const inside=centered && inner.top>=outer.top && inner.bottom<=outer.bottom;
+    return {id,img:avatar.currentSrc,frame:frame.currentSrc,inside,visible:inner.width>10 && inner.height>10 && skin.opacity!=='0'};
   })));
   const expected=await p.evaluate(()=>Sky.D.stages[0].enemies.map(id=>({id,src:new URL(Sky.art(id,'avatar'),document.baseURI).href,rarity:Sky.D.hero(id).rarity.toLowerCase()})));
-  assert(enemies.every((e,i)=>e&&e.id===expected[i].id && e.img===expected[i].src && e.frame.endsWith('frame_'+expected[i].rarity+'.png') && e.visible && e.centered),'all six portraits must appear inside their own frames');
+  assert(enemies.every((e,i)=>e&&e.id===expected[i].id && e.img===expected[i].src && e.frame.endsWith('frame_'+expected[i].rarity+'.png') && e.visible && e.inside),'all six portraits must appear inside their own frames');
   await panel(p,'start-route',1).click();await waitPage(p,'battle');
   await recordMotion(p);const renderer=await inspectBattle(p,spec),frameStart=await status(p);
+  await sceneBackdrop(p,'battle','chapter 1');
   assert.deepEqual(renderer.originalHeroes,leads,'opening lineup must show all six different illustrated heroes across both teams');
   const openingPositions=await status(p);
   assert.equal(openingPositions.positions.filter(n=>n.key[0]==='a' && n.artwork==='original').length,5);
   const embedded=spec.file ? await checkEmbedded(p) : null;
   await checkBleed(p,spec,'battle');
   assert.equal(renderer.textures,8);
-  if(out && (spec.name==='desktop' || spec.mobile))await screenshot(p,spec,'battle');
+  await screenshot(p,spec,'battle');
   await battle(p,'auto').click();assert.equal((await status(p)).auto,false);
   await battle(p,'speed').click();assert.equal((await status(p)).speed,2);
   await battle(p,'speed').click();assert.equal((await status(p)).speed,3);
@@ -679,7 +925,7 @@ async function runCampaign(p,spec) {
   const measuredFPS=(from,to)=>Math.round((to.presentedFrames-from.presentedFrames)*10000/(to.renderedMs-from.renderedMs))/10;
   const presentedFPS=[measuredFPS(frameStart,frameMiddle),measuredFPS(frameMiddle,frameEnd)];
   assert(presentedFPS.every(n=>Number.isFinite(n)&&n>0));
-  assert(motion.cuts.some(c=>c.hero==='h01' && c.duration>=800 && c.image.includes('lobby_cg_c07.png')));
+  await assertCut(p,motion.cuts.find(c=>c.hero==='h01'),'h01');
   assert(motion.spots>0 && motion.hits>0);
   assert(new Set(motion.totals.filter(v=>v>0)).size>=2);
   const increasing=motion.segments.find(row=>row.length>=2 && row.every((n,i)=>!i||n>row[i-1]));
@@ -714,13 +960,17 @@ async function runCampaign(p,spec) {
       await auditArt(p,kind+' rewards','.pn-trial-intel',kind==='arena'?['item_ticket']:['item_gem','item_core']);
       if(kind!=='tower')await screenForReview(p,spec,'trials-'+kind);
       await panel(p,'start-trial',kind).click();
-      await inspectBattle(p,spec);await battle(p,'skip').click();
+      await inspectBattle(p,spec);
+      await sceneBackdrop(p,kind==='boss'?'battle_boss':'battle',kind);
+      if(kind==='boss')await screenshot(p,spec,'wave4-battle-boss');
+      await battle(p,'skip').click();
       await p.locator('.battle-result').waitFor();const s=await state(p);
       assert.equal(s.daily.battles,before.daily.battles+1);
       if(kind==='tower') assert.equal(s.tower,1);
       if(kind==='boss') assert(s.bossBest>0);
       if(kind==='arena') assert.equal(s.arenaWins,1);
       await battle(p,'return').click();
+      await sceneBackdrop(p,'worldmap','trial return');
     }
   }
   await action(p,'home').click();
@@ -733,6 +983,45 @@ async function importProgress(p,save) {
   await action(p,'settings').click();await action(p,'import').click();
   await p.locator('#save-json').fill(JSON.stringify(save));await action(p,'confirm-import').click();
   assert.deepEqual(await state(p),save);
+}
+async function verifyVfxPack(p,bundle='offlineVfx',files=vfxPaths) {
+  const packed=await p.evaluate(async bundle=>{
+    const pairs=await Promise.all(Object.entries(Sky[bundle]).map(async ([id,source])=>{
+      const data=await (await fetch(source)).arrayBuffer();
+      const digest=new Uint8Array(await crypto.subtle.digest('SHA-256',data));
+      return [id,[...digest].map(byte=>byte.toString(16).padStart(2,'0')).join('')];
+    }));
+    return Object.fromEntries(pairs);
+  },bundle);
+  const expected=Object.fromEntries(Object.entries(files).map(([id,file])=>{
+    if(bundle==='offlineVfx')assert.deepEqual(originalSize(file),[1254,1254]);
+    return [id,sha(fs.readFileSync(path.join(root,file)))];
+  }));
+  assert.deepEqual(packed,expected,'every offline sequence must preserve its complete source PNG');
+  return packed;
+}
+async function exerciseChapterTwo(p,spec) {
+  // Begin just before chapter two, then cross the boundary using normal settlement.
+  const fixture=await p.evaluate(()=>Sky.Save.fresh());
+  fixture.cleared=4;fixture.level=100;
+  await importProgress(p,fixture);
+  await action(p,'campaign').click();await panel(p,'start-route',5).click();
+  await inspectBattle(p,spec);await sceneBackdrop(p,'battle','chapter 1 finale');
+  await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+  assert.equal((await state(p)).cleared,5);
+  await battle(p,'next').click();await inspectBattle(p,spec);
+  await sceneBackdrop(p,'battle_ch2','next across chapters');
+  await screenshot(p,spec,'wave4-battle-ch2');
+  await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+  assert.equal((await state(p)).cleared,6);
+  await battle(p,'again').click();await inspectBattle(p,spec);
+  await sceneBackdrop(p,'battle_ch2','chapter 2 retry');
+  await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+  await battle(p,'return').click();await sceneBackdrop(p,'worldmap','chapter 2 return');
+  await panel(p,'chapter',2).click();await panel(p,'stage',6).click();await panel(p,'start-route',6).click();
+  await inspectBattle(p,spec);await sceneBackdrop(p,'battle_ch2','chapter 2 from map');
+  await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+  await battle(p,'return').click();await action(p,'home').click();
 }
 async function illustratedParty(p,spec) {
   // An isolated, reproducible regular-pool draw. Only the PRNG used during the
@@ -758,9 +1047,11 @@ async function illustratedParty(p,spec) {
   if(spec.name==='desktop'||spec.mobile)await screenshot(p,spec,'summon-illustrated');
   await panel(p,'dismiss').click();await action(p,'home').click();await action(p,'roster').click();
   await panel(p,'roster-tab',2).click();
-  const weapons={};
+  const weapons={}, portraits={roster:{},formation:{},battle:{}};
   for(const id of leads) {
     await panel(p,'hero',id).click();
+    const faction=await p.evaluate(id=>Sky.D.hero(id).faction,id);
+    await badge(p,p.locator('.pn-faction'),'faction_'+factionStems[faction],'roster hero tag');
     await decoded(p,panel(p,'hero',id).locator('img.portrait'),artPath(id,'avatar'));
     const img=p.locator('.pn-weapon-emblem>img');
     weapons[id]=await decoded(p,img,artPath(id,'weapon'));
@@ -774,6 +1065,18 @@ async function illustratedParty(p,spec) {
     if(spec.name==='desktop'&&['h01','h04','h05','h06'].includes(id) || spec.mobile&&id==='h04')
       await screenshot(p,spec,'weapon-'+id);
   }
+  await panel(p,'roster-tab',0).click();
+  for(const id of leads.slice(3)) {
+    await panel(p,'hero',id).click();
+    await panel(p,'art','poster').click();
+    const poster=await decoded(p,p.locator('.pn-portrait img'),artPath(id,'poster'));
+    if(spec.name==='desktop')await screenshot(p,spec,'roster-poster-'+id);
+    await panel(p,'art','chibi').click();
+    const chibi=await decoded(p,p.locator('.pn-portrait img'),artPath(id,'chibi'));
+    if(spec.name==='desktop' || id==='h05' && (spec.mobile || spec.name==='retina'))
+      await screenshot(p,spec,'roster-chibi-'+id);
+    portraits.roster[id]={poster,chibi};
+  }
   await action(p,'home').click();
   // Use the heroes recruited above in a valid test formation. A boss has enough
   // HP for all three newcomers to earn rage and cast through the normal turn queue.
@@ -781,6 +1084,13 @@ async function illustratedParty(p,spec) {
   save.formation=['h04','h05','h06','h01','h02','h03'];
   save.level=5;
   await importProgress(p,save);
+  await action(p,'roster').click();await panel(p,'formation').click();
+  for(const [slot,id] of save.formation.entries()){
+    const portrait=panel(p,'position',slot).locator('img.portrait');
+    portraits.formation[id]=await decoded(p,portrait,artPath(id,'avatar'));
+  }
+  if(spec.name==='desktop'||spec.mobile)await screenshot(p,spec,'formation-leads');
+  await panel(p,'dismiss').click();await action(p,'home').click();
   await action(p,'trials').click();await panel(p,'trial','boss').click();
   await panel(p,'start-trial','boss').evaluate(button=>{
     let seed=72;
@@ -788,25 +1098,339 @@ async function illustratedParty(p,spec) {
     try{Math.random=()=>((seed=(Math.imul(1664525,seed)+1013904223)>>>0)/4294967296);button.click();}
     finally{Math.random=original;}
   });
-  await recordMotion(p);const renderer=await inspectBattle(p,spec);
+  await recordMotion(p);await recordUltimateVfx(p);const renderer=await inspectBattle(p,spec);
   const party=(await status(p)).positions.filter(n=>n.key[0]==='a');
   assert(party.length===6 && party.every(n=>n.artwork==='original' && n.source==='pixi-texture'));
-  if(spec.name==='desktop'||spec.file)await screenshot(p,spec,'battle-leads');
+  for(const [slot,id] of save.formation.entries()){
+    const portrait=p.locator('[data-cast="'+slot+'"] img.portrait');
+    portraits.battle[id]=await decoded(p,portrait,artPath(id,'avatar'));
+  }
+  await screenshot(p,spec,'battle-leads');
   await battle(p,'speed').click();await battle(p,'speed').click();
-  if(spec.name==='desktop' && out){
+  if((spec.name==='desktop'||spec.file) && out){
     await p.locator('.battle-cutin[data-hero="h06"]').waitFor({timeout:45000});
     await p.waitForTimeout(140);await screenshot(p,spec,'cutin-h06');
   }
+  const h06Vfx=await checkUltimateVfx(p,spec,'wave5-impact-h06');
+  assert(h06Vfx.mediaEnded && h06Vfx.cutSkips===0,'h06 dedicated media naturally ended before the effect');
   await p.waitForFunction(()=>['h04','h05','h06'].every(id=>window.__skyQaMotion.cuts.some(c=>c.hero===id)),null,{timeout:55000});
   const cuts=await p.evaluate(()=>window.__skyQaMotion.cuts.filter(c=>['h04','h05','h06'].includes(c.hero)));
-  for(const id of leads.slice(3)){
-    const cut=cuts.find(c=>c.hero===id);
-    assert(cut && cut.duration>=800 && cut.image.includes(artPath(id,'poster')),id+' actual theatrical cut-in');
-  }
+  for(const id of leads.slice(3))await assertCut(p,cuts.find(c=>c.hero===id),id);
+  await p.waitForFunction(()=>['h04','h05'].every(id=>window.__skyVfxProbe.hits.some(hit=>
+    hit.ultimate && hit.actor[0]==='a' && hit.heroId===id && hit.effects.some(effect=>effect.key===id))));
+  const teammateEffects=await p.evaluate(()=>['h04','h05'].map(id=>
+    window.__skyVfxProbe.hits.find(hit=>hit.ultimate && hit.actor[0]==='a' && hit.heroId===id &&
+      hit.effects.some(effect=>effect.key===id))));
+  assertVfxPeak(teammateEffects[0],'h04','target',3,spec);
+  assertVfxPeak(teammateEffects[1],'h05','projectile',3,spec);
+  await p.evaluate(()=>window.__skyVfxProbeRestore());
   await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
   await battle(p,'return').click();await action(p,'home').click();
   return {regularPoolSeed:43267,drawn,weapons,bossSeed:72,formation:save.formation,
-    allyOriginals:party.map(n=>n.heroId),originalTextures:renderer.originalHeroes,cutins:cuts};
+    allyOriginals:party.map(n=>n.heroId),originalTextures:renderer.originalHeroes,portraits,cutins:cuts,
+    h06Vfx,teammateEffects};
+}
+async function exerciseVfxCutSkip(p,spec) {
+  const slot=await startVfxFixture(p);
+  await castAndSkipVfx(p,slot);
+  const trace=await checkUltimateVfx(p,spec,'wave5-skip-impact-h06');
+  assert(!trace.mediaEnded && trace.cutSkips===1,'player skipped the actively playing h06 cut-in');
+  await p.waitForFunction(()=>window.__skyVfxProbe.hits.some(hit=>hit.heroId==='h06' && hit.actor[0]==='a' && hit.kind==='heal'));
+  const heal=await p.evaluate(()=>window.__skyVfxProbe.hits.find(hit=>hit.heroId==='h06' && hit.actor[0]==='a' && hit.kind==='heal'));
+  assert(heal.amount>0 && heal.target===trace.hit.actor && heal.labels.some(label=>Number(label.replace(/\D/g,''))===heal.amount),
+    'lifesteal keeps its separate heal label and caster target');
+  await p.waitForFunction(()=>!Sky.battlePage.inspect()?.vfx.active.some(effect=>effect.key==='h06' && effect.actor[0]==='a'));
+  const frames=await p.evaluate(started=>window.__skyVfxProbe.frames.filter(frame=>
+    frame.key==='h06' && frame.role==='single' && frame.startedAt===started).map(frame=>frame.frame),
+  trace.hit.effects.find(effect=>effect.key==='h06').startedAt);
+  assert(frames.includes(3) && frames.at(-1)>=3 && frames.every((frame,i)=>i===0||frame>=frames[i-1]),
+    'the atlas advances in order and retires');
+  await p.evaluate(()=>window.__skyVfxProbeRestore());
+  await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+  await battle(p,'return').click();await action(p,'home').click();
+  return {...trace,heal,frames,settled:true};
+}
+async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,statuses=false}) {
+  const fixture=await p.evaluate(({formation,powerSave})=>{
+    const save=Sky.Save.fresh();
+    save.owned=Sky.D.heroes.map(hero=>hero.id);
+    save.formation=formation;
+    save.settings.powerSave=powerSave;
+    return save;
+  },{formation,powerSave});
+  await importProgress(p,fixture);
+  await action(p,'trials').click();await panel(p,'trial','boss').click();
+  // Leave numeric resolution and target choice to the engine. Give the team
+  // enough turns to exercise every cast in isolation without early settlement.
+  await panel(p,'start-trial','boss').evaluate((button,{shield,statuses})=>{
+    const create=Sky.Battle.create;
+    try {
+      let seed=72;
+      const rng=()=>((seed=(Math.imul(1664525,seed)+1013904223)>>>0)/4294967296);
+      Sky.Battle.create=(save,spec)=>{
+        const fight=create(save,spec,rng);
+        for(const unit of fight.units){
+          unit.maxHp=Math.max(4500,unit.maxHp);
+          unit.hp=unit.side==='ally'?3300:unit.maxHp;
+          if(unit.side==='ally')unit.rage=100;
+        }
+        if(shield)fight.units.find(unit=>unit.key==='e0').shield=90;
+        // Reproduce a mid-round encounter. Real engine hits, turn expiry and cleansing
+        // must subsequently update these pre-existing states in the scene.
+        if(statuses){
+          fight.units.find(unit=>unit.key==='a0').shield=250;
+          fight.units.find(unit=>unit.key==='a2').shield=380;
+          fight.units.find(unit=>unit.key==='e1').status.freeze=2;
+          // Reserve the rightmost rear unit as the real lowest-HP target for h06.
+          fight.units.find(unit=>unit.key==='e5').hp-=500;
+          fight.units.find(unit=>unit.key==='a5').status.freeze=3;
+          fight.units.find(unit=>unit.key==='a5').status.breakArmor=2;
+        }
+        return fight;
+      };
+      button.click();
+    } finally {Sky.Battle.create=create;}
+  },{shield,statuses});
+  await battle(p,'auto').click();
+  await p.waitForFunction(()=>Sky.battlePage.inspect()?.ready);
+}
+async function queueVfxCast(p,slot,id,powerSave,natural=false) {
+  await p.locator('[data-cast="'+slot+'"]:enabled').click();
+  const cut=p.locator('.battle-cutin[data-hero="'+id+'"]');
+  await cut.waitFor({timeout:15000});
+  let media=null;
+  if(!powerSave && leads.includes(id)){
+    await p.waitForFunction(id=>[...document.querySelectorAll('.battle-cutin[data-hero="'+id+'"] video')].some(video=>
+      video.src.includes('/ult_'+id+'.mp4') && video.currentTime>0.08 && !video.paused),id);
+    media=await cut.locator('video').evaluate(video=>({clip:new URL(video.currentSrc).pathname.split('/').pop(),
+      duration:video.duration,muted:video.muted,audioBytes:video.webkitAudioDecodedByteCount}));
+    assert.equal(media.clip,'ult_'+id+'.mp4');
+    assert(media.duration>=2.8 && media.duration<=3.2 && !media.muted,
+      id+' keeps its dedicated voice clip after user interaction with game sound enabled');
+  }
+  if(natural)await cut.waitFor({state:'detached',timeout:4500});
+  else await cut.locator('.battle-cut-skip').click();
+  return media;
+}
+async function settleVfxFixture(p) {
+  await p.evaluate(()=>window.__skyVfxProbeRestore());
+  await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+  assert.equal((await status(p)).vfx.active.length,0,'settlement clears live atlas sprites');
+  assert.deepEqual((await status(p)).vfx.ready,[],'settlement frees all atlas textures');
+  await battle(p,'return').click();await action(p,'home').click();
+}
+async function waitAuthoredHits(p,id,minimum) {
+  await p.waitForFunction(({id,minimum})=>window.__skyVfxProbe.hits.filter(hit=>hit.heroId===id &&
+    hit.ultimate && hit.actor[0]==='a' && hit.effects.some(effect=>effect.key===id)).length>=minimum,{id,minimum});
+}
+function confirmPopup(hit) {
+  assert(hit.amount===0 ? hit.labels.includes('抵挡') || hit.labels.some(label=>label.endsWith('0')) :
+    hit.labels.some(label=>Number(label.replace(/\D/g,''))===hit.amount),
+  'the real hit must create its numeric floating label: '+JSON.stringify(hit));
+}
+async function exerciseFullVfx(p,spec) {
+  const formation=['h04','h05','h06','h01','h02','h03'];
+  const role={h01:'single',h02:'target',h03:'target',h04:'target',h05:'projectile',h06:'single'};
+  const counts={h01:3,h02:6,h03:6,h04:3,h05:4,h06:1};
+  const artCounts={...counts};
+  const screenshotsAt={h01:1,h02:4,h03:4,h04:3,h05:3,h06:1};
+  await startFullVfxFixture(p,{formation,shield:true});
+  const ids=Object.keys(vfxPaths);
+  await p.waitForFunction(keys=>keys.every(key=>Sky.battlePage.inspect()?.vfx.ready.includes(key)),ids);
+  await recordUltimateVfx(p);
+  await p.waitForFunction(()=>window.__skyVfxProbe.hits.some(hit=>!hit.ultimate && hit.effects.some(effect=>effect.key==='spark')));
+  const spark=await p.evaluate(()=>window.__skyVfxProbe.hits.find(hit=>!hit.ultimate &&
+    hit.effects.some(effect=>effect.key==='spark')));
+  confirmPopup(spark);
+  const firstSpark=assertVfxPeak(spark,'spark','spark',0,spec);
+  assert.notEqual(firstSpark.rotation,0,'basic spark has a small runtime rotation');
+  assert(Math.abs(firstSpark.rotation)<.35,'basic spark should stay close to its drawn orientation');
+  await screenshot(p,spec,'full-vfx-spark');
+  const atlases=await p.evaluate(()=>window.__skyVfxProbe.atlases);
+  for(const [id,atlas] of Object.entries(atlases)){
+    assert.equal(atlas.cornerAlpha,0,id+' black atlas backdrop is transparent');
+    assert.deepEqual(atlas.frames,Array.from({length:9},(_,i)=>[i%3*418,Math.floor(i/3)*418,418,418]));
+    assert(id==='spark' ? atlas.frameMs>=50&&atlas.frameMs<=56 : atlas.frameMs>=66&&atlas.frameMs<=77);
+  }
+  assert.deepEqual(Object.keys(atlases).sort(),[...ids].sort());
+  const results={spark,atlases};
+  for(const id of leads){
+    const media=await queueVfxCast(p,formation.indexOf(id),id,false);
+    await waitAuthoredHits(p,id,screenshotsAt[id]);
+    await screenshot(p,spec,'full-vfx-'+id);
+    await p.waitForFunction(({id,count})=>{
+      const hits=window.__skyVfxProbe.hits.filter(hit=>hit.ultimate && hit.actor[0]==='a' && hit.heroId===id);
+      return hits.filter(hit=>id==='h03' ? hit.kind==='heal' : id==='h04' ? hit.kind==='shield' :
+        hit.kind==='damage' && hit.target[0]==='e').length>=count &&
+        (id!=='h06' || hits.some(hit=>hit.kind==='heal'));
+    },{id,count:counts[id]});
+    const trace=await p.evaluate(id=>({
+      hits:window.__skyVfxProbe.hits.filter(hit=>hit.ultimate && hit.actor[0]==='a' && hit.heroId===id),
+      frames:window.__skyVfxProbe.frames.filter(frame=>frame.actor[0]==='a' && frame.key===id),
+      skipped:window.__skyVfxProbe.cutSkips.includes(id)
+    }),id);
+    assert(trace.skipped && trace.frames.length && trace.frames.every(frame=>!frame.cutVisible));
+    const primary=trace.hits.filter(hit=>id==='h03' ? hit.kind==='heal' : id==='h04' ? hit.kind==='shield' :
+      hit.kind==='damage' && hit.target[0]==='e');
+    assert.equal(primary.length,counts[id],id+' actual target count');
+    for(const hit of primary)confirmPopup(hit);
+    const authored=primary.filter(hit=>hit.effects.some(effect=>effect.key===id && effect.role===role[id]));
+    assert.equal(authored.length,artCounts[id],id+' authored impact count');
+    const effects=authored.map(hit=>assertVfxPeak(hit,id,role[id],id==='h03'?4:3,spec));
+    assert.deepEqual(effects.map(effect=>effect.target),authored.map(hit=>hit.target));
+    assert(primary.every(hit=>!hit.procedural),id+' should use its authored art on successful load');
+    assert.equal(primary.at(-1).counter,primary.reduce((total,hit)=>total+hit.amount,0),id+' running total');
+    if(id==='h01'){
+      assert(primary.every(hit=>hit.target===primary[0].target),'all three numbers belong to one opponent');
+      const reflection=trace.hits.find(hit=>hit.kind==='damage' && hit.actor===hit.target);
+      assert(reflection,'the fixture includes a real reflected hit');
+      confirmPopup(reflection);
+      assertVfxPeak(reflection,'spark','spark',0,spec);
+    }
+    if(id==='h02' || id==='h03'){
+      assert.equal(new Set(primary.map(hit=>hit.target)).size,6);
+      const center=assertVfxPeak(primary[0],id,'group',id==='h03'?4:3,spec);
+      assert.equal(center.target,null);
+      assert.deepEqual([...center.targets].sort(),primary.map(hit=>hit.target).sort());
+    }
+    if(id==='h02')assert.deepEqual(effects.slice(1).map((effect,i)=>effect.due-effects[i].due),[80,80,80,80,80]);
+    if(id==='h04')assert.deepEqual(primary.map(hit=>hit.target).sort(),['a0','a1','a2']);
+    if(id==='h05'){
+      assert.deepEqual(primary.map(h=>h.impact.beat),[1,2,3,4]);
+      assert(primary.at(-1).impact.finisher && primary.at(-1).impact.hold>=65 && primary.at(-1).impact.sparks===14);
+      const building=primary.filter(h=>!h.impact.critical && !h.impact.finisher);
+      for(let i=1;i<building.length;i++)assert(building[i].impact.sparks>building[i-1].impact.sparks &&
+        building[i].kickPower>building[i-1].kickPower,'successive ordinary beats strengthen the sparks and directional kick');
+      assert(effects.every((effect,i)=>!i || effect.due>effects[i-1].due),'projectiles preserve their stagger');
+      const first=trace.frames.filter(frame=>frame.hitIndex===effects[0].hitIndex && frame.position);
+      const launch=first.find(frame=>frame.frame<3), landing=first.find(frame=>frame.frame===3);
+      assert(launch && landing && launch.position.x<landing.position.x,'shot travels from caster to target during pre-impact cels');
+    }
+    if(id==='h06'){
+      assert(Number(primary[0].target[1])>=3 && primary[0].impact?.hold>=65,
+        'rear target with strong authored hit shake');
+      const heal=trace.hits.find(hit=>hit.kind==='heal');
+      assert(heal?.amount>0 && heal.target===primary[0].actor);
+      confirmPopup(heal);
+    }
+    results[id]={media,hits:trace.hits,framesSeen:[...new Set(trace.frames.map(frame=>frame.frame))]};
+  }
+  await settleVfxFixture(p);
+  const sr=['h07','h08','h06','h01','h02','h03'];
+  await startFullVfxFixture(p,{formation:sr});await recordUltimateVfx(p);
+  results.sr=[];
+  for(const id of sr.slice(0,2)){
+    await queueVfxCast(p,sr.indexOf(id),id,false);
+    await p.waitForFunction(id=>window.__skyVfxProbe.hits.some(hit=>hit.ultimate && hit.actor[0]==='a' && hit.heroId===id),id);
+    const fallback=await p.evaluate(id=>window.__skyVfxProbe.hits.find(hit=>hit.ultimate && hit.actor[0]==='a' && hit.heroId===id),id);
+    assert(fallback.procedural && fallback.effects.length===0,id+' keeps procedural SR art');
+    confirmPopup(fallback);
+    results.sr.push(fallback);
+  }
+  await settleVfxFixture(p);
+  return results;
+}
+async function exerciseVfxSpeeds(p,spec) {
+  const rates=[];
+  for(const expected of [1,2,3]){
+    await startFullVfxFixture(p,{formation:leads});
+    await p.waitForFunction(()=>Sky.battlePage.inspect()?.vfx.ready.includes('h06'));
+    for(let speed=1;speed<expected;speed++)await battle(p,'speed').click();
+    assert.equal((await status(p)).speed,expected);
+    await recordUltimateVfx(p);
+    await queueVfxCast(p,5,'h06',false,true);
+    await waitAuthoredHits(p,'h06',1);
+    await p.waitForFunction(()=>!Sky.battlePage.inspect()?.vfx.active.some(effect=>effect.key==='h06' && effect.actor==='a5'));
+    const trace=await p.evaluate(()=>{
+      const log=window.__skyVfxProbe;
+      return {hit:log.hits.find(hit=>hit.ultimate&&hit.heroId==='h06'&&hit.actor==='a5'&&hit.kind==='damage'&&hit.target[0]==='e'),
+        frames:log.frames.filter(frame=>frame.key==='h06'&&frame.actor==='a5'&&frame.frame!==null),
+        voice:log.voices.find(voice=>voice.id==='h06')};
+    });
+    assertVfxPeak(trace.hit,'h06','single',3,spec);
+    const ratios=[];
+    for(let i=1;i<trace.frames.length;i++){
+      const next=trace.frames[i],previous=trace.frames[i-1],wall=next.drawClock-previous.drawClock;
+      // Browser suspension discards time over 300 ms by design.
+      if(wall>1 && wall<290)ratios.push((next.effectClock-previous.effectClock)/wall);
+    }
+    const first=trace.frames[0],last=trace.frames.at(-1),hold=trace.hit.impact.hold;
+    const wall=last.drawClock-first.drawClock,played=last.effectClock-first.effectClock;
+    // A hit deliberately draws at its exact cue. Any unused fraction of that
+    // render tick resumes after hitstop, so individual intervals can exceed 1×.
+    const measured=(played+hold)/wall;
+    assert(ratios.length>=2 && ratios.every(rate=>rate>=0) && Math.abs(measured-expected)<expected*.13,
+      JSON.stringify({expected,measured,played,hold,wall,ratios}));
+    const voice=trace.voice,expectedMs=[3000,1900,1250][expected-1];
+    assert(voice?.playedMs>0 && !voice.muted && voice.audioBytes>0 && Math.abs(voice.playedMs-expectedMs)<300,
+      'natural end of the voiced cinematic at '+expected+'×: '+JSON.stringify(voice));
+    rates.push({selected:expected,measured:+measured.toFixed(3),hold,voice,
+      frames:trace.frames.map(frame=>frame.frame),renderMs:Math.round(wall)});
+    await settleVfxFixture(p);
+  }
+  return rates;
+}
+async function runVfxFocus(browser,origin,spec) {
+  const issues=[], outcome={name:spec.name};
+  for(const powerSave of [false,true]){
+    const context=await browser.newContext({viewport:{width:spec.width,height:spec.height},deviceScaleFactor:spec.dpr,
+      isMobile:!!spec.mobile,hasTouch:!!spec.mobile});
+    try {
+      const p=await context.newPage(),requested=[];
+      p.on('pageerror',error=>issues.push('page: '+error.message));
+      p.on('console',message=>{if(message.type()==='error')issues.push('console: '+message.text());});
+      p.on('response',response=>{if(response.status()>=400)issues.push('HTTP '+response.status()+' '+response.url());});
+      p.on('requestfailed',request=>{if(request.failure()?.errorText!=='net::ERR_ABORTED')issues.push('resource: '+request.url());});
+      p.on('request',request=>{
+        const url=request.url();requested.push(url);
+        if(/^https?:/.test(url) && (spec.file || new URL(url).origin!==origin))issues.push('external request: '+url);
+      });
+      if(spec.mobile){
+        const cdp=await context.newCDPSession(p);
+        await cdp.send('Emulation.setSafeAreaInsetsOverride',{insets:{left:44,right:35,top:0,bottom:0}});
+      }
+      await p.goto(spec.file?pathToFileURL(path.join(root,'index.html')).href:origin+'/index.html');
+      await p.waitForFunction(()=>window.Sky?.ui?.state);
+      const artRequests=()=>requested.filter(url=>url.includes('/assets/vfx/') || /\/offline-(vfx|battle-art)\.js$/.test(url));
+      assert.deepEqual(artRequests(),[],'no atlas requests from the lobby');
+      if(powerSave){
+        await startFullVfxFixture(p,{formation:leads,powerSave:true});
+        await recordUltimateVfx(p);
+        await p.waitForFunction(()=>window.__skyVfxProbe.hits.some(hit=>!hit.ultimate));
+        await queueVfxCast(p,5,'h06',true);
+        await p.waitForFunction(()=>window.__skyVfxProbe.hits.some(hit=>hit.ultimate && hit.heroId==='h06' && hit.actor[0]==='a'));
+        const hits=await p.evaluate(()=>[window.__skyVfxProbe.hits.find(hit=>!hit.ultimate),
+          window.__skyVfxProbe.hits.find(hit=>hit.ultimate && hit.heroId==='h06' && hit.actor[0]==='a')]);
+        assert(hits.every(hit=>hit.procedural && hit.effects.length===0));
+        assert.deepEqual((await status(p)).vfx.ready,[]);
+        assert.deepEqual(artRequests(),[],'power saving uses no VFX atlas resources');
+        outcome.powerSave={hits,requests:0};
+        if(hudOnly)outcome.powerSave.hud=await checkPowerHud(p);
+        await settleVfxFixture(p);
+      } else {
+        outcome.stage=await geometry(p,spec);
+        if(hudOnly)outcome.hud=await exerciseHud(p,spec,{startFullVfxFixture,queueVfxCast,battle,action,screenshot});
+        else{
+          outcome.normal=await exerciseFullVfx(p,spec);
+          outcome.speeds=await exerciseVfxSpeeds(p,spec);
+        }
+        const packs=artRequests().filter(url=>url.endsWith('/offline-vfx.js'));
+        assert.equal(packs.length,spec.file?1:0);
+        assert.equal(artRequests().filter(url=>url.endsWith('/offline-battle-art.js')).length,spec.file?1:0);
+        if(spec.file){
+          outcome.embeddedSha256=await verifyVfxPack(p);
+          outcome.battleArtSha256=await verifyVfxPack(p,'offlineBattleArt',battleArtPaths);
+        }
+        else {
+          const files=artRequests().map(url=>new URL(url).pathname.slice(1));
+          assert.deepEqual([...new Set(files)].sort(),[...Object.values(vfxPaths),...Object.values(battleArtPaths)].sort());
+        }
+        outcome.offlinePackRequests=packs.length;
+      }
+    } finally {await context.close();}
+  }
+  assert.deepEqual(issues,[]);
+  return {...outcome,errors:issues};
 }
 async function run(browser,origin,spec) {
   const context=await browser.newContext({viewport:{width:spec.width,height:spec.height},deviceScaleFactor:spec.dpr,isMobile:!!spec.mobile,hasTouch:!!spec.mobile});
@@ -814,6 +1438,7 @@ async function run(browser,origin,spec) {
   visualChecks.set(p,{});
   mobileEdges.set(p,{});
   wave2Checks.set(p,{artwork:{},contrast:{},masks:{}});
+  wave4Checks.set(p,{scenes:{},badges:{},contrast:{}});
   const issues=[],failed=[],requested=[];
   p.on('pageerror',e=>issues.push('page: '+e.message));
   p.on('console',m=>{if(m.type()==='error')issues.push('console: '+m.text());});
@@ -833,7 +1458,10 @@ async function run(browser,origin,spec) {
     await decoded(p,p.locator('.backdrop.current'),artPath('h01','poster'));
     const startupPosters=[...new Set(requested.filter(u=>u.includes('/assets/posters/')).map(u=>u.split('/').pop()))];
     assert.deepEqual(startupPosters,['lobby_cg_c07.png'],'cold load should request just the selected lobby poster');
+    const startupVideos=[...new Set(requested.filter(u=>new URL(u).pathname.endsWith('.mp4')).map(u=>u.split('/').pop()))];
+    assert(startupVideos.every(video=>video==='lobby_cg_h01.mp4'),'cold lobby must not preload other lobby or battle clips');
     assert(!requested.some(url=>url.endsWith('/offline-textures.js')),'cold lobby should not load the offline battle bundle');
+    assert(!requested.some(url=>url.includes('/assets/vfx/')||url.endsWith('/offline-vfx.js')),'cold lobby must not load battle VFX');
     const stage=await geometry(p,spec),images=await artwork(p,spec);
     await runLobby(p,spec);await runRoster(p,spec);await runGacha(p,spec);
     const combat=await runCampaign(p,spec);
@@ -844,9 +1472,19 @@ async function run(browser,origin,spec) {
     assert.deepEqual(after.pity,before.pity);
     await exerciseLateGameArt(p,spec);
     const wave3=await illustratedParty(p,spec);
+    const wave5={natural:wave3.h06Vfx,teammateEffects:wave3.teammateEffects,skipped:await exerciseVfxCutSkip(p,spec)};
+    delete wave3.h06Vfx;delete wave3.teammateEffects;
+    wave5.offlinePackRequests=requested.filter(url=>url.endsWith('/offline-vfx.js')).length;
+    // The full campaign exercise also reloads the app once to verify save compatibility.
+    assert.equal(wave5.offlinePackRequests,spec.file?2:0);
+    if(spec.file)wave5.embeddedSha256=await verifyVfxPack(p);
+    await exerciseChapterTwo(p,spec);
     wave3.startupPosters=startupPosters;
     wave3.offlineBundleRequests=requested.filter(url=>url.endsWith('/offline-textures.js')).length;
     assert(spec.file ? wave3.offlineBundleRequests>=1 : wave3.offlineBundleRequests===0);
+    wave3.videoRequests=requested.filter(url=>new URL(url).pathname.endsWith('.mp4'));
+    const videosEnabled=await p.evaluate(()=>Sky.D.illustrated.some(id=>Sky.art.video(id) || Sky.art.ultVideo(id)));
+    if(!videosEnabled)assert.deepEqual(wave3.videoRequests,[],'No video requests with an empty video manifest');
     if(spec.mobile) {
       await p.setViewportSize({width:390,height:844});await p.locator('#orientation:visible').waitFor();
       await p.locator('#portrait-continue').click();await p.locator('#orientation').waitFor({state:'hidden'});
@@ -857,9 +1495,11 @@ async function run(browser,origin,spec) {
     const visible=new Set(Object.values(screens).flat());
     assert.deepEqual(wave1Paths.filter(name=>!visible.has(name)),[],'wave 1 assets missing from real UI states');
     const wave2=wave2Checks.get(p);
+    const wave4=wave4Checks.get(p);
+    assert.equal(Object.keys(wave4.badges).length,9,'every new badge should appear');
     assert.equal(Object.keys(wave2.artwork).length,6,'all six banners should appear');
     wave2.sha256=Object.fromEntries(Object.keys(wave2.artwork).map(src=>[src,sha(fs.readFileSync(path.join(root,src)))]));
-    return {name:spec.name,stage,images,...combat,wave1ArtCount:visible.size,screenArt:screens,mobileEdgeSamples:mobileEdges.get(p),wave2,wave3,
+    return {name:spec.name,stage,images,...combat,wave1ArtCount:visible.size,screenArt:screens,mobileEdgeSamples:mobileEdges.get(p),wave2,wave3,wave4,wave5,
       lateGameEvidence:'Imported test save, four UR items, level 1 vs tower 30. Real game resolution.',consoleErrorsAndHTTPFailures:issues.length};
   } catch(err) {
     const page=await p.evaluate(()=>({page:document.querySelector('#view')?.dataset.page,toast:document.querySelector('#toast')?.innerText,
@@ -938,12 +1578,12 @@ async function replacementCheck(browser) {
     const origin='http://127.0.0.1:'+server.address().port;
     const reports=[];
     const chosen=presets.filter(x=>selected ? selected.split(',').includes(x.name) : !x.extra);
-    const replacements=!selected || selected.split(',').includes('replacement');
+    const replacements=!vfxOnly && !hudOnly && (!selected || selected.split(',').includes('replacement'));
     assert(chosen.length||replacements,'unknown --case');
     for(const spec of chosen) {
-      const result=await run(browser,origin,spec);
+      const result=await (vfxOnly||hudOnly?runVfxFocus:run)(browser,origin,spec);
       reports.push(result);console.log(JSON.stringify(result));
-      if(out)fs.writeFileSync(path.join(out,spec.name+'-report.json'),JSON.stringify(result,null,2));
+      if(out)fs.writeFileSync(path.join(out,spec.name+(hudOnly?'-hud':vfxOnly?'-vfx':'')+'-report.json'),JSON.stringify(result,null,2));
     }
     if(replacements)await replacementCheck(browser);
   } finally {await browser?.close();await new Promise(resolve=>server.close(resolve));}

@@ -1,6 +1,9 @@
-#bleed.clean .lobby-shade{display:none}#bleed.clean .backdrop,body:has(#stage.power-save) #bleed .backdrop{animation:none}body:has(#stage.power-save) #bleed .backdrop{transition:none}
-.lobby-art,.lobby-shade,.backdrop{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.backdrop{object-fit:cover;object-position:center 15%;animation:poster-breathe 16s ease-in-out infinite alternate}
+#bleed.clean .lobby-shade{display:none}#bleed.clean .lobby-media,body:has(#stage.power-save) #bleed .lobby-media{animation:none}
+.lobby-art,.lobby-shade,.lobby-media,.backdrop{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.lobby-media{animation:poster-breathe 16s ease-in-out infinite alternate}
+.backdrop,.lobby-media .lobby-video{object-fit:cover;object-position:center 15%}
+.lobby-video.is-opening{transition:opacity 180ms ease-out}
+.lobby-video.is-loop-incoming{z-index:1}
 @keyframes poster-breathe{from{transform:scale(1)}to{transform:scale(1.012)}}
 .lobby-shade{background:linear-gradient(90deg,rgba(5,8,18,.26),transparent 16%,transparent 52%,rgba(10,14,30,.68) 94%),linear-gradient(0deg,rgba(9,10,23,.88) 0,rgba(12,13,27,.5) 12%,transparent 40%,transparent 82%,rgba(7,11,24,.68) 100%)}
 .lobby-interact{position:absolute;inset:0;width:100%;height:100%;cursor:pointer}
@@ -19,6 +22,9 @@
 .top-resources button:nth-child(1){color:#a6dee5}.top-resources button:nth-child(3){color:#cabbea}
 .top-resources b{font:600 1.1cqw/1.2 var(--body);color:#fffbf1}
 .top-resources .item-icon{width:2cqw;height:2cqw}.quick-settings button{border-radius:1.55cqw;padding:.13cqw .8cqw .13cqw .35cqw;color:#f3e9da;gap:.28cqw}.quick-settings .ico{width:2.25cqw;height:2.25cqw}.quick-settings span{font-size:.9cqw}
+.quick-settings .audio-toggle {width:max(26px,2.66cqw);aspect-ratio:1;border-radius:50%;padding:0;color:#f2ebdf;}
+.quick-settings .audio-toggle[aria-pressed="true"] {color:#ffe6a9;border-color:#e7c188ac;box-shadow:inset 0 0 .48cqw #e1aa4e2d;}
+.quick-settings .audio-note {font-size:max(16px,1.63cqw);}
 .side-tools{position:absolute;left:1.9%;top:22%;display:grid;gap:.7cqw}
 .side-tools button{display:grid;place-items:center;align-content:center;width:3.9cqw;height:4.25cqw;gap:.18cqw;background:linear-gradient(105deg,#101622b5,#161b2e59);border:1px solid #dfc48565;clip-path:polygon(0 0,100% 0,100% 86%,84% 100%,0 100%);color:#efdfb7}
 .side-tools .ico{width:2.85cqw;height:2.85cqw}.side-tools span{font-size:.85cqw;color:#fffae9}
@@ -61,11 +67,9 @@
 .small-tiles>button{--cut:.65cqw;--edge:#ab916f;display:flex;align-items:center;gap:.48cqw;padding-left:.92cqw;font-size:1.08cqw;font-weight:600}
 .small-tiles .ico{width:1.85cqw;height:1.85cqw}
 .small-tiles [data-action="shop"] .tile-paint{object-position:50% 59%}
+.small-tiles [data-action="event"] .tile-paint{object-position:center 62%}
 .small-tiles [data-action="event"]::before{
-  background:linear-gradient(90deg,#211d32f5,#302237c9 47%,transparent 86%),
-    repeating-radial-gradient(ellipse at 93% 140%,transparent 0 .64cqw,#ead19a42 .68cqw,transparent .77cqw 1.17cqw),
-    repeating-linear-gradient(53deg,transparent 0 1.2cqw,#b8906447 1.24cqw,transparent 1.3cqw 2.4cqw),
-    radial-gradient(ellipse at 88% 100%,#91643c,#533743 53%,#232236);
+  background:linear-gradient(90deg,#0e1429ed,#10162be0 48%,#10162b8a 56%,#11182c26 72%,transparent 83%);
 }
 .poster-info{position:absolute;left:8.75%;bottom:5.8%;max-width:48%;color:#f9f6ec;text-shadow:0 2px .7cqw #101323}
 .hero-sigil{display:flex;align-items:center;gap:.6cqw;color:#ffe0ab;font-size:.93cqw;letter-spacing:.16em}.hero-star{width:1.65cqw;height:1.65cqw;object-fit:contain}
@@ -80,6 +84,6 @@
 .main-dock button:nth-child(3){color:#ffe1a3;background:linear-gradient(110deg,#b58b4938,#b58b490d)}
 .main-dock .ico{width:3.15cqw;height:3.15cqw}.speech-spark{position:absolute;pointer-events:none;color:#ffe6b5;font:3cqw Georgia;animation:speech .6s ease-out both}
 @keyframes speech{to{transform:translateY(-2cqw) scale(1.5);opacity:0}}
-#view.clean>:not(.lobby-art):not(.lobby-interact){display:none}#view.clean .lobby-interact{outline:0}#view.clean .backdrop{animation:none}
+#view.clean>:not(.lobby-art):not(.lobby-interact){display:none}#view.clean .lobby-interact{outline:0}
 @media(max-height:480px) and (orientation:landscape){.side-tools button{min-width:40px;min-height:40px}.side-tools .ico{width:24px;height:24px}.side-tools span{font-size:9px}.poster-controls button{font-size:max(10px,.89cqw);min-height:30px;padding-inline:9px}.top-resources button,.quick-settings button{min-height:25px}.small-tiles>button,.idle-tile small,.top-resources b{font-size:max(8px,1.08cqw)}}
 

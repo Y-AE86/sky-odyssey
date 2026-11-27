@@ -4,17 +4,16 @@
   const P = window.PIXI;
   const tau = Math.PI * 2;
   const palette = {ink: 0xc18aff, ice: 0x8fefff, water: 0x69ebcd, light: 0xffdf87, gear: 0xffae61, blood: 0xff698f};
-  const accents = {东煌: 0x76dfd2, 圣辉: 0xffdf9c, 机巧: 0xffb07d, 秘影: 0xbc9bff};
+  const melee = new Set(['h01','h06','h07','h08']);
   const imageCache = new Map();
   // Width, height and midpoint between the boots in the standing PNG.
   // Weapons and trailing capes often shift the centre of the image away from the feet.
   const stances = {
     h01:[1079,1081,.54], h02:[1028,1193,.49], h03:[946,1198,.57],
-    h04:[862,1138,.625], h05:[1090,1249,.505], h06:[774,1136,.57]
+    h04:[1033,1239,.59], h05:[1240,1239,.52], h06:[1125,1239,.585]
   };
   const clamp = n => Math.max(0, Math.min(1, n));
-  // Four neighbouring alpha samples outline a struck sprite in the same GPU batch.
-  // The fill keeps its original colour and texture, even on overlapping area hits.
+  // Flash inside the original silhouette, including thin hair and transparent weapons.
   if (P) {
     class ActorShader extends P.BatchShaderGenerator {
       generateSampleSrc(count) {return super.generateSampleSrc(count).replace(/vTextureCoord/g,'uv');}
@@ -28,14 +27,7 @@
           void main(){
             vec4 base=actorPixel(vTextureCoord);
             if(vColor.r >= vColor.a*.02){gl_FragColor=base*vColor;return;}
-            vec4 neighbors=vec4(actorPixel(vTextureCoord+vec2(.015,0.)).a,actorPixel(vTextureCoord-vec2(.015,0.)).a,
-                                actorPixel(vTextureCoord+vec2(0.,.012)).a,actorPixel(vTextureCoord-vec2(0.,.012)).a);
-            float low=min(min(neighbors.x,neighbors.y),min(neighbors.z,neighbors.w));
-            float high=max(max(neighbors.x,neighbors.y),max(neighbors.z,neighbors.w));
-            float inside=clamp((base.a-low)*1.45,0.,1.);
-            float outside=max(0.,high-base.a)*.82;
-            vec3 rim=vec3(1.,.94,.77);
-            gl_FragColor=vec4(mix(base.rgb,rim*base.a,inside)+rim*outside,base.a+outside)*vColor.a;
+            gl_FragColor=vec4(mix(base.rgb,vec3(1.,.98,.94)*base.a,.88),base.a)*vColor.a;
           }`);
       }
     }
@@ -98,7 +90,8 @@
   function bounds(slot, side) {
     const row = slot % 3, front = slot < 3;
     const x = (front ? .386 : .225) - row * .062;
-    return {x: side === 'ally' ? x : 1-x, y:(front ? .545 : .512)+row*.142,depth:[.88,.96,1.04][row]};
+    const rearInset=front?0:(row+1)*.012;
+    return {x: side === 'ally' ? x : 1-x-rearInset, y:(front ? .545 : .512)+row*.142,depth:[.88,.96,1.04][row]};
   }
   function polygon(cx,cy,rx,ry,sides,angle=0) {
     const points = [];
@@ -108,15 +101,57 @@
     }
     return points;
   }
+  class BattleCamera {
+    constructor() {this.reset();}
+    reset() {
+      this.zoom=1; this.x=this.y=this.focus=0;
+      this.aim={x:.5,y:.5}; this.kick=null; this.move=null;
+    }
+    frame(aim,time) {
+      const target=aim?1:0;
+      this.move={from:this.focus,to:target,start:time,ms:aim?180:260};
+      if(aim)this.aim=aim;
+    }
+    strike(dir,power,time) {this.kick={dir,power,start:time};}
+    update(time,w,h,left,right) {
+      if(this.move){
+        const m=this.move,t=clamp((time-m.start)/m.ms);
+        this.focus=m.from+(m.to-m.from)*t*t*(3-2*t);
+        if(t===1)this.move=null;
+      }
+      let dx=0,dy=0,punch=0;
+      if(this.kick){
+        const {start,dir,power}=this.kick, t=clamp((time-start)/190);
+        const wave=Math.cos(t*tau*2.5)*Math.exp(-4*t)*(1-t);
+        dx=dir.x*w*power*wave; dy=(dir.y+.25)*h*power*wave;
+        punch=.04*(power/.009)*Math.max(0,1-t*3)**2;
+        if(t===1)this.kick=null;
+      }
+      const zoom=1+.115*this.focus+punch;
+      const gutter=Math.max(6,w*.007);
+      // Fit the current pose rectangles, including weapons, lunge and recoil.
+      // Only spend as much horizontal camera movement as the frame can carry.
+      this.zoom=right>left ? Math.min(zoom,(w-2*gutter)/(right-left)) : zoom;
+      const desiredX=(1-this.zoom)*this.aim.x*w+(.5-this.aim.x)*.16*this.focus*w+dx;
+      this.x=Math.max(gutter-left*this.zoom,Math.min(w-gutter-right*this.zoom,desiredX));
+      this.y=(1-this.zoom)*this.aim.y*h+(.51-this.aim.y)*.12*this.focus*h+dy;
+    }
+  }
   class BattleScene {
     constructor(host, units, powerSave) {
       this.host = host;
       this.powerSave = powerSave;
       this.nodes = units.map(u => ({...bounds(u.slot,u.side),key:u.key,slot:u.slot,side:u.side,heroId:u.heroId,
-        boss:u.boss, hp:u.hp,maxHp:u.maxHp,shield:u.shield,sprite:null,dx:0,dy:0,hurt:0}));
+        boss:u.boss, hp:u.hp,maxHp:u.maxHp,shield:u.shield,rage:u.rage,status:{...u.status},sprite:null,dx:0,dy:0}));
       this.byKey = Object.fromEntries(this.nodes.map(n => [n.key,n]));
       this.nodes.sort((a,b) => a.y-b.y);
-      this.flashes = [];
+      this.camera = new BattleCamera();
+      this.feedbackClock=0;
+      this.hitstopRemaining=0;
+      this.basicWindupMs=80;
+      this.basicHitMs=255;
+      this.trails=[];
+      this.bursts=[];
       this.focus = null;
       this.effects = [];
       this.textures = new Map();
@@ -125,7 +160,12 @@
       this.canvas.setAttribute('aria-label','星盘战台，左方我队六个阵位，右方敌队六个阵位');
       this.domLayer = document.createElement('div');
       this.domLayer.className = 'battle-dom-units';
+      this.domLayer.style.transformOrigin='0 0';
+      this.rim=document.createElement('div');
+      this.rim.setAttribute('aria-hidden','true');
+      this.rim.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0';
       host.append(this.domLayer,this.canvas);
+      (document.querySelector('#bleed[data-page="battle"]') || host).append(this.rim);
       // Avoid consuming two WebGL contexts just to test support. Renderer's exception
       // uses a fresh canvas, since a canvas cannot switch its context type.
       try {
@@ -134,13 +174,23 @@
         this.app = new P.Application({view:this.canvas, width:2,height:2, resolution:window.devicePixelRatio || 1,
           backgroundAlpha:0, autoDensity:true, antialias:true, powerPreference:'high-performance',
           autoStart:false, sharedTicker:false, eventMode:'none'});
-        this.world = new P.Container();
+        this.battleCamera = new P.Container();
         this.shadows = new P.Container();
-        this.actors = new P.Container();
+        this.groundFxLayer = new P.Container();
+        this.unitLayer = new P.Container();
+        this.overFxLayer = new P.Container();
         this.flags = new P.Container();
+        this.groundRings=new P.Graphics();
+        this.sparks=new P.Graphics();
+        this.sparks.blendMode=P.BLEND_MODES.ADD;
+        this.groundFxLayer.addChild(this.groundRings);
+        this.groundInk=new Paint(this.groundRings,null);
+        this.sparkInk=new Paint(this.sparks,null);
         this.overlay = new P.Graphics();
-        this.world.addChild(this.shadows,this.actors,this.flags,this.overlay);
-        this.app.stage.addChild(this.world);
+        this.overFxLayer.addChild(this.overlay,this.sparks);
+        this.battleCamera.addChild(this.shadows,this.groundFxLayer,this.unitLayer,this.overFxLayer,this.flags);
+        this.app.stage.addChild(this.battleCamera);
+        if(!powerSave)this.vfx=new Sky.BattleVfx(this.overFxLayer,this.app.renderer,this.byKey,this.groundFxLayer);
         this.app.ticker.maxFPS = powerSave ? 30 : 60;
         this.ink = new Paint(this.overlay,null);
       } catch (err) {
@@ -186,6 +236,7 @@
     async load() {
       const heroes = [...new Set(this.nodes.map(n => n.heroId))];
       const offline = Sky.art.loadOfflineTextures();
+      const effectsReady=this.vfx?.preload(heroes);
       const sources = await Promise.all(heroes.map(async id => {
         const fileImage=await getImage(Sky.art(id,'chibi'));
         const stance=stances[id];
@@ -242,7 +293,7 @@
         }
       }
       for(const n of this.nodes) {
-        if(n.sprite) this.actors.addChild(n.sprite);
+        if(n.sprite) this.unitLayer.addChild(n.sprite);
         if(this.app) {
           n.flag=new P.Graphics();
           n.flagInk=new Paint(n.flag,null);
@@ -250,29 +301,142 @@
         }
       }
       this.ready = true;
+      this.render(performance.now(),0);
+      await effectsReady;
+    }
+    planUltimate(action,clock) {
+      this.ultimatePlan=this.vfx?.plan(action,clock);
+      return this.ultimatePlan;
     }
     state(units) {
-      for(const u of units) Object.assign(this.byKey[u.key],{hp:u.hp,shield:u.shield});
+      for(const u of units) Object.assign(this.byKey[u.key],{hp:u.hp,shield:u.shield,rage:u.rage,status:{...u.status}});
     }
-    elapsedAction(actor, target, progress, dash) {
-      const n = this.byKey[actor], dest = this.byKey[target];
-      if (!n || !dest || !dash) return;
-      const step = progress < .42 ? Math.sin(progress/.42*Math.PI/2) :
-        progress < .52 ? 1 : Math.cos((progress-.52)/.48*Math.PI/2);
-      n.dx = (dest.x-n.x)*.73*step;
-      n.dy = (dest.y-n.y)*.70*step - Math.sin(step*Math.PI)*.055;
+    attackSound(key) {return melee.has(this.byKey[key].heroId)?'slash':'cast';}
+    advanceClock(delta) {
+      // Freeze only the battle timeline. Camera impulses, hit colours, buttons and
+      // the next presentation frame continue on the live render ticker.
+      this.feedbackClock+=delta;
+      const held=Math.min(delta,this.hitstopRemaining);
+      this.hitstopRemaining-=held;
+      return delta-held;
     }
-    resetMotion() {
-      this.focus = null;
-      for (const n of this.nodes) {n.dx = n.dy = n.hurt = 0;}
+    beginAction(action,clock) {
+      this.actionStart=clock; this.trailIndex=0;
+      const n=this.byKey[action.actor], target=this.byKey[action.hits[0]?.target];
+      if(!target)return;
+      if(action.kind==='basic')this.vfx?.launchBasic(action,clock,this.basicHitMs);
+      if(action.kind==='ultimate' && !this.powerSave){
+        const targets=[...new Set(action.hits.map(hit=>this.byKey[hit.target]))];
+        const cx=targets.reduce((sum,t)=>sum+t.x,0)/targets.length;
+        const cy=targets.reduce((sum,t)=>sum+t.y,0)/targets.length;
+        this.camera.frame({x:(n.x+cx*2)/3,y:(n.y+cy*2)/3-.11},this.feedbackClock);
+      }
     }
-    hit(actor, hit, element, ultimate, clock) {
+    elapsedAction(actor,target,progress,dash,elapsed=progress*430) {
+      const n=this.byKey[actor],dest=this.byKey[target];
+      if(!n || !dest || !dash)return;
+      const dir=n.side==='ally'?1:-1, close=melee.has(n.heroId);
+      const windup=this.basicWindupMs;
+      const pull=Math.sin(clamp(elapsed/windup)*Math.PI*.5)*.013;
+      if(elapsed<windup){n.dx=-dir*pull; n.dy=0; return;}
+      const lunge=clamp((elapsed-windup)/135);
+      const reach=1-2**(-9*lunge);
+      const back=clamp((elapsed-this.basicHitMs)/(430-this.basicHitMs));
+      const settle=(1-back)**2*(1-2*back);
+      if(close){
+        const step=reach*settle;
+        n.dx=((dest.x-n.x)*.82*step)-dir*pull*(1-reach);
+        n.dy=(dest.y-n.y)*.78*step-Math.sin(lunge*Math.PI)*.035;
+        while(n.sprite && !this.powerSave && this.trailIndex<4){
+          const at=windup+8+this.trailIndex*23;
+          if(elapsed<at)break;
+          this.trailIndex++;
+          if(elapsed-at<180)this.afterimage(n,dest,at);
+        }
+      }else{
+        const recoil=clamp((elapsed-windup)/120);
+        n.dx=dir*(.009*Math.sin(recoil*Math.PI*2)*(1-recoil)-pull*(1-recoil));
+        n.dy=-.003*Math.sin(recoil*Math.PI);
+      }
+    }
+    afterimage(n,dest,at) {
+      const ghost=new P.Sprite(n.sprite.texture), t=(at-this.basicWindupMs)/135, reach=1-2**(-9*t);
+      ghost.eventMode='none';
+      ghost.anchor.copyFrom(n.sprite.anchor);
+      ghost.scale.copyFrom(n.sprite.scale);
+      ghost.blendMode=P.BLEND_MODES.ADD;
+      ghost.tint=palette[Sky.D.hero(n.heroId).element];
+      const dir=n.side==='ally'?1:-1;
+      ghost.position.set((n.x+(dest.x-n.x)*.82*reach-dir*.013*(1-reach))*this.w,
+        (n.y+(dest.y-n.y)*.78*reach-Math.sin(t*Math.PI)*.035)*this.h);
+      this.unitLayer.addChildAt(ghost,this.unitLayer.getChildIndex(n.sprite));
+      this.trails.push({sprite:ghost,start:this.actionStart+at});
+    }
+    resetMotion(clearEffects=false) {
+      if(this.focus && !this.powerSave){
+        this.previousFocus=this.focus;
+        this.camera.frame(null,this.feedbackClock);
+      }
+      this.focus=null;
+      this.ultimatePlan=null;
+      if(clearEffects){
+        this.effects.length=0;
+        this.bursts.length=0; this.lastImpact=null; this.hitstopRemaining=0;
+        this.camera.reset(); this.previousFocus=null;
+        this.rim.style.opacity=0; this.rimStart=null;
+        for(const t of this.trails)t.sprite.destroy();
+        this.trails.length=0;
+        this.groundRings?.clear(); this.sparks?.clear();
+        this.overlay?.clear();
+        this.vfx?.destroy();
+      }
+      for(const n of this.nodes){n.dx=n.dy=0;if(clearEffects)n.reaction=null;}
+    }
+    hit(actor,hit,element,ultimate,clock,effectClock,index,due,meta={}) {
       const n = this.byKey[hit.target];
       if (!n) return;
       n.hp = hit.hp; n.shield = hit.shield;
-      if (hit.kind === 'damage') n.hurt = clock+165;
-      this.effects.push({actor, target:n.key, element, ultimate, start:clock, duration:ultimate ? 625 : 325});
-      if (ultimate && hit.kind === 'damage' && !this.powerSave) this.shakeUntil = clock+170;
+      if(hit.rage!==undefined)n.rage=hit.rage;
+      if(hit.status)n.status={...hit.status};
+      const damage=hit.kind==='damage', plan=ultimate ? this.ultimatePlan : null;
+      const finisher=ultimate && !!meta.finisher;
+      const progression=meta.beats>1?clamp((meta.beat-1)/(meta.beats-1)):0;
+      if(damage){
+        const source=this.byKey[hit.source || actor];
+        const dx=(n.x-source.x)*this.w,dy=(n.y-source.y)*this.h,dist=Math.hypot(dx,dy)||1;
+        const dir={x:dx/dist,y:dy/dist};
+        const heavy=hit.crit || finisher;
+        const hold=this.powerSave?0:heavy?72:!ultimate?43:0;
+        this.hitstopRemaining=Math.max(this.hitstopRemaining,hold);
+        n.reaction={dir,start:this.feedbackClock,motionStart:effectClock};
+        const sparks=this.powerSave?0:heavy?14:ultimate?9+Math.round(4*progression):8;
+        this.lastImpact={actor,target:n.key,critical:!!hit.crit,finisher,hold,sparks,beat:meta.beat,beats:meta.beats};
+        if(!this.powerSave){
+          const power=heavy?.009:ultimate?.0058+.002*progression:.0045;
+          this.camera.strike(dir,power,this.feedbackClock);
+          this.bursts.push({start:effectClock,x:n.x+n.dx,y:n.y+n.dy,dir,color:palette[element],count:sparks,heavy});
+          if(heavy || ultimate){
+            this.rimStart=this.feedbackClock;
+            this.rim.style.boxShadow='inset 0 0 '+(heavy?3.2:1.9)+'cqw #'+palette[element].toString(16).padStart(6,'0');
+          }
+        }
+      }else{
+        if(hit.kind==='heal')this.vfx?.healRing(n.key,effectClock);
+        if(finisher && !this.powerSave){
+          this.hitstopRemaining=Math.max(this.hitstopRemaining,65);
+          this.camera.strike({x:this.byKey[actor].side==='ally'?.70:-.70,y:-.52},.009,this.feedbackClock);
+          this.lastImpact={actor,target:n.key,critical:false,finisher,hold:65,sparks:0,beat:meta.beat,beats:meta.beats};
+        }
+      }
+      if(plan)this.vfx.impact(plan.byHit.get(index),effectClock,clock);
+      const covered=plan && (plan.targets.has(index) || !damage);
+      if(!covered){
+        const spark=damage && (!ultimate || plan) && this.vfx?.spark(actor,n.key,index,due,effectClock,clock);
+        if(!spark){
+          const fallbackUltimate=ultimate && !plan;
+          this.effects.push({actor,target:n.key,element,ultimate:fallbackUltimate,start:clock,duration:fallbackUltimate?625:325});
+        }
+      }
     }
     effect(p,e,time) {
       const actor=this.byKey[e.actor], target=this.byKey[e.target];
@@ -376,46 +540,123 @@
       p.ellipse(x,y,Math.max(0.1,k*.58),Math.max(0.1,k*.58),color,fade*.56,h*.0035*fade+.3);
     }
     flagGeometry(ink,n,x,y,alpha) {
-      const bw=this.w*.041, bh=Math.max(3.2,this.h*.0075);
-      const fac=accents[Sky.D.hero(n.heroId).faction] || 0xffffff,col=n.side==='ally'?0x5ddcb5:0xf09aaa;
+      const bw=this.w*48/1280,bh=Math.max(2,this.h*4/720);
+      const col=n.side==='ally'?0x71e4b9:0xf490a3;
       const left=x-bw*.5, right=x+bw*.5, top=y-bh*.5, bottom=y+bh*.5, edge=bh*.22;
-      ink.path([left-edge,top,right+edge,top,right+edge,bottom+edge*2.4,left-edge,bottom+edge*2.4],0x080d20,.65*alpha);
       ink.path([left-edge,top-edge,right+edge,top-edge,right+edge,bottom+edge,left-edge,bottom+edge],0x162034,alpha);
-      ink.path([x-bw*.68,y,x-bw*.60,y-bh*.64,x-bw*.52,y,x-bw*.60,y+bh*.64],fac,alpha);
       if(n.hp){
         const end=left+bw*clamp(n.hp/n.maxHp);
         ink.path([left,top,end,top,end,bottom,left,bottom],col,alpha);
         ink.path([left,top+edge*.56,end,top+edge*.56],0xf4fff9,.72*alpha,edge);
       }
-      if(n.shield>0) ink.path([left,bottom+edge,left+bw*clamp(n.shield/n.maxHp),bottom+edge],0xffdd83,alpha,bh*.38);
+      if(n.shield>0){
+        const end=left+bw*clamp((n.hp+n.shield)/n.maxHp);
+        const start=end-bw*clamp(n.shield/n.maxHp);
+        ink.path([start,top,end,top,end,bottom,start,bottom],0xf5fcff,alpha);
+      }
+      for(let i=0;i<4;i++){
+        const mid=x+(i-1.5)*bh*1.9, cy=bottom+bh*1.04, r=bh*.62;
+        const lit=n.rage>=(i+1)*25, gold=n.rage>=100;
+        ink.path([mid-r-edge,cy,mid,cy-r-edge,mid+r+edge,cy,mid,cy+r+edge],0x15192a,.94*alpha);
+        ink.path([mid-r,cy,mid,cy-r,mid+r,cy,mid,cy+r],lit?(gold?0xffdc87:0x9ee4ef):0x536074,alpha);
+      }
     }
-    render(time) {
+    flagPoint(key) {
+      const n=this.byKey[key],cam=this.camera;
+      if(!n)return null;
+      const x=n.pinX ?? n.x*this.w;
+      const y=n.pinY ?? (n.y-.22)*this.h;
+      return {x:x*cam.zoom+cam.x,y:(y-this.h*2.4/720)*cam.zoom+cam.y};
+    }
+    drawBursts(clock,ground) {
+      const ink=ground?(this.groundInk || this.ink):(this.sparkInk || this.ink),w=this.w,h=this.h;
+      for(const b of this.bursts){
+        const t=clamp((clock-b.start)/270),fade=1-t;
+        const x=b.x*w,y=b.y*h,k=1-Math.exp(-3.5*t);
+        if(ground){
+          const r=(b.heavy?.075:.044)*h*(.19+k);
+          ink.ellipse(x,y,r,r*.28,b.color,.64*fade,Math.max(.55,h*.0023*fade));
+          continue;
+        }
+        const aim=Math.atan2(b.dir.y,b.dir.x), cy=y-.10*h;
+        for(let i=0;i<b.count;i++){
+          const a=aim+Math.sin(i*2.4+1.12)*1.12;
+          const vx=Math.cos(a),vy=Math.sin(a);
+          const length=h*(.046+(i%5)*.014)*(b.heavy?1.28:1);
+          const d=length*(.12+.88*k);
+          const xx=x+vx*d, yy=cy+vy*d+.038*h*t*t;
+          const tail=h*(.005+(i%3)*.003)*fade;
+          ink.path([xx,yy,xx-vx*tail,yy-vy*tail],i%3===0?0xfff0d2:b.color,fade*.9,Math.max(.5,h*.0023*fade));
+        }
+      }
+    }
+    actorPose(n,clock) {
+      const age=n.reaction?this.feedbackClock-n.reaction.start:Infinity;
+      const poseAge=n.reaction?clock-n.reaction.motionStart:Infinity;
+      if(n.hp<=0 && poseAge>=190)return null;
+      const w=this.w,h=this.h,t=clamp(poseAge/190);
+      const push=(1-t)**2*Math.cos(t*Math.PI*1.55);
+      const recoil=push*w*(this.powerSave?.004:.018);
+      const rx=n.reaction?.dir.x ?? 0,ry=n.reaction?.dir.y ?? 0;
+      const x=(n.x+n.dx)*w+rx*recoil,y=(n.y+n.dy)*h+ry*recoil;
+      const stretch=this.powerSave?0:push,tilt=rx*.12*stretch;
+      const breath=this.powerSave?1:1+.007*Math.sin(clock/540+n.slot*1.8);
+      const size=h*(n.boss?.285:.204)*n.depth*breath*n.heightFactor;
+      const width=size*n.image.naturalWidth/n.image.naturalHeight;
+      const sign=n.side==='enemy'?-1:1,sx=sign*(1-.18*stretch),sy=1+.15*stretch;
+      const horizontal=width*Math.abs(sx)*Math.cos(tilt);
+      const anchor=sign<0?1-n.footX:n.footX;
+      const slant=-Math.sin(tilt)*size*sy;
+      const upper=-n.footY*slant,lower=(1-n.footY)*slant;
+      return {x,y,size,width,sx,sy,tilt,white:age<50,red:age>=50 && age<115,
+        left:x-horizontal*anchor+Math.min(upper,lower),right:x+horizontal*(1-anchor)+Math.max(upper,lower)};
+    }
+    render(time,effectClock=0) {
       if (!this.ready || this.disposed || !this.w) return;
       if (window.devicePixelRatio !== this.ratio) this.resize();
       const w=this.w,h=this.h, c=this.ctx;
       if (this.app) {if(this.effects.length || this.drewEffects) this.overlay.clear();}
       else {c.setTransform(this.ratio,0,0,this.ratio,0,0); c.clearRect(0,0,w,h);}
-      const shake = time < this.shakeUntil ? .003*w*Math.sin(time*.13)*(this.shakeUntil-time)/170 : 0;
-      if (this.app) this.world.x = shake;
-      else c.translate(shake,0);
+      const cam=this.camera;
+      let left=Infinity,right=-Infinity;
+      for(const n of this.nodes){
+        n.pose=this.actorPose(n,effectClock);
+        if(!n.pose)continue;
+        left=Math.min(left,n.pose.left);
+        right=Math.max(right,n.pose.right);
+      }
+      cam.update(this.feedbackClock,w,h,left,right);
+      if(this.app){
+        this.battleCamera.position.set(cam.x,cam.y); this.battleCamera.scale.set(cam.zoom);
+        if(this.domLayer.childElementCount)this.domLayer.style.transform='translate('+cam.x+'px,'+cam.y+'px) scale('+cam.zoom+')';
+      }else{c.translate(cam.x,cam.y);c.scale(cam.zoom,cam.zoom);}
+      if(this.rimStart!=null){
+        const t=clamp((this.feedbackClock-this.rimStart)/40);
+        this.rim.style.opacity=String(.52*(1-t));
+        if(t===1)this.rimStart=null;
+      }
+      if(this.bursts.length || this.drewBursts){this.groundRings?.clear();this.sparks?.clear();}
+      this.bursts=this.bursts.filter(b=>effectClock-b.start<270);
+      this.drewBursts=this.bursts.length>0;
+      this.drawBursts(effectClock,true);
+      for(let i=this.trails.length-1;i>=0;i--){
+        const trail=this.trails[i],age=effectClock-trail.start;
+        if(age>=180){trail.sprite.destroy();this.trails.splice(i,1);}
+        else trail.sprite.alpha=.32*(1-clamp(age/180))**1.4;
+      }
       for(const n of this.nodes) {
-        const flashing=n.hurt>time;
-        const visible=n.hp>0 || flashing;
+        const visible=!!n.pose;
         if(n.sprite) n.sprite.visible=n.shadow.visible=visible;
         if(n.flag) n.flag.visible=visible;
         if(n.dom) n.dom.body.hidden=!visible;
         if(!visible) continue;
-        const alpha=this.focus && !this.focus.has(n.key) ? .35 : 1;
-        const recoil=flashing ? Math.sin((n.hurt-time)/165*Math.PI)*.013*w*(n.side==='ally'?-1:1) : 0;
-        const x=(n.x+n.dx)*w+recoil,y=(n.y+n.dy)*h;
-        const breath=this.powerSave ? 1 : 1+.007*Math.sin(time/540+n.slot*1.8);
-        const size=h*(n.boss?.285:.204)*n.depth*breath*n.heightFactor;
-        const width=size*n.image.naturalWidth/n.image.naturalHeight;
-        const sign=n.side==='enemy'?-1:1;
+        const {x,y,size,width,sx,sy,tilt,white,red}=n.pose;
+        const lit=this.focus || this.previousFocus;
+        const alpha=lit && !lit.has(n.key) ? 1-.65*(this.powerSave?Number(!!this.focus):cam.focus) : 1;
         const shadowWidth=size*.30*(1-Math.min(.30,Math.abs(n.dx)));
         const shadowAlpha=n.side==='enemy' ? Math.max(.68,alpha) : alpha*(n.phantom ? .8 : 1);
         if(n.shadow) {
-          n.shadow.position.set(x,(n.y+n.dy*.60)*h-1);
+          n.shadow.position.set((n.x+n.dx)*w,(n.y+n.dy*.60)*h-1);
           n.shadow.scale.set(shadowWidth/100,size*.050/12);
           n.shadow.alpha=shadowAlpha;
         } else if (!n.dom) {
@@ -425,42 +666,58 @@
         if(n.dom) {
           const {body,shadow,portrait}=n.dom;
           body.style.cssText='left:'+x+'px;top:'+y+'px;z-index:'+Math.round(n.y*100);
-          const anchorX=sign<0 ? 1-n.footX : n.footX;
-          portrait.style.cssText='width:'+width+'px;height:'+size+'px;transform:translate('+(-anchorX*100)+'%,'+(-n.footY*100)+'%) scaleX('+sign+');filter:'+(flashing?'drop-shadow(0 0 2px #fff3c9) drop-shadow(0 0 3px #fde3b1)':alpha<1?'brightness(.35)':'none');
+          portrait.style.cssText='width:'+width+'px;height:'+size+'px;left:'+(-width*n.footX)+'px;top:'+(-size*n.footY)+
+            'px;transform-origin:'+n.footX*100+'% '+n.footY*100+'%;transform:rotate('+tilt+'rad) scale('+sx+','+sy+
+            ');filter:'+(white?'brightness(2.4)':red?'sepia(1) saturate(4) brightness(.65)':'brightness('+alpha+')');
           shadow.style.cssText='width:'+shadowWidth*2+'px;height:'+size*.10+'px;opacity:'+shadowAlpha+';top:'+(-n.dy*.40*h)+'px';
         } else if(n.sprite) {
           n.sprite.position.set(x,y);
-          n.sprite.scale.set(sign*width/n.image.naturalWidth,size/n.image.naturalHeight);
-          n.sprite.tint=flashing?0x00ffff:alpha<1?0x595959:0xffffff;
+          n.sprite.scale.set(sx*width/n.image.naturalWidth,sy*size/n.image.naturalHeight);
+          n.sprite.rotation=tilt;
+          n.sprite.tint=white?0x00ffff:red?0xa7384c:Math.round(alpha*255)*0x010101;
         } else {
-          c.save(); c.translate(x,y); c.scale(sign,1);
-          if(flashing || alpha<1) c.filter=flashing?'drop-shadow(0 0 2px #fff3c9) drop-shadow(0 0 3px #fde3b1)':'brightness(.35)';
+          c.save(); c.translate(x,y);c.rotate(tilt); c.scale(sx,sy);
+          if(white || red || alpha<1)c.filter=white?'brightness(2.4)':red?'sepia(1) saturate(4) brightness(.65)':'brightness('+alpha+')';
           c.drawImage(n.image,-width*n.footX,-size*n.footY,width,size); c.restore();
         }
         // Each flag and gauge is vector geometry at the canvas' actual backing density.
+        n.pinX=x; n.pinY=y-size*sy-h*.010;
         if(n.flag) {
-          n.flag.position.set(x,y-size*1.012); n.flag.alpha=alpha;
-          if(n.flagHP!==n.hp || n.flagShield!==n.shield || n.flagW!==w || n.flagH!==h) {
+          n.flag.position.set(n.pinX,n.pinY); n.flag.alpha=alpha;
+          if(n.flagHP!==n.hp || n.flagShield!==n.shield || n.flagRage!==n.rage || n.flagW!==w || n.flagH!==h) {
             n.flag.clear(); this.flagGeometry(n.flagInk,n,0,0,1);
-            n.flagHP=n.hp; n.flagShield=n.shield; n.flagW=w; n.flagH=h;
+            n.flagHP=n.hp; n.flagShield=n.shield; n.flagRage=n.rage; n.flagW=w; n.flagH=h;
           }
-        } else this.flagGeometry(this.ink,n,x,y-size*1.012,alpha);
+        } else this.flagGeometry(this.ink,n,n.pinX,n.pinY,alpha);
       }
+      this.drawBursts(effectClock,false);
       this.effects=this.effects.filter(e=>time-e.start<e.duration);
       this.drewEffects=this.effects.length>0;
       for(const e of this.effects) this.effect(this.ink,e,time);
-      if(this.app) this.app.render();
+      if(this.app){
+        this.vfx?.draw(effectClock,time,w,h);
+        this.app.render();
+        this.vfx?.presented(time);
+      }
     }
     inspect() {
+      const vfx=this.vfx?.inspect() || {ready:[],active:[],last:null,artReady:[],projectiles:[],statuses:[]};
+      vfx.procedural=[...new Set(this.effects.filter(e=>e.ultimate).map(e=>this.byKey[e.actor].heroId))];
       return {renderer:this.app?'pixi-webgl':'canvas2d',resolution:this.ratio, canvas:[this.canvas.width,this.canvas.height],
+        camera:{zoom:this.camera.zoom,x:this.camera.x,y:this.camera.y,kick:!!this.camera.kick,focus:this.camera.focus,
+          hitstopRemaining:this.hitstopRemaining},impact:this.lastImpact||null,
+        layers:this.app?['groundFxLayer','unitLayer','overFxLayer']:[],
         stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,heroId:n.heroId,x:n.x,y:n.y,mirror:n.side==='enemy',depth:n.depth,
           artwork:n.phantom?'phantom':'original',source:n.dom?'native-image':this.app?'pixi-texture':'canvas-image'})),textures:[...this.textures].map(([heroId,t])=>({heroId,
-          width:t.baseTexture.realWidth,height:t.baseTexture.realHeight,mipmap:t.baseTexture.mipmap,scaleMode:t.baseTexture.scaleMode})),ready:!!this.ready};
+          width:t.baseTexture.realWidth,height:t.baseTexture.realHeight,mipmap:t.baseTexture.mipmap,scaleMode:t.baseTexture.scaleMode})),ready:!!this.ready,
+        vfx,ultimateVfx:vfx};
     }
     destroy() {
       this.disposed=true;
+      this.rim.remove();
       this.observer.disconnect();
       if(this.app) {
+        this.vfx?.destroy();
         this.app.destroy(true,{children:true,texture:false,baseTexture:false});
         for(const shape of Object.values(this.shadowShapes||{}))shape.destroy();
         for(const t of this.textures.values()) t.destroy(true);

@@ -8,6 +8,7 @@
     ['星图挂坠','流银指环','曙光星环','天穹之泪'], ['见习星盘','黄铜罗盘','航星仪','群星天球']
   ];
   const resources = ['coins','cores','diamonds','tickets'];
+  const audioDefaults = Object.freeze({music:true,muted:false,musicVolume:.46,soundVolume:.82});
   const check = (condition, msg) => { if (!condition) throw new Error(msg); };
   const dateOf = now => {
     const d = new Date(now);
@@ -35,7 +36,7 @@
       owned:[...D.starter].sort(), formation:[...D.starter], stars:fields(() => 1),
       shards:fields(() => 0), bag, equipment, cleared:0,tower:0,bossBest:0,arenaWins:0,
       pity:{standard:{ur:0,ssr:0},up:{ur:0,ssr:0}}, firstTenDone:false,
-      settings:{powerSave:false,sound:true,poster:'h01'},
+      settings:{powerSave:false,sound:true,poster:'h01',...audioDefaults},
       welfare:false, daily:dailyRecord(now), event:{start:calendarDay(now),days:[]},
       idleAt:Math.max(0,now-120000), idleCoreSeconds:0};
   }
@@ -71,6 +72,11 @@
     for (const p of ['standard','up']) {counter(s.pity?.[p]?.ur,59); counter(s.pity?.[p]?.ssr,9);}
     valid(s.firstTenDone===undefined || typeof s.firstTenDone==='boolean');
     valid(s.settings && typeof s.settings.sound==='boolean' && typeof s.settings.powerSave==='boolean');
+    for(const key of ['music','muted'])valid(s.settings[key]===undefined || typeof s.settings[key]==='boolean');
+    for(const key of ['musicVolume','soundVolume']){
+      const value=s.settings[key];
+      valid(value===undefined || (Number.isFinite(value) && value>=0 && value<=1));
+    }
     valid(D.illustrated.includes(s.settings.poster) && typeof s.welfare==='boolean');
     valid(s.daily && /^\d{4}-\d{2}-\d{2}$/.test(s.daily.day) && typeof s.daily.claimed==='boolean');
     counter(s.daily.battles); counter(s.idleAt,8640000000000000);
@@ -90,6 +96,7 @@
     try { s=JSON.parse(json); } catch { throw new Error('无法读取 JSON 存档'); }
     validate(s); refreshDaily(s); s.event ||= {start:calendarDay(Date.now()),days:[]};
     s.firstTenDone ??= false;
+    s.settings={...audioDefaults,...s.settings};
     return s;
   }
   function load() {
@@ -305,7 +312,7 @@
     gain(s,loot); battle.settled=true;
     return loot;
   }
-  globalThis.Sky.Save={KEY,poolRates,fresh,validate,load,write,exportJSON:s=>JSON.stringify(validate(s),null,2),
+  globalThis.Sky.Save={KEY,poolRates,audioDefaults,fresh,validate,load,write,exportJSON:s=>JSON.stringify(validate(s),null,2),
     importJSON,refreshDaily,idle,claimIdle,claimDaily,claimWelfare,launchEvent,claimEvent,bonds,stats,power,upgradeCost,upgrade,starCost,
     starUp,assign,equip,wearer,autoEquip,gearStats,enhanceCost,enhance,equippedUpgrade,enhanceAll,exchange,draw,settle};
 })();

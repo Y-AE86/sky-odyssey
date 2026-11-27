@@ -20,6 +20,7 @@
   function image(url, cls="pn-mark") {
     return '<img class="'+cls+'" alt="" draggable="false" src="'+escape(url)+'">';
   }
+  const factionBadge = name => image(S.art.faction(name));
   function mark(key) {
     if(key==='lock') return '<span class="pn-mark pn-lock" aria-hidden="true"></span>';
     if(glyphs[key]) return '<span class="pn-mark pn-symbol" aria-hidden="true">'+glyphs[key]+'</span>';
@@ -48,14 +49,14 @@
     return resource("coin","星币",s.coins) + resource("core","晶核",s.cores);
   }
   const subviews = ["共鸣与升星","星装","本命武装","技能详情"];
-  const skillNames = ["普攻","必杀","被动","觉醒"];
+  const skillTypes = [["skill_basic","普攻"],["skill_ult","必杀"],["skill_passive","被动"],["skill_awaken","觉醒"]];
   function rosterPanel(h) {
     const s = state(), count = s.stars[h.id], fragments = s.shards[h.id] || 0, cost = S.Save.upgradeCost(s);
     const st = S.Save.stats(s, h.id);
     if (P.rosterTab === 0) {
       const threshold = S.Save.starCost(s, h.id), maxed = count >= 6;
       return '<div class="pn-resonance"><div class="pn-level"><div><p>战队共鸣等级</p><div class="pn-big-number"><small>Lv.</small>' + String(s.level).padStart(2,"0") + '</div></div>' +
-        '<div class="pn-orbitseal">' + mark("orbit") + '</div><div class="pn-level-action"><p>全队共享等级</p>' + button("共鸣升级","upgrade","","cyan") +
+        '<div class="pn-orbitseal">' + image(S.art.badge("badge_resonance")) + '</div><div class="pn-level-action"><p>全队共享等级</p>' + button("共鸣升级","upgrade","","cyan") +
         '<small>' + costText(cost.coins,"星币") + ' · ' + costText(cost.cores,"晶核") + '</small></div></div>' +
         '<div class="pn-tristat">' + [["生命",st.hp],["攻击",st.atk],["防御",st.def]].map(([label,v]) => '<span><small>' + label + '</small><b>' + money(v) + '</b></span>').join("") + '</div>' +
         '<div class="pn-star-up"><div><p>星灵升星</p><div class="pn-starlight" aria-label="' + count + '星">' + Array.from({length:6},(_,i) => '<i class="' + (i<count?'lit':'') + '">✦</i>').join("") + '</div><small>' + (maxed ? "觉醒已解锁" : mark('shards')+' 角色碎片 ' + fragments + ' / ' + threshold) + '</small></div>' +
@@ -77,8 +78,10 @@
       return '<div class="pn-weapon"><div class="pn-weapon-emblem">' + (special ? photo(h.id,"weapon") : mark("blade")) + '</div><div class="pn-weapon-copy"><p>' + (special ? '已共鸣 · '+h.rarity : "通用武装") + '</p><h2>' + escape(special ? h.weapon : "基础武装") + '</h2><p>' + escape(special ? h.weaponDesc : "通过四格星装提升战斗属性。") + '</p>' + (special ? '<div class="pn-weapon-bonus"><span>生命 <b>+6%</b></span><span>攻击 <b>+6%</b></span></div>' : "") + '</div></div>';
     }
     const selected = h.skills[P.skill];
-    return '<div class="pn-skills"><div class="pn-skill-row">' + h.skills.map((skill,i) =>
-      '<button class="pn-skill' + (i===P.skill ? ' on' : '') + '" ' + act("skill",i) + '>' + mark(["blade","star","orbit","ranks"][i]) + '<small>' + skillNames[i] + '</small></button>').join("") + '</div><div class="pn-skill-detail"><p>' + skillNames[P.skill] + '</p><h2>' + escape(selected.name) + '</h2><p>' + escape(selected.desc) + '</p></div></div>';
+    return '<div class="pn-skills"><div class="pn-skill-row">' + skillTypes.map(([icon,label],i) =>
+      '<button type="button" class="pn-skill' + (i===P.skill ? ' on' : '') + '" aria-pressed="' + (i===P.skill) + '" ' + act("skill",i) + '>' +
+      image(S.art.badge(icon)) + '<small>' + label + '</small></button>').join("") + '</div><div class="pn-skill-detail"><p>' +
+      skillTypes[P.skill][1] + '</p><h2>' + escape(selected.name) + '</h2><p>' + escape(selected.desc) + '</p></div></div>';
   }
   function roster() {
     const s = state();
@@ -88,12 +91,12 @@
     return '<section class="pn-page pn-roster" aria-label="星灵养成">' + header(titleNames.roster,resGroup()) +
       '<div class="pn-portrait ' + (P.view==="poster" ? "art" : "chibi") + '">' + photo(h.id,P.view) + '</div>' +
       '<div class="pn-art-pick">' + tab("立绘","art","poster",P.view==="poster") + tab("Q版","art","chibi",P.view==="chibi") + '</div>' +
-      '<div class="pn-hero-caption"><span class="pn-rarity">' + h.rarity + '</span><span class="pn-faction">' + h.faction +
+      '<div class="pn-hero-caption"><span class="pn-rarity">' + h.rarity + '</span><span class="pn-faction">' + factionBadge(h.faction) + h.faction +
       '</span><h2>' + escape(h.name) + '</h2><div>' + escape(h.role) + ' <i></i> 战力 ' + money(S.Save.power(s,h.id)) + '</div></div>' +
       '<div class="pn-roster-panel pn-glass"><nav class="pn-tabs">' + subviews.map((x,i)=>tab(x,"roster-tab",i,i===P.rosterTab)).join("") +
       '</nav><div class="pn-roster-content">' + rosterPanel(h) + '</div></div>' +
       '<div class="pn-hero-strip"><div class="pn-filters"><span>已拥有 ' + s.owned.length + ' / 8</span>' +
-      ["",...S.D.factions].map(x=>'<button ' + act("filter",x) + ' aria-pressed="' + (P.faction===x) + '" class="' + (P.faction===x?"on":"") + '">' + (x||"全部") + '</button>').join("") +
+      ["",...S.D.factions].map(x=>'<button type="button" ' + act("filter",x) + ' aria-pressed="' + (P.faction===x) + '" class="' + (P.faction===x?"on":"") + '">' + (x?factionBadge(x)+x:"全部") + '</button>').join("") +
       '</div><div class="pn-hero-list">' + (filtered.length ? filtered.map(x => '<button class="pn-hero-pick' + (x.id===h.id?' on':'') + '" aria-label="查看' + escape(x.name) + '" '+act("hero",x.id)+'>' + S.ui.frame(x.id) + (s.formation.includes(x.id)?'<i>上阵</i>':'') + '</button>').join("") : '<small>尚未获得此阵营星灵</small>') +
       '</div><div class="pn-formation-go">' + button("调整 6 人站位","formation") + '</div></div></section>';
   }
@@ -108,7 +111,7 @@
           '<b>'+escape(h.name.split(" · ")[0])+'</b><small class="pn-profession">'+escape(h.role.split(" · ")[1].replace(/^[前后]排/,""))+'</small></button>';
       }).join("") + '</div>').join("") + '<small>' + (P.formSlot==null ? "数字为我方出手顺序。依次选择两个阵位可互换。" : "已选阵位，可点另一阵位或候补星灵换位。") + '</small></div>' +
       '<aside class="pn-form-side"><h3>阵营羁绊</h3>' + S.Save.bonds(s.formation).map(b =>
-        '<div class="pn-bond' + (b.tier ? ' on' : '') + '">'+'<b>'+b.faction+'</b><small>'+b.count+' 人</small><em>' + (b.tier ? '+' + Math.round(b.bonus*100) + '%' : '未激活') + '</em></div>').join("") +
+        '<div class="pn-bond' + (b.tier ? ' on' : '') + '">' + factionBadge(b.faction) + '<b>'+b.faction+'</b><small>'+b.count+' 人</small><em>' + (b.tier ? '+' + Math.round(b.bonus*100) + '%' : '未激活') + '</em></div>').join("") +
       '<p class="pn-bond-rule">同阵营上阵 2 / 4 / 6 人，生命、攻击与防御分别提升 6% / 12% / 20%。</p><h3>候补星灵</h3><div class="pn-bench">' + (bench.length ? bench.map(id=>'<button '+act("bench",id)+'>'+S.ui.frame(id)+'<small>'+escape(hero(id).name.split(" · ")[0])+'</small></button>').join("") : '<p>已拥有的星灵均已上阵</p>') +
       '</div></aside></div>');
   }
@@ -230,13 +233,17 @@
     S.ui.save();
     if (success) S.ui.toast(success);
   }
+  const navigationSounds=new Set(["roster-tab","skill","art","hero","filter","pool","mode","chapter","stage","trial","formation"]);
+  const upgradeSounds=new Set(["upgrade","star","enhance-all","enhance"]);
   function onClick(e) {
     const target=e.target.closest("button[data-panel]");
     if (!target||target.disabled) return;
-    const v=target.dataset.value, n=Number(v), s=state();
+    const key=target.dataset.panel, v=target.dataset.value, n=Number(v), s=state();
     try {
-      if(target.dataset.panel!=="draw") S.sound("tap");
-      switch (target.dataset.panel) {
+      if(key==="dismiss")S.sound("back");
+      else if(navigationSounds.has(key))S.sound("tab");
+      else if(!upgradeSounds.has(key) && key!=="draw" && !(key==="exchange" && P.requestedDraw))S.sound("tap");
+      switch (key) {
       case "roster-tab": P.rosterTab=n; break;
       case "skill": P.skill=n; break;
       case "art": P.view=v; break;
@@ -270,7 +277,7 @@
         if (P.requestedDraw) {const count=P.requestedDraw; P.requestedDraw=0; draw(count);}
         break;
       case "draw":
-        if (s.tickets<n) {P.exchangeCount=n-s.tickets; P.requestedDraw=n; P.overlay="exchange";} else draw(n);
+        if (s.tickets<n) {S.sound("tap");P.exchangeCount=n-s.tickets; P.requestedDraw=n; P.overlay="exchange";} else draw(n);
         break;
       case "skip":
         finishReveal(true); return;
@@ -283,6 +290,7 @@
       case "dismiss": P.overlay=""; P.requestedDraw=0; break;
       default: return;
       }
+      if(upgradeSounds.has(key))S.sound("upgrade");
       paint();
     } catch (err) { S.ui.toast(err.message || "操作未完成"); }
   }
@@ -307,7 +315,7 @@
     if(event.animationName==="pn-flip" && event.target.matches(".pn-result-card:last-child"))finishReveal(false);
   }
   function onKey(event) {
-    if(event.key==="Escape" && P.overlay) {event.preventDefault();P.overlay="";P.requestedDraw=0;paint();}
+    if(event.key==="Escape" && P.overlay) {event.preventDefault();S.sound("back");P.overlay="";P.requestedDraw=0;paint();}
     if(event.key==="Tab" && P.overlay){
       const buttons=S.ui.root.querySelectorAll('[role="dialog"] button:not(:disabled):not([hidden])');
       if(!buttons.length) return;

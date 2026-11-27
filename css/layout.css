@@ -2,12 +2,14 @@ body{display:grid;place-items:center;min-width:0;padding:env(safe-area-inset-top
 #stage,#bleed{grid-area:1 / 1;width:min(100%,calc((100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))*16/9));aspect-ratio:16/9;position:relative;overflow:hidden}
 #stage{container-type:inline-size;isolation:isolate}
 #bleed{pointer-events:none;background:#121726 center/cover no-repeat}
+.poster-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;opacity:0}
+.poster-video.is-playing{opacity:1}
 #bleed .cinema-wing{display:none}
 @media (orientation:landscape) and (pointer:coarse),(orientation:landscape) and (max-height:500px){
   #bleed{position:fixed;inset:0;width:100vw;height:100dvh;aspect-ratio:auto}
   #bleed{--wings:linear-gradient(to right,#000 var(--stage-left),transparent var(--stage-left),transparent calc(100% - var(--stage-right)),#000 calc(100% - var(--stage-right)))}
   #bleed .cinema-wing{position:absolute;inset:0;display:block;background:center 25%/cover no-repeat;mask-image:var(--wings)}
-  body:has(.battle-page.spotlight) #bleed:not(:has(.cinema-wing))::after{content:"";position:absolute;inset:0;background:rgba(5,6,25,.66);mask-image:var(--wings)}
+  #bleed .cinema-matte{background:linear-gradient(90deg,#090d19,#1c223a 14%,#1c223a 86%,#090d19)}
   /* One continuous backdrop samples the scene on both sides of the safe stage.
      Content uses the positive insets to stay in the original 16:9 play area. */
   #stage:has(#overlay:not([hidden]),.pn-scrim,.pn-draw-results,.battle-result),
@@ -35,9 +37,31 @@ body{display:grid;place-items:center;min-width:0;padding:env(safe-area-inset-top
 .sky-dialog .dialog-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:.6cqw;margin-top:1.3cqw}
 .sky-dialog .dialog-row{display:flex;justify-content:space-between;align-items:center;gap:1cqw;padding:1.05cqw .2cqw;border-bottom:1px solid #c3a97928}
 .sky-dialog .dialog-row strong{color:var(--gold)}.sky-dialog .dialog-row small{display:block;color:#c7c3ce;font-size:.94cqw;margin-top:.36cqw}
-.sky-dialog .catalog{display:grid;grid-template-columns:repeat(4,1fr);gap:.7cqw}
+.audio-note {
+  position:relative;display:grid;place-items:center;width:1.1em;height:1.1em;
+  font:700 max(16px,1.63cqw)/1 "Segoe UI Symbol",sans-serif;
+}
+.audio-toggle[aria-pressed="false"] .audio-note::after {
+  content:"";position:absolute;left:2%;right:2%;top:48%;height:1.5px;border-radius:1px;
+  background:currentColor;box-shadow:0 1px #151b30;transform:rotate(-47deg);
+}
+.sky-dialog .audio-setting b {font-size:max(11px,1.12cqw);}
+.audio-volume {
+  display:flex;align-items:center;gap:max(6px,.58cqw);margin-top:.38cqw;
+  color:#e4d8c5;font-size:max(10px,.9cqw);
+}
+.audio-volume input {width:clamp(100px,18cqw,230px);margin:0;accent-color:#f2ce8b;}
+.audio-volume output {min-width:4ch;font-variant-numeric:tabular-nums;}
+.audio-credit {margin:1.15cqw 0 0;color:#ded1be;font-size:max(10px,.9cqw);}
+.audio-credit a {color:#f1d392;text-decoration:underline;text-underline-offset:.18em;}
+.sky-dialog .catalog{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7cqw}
 .sky-dialog .catalog button,.sky-dialog .catalog .catalog-item{display:grid;place-items:center;align-content:start;padding:.5cqw;background:#171c30;border:1px solid #aa916a41;font-size:1cqw}
 .sky-dialog .catalog small{font-size:.85cqw;color:#cec7b9}
+.sky-dialog .catalog button>b{font-size:max(9px,1cqw);text-align:center}
+.sky-dialog small.codex-meta{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.2cqw max(3px,.38cqw);white-space:nowrap;font-size:max(9px,.85cqw)}
+.sky-dialog .dialog-row small.codex-meta{display:flex;justify-content:flex-start;font-size:max(9px,.94cqw)}
+.codex-faction-label{display:inline-flex;align-items:center;gap:max(2px,.22cqw)}
+.codex-faction{width:max(10px,1.25cqw);height:max(10px,1.25cqw);object-fit:contain}
 .bag-tabs{display:flex;gap:.5cqw;margin-bottom:1.2cqw}
 .bag-tabs button{padding:.45cqw 1.5cqw;border-bottom:1px solid #9c8e8055;color:#c5c1cd}
 .bag-tabs [aria-pressed=true]{color:#ffda98;border-color:#e0b976;background:#b9925320}
@@ -54,5 +78,5 @@ body{display:grid;place-items:center;min-width:0;padding:env(safe-area-inset-top
 #orientation{position:fixed;inset:0;z-index:200;display:grid;place-items:center;text-align:center;background:radial-gradient(ellipse at 50% 35%,#35364e,#101222 70%);padding:8vw}
 #orientation span{font:70px/1 serif;color:#dfc08e}#orientation h2{font:600 34px/2 var(--display);letter-spacing:.13em}#orientation p{font-size:15px;color:#d7d0c2;margin:8px 0 30px}
 #orientation button{border:1px solid var(--edge);padding:12px 28px;color:var(--gold);background:#1d263d}
-@media(max-height:480px) and (orientation:landscape){.sky-dialog{font-size:max(9px,1.15cqw)}.sky-dialog button,.sky-dialog .dialog-row{min-height:23px}}
+@media(max-height:480px) and (orientation:landscape){.sky-dialog{font-size:max(9px,1.15cqw)}.sky-dialog:has(.catalog){width:min(68cqw,90%)}.sky-dialog button,.sky-dialog .dialog-row{min-height:23px}}
 

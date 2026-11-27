@@ -22,6 +22,10 @@ h1,h2,h3,h4,p{margin:0}img{display:block}.ico,.item-icon{width:1.7em;height:1.7e
 .tab{background-image:url('../assets/ui/ui_tab_idle.png');color:#ede4d6}.tab.active{background-image:url('../assets/ui/ui_tab_active.png');color:#fff1c5}
 .quality{position:relative;display:inline-grid;place-items:center;width:5.5cqw;aspect-ratio:1;vertical-align:middle;isolation:isolate;flex:none}
 .quality .portrait{position:absolute;width:66%;height:66%;object-fit:cover;object-position:50% 24%;border-radius:8%;background:#191d31}
+/* Give the halo and crescent clearance below the top rim. */
+:is(.quality img.portrait,.commander-badge img):is([src$="/avatar_h04.png"],[src$="/avatar_h06.png"]){
+  transform:translateY(10%);clip-path:inset(0 0 10% round 8%);
+}
 .quality .rim{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
 .quality:is(.ssr,.ur)::after{content:"";pointer-events:none;position:absolute;inset:16% 16.5%;border-radius:8%;padding:max(1px,.12cqw);background:linear-gradient(111deg,transparent 39%,#fff6cfe0 48%,transparent 57%) -25% 0/280% 100% no-repeat;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:quality-shine 6.4s linear infinite}
 @keyframes quality-shine{0%,62%{background-position:120% 0}87%,100%{background-position:-25% 0}}

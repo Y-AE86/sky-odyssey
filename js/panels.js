@@ -13,35 +13,19 @@
   const button = (text, action, value = "", color = "gold", disabled = false) =>
     '<button type="button" class="pn-button ' + color + '" ' + act(action, value) + (disabled ? " disabled" : "") + '>' + text + '</button>';
   const titleNames = {roster:"星灵养成", gacha:"星穹召唤", campaign:"航线推图"};
-  const factions = {"东煌":"mountain", "圣辉":"wing", "机巧":"gear", "秘影":"moon"};
-  const marks = {
-    arrow:'<path d="M7 12h17m-6-6 6 6-6 6"/>',
-    back:'<path d="m15 5-8 7 8 7m-8-7h17"/>',
-    star:'<path d="m15 1 3.2 7.7L27 12l-8.8 3.1L15 23l-3.2-7.9L3 12l8.8-3.3Z"/><path d="M15 6v12M9 12h12"/>',
-    shards:'<path d="m5 15 4-11 5 5-3 12Zm11-9 5-4 3 6-5 6Zm0 12 5-4 2 6-8 2Z"/>',
-    diamond:'<path d="m3 9 5-5h14l5 5-12 12Zm0 0h24M8 4l7 17 7-17"/>',
-    ticket:'<path d="m3 8 2-3h22l-2 5c-4 0-5 4-2 5l-2 5H1l2-6c3-1 4-4 0-6Zm14-2-4 13"/>',
-    coin:'<ellipse cx="15" cy="12" rx="9" ry="9"/><ellipse cx="15" cy="12" rx="6" ry="6"/><path d="m15 8 2.5 4-2.5 4-2.5-4Z"/>',
-    mountain:'<path d="m2 19 8-12 4 6 3-9 11 15ZM6 19h19"/>',
-    wing:'<path d="m24 3-6 4-12 2 8 3-8 3 7 1-2 5 9-7Zm-1 3-7 7"/>',
-    gear:'<path d="m12 3 6 0 1 3 3 1 3 0 2 5-3 2-1 3-1 3-5 1-2-2-4 1-3-2-2-4-2-2 3-4 3 0Z"/><circle cx="15" cy="12" r="3"/>',
-    moon:'<path d="M20 3a9 9 0 1 0 5 14A9 9 0 0 1 20 3ZM6 5v4M4 7h4"/>',
-    blade:'<path d="M10 16 22 3l4-1-1 5-13 12M5 14l10 8M3 23l6-6m-7 5 3 2"/>',
-    armor:'<path d="m4 5 6-3 5 3 5-3 6 3-2 5-3 1v8l-6 4-6-4v-8l-3-1Z"/><path d="m10 7 5 4 5-4m-5 4v9"/>',
-    charm:'<path d="M6 2c0 12 18 12 18 0m-9 7 5 6-5 7-5-7Z"/><circle cx="15" cy="15" r="2"/>',
-    relic:'<path d="m15 2 7 6-3 11-4 4-4-4L8 8Zm0 0v21M8 8l7 4 7-4"/>',
-    castle:'<path d="m5 21 1-9h4l1-5h2l2-5 2 5h2l1 5h4l1 9Zm5-1 1-8m9 8-1-8m-5 8v-5h2v5"/>',
-    crown:'<path d="m3 6 7 5 5-8 5 8 7-5-4 12H7ZM8 21h14"/>',
-    duel:'<path d="m4 2 4 1 15 15-3 3L5 6Zm22 0-4 1L7 18l3 3L25 6ZM3 18l7 6m10-1 7-6"/>',
-    flag:'<path d="M6 23V3m0 1 6-2 6 3 7-1-3 8-6 2-5-4-5 2"/>',
-    lock:'<rect x="7" y="10" width="16" height="12" rx="2"/><path d="M10 10V7a5 5 0 0 1 10 0v3m-5 4v4"/>',
-    check:'<path d="m5 12 6 6L25 5"/>',
-    orbit:'<ellipse cx="15" cy="12" rx="12" ry="5" transform="rotate(-26 15 12)"/><circle cx="15" cy="12" r="7"/><path d="m15 8 1 3 3 1-3 1-1 3-1-3-3-1 3-1Z"/>',
-    ranks:'<path d="m15 3 10 6-10 6L5 9Zm-9 10 9 6 9-6M6 17l9 6 9-6"/>',
-    close:'<path d="m9 6 12 12m0-12L9 18"/>'
-  };
+  const glyphs = {arrow:'→',back:'‹',close:'×',lock:'锁',check:'✓'};
+  const navArt = {orbit:'gacha',ranks:'formation',flag:'codex',duel:'formation',star:'gacha'};
+  const itemArt = {coin:'coin',diamond:'gem',ticket:'ticket',shards:'shard',core:'core'};
+  const gearArt = {blade:0,castle:3,crown:1};
+  function image(url, cls="pn-mark") {
+    return '<img class="'+cls+'" alt="" draggable="false" src="'+escape(url)+'">';
+  }
   function mark(key) {
-    return '<svg class="pn-mark" viewBox="0 0 30 24" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">' + (marks[key] || marks.star) + '</svg>';
+    if(glyphs[key]) return '<span class="pn-mark pn-symbol" aria-hidden="true">'+glyphs[key]+'</span>';
+    if(itemArt[key]) return image(S.art.item(itemArt[key]));
+    if(navArt[key]) return image(S.art.icon(navArt[key]));
+    if(gearArt[key]!==undefined) return image(S.art.gear(gearArt[key],"UR"));
+    return '';
   }
   function resource(key, label, amount) {
     return '<span class="pn-resource" title="' + label + '">' + mark(key) + '<span>' + label + '</span><b>' + money(amount) + '</b></span>';
@@ -49,17 +33,18 @@
   function header(title, resources = "") {
     return '<header class="pn-head"><button type="button" data-action="home" aria-label="返回主城" class="pn-home">' + mark("back") + '</button><h1>' + title + '</h1><span class="pn-head-rule"></span><div class="pn-currencies">' + resources + '</div></header>';
   }
-  function framedIcon(key, rarity) {
-    const grade = String(rarity || "R").toLowerCase();
-    return '<span class="pn-itemframe grade-' + grade + '"><span>' + mark(key) + '</span><img alt="" src="assets/ui/frame_' + grade + '.png"></span>';
+  function framedGear(slot, rarity) {
+    const grade=(rarity || "R").toLowerCase();
+    return '<span class="pn-itemframe grade-'+grade+'"><span>'+image(S.art.gear(slot,rarity || "R"))+'</span>'+
+      '<img alt="" src="assets/ui/frame_'+grade+'.png"></span>';
   }
-  const equipMarks = ["blade","armor","charm","relic"];
   function costText(amount, unit) {
-    return '<strong>' + money(amount) + '</strong> ' + unit;
+    const key={"星币":"coin","晶核":"core","星钻":"diamond","张唤星券":"ticket"}[unit];
+    return '<span class="pn-cost">'+mark(key)+'<strong>'+money(amount)+'</strong> '+unit+'</span>';
   }
   function resGroup() {
     const s = state();
-    return resource("coin","星币",s.coins) + resource("relic","晶核",s.cores);
+    return resource("coin","星币",s.coins) + resource("core","晶核",s.cores);
   }
   const subviews = ["共鸣与升星","星装","本命武装","技能详情"];
   const skillNames = ["普攻","必杀","被动","觉醒"];
@@ -72,15 +57,15 @@
         '<div class="pn-orbitseal">' + mark("orbit") + '</div><div class="pn-level-action"><p>全队共享等级</p>' + button("共鸣升级","upgrade","","cyan") +
         '<small>' + costText(cost.coins,"星币") + ' · ' + costText(cost.cores,"晶核") + '</small></div></div>' +
         '<div class="pn-tristat">' + [["生命",st.hp],["攻击",st.atk],["防御",st.def]].map(([label,v]) => '<span><small>' + label + '</small><b>' + money(v) + '</b></span>').join("") + '</div>' +
-        '<div class="pn-star-up"><div><p>星灵升星</p><div class="pn-starlight" aria-label="' + count + '星">' + Array.from({length:6},(_,i) => '<i class="' + (i<count?'lit':'') + '">✦</i>').join("") + '</div><small>' + (maxed ? "觉醒已解锁" : '角色碎片 ' + fragments + ' / ' + threshold) + '</small></div>' +
-        button(maxed ? "星级已满" : "升星","star",h.id,"gold",maxed) + '</div></div>';
+        '<div class="pn-star-up"><div><p>星灵升星</p><div class="pn-starlight" aria-label="' + count + '星">' + Array.from({length:6},(_,i) => '<i class="' + (i<count?'lit':'') + '">✦</i>').join("") + '</div><small>' + (maxed ? "觉醒已解锁" : mark('shards')+' 角色碎片 ' + fragments + ' / ' + threshold) + '</small></div>' +
+        button(maxed ? "星级已满" : "升星","star",h.id,"gold",maxed || fragments<threshold) + '</div></div>';
     }
     if (P.rosterTab === 1) {
       const kit=S.Save.equippedUpgrade(s,h.id);
-      return '<div class="pn-equipment"><div class="pn-inline-title"><h2>星装配置</h2><div class="pn-kit-actions">' + button("一键配装","auto-equip",h.id,"cyan") + button("一键强化 · "+kit.cost+" 星币","enhance-all",h.id,"gold",!kit.items.length) + '</div></div><div class="pn-equip-grid">' +
+      return '<div class="pn-equipment"><div class="pn-inline-title"><h2>星装配置</h2><div class="pn-kit-actions">' + button("一键配装","auto-equip",h.id,"cyan") + button('<span>一键强化</span><small>'+mark("coin")+money(kit.cost)+'</small>',"enhance-all",h.id,"gold",!kit.items.length || s.coins<kit.cost) + '</div></div><div class="pn-equip-grid">' +
         S.D.slots.map((label,i) => {
           const item = s.bag.find(it => it.uid === s.equipment[h.id]?.[i]);
-          return '<button class="pn-equip-slot" ' + act("gear-slot", i) + '>' + framedIcon(equipMarks[i], item?.rarity || "R") +
+          return '<button class="pn-equip-slot" ' + act("gear-slot", i) + '>' + framedGear(i,item?.rarity) +
             '<span><small>' + label + '</small><b>' + escape(item?.name || "未装备") + '</b><em>' + (item ? escape(item.rarity) + '　+' + item.level : "选择星装") + '</em></span></button>';
         }).join("") + '</div></div>';
     }
@@ -100,7 +85,7 @@
     return '<section class="pn-page pn-roster" aria-label="星灵养成">' + header(titleNames.roster,resGroup()) +
       '<div class="pn-portrait ' + (P.view==="poster" ? "art" : "chibi") + '">' + photo(h.id,P.view) + '</div>' +
       '<div class="pn-art-pick">' + tab("立绘","art","poster",P.view==="poster") + tab("Q版","art","chibi",P.view==="chibi") + '</div>' +
-      '<div class="pn-hero-caption"><span class="pn-rarity">' + h.rarity + '</span><span class="pn-faction">' + mark(factions[h.faction]) + h.faction +
+      '<div class="pn-hero-caption"><span class="pn-rarity">' + h.rarity + '</span><span class="pn-faction">' + h.faction +
       '</span><h2>' + escape(h.name) + '</h2><div>' + escape(h.role) + ' <i></i> 战力 ' + money(S.Save.power(s,h.id)) + '</div></div>' +
       '<div class="pn-roster-panel pn-glass"><nav class="pn-tabs">' + subviews.map((x,i)=>tab(x,"roster-tab",i,i===P.rosterTab)).join("") +
       '</nav><div class="pn-roster-content">' + rosterPanel(h) + '</div></div>' +
@@ -111,15 +96,17 @@
   }
   function formation() {
     const s = state(), bench=s.owned.filter(id=>!s.formation.includes(id));
+    const order=s.formation.map((id,slot)=>({id,slot,speed:S.Save.stats(s,id).speed})).sort((a,b)=>b.speed-a.speed || a.slot-b.slot);
     return dialog("六人编队", '<div class="pn-formation-layout"><div class="pn-formation-board">' + [0,1].map(row =>
       '<div class="pn-form-row"><em>'+ (row===0?"前排":"后排") +'</em>' + s.formation.slice(row*3,row*3+3).map((id,i) => {
         const idx=row*3+i, h=hero(id);
         return '<button class="pn-position' + (idx===P.formSlot?' on':'') + '" aria-label="' + (row===0?"前":"后") + '排' + (i+1) + '号位 ' + escape(h.name) + '" ' + act("position",idx) + '>' +
-          S.ui.frame(id) + '<b>' + escape(h.name.split(" · ")[0]) + '</b></button>';
-      }).join("") + '</div>').join("") + '<small>' + (P.formSlot==null ? "选择一个阵位，再点另一阵位互换。" : "已选阵位，可点另一阵位或候补星灵换位。") + '</small></div>' +
+          '<span class="pn-order" title="我方出手顺序">'+(order.findIndex(unit=>unit.id===id)+1)+'</span>'+S.ui.frame(id) +
+          '<b>'+escape(h.name.split(" · ")[0])+'</b><small class="pn-profession">'+escape(h.role.split(" · ")[1].replace(/^[前后]排/,""))+'</small></button>';
+      }).join("") + '</div>').join("") + '<small>' + (P.formSlot==null ? "数字为我方出手顺序。依次选择两个阵位可互换。" : "已选阵位，可点另一阵位或候补星灵换位。") + '</small></div>' +
       '<aside class="pn-form-side"><h3>阵营羁绊</h3>' + S.Save.bonds(s.formation).map(b =>
-        '<div class="pn-bond' + (b.tier ? ' on' : '') + '">'+mark(factions[b.faction])+'<b>'+b.faction+'</b><small>'+b.count+' 人</small><em>' + (b.tier ? '+' + Math.round(b.bonus*100) + '%' : '未激活') + '</em></div>').join("") +
-      '<h3>候补星灵</h3><div class="pn-bench">' + (bench.length ? bench.map(id=>'<button '+act("bench",id)+'>'+S.ui.frame(id)+'<small>'+escape(hero(id).name.split(" · ")[0])+'</small></button>').join("") : '<p>已拥有的星灵均已上阵</p>') +
+        '<div class="pn-bond' + (b.tier ? ' on' : '') + '">'+'<b>'+b.faction+'</b><small>'+b.count+' 人</small><em>' + (b.tier ? '+' + Math.round(b.bonus*100) + '%' : '未激活') + '</em></div>').join("") +
+      '<p class="pn-bond-rule">同阵营上阵 2 / 4 / 6 人，生命、攻击与防御分别提升 6% / 12% / 20%。</p><h3>候补星灵</h3><div class="pn-bench">' + (bench.length ? bench.map(id=>'<button '+act("bench",id)+'>'+S.ui.frame(id)+'<small>'+escape(hero(id).name.split(" · ")[0])+'</small></button>').join("") : '<p>已拥有的星灵均已上阵</p>') +
       '</div></aside></div>');
   }
   function gearPicker() {
@@ -127,8 +114,8 @@
     const items=s.bag.filter(it=>it.slot===slot).sort((a,b)=>((b.uid===equipped)-(a.uid===equipped)) || b.level-a.level);
     return dialog(S.D.slots[slot]+" · 星装库", '<div class="pn-bag-list">' + items.map(it=>{
       const wearer=s.owned.find(id=>s.equipment[id]?.includes(it.uid));
-      return '<div class="pn-bag-item">' + framedIcon(equipMarks[slot],it.rarity) + '<div><b>' + escape(it.name) + ' +' + it.level + '</b><small>' + (wearer ? escape(hero(wearer).name) + ' 装备中' : '待装备') + '</small></div>' +
-        (it.uid===equipped ? button("强化 · "+money(S.Save.enhanceCost(it))+" 星币","enhance",it.uid,"cyan") : button(wearer ? "占用中" : "装备","equip",it.uid,"gold",!!wearer)) + '</div>';
+      return '<div class="pn-bag-item">' + framedGear(slot,it.rarity) + '<div><b>' + escape(it.name) + ' +' + it.level + '</b><small>' + (wearer ? escape(hero(wearer).name) + ' 装备中' : '待装备') + '</small></div>' +
+        (it.uid===equipped ? button('<span>强化</span><small>'+mark("coin")+money(S.Save.enhanceCost(it))+'</small>',"enhance",it.uid,"cyan",it.level>=50 || s.coins<S.Save.enhanceCost(it)) : button(wearer ? "占用中" : "装备","equip",it.uid,"gold",!!wearer)) + '</div>';
     }).join("") + '</div>');
   }
   function dialog(title, body, className = "") {
@@ -140,27 +127,31 @@
       '<div class="pn-gacha-action-art">' + photo(id,"poster") + '</div><div class="pn-feature"><div><strong>UR</strong><span>' + h.faction + '　·　' + escape(h.role) +
       '</span></div><h2>' + escape(h.name) + '</h2><span>' + escape(h.ult) + '</span></div>' +
       '<div class="pn-summon-panel pn-glass"><nav class="pn-tabs">'+tab("常驻星穹池","pool","standard",!featured)+tab("东煌限定 UP","pool","up",featured)+'</nav>' +
-      '<div class="pn-pool-data"><div class="pn-inline-title"><div class="pn-pool-emblem">'+mark(featured?"moon":"orbit")+'</div><button aria-label="概率说明" title="概率说明" class="pn-question" '+act("rates")+'>?</button></div>' +
+      '<div class="pn-pool-data"><div class="pn-inline-title"><div class="pn-pool-emblem">'+mark("orbit")+'</div><button aria-label="概率说明" title="概率说明" class="pn-question" '+act("rates")+'>?</button></div>' +
       '<h2>' + (featured?"幽冥墨莲":"群星回响") + '</h2><p>' + (featured ? "UR 星灵中，幽冥墨姬占 75%。" : "四大阵营星灵常驻星穹。") + '</p>' +
+      '<div class="pn-featured-list" aria-label="核心星灵预览">'+['h01','h02','h03'].map(id=>'<div>'+S.ui.frame(id)+'<span>'+hero(id).name.split(' · ')[0]+'</span><small>'+hero(id).rarity+'</small></div>').join('')+'<div class="pn-rate-note"><span>基础概率</span><b>UR　2%</b><b>SSR　13%</b></div></div>'+
       '<div class="pn-pity"><div><strong>UR 保底进度</strong><b>' + pity.ur + '<small> / 60</small></b></div>' + S.ui.bar(pity.ur/60*100,"cyan") + '<small>再召唤 ' + (60-pity.ur) + ' 次必得 UR　·　至多 ' + (10-pity.ssr) + ' 次获得 SSR 或以上</small></div>' +
-      '<div class="pn-summon-buttons">' + button("单次召唤 ×1","draw",1,"cyan") + button("十连召唤 ×10","draw",10) + '</div><button class="pn-exchange-link" ' + act("exchange-dialog",1)+'>星钻兑券　' + mark("arrow") + '</button></div></div></section>';
+      '<div class="pn-summon-buttons">' + button('单次召唤 <span class="pn-draw-cost">'+mark("ticket")+'×1</span>',"draw",1,"cyan") + button('十连召唤 <span class="pn-draw-cost">'+mark("ticket")+'×10</span>',"draw",10) + '</div><button class="pn-exchange-link" ' + act("exchange-dialog",1)+'>星钻兑券　' + mark("arrow") + '</button></div></div></section>';
   }
   function rates() {
     return dialog("召唤概率", '<div class="pn-rates"><div class="pn-rate-values">' +
       [["UR","2%"],["SSR","13%"],["SR","85%"]].map(([grade,rate])=>'<span><em>'+grade+'</em><b>'+rate+'</b></span>').join("") +
-      '</div><p>每 10 抽至少获得 1 位 SSR 或更高品质星灵，每 60 抽至少获得 1 位 UR。获得相应品质后，该项保底重新计数。</p><p>两个卡池独立累计。常驻池的 UR 星灵均分概率，东煌 UP 池的 UR 有 75% 为幽冥墨姬。已拥有的星灵会转为该角色碎片。</p></div>');
+      '</div><p>每 10 抽至少获得 1 位 SSR 或更高品质星灵，每 60 抽至少获得 1 位 UR。获得相应品质后，该项保底重新计数。</p><p>首次十连至少结识幽冥墨姬、冰灵或凌波玉笛中的一位，此保障全账户限一次。两个卡池分别累计常规保底。常驻池的 UR 星灵均分概率，东煌 UP 池的 UR 有 75% 为幽冥墨姬。已拥有的星灵会转为该角色碎片。</p></div>');
   }
   function exchangeDialog() {
     const need=P.exchangeCount;
     return dialog("兑换唤星券",'<div class="pn-exchange-info">'+mark("ticket")+'<h3>'+costText(need*160,"星钻")+'　→　'+costText(need,"张唤星券")+'</h3><p>当前持有 '+money(state().diamonds)+' 星钻</p>'+button("确认兑换","exchange",need)+'</div>');
   }
   function results() {
-    const one=P.draws.length===1;
-    return '<div class="pn-draw-results' + (P.skip || state().settings.powerSave ? ' instant' : '') + (one?' single':'') + '" role="dialog" aria-modal="true" aria-label="召唤结果">' +
-      '<div class="pn-reveal-light"></div><header><h2>召唤结果</h2><button '+act("skip")+' class="pn-skip">跳过动画 '+mark("arrow")+'</button></header><div class="pn-result-grid">' + P.draws.map((r,i)=>{
-        const h=hero(r.id);
-        return '<div class="pn-result-card result-'+r.rarity.toLowerCase()+'" style="--i:'+i+'"><div class="pn-result-front"><small>'+r.rarity+'</small>'+
-          S.ui.frame(r.id)+'<b>'+escape(h.name)+'</b><em class="'+(r.isNew?'is-new':'')+'">'+(r.isNew?'NEW · 初次相遇':'碎片 ×'+r.shards)+'</em></div></div>';
+    const one=P.draws.length===1, ready=P.revealed;
+    return '<div class="pn-draw-results' + (ready?' instant':'') + (one?' single':'') + '" role="dialog" aria-modal="true" aria-label="召唤结果">' +
+      '<div class="pn-reveal-light"></div><header><h2>召唤结果</h2><div class="pn-reveal-actions"><button '+act("skip")+(ready?' hidden':'')+' class="pn-skip">跳过动画 '+mark("arrow")+'</button>'+
+      (one?'':'<button '+act("draw",10)+(ready?'':' hidden')+' aria-label="再抽十次" class="pn-repeat">再抽十次 '+mark("ticket")+' ×10</button>')+'</div></header>'+
+      '<div class="pn-result-grid">' + P.draws.map((r,i)=>{
+        const h=hero(r.id), illustrated=['h01','h02','h03'].includes(r.id);
+        return '<div class="pn-result-card result-'+r.rarity.toLowerCase()+'" data-hero="'+r.id+'" style="--i:'+i+'"><div class="pn-result-front">'+
+          photo(r.id,illustrated?"poster":"chibi","pn-card-scene"+(illustrated?"":" phantom"))+'<small>'+r.rarity+'</small>'+S.ui.frame(r.id)+'<b>'+escape(h.name)+'</b><em class="'+(r.isNew?'is-new':'')+'">'+
+          (r.isNew?'NEW · 初次相遇':mark("shards")+' 碎片 ×'+r.shards)+'</em></div></div>';
       }).join("")+'</div>'+button("收下星灵","dismiss")+'</div>';
   }
 
@@ -171,7 +162,7 @@
   function chapterTitle(chapter) {return '第' + (chapter===1?'一':'二') + '章';}
   function campaign() {
     const s=state();
-    return '<section class="pn-page pn-campaign" style="background-image:url(&quot;'+escape(S.scene("worldmap"))+'&quot;)" aria-label="'+(P.trials?"星穹试炼":"航线推图")+'">'+
+    return '<section class="pn-page pn-campaign" aria-label="'+(P.trials?"星穹试炼":"航线推图")+'">'+
       header(P.trials?"星穹试炼":titleNames.campaign,resource("ranks","战力",S.Save.power(s))) +
       '<nav class="pn-camp-modes">'+tab("主线航线","mode","campaign",!P.trials)+tab("星穹试炼","mode","trials",P.trials)+'</nav>' + (P.trials?trialPanel():mapPanel())+'</section>';
   }
@@ -186,7 +177,7 @@
       stages.map((v,i)=>{const [x,y]=mapNodes[i], unlocked=v.id<=reached+1;
         return '<button class="pn-route-node'+(v.id===stage.id && unlocked?' on':'')+(!unlocked?' locked':'')+'" style="left:'+x+'%;top:'+y+'%" aria-label="'+v.code+' '+v.name+'" '+act("stage",v.id)+(unlocked?'':' disabled')+'><i>'+mark(unlocked?(v.id<=reached?"check":i===4?"crown":"star"):"lock")+'</i><b>'+v.code+'</b><small>'+v.name+'</small></button>';}).join("") +
       '</div><div class="pn-map-chapters">' + [1,2].map(i=>tab(chapterTitle(i),"chapter",i,P.chapter===i)).join("") + '<span>已通关　'+reached+' / 10</span></div></div>' +
-      (chosen?'<article class="pn-intel pn-glass"><p class="pn-section-tag">'+mark("flag")+'战前情报</p><div class="pn-intel-title"><small>'+stage.code+'</small><h2>'+stage.name+'</h2></div><div class="pn-enemy-title"><b>敌方阵容</b><small>推荐战力　'+money(stage.power)+'</small></div><div class="pn-enemies">'+stage.enemies.map((id,i)=>'<div title="'+(i<3?'前排':'后排')+' · '+escape(hero(id).name)+'">'+S.ui.frame(id)+'</div>').join("")+'</div>'+
+      (chosen?'<article class="pn-intel pn-glass"><p class="pn-section-tag">'+mark("flag")+'战前情报</p><div class="pn-intel-title"><small>'+stage.code+'</small><h2>'+stage.name+'</h2></div><div class="pn-enemy-title"><b>敌方阵容</b><small>推荐战力　'+money(stage.power)+'</small></div><div class="pn-enemies">'+stage.enemies.map((id,i)=>'<div data-hero="'+id+'" title="'+(i<3?'前排':'后排')+' · '+escape(hero(id).name)+'">'+S.ui.frame(id)+'<small>'+escape(hero(id).name.split(" · ")[0])+'</small></div>').join("")+'</div>'+
       '<div class="pn-reward"><small>'+(stage.id<=reached?'首通奖励已领取':'首通奖励')+'</small><span>'+mark("diamond")+money(stage.reward.diamonds)+'</span><span>'+mark("ticket")+stage.reward.tickets+'</span></div>'+button("出征","start-route",stage.id)+'</article>':
       '<article class="pn-intel pn-glass pn-locked-intel">'+mark("lock")+'<h2>航线尚未解锁</h2><p>完成第一章全部 5 关，即可启航齿轮云巅。</p></article>');
   }
@@ -220,7 +211,7 @@
     const scope=dialog || S.ui.root;
     const next=focusSelector ? scope.querySelector(focusSelector) : null;
     if (next && !next.disabled) next.focus({preventScroll:true});
-    else if (dialog) dialog.querySelector('button:not(:disabled)')?.focus({preventScroll:true});
+    else if (dialog) dialog.querySelector('button:not(:disabled):not([hidden])')?.focus({preventScroll:true});
   }
   function commit(action, success) {
     action();
@@ -270,7 +261,7 @@
         if (s.tickets<n) {P.exchangeCount=n-s.tickets; P.requestedDraw=n; P.overlay="exchange";} else draw(n);
         break;
       case "skip":
-        P.skip=true; target.closest(".pn-draw-results")?.classList.add("instant"); return;
+        finishReveal(true); return;
       case "mode": P.trials=v==="trials"; break;
       case "chapter": P.chapter=n; P.stage=Math.min(n*5,Math.max((n-1)*5+1,s.cleared+1)); break;
       case "stage": P.stage=n; break;
@@ -286,12 +277,27 @@
   function draw(count) {
     P.draws=S.Save.draw(state(),P.pool,count); S.ui.save();
     S.sound("summon");
-    P.skip=false; P.overlay="draws";
+    P.revealed=state().settings.powerSave || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    P.overlay="draws";
+  }
+  function finishReveal(skipped) {
+    const results=S.ui.root.querySelector(".pn-draw-results");
+    if(!results || P.revealed)return;
+    P.revealed=true;
+    if(skipped)results.classList.add("instant");
+    const skip=results.querySelector(".pn-skip"), repeat=results.querySelector(".pn-repeat");
+    const wasFocused=document.activeElement===skip;
+    skip.hidden=true;
+    if(repeat)repeat.hidden=false;
+    if(wasFocused)(repeat || results.querySelector('[data-panel="dismiss"]')).focus({preventScroll:true});
+  }
+  function onReveal(event) {
+    if(event.animationName==="pn-flip" && event.target.matches(".pn-result-card:last-child"))finishReveal(false);
   }
   function onKey(event) {
     if(event.key==="Escape" && P.overlay) {event.preventDefault();P.overlay="";P.requestedDraw=0;paint();}
     if(event.key==="Tab" && P.overlay){
-      const buttons=S.ui.root.querySelectorAll('[role="dialog"] button:not(:disabled)');
+      const buttons=S.ui.root.querySelectorAll('[role="dialog"] button:not(:disabled):not([hidden])');
       if(!buttons.length) return;
       const first=buttons[0],last=buttons[buttons.length-1];
       if(event.shiftKey && document.activeElement===first){event.preventDefault();last.focus();}
@@ -300,6 +306,7 @@
   }
   function destroy() {
     S.ui.root.removeEventListener("click",onClick);
+    S.ui.root.removeEventListener("animationend",onReveal);
     document.removeEventListener("keydown",onKey);
     P.overlay=""; P.draws=[];
   }
@@ -312,9 +319,8 @@
     P.chapter=S.D.stages[P.stage-1].chapter;
     paint();
     S.ui.root.addEventListener("click",onClick);
+    S.ui.root.addEventListener("animationend",onReveal);
     document.addEventListener("keydown",onKey);
   }
   S.panels={render,destroy};
 })(window.Sky = window.Sky || {});
-
-

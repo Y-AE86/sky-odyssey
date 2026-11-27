@@ -34,7 +34,8 @@
     return {version:1, diamonds:4800, coins:6000, tickets:30, cores:120, level:1,
       owned:[...D.starter].sort(), formation:[...D.starter], stars:fields(() => 1),
       shards:fields(() => 0), bag, equipment, cleared:0,tower:0,bossBest:0,arenaWins:0,
-      pity:{standard:{ur:0,ssr:0},up:{ur:0,ssr:0}}, settings:{powerSave:false,sound:true,poster:'h01'},
+      pity:{standard:{ur:0,ssr:0},up:{ur:0,ssr:0}}, firstTenDone:false,
+      settings:{powerSave:false,sound:true,poster:'h01'},
       welfare:false, daily:dailyRecord(now), event:{start:calendarDay(now),days:[]},
       idleAt:Math.max(0,now-120000), idleCoreSeconds:0};
   }
@@ -68,6 +69,7 @@
     }
     counter(s.cleared,10); counter(s.tower,30); counter(s.bossBest); counter(s.arenaWins);
     for (const p of ['standard','up']) {counter(s.pity?.[p]?.ur,59); counter(s.pity?.[p]?.ssr,9);}
+    valid(s.firstTenDone===undefined || typeof s.firstTenDone==='boolean');
     valid(s.settings && typeof s.settings.sound==='boolean' && typeof s.settings.powerSave==='boolean');
     valid(['h01','h02','h03'].includes(s.settings.poster) && typeof s.welfare==='boolean');
     valid(s.daily && /^\d{4}-\d{2}-\d{2}$/.test(s.daily.day) && typeof s.daily.claimed==='boolean');
@@ -87,6 +89,7 @@
     let s;
     try { s=JSON.parse(json); } catch { throw new Error('无法读取 JSON 存档'); }
     validate(s); refreshDaily(s); s.event ||= {start:calendarDay(Date.now()),days:[]};
+    s.firstTenDone ??= false;
     return s;
   }
   function load() {
@@ -230,12 +233,19 @@
     s.tickets-=n;
     for (let i=0; i<n; i++) {
       const roll=rng();
-      const rarity= (pity.ur>=59 || roll<poolRates.ur) ? 'UR' :
+      let rarity= (pity.ur>=59 || roll<poolRates.ur) ? 'UR' :
         ((pity.ssr>=9 || roll<poolRates.ur+poolRates.ssr) ? 'SSR' : 'SR');
       const candidates=D.heroes.filter(h=>h.rarity===rarity);
       let hero;
       if (pool==='up' && rarity==='UR') hero=D.hero(rng()<poolRates.up ? 'h01' : 'h02');
       else hero=candidates[Math.floor(rng()*candidates.length)];
+      // Apply the newcomer slot before inventory and pity so the displayed card,
+      // credited shards and counter resets all describe the same pull.
+      if(n===10 && i===9 && !s.firstTenDone && rarity!=='UR' &&
+          !results.some(result=>['h01','h02','h03'].includes(result.id))) {
+        hero=D.hero('h03');
+        rarity=hero.rarity;
+      }
       const id=hero.id, isNew=!s.owned.includes(id), shards=isNew ? 0 : {SR:6,SSR:12,UR:24}[rarity];
       if (isNew) s.owned.push(id);
       s.shards[id]+=shards;
@@ -243,6 +253,7 @@
       pity.ssr=rarity==='SR' ? pity.ssr+1 : 0;
       results.push({id,rarity,isNew,shards});
     }
+    if(n===10)s.firstTenDone=true;
     return results;
   }
   function settle(s,battle) {

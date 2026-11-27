@@ -12,6 +12,36 @@
     "sha256": "023330BA4CCAF2C49E32D4D17FF62EF732C2D2FAF1F4E9010302777AFBDFA683"
   },
   {
+    "path": "assets/avatars/avatar_h04.png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "94CA78DEED1B7E8F9CF53961740E6276ABE85157AEC7452A0ABA7A73546C03DA"
+  },
+  {
+    "path": "assets/avatars/avatar_h05.png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "D7C68C4C6C107B80643D9A05FAF76F02F163FD8A9423B8DADA73AFE72755C72F"
+  },
+  {
+    "path": "assets/avatars/avatar_h06.png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "1B4DA4C54F803B6290A65AD4FC05287F094A299400A01FFB931B9087A2FEF059"
+  },
+  {
+    "path": "assets/avatars/avatar_h07.png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "1D6D5636746070A58B202CDA1CE7153CB1E8962B2FBC7066C87DDC5C9ED21203"
+  },
+  {
+    "path": "assets/avatars/avatar_h08.png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "EDDB770145092A5C47CB54443D92163B47DC7E5F255EA8B03CECE458091A7DB6"
+  },
+  {
     "path": "assets/avatars/avatar_protag.png",
     "width": 1254,
     "height": 1254,
@@ -30,10 +60,196 @@
     "sha256": "DF7BF54115A2EA1E242022800DE855CB1AF89B4275276F2B9803B8F330CC2459"
   },
   {
+    "path": "assets/chibi/chibi_h04.png",
+    "width": 1,
+    "height": 1,
+    "sha256": "2FE8E6C2A228CC8932B1A02EF77D563DDDC0618EB038EA3EA29338B35F37FDC6"
+  },
+  {
+    "path": "assets/chibi/chibi_h05.png",
+    "width": 1,
+    "height": 1,
+    "sha256": "2FE8E6C2A228CC8932B1A02EF77D563DDDC0618EB038EA3EA29338B35F37FDC6"
+  },
+  {
+    "path": "assets/chibi/chibi_h06.png",
+    "width": 1,
+    "height": 1,
+    "sha256": "2FE8E6C2A228CC8932B1A02EF77D563DDDC0618EB038EA3EA29338B35F37FDC6"
+  },
+  {
+    "path": "assets/chibi/chibi_h07.png",
+    "width": 1,
+    "height": 1,
+    "sha256": "2FE8E6C2A228CC8932B1A02EF77D563DDDC0618EB038EA3EA29338B35F37FDC6"
+  },
+  {
+    "path": "assets/chibi/chibi_h08.png",
+    "width": 1,
+    "height": 1,
+    "sha256": "2FE8E6C2A228CC8932B1A02EF77D563DDDC0618EB038EA3EA29338B35F37FDC6"
+  },
+  {
     "path": "assets/chibi/chibi_protag.png",
     "width": 1028,
     "height": 1193,
     "sha256": "F9D8B28CDB7FFD0B98D4001804CCE6B368948661E3644F02116A34B4DADC2E14"
+  },
+  {
+    "path": "assets/icons/icon_bag.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "AF53E1786A6C2C47C950022D225DE0061920CE87B4C49D05FB32EB6C9C84B3FD"
+  },
+  {
+    "path": "assets/icons/icon_codex.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "3D7A18CDB0DED755EDA5527ADB613847E8EF15A9B0233D8D7846528A5BC9AFE6"
+  },
+  {
+    "path": "assets/icons/icon_formation.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "940E60FFEE317BB6892779A7E0DD9FD63D35D75147AADA79E0237DE930C8FB64"
+  },
+  {
+    "path": "assets/icons/icon_gacha.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "6CD145ADB5FB3ECE5EDFC926BFC98490D44F8AF78215F24EE04571C2B2D71EEC"
+  },
+  {
+    "path": "assets/icons/icon_quest.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "E424599A7CD924C20C179A3C60C46DA331FAE1B70143BD69818291D589E7B544"
+  },
+  {
+    "path": "assets/icons/icon_reward.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "518ACB9D406E0EE191ADB60E8E3853079879BC1D806D53A65A6232DABE87A3D4"
+  },
+  {
+    "path": "assets/icons/icon_roster.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "8E2B46DA53C75A9A65291F4B4A0D3DE01F9FE8989DEA25435EFD6090ED5E56A4"
+  },
+  {
+    "path": "assets/icons/icon_settings.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "D792E435288EAF63A4B589D0E1A2C93BA574AFD017AE0A5929C5688C7C3EC195"
+  },
+  {
+    "path": "assets/icons/icon_shop.png",
+    "width": 380,
+    "height": 380,
+    "sha256": "EF528BE7E42BCE45D7BAB6FD9ED7E08D8E5ADBC50EEED2AAA2BA1F9541939E36"
+  },
+  {
+    "path": "assets/items/gear_accessory_sr.png",
+    "width": 450,
+    "height": 450,
+    "sha256": "F776B222B84C00059826A668F22892FBE3137276CC09F1EC593691AB5C0307A1"
+  },
+  {
+    "path": "assets/items/gear_accessory_ur.png",
+    "width": 450,
+    "height": 450,
+    "sha256": "F5C292815C20BCE4AEF12BB8636B583D5513F07AD9D57F60A90FCE0FC859BF56"
+  },
+  {
+    "path": "assets/items/gear_armor_sr.png",
+    "width": 452,
+    "height": 452,
+    "sha256": "51B0CD5A4B92D044C37D8462EDC22E2D5DABFDFD6C3B826B0821A1C5289E5C8B"
+  },
+  {
+    "path": "assets/items/gear_armor_ur.png",
+    "width": 462,
+    "height": 462,
+    "sha256": "B0DA2D29975158AA4FA823C6F92C4001404617B5DB6A08458CD47CC1B717363C"
+  },
+  {
+    "path": "assets/items/gear_relic_sr.png",
+    "width": 450,
+    "height": 450,
+    "sha256": "AE736CFC070E750797E0F8807F3AAC7A26AE3D3A487D5F7806EE5DBBCBE7F490"
+  },
+  {
+    "path": "assets/items/gear_relic_ur.png",
+    "width": 457,
+    "height": 457,
+    "sha256": "D2100E327C0C75F207435050F3919EFA73A64093FA17CA9D542261ABAAB092C8"
+  },
+  {
+    "path": "assets/items/gear_weapon_sr.png",
+    "width": 450,
+    "height": 450,
+    "sha256": "184737A9A6F13EE4F162CCC5E243B5B7DB79ABDF651EC7916FB3A5218D75BD40"
+  },
+  {
+    "path": "assets/items/gear_weapon_ur.png",
+    "width": 452,
+    "height": 452,
+    "sha256": "31F56306AC33110ECA21030D45B20482AA844C64FA98CEA13A7B28095333BD42"
+  },
+  {
+    "path": "assets/items/item_chest.png",
+    "width": 400,
+    "height": 400,
+    "sha256": "A4BB90D058BDA567970667F621AA4F80CA04936427EC2EF38A76E12AA45E0DBA"
+  },
+  {
+    "path": "assets/items/item_coin.png",
+    "width": 400,
+    "height": 400,
+    "sha256": "715F579ED85443D19FEB4681CFF1409D19751BD92C4C8EBE8256B0BF3E0AC2FD"
+  },
+  {
+    "path": "assets/items/item_core.png",
+    "width": 400,
+    "height": 400,
+    "sha256": "050E339CD3D3C080416D0A5BF0693BB1C67C08630302954B2AFFE223B54A522C"
+  },
+  {
+    "path": "assets/items/item_dew.png",
+    "width": 415,
+    "height": 415,
+    "sha256": "443AD5938040EE22887AC39AD703CB80D1636B0DCBB57EAB399B229DE9924567"
+  },
+  {
+    "path": "assets/items/item_dust.png",
+    "width": 400,
+    "height": 400,
+    "sha256": "43DEEF68B50473A70A7B0106FF56CB9317E2435C533270E16585C618823D9F26"
+  },
+  {
+    "path": "assets/items/item_gem.png",
+    "width": 400,
+    "height": 400,
+    "sha256": "C559601BCBDFD6DF3F36265BE02C264F2C8C653B17E62BBD26FA7AD7A79EE9EB"
+  },
+  {
+    "path": "assets/items/item_shard.png",
+    "width": 400,
+    "height": 400,
+    "sha256": "8DA9BB6BB04C3E7973D9A4385D34586DBFDED92DF47B5652DA83B00CAF3CF197"
+  },
+  {
+    "path": "assets/items/item_stamina.png",
+    "width": 400,
+    "height": 400,
+    "sha256": "75D42DDC17E189BEFD809CEDB68F709B8228578713883E0D9A8461A72AA0CEDD"
+  },
+  {
+    "path": "assets/items/item_ticket.png",
+    "width": 400,
+    "height": 400,
+    "sha256": "37F398175C038BCA28B5D3145E723E12354499148CD3673E63924695DD901909"
   },
   {
     "path": "assets/posters/lobby_cg_c07.png",
@@ -46,6 +262,36 @@
     "width": 1672,
     "height": 941,
     "sha256": "BCB6272A2413DD1D8B1F793E10A8EBB6CE3663931C71D2F1E1A59C112CFEE182"
+  },
+  {
+    "path": "assets/posters/lobby_cg_h04.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "3D578453E3D705564EA9C3C384EBCDBE3DCB9499B299B1DD9D505A6CDC7EC660"
+  },
+  {
+    "path": "assets/posters/lobby_cg_h05.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "4E4D9BB4AE8ECE341FCD9FEC94CBDD6EF4E442243FAE3F92A306ECC8C5277796"
+  },
+  {
+    "path": "assets/posters/lobby_cg_h06.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "27EE56EA63BF45E63639D75FF1BA12FE3E4C99E7C4B545CAE1DE09A74E076ECD"
+  },
+  {
+    "path": "assets/posters/lobby_cg_h07.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "22621C8A1DF8350541A39C5930637CB742B963D53C8CB2746B69D8B3FB7A922C"
+  },
+  {
+    "path": "assets/posters/lobby_cg_h08.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "B358672A44D5058FFA598D5C0BCA1108B2C1CCC8E0D3D4D9E41FB0EA4CCD20E8"
   },
   {
     "path": "assets/posters/lobby_cg_protag.png",
@@ -66,16 +312,46 @@
     "sha256": "05452DA0057C592547C177F868E7DAD361526AC3BB3F627C32033252FA73D77C"
   },
   {
+    "path": "assets/scenes/bg_roster.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "B90C97B178865D5B77B382BD8AF2DE310F14FED861E9BBA55F92B83D2D479129"
+  },
+  {
     "path": "assets/scenes/bg_roster_alt.png",
     "width": 1672,
     "height": 941,
     "sha256": "72A639A7226DF0FEF4CF8A7A3B831FC9CB0F76E5A0A0B1FFFDFE39E7DECDEE46"
   },
   {
-    "path": "assets/scenes/bg_roster.png",
+    "path": "assets/scenes/bg_worldmap.png",
     "width": 1672,
     "height": 941,
-    "sha256": "B90C97B178865D5B77B382BD8AF2DE310F14FED861E9BBA55F92B83D2D479129"
+    "sha256": "72A639A7226DF0FEF4CF8A7A3B831FC9CB0F76E5A0A0B1FFFDFE39E7DECDEE46"
+  },
+  {
+    "path": "assets/ui/emblem_defeat.png",
+    "width": 341,
+    "height": 349,
+    "sha256": "8BD7A62322458291450AA9BCD43618F689B2A88407C8332CA3CB3A13F0DDCACD"
+  },
+  {
+    "path": "assets/ui/emblem_mvp.png",
+    "width": 291,
+    "height": 281,
+    "sha256": "EF51FF52DBAB97992D02D48B2A309760D814F1B21C6C08EFC52F6E41DB1D18CE"
+  },
+  {
+    "path": "assets/ui/emblem_star.png",
+    "width": 221,
+    "height": 257,
+    "sha256": "E70B14A9257EC3D0225D20CC86947A95B7603382ED903C13C099F7052D8FA301"
+  },
+  {
+    "path": "assets/ui/emblem_victory.png",
+    "width": 450,
+    "height": 363,
+    "sha256": "4F1FFAFCA275BA4CEACCDB0B253930CFECBF69EAD9E1A4993A867E1460D8C0C7"
   },
   {
     "path": "assets/ui/frame_r.png",
@@ -121,15 +397,15 @@
   },
   {
     "path": "assets/ui/ui_btn_crimson.png",
-    "width": 413,
-    "height": 166,
-    "sha256": "5107DB6243D7763A28F4163A770F5BB96C82AF412263A0E312057F84F1B00C02"
+    "width": 418,
+    "height": 179,
+    "sha256": "B6E1BC56D7EC55C1D0C2E1F440D46068D302CC2C02F209BD5404DE26BBD4F776"
   },
   {
     "path": "assets/ui/ui_btn_cyan.png",
-    "width": 410,
-    "height": 169,
-    "sha256": "470937FFA28917CCAC5473506043EA3B533A1003936BA12708A13D7516CAA9E2"
+    "width": 416,
+    "height": 179,
+    "sha256": "2491ED9BD6E7007CE150E668EFE0ACB32581FCF044CE499F61C728A3D8B9A318"
   },
   {
     "path": "assets/ui/ui_btn_dark.png",
@@ -139,20 +415,68 @@
   },
   {
     "path": "assets/ui/ui_btn_gold.png",
-    "width": 414,
-    "height": 174,
-    "sha256": "EE175663D02E65AFA809568070BDBDC36307635936C6E0A417ED8774E407215F"
+    "width": 417,
+    "height": 171,
+    "sha256": "D43D2D6EC298C4A97AB9937D4DB2CCAE340F1202EBD17D740FA00D9788C543B0"
   },
   {
     "path": "assets/ui/ui_tab_active.png",
-    "width": 559,
-    "height": 196,
-    "sha256": "5523BE3B23EF02150A1F32F4282810CCC1D10914FD75112E1A3C7B09CBDA7278"
+    "width": 659,
+    "height": 141,
+    "sha256": "1215DCCD3D4E9A23DFA2158433175F7BF8AE05AD7ECCA826721AEF8213A581C5"
   },
   {
     "path": "assets/ui/ui_tab_idle.png",
-    "width": 547,
-    "height": 190,
-    "sha256": "2BECEF48242991F0CE470C497113EA324A3762DECB216BDF2A7740D0FA1BE74A"
+    "width": 675,
+    "height": 112,
+    "sha256": "EA5536A7C170FCE52332469AD4D9E86E8DAAF84277A76CDDE3058D30D518601D"
+  },
+  {
+    "path": "assets/weapons/weapon_h01.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "A6769CBAE98EB63BE032CE7851A696AE55ADEBE9854C1E5750DDFFC5C8181041"
+  },
+  {
+    "path": "assets/weapons/weapon_h02.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "83C4D0A7A2B36B819B55F1499952453D2AC74861A7A34EE7356B5AD45706BE09"
+  },
+  {
+    "path": "assets/weapons/weapon_h03.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "B8D49C960420CE5E983898B89BB6A220881BBBE7F6DF0E8CDE39C80EBA800B43"
+  },
+  {
+    "path": "assets/weapons/weapon_h04.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "C05A72671AA6403732F0660950A4B1325051FA2CB226A2B3837F58076F471420"
+  },
+  {
+    "path": "assets/weapons/weapon_h05.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "A2A4F15494D36E8B8354CF8B510BC19CEEAD473CB6EDB648064DD3F9708C9470"
+  },
+  {
+    "path": "assets/weapons/weapon_h06.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "F6E805F4FFE3D62499EBBB05545C83EF4420D48003C2E45099D508032C46EF25"
+  },
+  {
+    "path": "assets/weapons/weapon_h07.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "4EAB98C9F4EFCA40CB17A3BC0BC5ED682FE274C296E45418F0FF415AA002329B"
+  },
+  {
+    "path": "assets/weapons/weapon_h08.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "B81E891EDAE4BC5A31159A1DF2AC206C0981B90CE5F0C8A2B97B135972F7ECDC"
   }
 ]

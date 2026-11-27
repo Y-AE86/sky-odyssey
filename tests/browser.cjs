@@ -1,5 +1,5 @@
 'use strict';
-// Run with Node and Playwright installed. Optional --root, --chrome, --out and --case values.
+// Run with Node and Playwright installed. Optional --root, --chrome, --out, --baseline and --case values.
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
@@ -23,12 +23,83 @@ const presets=[
   {name:'4k',width:3840,height:2160,dpr:1,full:true,extra:true}
 ];
 const sha=buffer=>crypto.createHash('sha256').update(buffer).digest('hex');
-const originalPaths=[
-  ...['c07','c15','protag'].flatMap(id=>['avatars/avatar_','chibi/chibi_','posters/lobby_cg_'].map(p=>p+id)),
-  ...['battle','roster','roster_alt','gacha'].map(n=>'scenes/bg_'+n),
-  ...['btn_gold','btn_cyan','btn_dark','btn_crimson','tab_active','tab_idle','bar_gold','bar_cyan','badge_circle'].map(n=>'ui/ui_'+n),
-  ...['r','sr','ssr','ur'].map(n=>'ui/frame_'+n)
-].map(p=>'assets/'+p+'.png');
+const wave1Paths=[
+  ...['gem','coin','ticket','core','shard','chest','dew','dust','stamina'].map(n=>'items/item_'+n),
+  ...['weapon','armor','accessory','relic'].flatMap(n=>['sr','ur'].map(r=>'items/gear_'+n+'_'+r)),
+  ...['quest','reward','codex','bag','shop','formation','roster','gacha','settings'].map(n=>'icons/icon_'+n),
+  ...['victory','defeat','mvp','star'].map(n=>'ui/emblem_'+n),
+  ...['btn_gold','btn_cyan','btn_crimson','tab_active','tab_idle'].map(n=>'ui/ui_'+n)
+].map(name=>'assets/'+name+'.png');
+const baseline=option('baseline',null);
+const assetsDir=path.join(root,'assets');
+const originalPaths=fs.readdirSync(assetsDir,{recursive:true}).filter(n=>n.endsWith('.png')).map(n=>'assets/'+n.split(path.sep).join('/')).sort();
+if(baseline) {
+  const expected=JSON.parse(fs.readFileSync(baseline,'utf8').replace(/^\uFEFF/,''));
+  assert.deepEqual(expected.map(entry=>entry.path).sort(),originalPaths,'PNG list changed since the supplied baseline');
+  for(const entry of expected)assert.equal(sha(fs.readFileSync(path.join(root,entry.path))),entry.sha256.toLowerCase(),entry.path);
+}
+const visualChecks=new WeakMap();
+const mobileEdges=new WeakMap();
+async function auditArt(p,screen,scope='#stage',required=[]) {
+  const result=await p.locator(scope).first().evaluate(async root=>{
+    const shown=el=>!!(el.offsetWidth || el.getClientRects().length) && getComputedStyle(el).visibility!=='hidden';
+    const paths=new Set(),badButtons=[],badSVG=[];
+    const add=src=>{
+      if(!src || !src.includes('/assets/') && !src.startsWith('assets/'))return;
+      const url=new URL(src,document.baseURI);
+      if(url.pathname.includes('/assets/'))paths.add('assets/'+url.pathname.split('/assets/').pop());
+    };
+    for(const img of root.querySelectorAll('img')) {
+      if(!shown(img))continue;
+      await img.decode();
+      if(!img.naturalWidth || !img.naturalHeight)throw new Error('Undecoded image '+img.src);
+      add(img.currentSrc);
+    }
+    for(const svg of root.querySelectorAll('svg')) {
+      if(shown(svg) && !svg.matches('.pn-trail'))badSVG.push(svg.outerHTML.slice(0,170));
+    }
+    for(const b of root.querySelectorAll('button')) {
+      if(!shown(b))continue;
+      for(const pseudo of [null,'::before','::after']) {
+        const s=getComputedStyle(b,pseudo);
+        if(pseudo && ['none','normal'].includes(s.content))continue;
+        for(const property of [s.backgroundImage,s.borderImageSource])for(const match of property.matchAll(/url\(["']?([^"')]+)["']?\)/g))add(match[1]);
+      }
+      if(b.matches('.gem-btn,.pn-button')) {
+        const r=b.getBoundingClientRect(),s=getComputedStyle(b);
+        const caps=s.borderImageSource!=='none' || getComputedStyle(b,'::before').borderImageSource!=='none';
+        if(!caps && r.width/r.height>3.53)badButtons.push([b.textContent.trim(),+(r.width/r.height).toFixed(2)]);
+      }
+    }
+    return {paths:[...paths],badSVG,badButtons};
+  });
+  assert.deepEqual(result.badSVG,[],screen+' visible outline SVG');
+  assert.deepEqual(result.badButtons,[],screen+' stretched artwork buttons');
+  for(const src of required)assert(result.paths.some(p=>p.endsWith('/'+src+'.png')),screen+' missing visible '+src+'; found '+result.paths.join(','));
+  const log=visualChecks.get(p);
+  if(log)log[screen]=[...new Set([...(log[screen]||[]),...result.paths.filter(src=>wave1Paths.includes(src))])].sort();
+}
+async function checkBleed(p,spec,screen) {
+  if(!spec.mobile)return;
+  const r=await p.locator('#stage').boundingBox();
+  const y=Math.round(spec.height*.20),h=Math.round(spec.height*.65);
+  const sampled=[];
+  for(const x of [Math.round(r.x*.4),Math.round((r.x+r.width+spec.width)/2)]) {
+    const band=await p.screenshot({clip:{x,y,width:5,height:h},scale:'css'});
+    const colors=await p.evaluate(async encoded=>{
+      const img=new Image();img.src='data:image/png;base64,'+encoded;await img.decode();
+      const c=document.createElement('canvas');c.width=img.width;c.height=img.height;
+      const ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+      const raw=ctx.getImageData(0,0,img.width,img.height).data,set=new Set();
+      let low=765,high=0;
+      for(let i=0;i<raw.length;i+=4){const sum=raw[i]+raw[i+1]+raw[i+2];low=Math.min(low,sum);high=Math.max(high,sum);set.add(raw[i]*65536+raw[i+1]*256+raw[i+2]);}
+      return {count:set.size,spread:high-low};
+    },band.toString('base64'));
+    assert(colors.count>24 && colors.spread>24,'flat mobile edge at '+x+' '+JSON.stringify(colors));
+    sampled.push({x,...colors});
+  }
+  mobileEdges.get(p)[screen]=sampled;
+}
 function serve(siteRoot=root) {
   const server=http.createServer((req,res)=>{
     const uri=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
@@ -52,7 +123,7 @@ async function screenshot(p,spec,label) {
   if(out) await p.screenshot({path:path.join(out,spec.name+'-'+label+'.png'),timeout:15000});
 }
 async function screenForReview(p,spec,label) {
-  if(!out || spec.name!=='desktop')return;
+  if(!out || spec.name!=='desktop' && !(spec.mobile && ['roster','gacha','campaign','trials'].includes(label)))return;
   await p.locator('#toast').waitFor({state:'hidden'});
   await screenshot(p,spec,label);
 }
@@ -102,7 +173,14 @@ async function runLobby(p,spec) {
   const initial=await state(p);
   assert.equal(initial.formation.length,6);assert.equal(initial.tickets,30);assert.equal(initial.diamonds,4800);
   assert.equal(initial.settings.powerSave,false);
+  await auditArt(p,'lobby','#view',['item_gem','item_coin','item_ticket','item_chest','icon_quest','icon_reward','icon_codex','icon_bag','icon_shop','icon_formation','icon_roster','icon_gacha','icon_settings']);
+  assert.equal(await p.locator('.main-dock [data-action=trials]').count(),0);
+  if(spec.mobile) {
+    const touch=await p.locator('.side-tools button,.poster-controls button').evaluateAll(buttons=>buttons.map(b=>b.getBoundingClientRect().height));
+    assert(touch.length>=6 && touch.every(h=>h>=24),'mobile action areas too short '+touch);
+  }
   await screenshot(p,spec,'lobby');
+  await checkBleed(p,spec,'lobby');
   const seen=new Set([initial.settings.poster]);
   for(let n=0;n<3;n++) {await action(p,'poster').click();seen.add((await state(p)).settings.poster);}
   assert.equal(seen.size,3);
@@ -119,6 +197,9 @@ async function runLobby(p,spec) {
 }
 async function runRoster(p,spec) {
   await action(p,'roster').click();await waitPage(p,'roster');
+  await auditArt(p,'roster','#view',['item_coin','item_core','item_shard','ui_tab_active','ui_tab_idle']);
+  assert(await panel(p,'star').isDisabled(),'new commander has no fragments to spend');
+  await checkBleed(p,spec,'roster');
   await screenForReview(p,spec,'roster');
   const initial=await state(p);
   await panel(p,'upgrade').click();assert.equal((await state(p)).level,initial.level+1);
@@ -127,6 +208,8 @@ async function runRoster(p,spec) {
   await panel(p,'roster-tab',1).click();await panel(p,'auto-equip').click();
   const equipped=(await state(p)).equipment.h01;
   assert.equal(equipped.filter(Boolean).length,4);
+  await auditArt(p,'gear','#view',['gear_weapon_sr','gear_armor_sr','gear_accessory_sr','gear_relic_sr']);
+  await screenForReview(p,spec,'gear');
   await panel(p,'gear-slot',0).click();await panel(p,'enhance',equipped[0]).click();
   assert.equal((await state(p)).bag.find(x=>x.uid===equipped[0]).level,1);
   await panel(p,'dismiss').click();await panel(p,'roster-tab',2).click();
@@ -134,13 +217,34 @@ async function runRoster(p,spec) {
   await panel(p,'skill',1).click();assert((await p.locator('.pn-skill-detail').innerText()).includes('九幽墨莲斩'));
   await panel(p,'filter','圣辉').click();assert.equal(await p.locator('.pn-hero-pick').count(),1);
   await panel(p,'formation').click();assert.equal(await p.locator('.pn-position').count(),6);
+  await auditArt(p,'formation','.pn-formation-layout');
+  const orderText=await p.locator('.pn-form-side').innerText();assert(/[246]/.test(orderText) && ['2','4','6'].every(n=>orderText.includes(n)),'bond thresholds');
+  const expectedOrder=await p.evaluate(()=>Sky.ui.state.formation.map((id,slot)=>({
+    slot,role:Sky.D.hero(id).role,speed:Sky.Save.stats(Sky.ui.state,id).speed
+  })).sort((a,b)=>b.speed-a.speed||a.slot-b.slot));
+  for(const [rank,unit] of expectedOrder.entries()){
+    const b=panel(p,'position',unit.slot);
+    assert.equal(Number(await b.locator('.pn-order').innerText()),rank+1);
+    const role=(await b.locator('.pn-profession').innerText()).trim();
+    assert(role.length>=2 && unit.role.includes(role),'formation role '+role);
+  }
   await panel(p,'position',0).click();await panel(p,'position',1).click();
   assert.deepEqual((await state(p)).formation,[
     initial.formation[1],initial.formation[0],...initial.formation.slice(2)]);
+  await p.locator('#toast').waitFor({state:'hidden'});
   await screenshot(p,spec,'formation');await panel(p,'dismiss').click();await action(p,'home').click();
 }
 async function runGacha(p,spec) {
   await action(p,'gacha').click();await waitPage(p,'gacha');
+  for(const n of [1,10])assert(await panel(p,'draw',n).locator('img[src$="item_ticket.png"]').count(),'ticket cost on '+n);
+  const featured=p.locator('.pn-featured-list');
+  const portraits=await featured.locator('img.portrait').evaluateAll(images=>images.map(img=>img.currentSrc));
+  const expected=await p.evaluate(()=>['h01','h02','h03'].map(id=>new URL(Sky.art(id,'avatar'),document.baseURI).href));
+  assert.deepEqual(portraits,expected,'featured gacha character portraits');
+  const ratesText=(await featured.innerText()).replace(/\s/g,'');assert(ratesText.includes('UR2%') && ratesText.includes('SSR13%'));
+  assert.match(await p.locator('.pn-pity b').first().innerText(),/0\s*\/\s*60/);
+  await auditArt(p,'gacha','#view',['item_gem','item_ticket','ui_btn_gold','ui_btn_cyan']);
+  await checkBleed(p,spec,'gacha');
   await screenForReview(p,spec,'gacha');
   const initial=await state(p);
   await panel(p,'rates').click();assert((await p.getByRole('dialog').innerText()).includes('75%'));
@@ -148,18 +252,28 @@ async function runGacha(p,spec) {
   assert.equal(await p.locator('.pn-result-card').count(),1);
   await panel(p,'dismiss').click();await panel(p,'pool','up').click();
   await panel(p,'draw',10).click();assert.equal(await p.locator('.pn-result-card').count(),10);
-  await panel(p,'skip').click();
+  const first=await p.locator('.pn-result-card').allTextContents();
+  assert(first.some(name=>/幽冥墨姬|冰灵|凌波玉笛/.test(name)),'first ten-pull must include an illustrated launch hero');
+  const redraw=p.getByRole('button',{name:/再抽十次/});
+  await redraw.waitFor({state:'visible'});
+  assert.equal(await panel(p,'skip').isVisible(),false,'skip button still visible after reveal');
+  await auditArt(p,'summon','.pn-draw-results');
+  await checkBleed(p,spec,'summon');
   const positions=await p.locator('.pn-result-card').evaluateAll(cards=>cards.map(c=>{
     const r=c.getBoundingClientRect();return [Math.round(r.x),Math.round(r.y)];}));
   assert.equal(new Set(positions.map(a=>a[0])).size,5);assert.equal(new Set(positions.map(a=>a[1])).size,2);
+  const card=await p.locator('.pn-result-card').first().boundingBox();assert(card.height>card.width,'portrait reveal cards');
   assert((await p.locator('.pn-result-grid').innerText()).includes('碎片'));
   const after=await state(p);assert.equal(after.tickets,initial.tickets-11);
   assert(Object.values(after.shards).reduce((a,b)=>a+b)>Object.values(initial.shards).reduce((a,b)=>a+b));
-  await screenshot(p,spec,'summon');await panel(p,'dismiss').click();
+  await screenshot(p,spec,'summon');await redraw.click();
+  await panel(p,'skip').click();await redraw.waitFor({state:'visible'});
+  assert.equal((await state(p)).tickets,initial.tickets-21);
+  await panel(p,'dismiss').click();
   await panel(p,'exchange-dialog').click();await panel(p,'exchange').click();assert.equal((await state(p)).diamonds,initial.diamonds-160);
   await action(p,'home').click();
 }
-async function runSaveDialog(p) {
+async function runSaveDialog(p,spec) {
   await action(p,'quests').click();await action(p,'claim-daily').click();
   assert((await state(p)).daily.claimed);
   await action(p,'welfare').click();await action(p,'claim-welfare').click();
@@ -169,13 +283,19 @@ async function runSaveDialog(p) {
   const event=await state(p);
   assert.deepEqual(event.event.days,[1]);assert.equal(event.tickets,beforeEvent.tickets+1);assert.equal(event.cores,beforeEvent.cores+5);
   await action(p,'event').click();assert((await p.getByRole('dialog').innerText()).includes('今日补给已领取'));
-  await action(p,'close').click();await action(p,'shop').click();assert((await p.getByRole('dialog').innerText()).includes('160 星钻'));
+  await action(p,'close').click();await action(p,'shop').click();assert((await p.getByRole('dialog').innerText()).includes('160'));
+  await auditArt(p,'shop','[role=dialog]',['item_gem','item_ticket']);
   await action(p,'close').click();
   await action(p,'atlas').click();assert.equal(await p.locator('[data-entry]').count(),8);
   await p.locator('[data-entry="h06"]').click();
   assert((await p.getByRole('dialog').innerText()).includes('猩红月蚀'));
   await action(p,'close').click();await action(p,'bag').click();
   assert((await p.getByRole('dialog').innerText()).includes('星币'));
+  await auditArt(p,'bag-materials','[role=dialog]',['item_gem','item_ticket','item_core','item_coin','item_dust','item_dew','item_stamina','item_shard']);
+  await screenForReview(p,spec,'bag-items');
+  await p.locator('[data-bag-tab=gear]').click();
+  await auditArt(p,'bag-gear','[role=dialog]',['gear_weapon_sr','gear_armor_sr','gear_relic_sr','gear_accessory_sr']);
+  await screenForReview(p,spec,'bag-gear');
   await action(p,'close').click();await action(p,'settings').click();
   const dialogAction=key=>p.getByRole('dialog').locator('[data-action="'+key+'"]');
   const downloadPromise=p.waitForEvent('download');
@@ -215,7 +335,10 @@ async function inspectBattle(p,spec) {
     assert(actor.y>=.48 && actor.y<=.86);
     assert.equal(actor.mirror,actor.key[0]==='e');
     assert(actor.key[0]==='e'?actor.x>.5:actor.x<.5);
+    assert(Math.abs(actor.depth-[.88,.96,1.04][Number(actor.key.slice(1))%3])<1e-6,'rank perspective '+actor.key);
   }
+  const gauges=await p.locator('[data-cast]').evaluateAll(cards=>cards.map(card=>[...card.querySelectorAll('.meter')].map(n=>n.className)));
+  assert(gauges.every(([hp,rage])=>hp?.includes('cyan') && rage?.includes('gold')),'battle HP/rage colors');
   const constants=await p.evaluate(()=>[PIXI.MIPMAP_MODES.ON,PIXI.SCALE_MODES.LINEAR]);
   assert(info.textures.length>=3);
   assert(info.textures.every(t=>t.mipmap===constants[0] && t.scaleMode===constants[1]));
@@ -271,16 +394,78 @@ async function recordMotion(p) {
     observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
   });
 }
+async function checkSettlement(p,won) {
+  const result=p.locator('.battle-result');
+  await result.locator('img[src$="emblem_'+(won?'victory':'defeat')+'.png"]').waitFor();
+  const stars=result.locator('[data-stars]');
+  const count=Number(await stars.getAttribute('data-stars'));
+  assert(won ? count>=1&&count<=3 : count===0);
+  assert.equal(await result.locator('.battle-report-stars img[src$="emblem_star.png"]').count(),3);
+  assert.equal(await result.locator('.battle-report-stars img.earned').count(),count);
+  const contributions=await result.locator('.battle-contrib').evaluateAll(rows=>rows.map(row=>({
+    amount:Number(row.dataset.damage),mvp:!!row.querySelector('img[src$="emblem_mvp.png"]')
+  })));
+  assert.equal(contributions.length,6);
+  assert(contributions[0].mvp && contributions.filter(c=>c.mvp).length===1 && contributions.every(c=>c.amount<=contributions[0].amount),'actual top damage must receive the single MVP');
+  const total=result.locator('.battle-stats .battle-cumulative');
+  assert.equal(Number((await total.innerText()).replace(/[^0-9]/g,'')),contributions.reduce((sum,c)=>sum+c.amount,0));
+  const tracks=await result.locator('.battle-contrib .meter').evaluateAll(meters=>meters.map(m=>({
+    percentage:parseFloat(m.querySelector('i').style.width),caps:getComputedStyle(m,'::after').borderImageSource,
+    opacity:Number(getComputedStyle(m,'::after').opacity)
+  })));
+  assert.equal(tracks.length,12);assert(tracks.every(t=>t.caps.includes('ui_bar_')),'contribution frame uses capped segments');
+  const blank=tracks.filter(t=>t.percentage===0),active=tracks.filter(t=>t.percentage>0);
+  assert(blank.length&&active.length&&blank.every(t=>t.opacity<.5)&&active.every(t=>t.opacity>.5),'empty contribution tracks are subdued');
+}
+async function exerciseLateGameArt(p,spec) {
+  // Import an isolated late-tower save through the normal settings dialog. It gives
+  // four UR gear items and a first-level party, so both the rare artwork and defeat
+  // result can be observed without changing the battle engine or overriding RNG.
+  const fixture=await state(p);
+  fixture.tower=29;fixture.level=1;fixture.shards.h01=12;
+  const names=['群星之刃','星冠圣铠','天穹之泪','群星天球'];
+  for(const [slot,name] of names.entries())fixture.bag.push({uid:'g900'+slot,name,slot,rarity:'UR',level:0});
+  await action(p,'settings').click();await action(p,'import').click();
+  await p.locator('#save-json').fill(JSON.stringify(fixture));await action(p,'confirm-import').click();
+  await action(p,'roster').click();assert(await panel(p,'star','h01').isEnabled());
+  await panel(p,'star','h01').click();assert.equal((await state(p)).stars.h01,fixture.stars.h01+1);
+  assert(await panel(p,'star','h01').isDisabled());
+  await panel(p,'roster-tab',1).click();await panel(p,'auto-equip').click();
+  const gear=names.map((_,i)=>'gear_'+['weapon','armor','accessory','relic'][i]+'_ur');
+  await auditArt(p,'equipped-ur','.pn-equip-grid',gear);
+  await screenForReview(p,spec,'gear-ur');
+  await action(p,'home').click();await action(p,'trials').click();
+  await panel(p,'start-trial','tower').click();await inspectBattle(p,spec);
+  await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+  assert.equal((await state(p)).tower,29,'a defeat must preserve the last cleared floor');
+  await checkSettlement(p,false);await auditArt(p,'defeat','.battle-result',['emblem_defeat','emblem_mvp','emblem_star']);
+  await screenForReview(p,spec,'defeat');
+  await battle(p,'return').click();await action(p,'home').click();
+}
 async function runCampaign(p,spec) {
   await action(p,'campaign').click();await waitPage(p,'campaign');
+  await auditArt(p,'route','#view',['item_gem','item_ticket','ui_btn_gold']);
+  await checkBleed(p,spec,'campaign');
   await screenForReview(p,spec,'campaign');
   assert.equal(await p.locator('.pn-route-node').count(),5);
   await panel(p,'chapter',2).click();assert.equal(await p.locator('.pn-route-node:disabled').count(),5);
   await panel(p,'chapter',1).click();await panel(p,'stage',1).click();assert.equal(await p.locator('.pn-enemies>div').count(),6);
+  const enemies=await p.locator('.pn-enemies>div').evaluateAll(async cells=>Promise.all(cells.map(async cell=>{
+    const id=cell.dataset.hero;
+    const avatar=cell.querySelector('img.portrait'),frame=cell.querySelector('img.rim');
+    if(!avatar||!frame)return null;
+    await Promise.all([avatar.decode(),frame.decode()]);
+    const inner=avatar.getBoundingClientRect(),outer=frame.getBoundingClientRect();
+    return {id,img:avatar.currentSrc,frame:frame.currentSrc,visible:inner.width>10 && inner.height>10 && getComputedStyle(avatar).opacity!=='0',
+      centered:Math.abs(inner.x+inner.width/2-outer.x-outer.width/2)<2 && Math.abs(inner.y+inner.height/2-outer.y-outer.height/2)<2};
+  })));
+  const expected=await p.evaluate(()=>Sky.D.stages[0].enemies.map(id=>({id,src:new URL(Sky.art(id,'avatar'),document.baseURI).href,rarity:Sky.D.hero(id).rarity.toLowerCase()})));
+  assert(enemies.every((e,i)=>e&&e.id===expected[i].id && e.img===expected[i].src && e.frame.endsWith('frame_'+expected[i].rarity+'.png') && e.visible && e.centered),'all six portraits must appear inside their own frames');
   await panel(p,'start-route',1).click();await waitPage(p,'battle');
   await recordMotion(p);const renderer=await inspectBattle(p,spec),frameStart=await status(p);
+  await checkBleed(p,spec,'battle');
   assert.equal(renderer.textures,8);
-  if(out && spec.name==='desktop')await screenshot(p,spec,'battle');
+  if(out && (spec.name==='desktop' || spec.mobile))await screenshot(p,spec,'battle');
   await battle(p,'auto').click();assert.equal((await status(p)).auto,false);
   await battle(p,'speed').click();assert.equal((await status(p)).speed,2);
   await battle(p,'speed').click();assert.equal((await status(p)).speed,3);
@@ -297,6 +482,7 @@ async function runCampaign(p,spec) {
         const box=el.getBoundingClientRect();return {left:box.left,right:box.right};
       }).sort((a,b)=>a.left-b.left));
       assert(combo.length>=2 && combo.every((box,i)=>i===0 || box.left>=combo[i-1].right),'multi-hit labels must be distinct');
+    assert(await p.locator('.battle-hits').innerText().then(t=>/[23]\s*HITS?/i.test(t)),'multi-hit counter');
     await screenshot(p,spec,'impact');await battle(p,'speed').click();await battle(p,'speed').click();
   }
   const frameMiddle=await status(p);
@@ -317,6 +503,8 @@ async function runCampaign(p,spec) {
   assert(increasing,'a single ultimate must visibly increase its own damage total more than once');
   assert.equal((await state(p)).cleared,1);assert.equal(await p.locator('.battle-contrib').count(),6);
   assert(await p.locator('.battle-drops li').count()>=4);
+  await checkSettlement(p,true);
+  await auditArt(p,'victory','.battle-result',['emblem_victory','emblem_star','emblem_mvp','item_gem','item_ticket','item_coin','item_core']);
   await screenshot(p,spec,'result');
   if(spec.full) {
     await battle(p,'next').click();await inspectBattle(p,spec);
@@ -324,6 +512,12 @@ async function runCampaign(p,spec) {
   }
   await battle(p,'return').click();await waitPage(p,'campaign');
   await panel(p,'mode','trials').click();assert.equal(await p.locator('.pn-trial-card').count(),3);
+  await auditArt(p,'tower','#view');
+  const towerSkin=await panel(p,'start-trial','tower').evaluate(el=>[el,...el.children].map(n=>[null,'::before','::after'].map(ps=>{
+    const s=getComputedStyle(n,ps);return s.backgroundImage+' '+s.borderImageSource+' '+(n.currentSrc||'');
+  }).join(' ')).join(' '));
+  assert(/ui_btn_(crimson|gold)\.png/.test(towerSkin),'missing tower challenge button artwork');
+  await checkBleed(p,spec,'trials');
   await screenForReview(p,spec,'trials');
   if(spec.full) {
     for(const kind of ['tower','boss','arena']) {
@@ -347,6 +541,8 @@ async function runCampaign(p,spec) {
 async function run(browser,origin,spec) {
   const context=await browser.newContext({viewport:{width:spec.width,height:spec.height},deviceScaleFactor:spec.dpr,isMobile:!!spec.mobile,hasTouch:!!spec.mobile});
   const p=await context.newPage();p.setDefaultTimeout(9000);
+  visualChecks.set(p,{});
+  mobileEdges.set(p,{});
   const issues=[],failed=[];
   p.on('pageerror',e=>issues.push('page: '+e.message));
   p.on('console',m=>{if(m.type()==='error')issues.push('console: '+m.text());});
@@ -365,18 +561,23 @@ async function run(browser,origin,spec) {
     const stage=await geometry(p,spec),images=await artwork(p,spec);
     await runLobby(p,spec);await runRoster(p,spec);await runGacha(p,spec);
     const combat=await runCampaign(p,spec);
-    await runSaveDialog(p);
+    await runSaveDialog(p,spec);
     const before=await state(p);await p.reload();await p.waitForFunction(()=>window.Sky?.ui?.state);
     const after=await state(p);
     assert.deepEqual(after.formation,before.formation);assert.equal(after.cleared,before.cleared);
     assert.deepEqual(after.pity,before.pity);
+    await exerciseLateGameArt(p,spec);
     if(spec.mobile) {
       await p.setViewportSize({width:390,height:844});await p.locator('#orientation:visible').waitFor();
       await p.locator('#portrait-continue').click();await p.locator('#orientation').waitFor({state:'hidden'});
       await action(p,'roster').click();await waitPage(p,'roster');
     }
     if(issues.length||failed.length) throw new Error('Resource or browser errors');
-    return {name:spec.name,stage,images,...combat,consoleErrorsAndHTTPFailures:issues.length};
+    const screens=visualChecks.get(p);
+    const visible=new Set(Object.values(screens).flat());
+    assert.deepEqual(wave1Paths.filter(name=>!visible.has(name)),[],'wave 1 assets missing from real UI states');
+    return {name:spec.name,stage,images,...combat,wave1ArtCount:visible.size,screenArt:screens,mobileEdgeSamples:mobileEdges.get(p),
+      lateGameEvidence:'Imported test save, four UR items, level 1 vs tower 30. Real game resolution.',consoleErrorsAndHTTPFailures:issues.length};
   } catch(err) {
     const page=await p.evaluate(()=>({page:document.querySelector('#view')?.dataset.page,toast:document.querySelector('#toast')?.innerText,
       battle:window.Sky?.battlePage?.inspect()?.phase,head:document.body.innerText.slice(0,700)})).catch(()=>null);

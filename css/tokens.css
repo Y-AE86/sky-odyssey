@@ -9,24 +9,28 @@ body{background:#090d18;color:var(--ink);font-family:var(--body);font-variant-nu
 button,input,textarea{font:inherit}button{appearance:none;cursor:pointer;color:inherit;background:none;border:0;padding:0;-webkit-tap-highlight-color:transparent}
 button:disabled{cursor:default;opacity:.55}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #fff0bb;outline-offset:2px}
 button:enabled:hover{filter:brightness(1.13)}button:enabled:active{filter:brightness(.94)}
-h1,h2,h3,h4,p{margin:0}img{display:block}svg.ico{width:1.35em;height:1.35em;display:inline-block;flex:none;fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+h1,h2,h3,h4,p{margin:0}img{display:block}.ico,.item-icon{width:1.7em;height:1.7em;object-fit:contain;flex:none}
+.item-amount{display:inline-flex;align-items:center;gap:.28em;white-space:nowrap}.item-amount+.item-amount{margin-left:.8em}
 [hidden]{display:none!important}
 .glass{background:var(--glass);border:1px solid var(--edge);backdrop-filter:blur(10px)}
 .gem-btn,.tab{position:relative;display:inline-flex;align-items:center;justify-content:center;text-align:center;min-width:8cqw;min-height:3.35cqw;padding:.65cqw 1.45cqw;background-size:100% 100%;background-repeat:no-repeat;font-weight:700;font-size:1.13cqw;line-height:1.3;white-space:nowrap}
-.gem-btn.gold{background-image:url('../assets/ui/ui_btn_gold.png');color:#3e2817;text-shadow:0 1px 2px #ffe6b1}
-.gem-btn.cyan{background-image:url('../assets/ui/ui_btn_cyan.png');color:#102e3b;text-shadow:0 1px 2px #c0f8ff}
+.gem-btn{width:10.9cqw;height:3.9cqw;min-height:3.9cqw;max-width:13.5cqw;padding:.4cqw .85cqw}
+.gem-btn.gold{background-image:url('../assets/ui/ui_btn_gold.png');color:#fff2cb;text-shadow:0 1px 3px #291503}
+.gem-btn.cyan{background-image:url('../assets/ui/ui_btn_cyan.png');color:#e5faff;text-shadow:0 1px 3px #052736}
 .gem-btn.dark{background-image:url('../assets/ui/ui_btn_dark.png');color:#f1eee8}
 .gem-btn.crimson{background-image:url('../assets/ui/ui_btn_crimson.png');color:white;text-shadow:0 1px 2px #4c0d21}
-.tab{background-image:url('../assets/ui/ui_tab_idle.png');color:#ede4d6}.tab.active{background-image:url('../assets/ui/ui_tab_active.png');color:#372516}
+.tab{background-image:url('../assets/ui/ui_tab_idle.png');color:#ede4d6}.tab.active{background-image:url('../assets/ui/ui_tab_active.png');color:#fff1c5}
 .quality{position:relative;display:inline-grid;place-items:center;width:5.5cqw;aspect-ratio:1;vertical-align:middle;isolation:isolate;flex:none}
 .quality .portrait{position:absolute;width:66%;height:66%;object-fit:cover;object-position:50% 24%;border-radius:8%;background:#191d31}
 .quality .rim{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
 .quality:is(.ssr,.ur)::after{content:"";pointer-events:none;position:absolute;inset:16% 16.5%;border-radius:8%;padding:max(1px,.12cqw);background:linear-gradient(111deg,transparent 39%,#fff6cfe0 48%,transparent 57%) -25% 0/280% 100% no-repeat;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:quality-shine 6.4s linear infinite}
 @keyframes quality-shine{0%,62%{background-position:120% 0}87%,100%{background-position:-25% 0}}
-.meter{position:relative;display:block;isolation:isolate;width:100%;height:.86cqw;--tint:#dfaa53}
-.meter.cyan{--tint:#44cee6}.meter::after{content:"";position:absolute;inset:0;background:url('../assets/ui/ui_bar_gold.png') center/100% 100%}
-.meter.cyan::after{background-image:url('../assets/ui/ui_bar_cyan.png')}
-.meter .channel{position:absolute;inset:25% 7.7% 24%;overflow:hidden;border-radius:999px;background:#121727}
+.meter{position:relative;display:block;isolation:isolate;container-type:size;width:100%;height:.86cqw;--tint:#dfaa53;--rail:url('../assets/ui/ui_bar_gold.png')}
+.meter.cyan{--tint:#44cee6;--rail:url('../assets/ui/ui_bar_cyan.png')}
+/* The original end ornaments scale with track height, independent of its length. */
+.meter::after{content:"";position:absolute;inset:0;border:solid transparent;border-width:0;border-image:var(--rail) 0 148 fill / 0 115cqh / 0 stretch;pointer-events:none}
+.meter.empty::after{opacity:.27}
+.meter .channel{position:absolute;inset:25% 103cqh 24%;overflow:hidden;border-radius:999px;background:#121727}
 .meter i{display:block;height:100%;background:linear-gradient(0deg,var(--tint),color-mix(in srgb,var(--tint) 60%,white));transition:width .18s}
 #stage.power-save *,#stage.power-save *::before,#stage.power-save *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 

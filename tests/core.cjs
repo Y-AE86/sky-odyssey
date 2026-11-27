@@ -147,6 +147,32 @@ test('60,000 independent rolls match published 2/13/85 rates and conditional 75%
   assert(Math.abs(ranks.SR/n-.85)<.005);
   assert(Math.abs(featured/ranks.UR-.75)<.05);
 });
+test('首个十连跨池仅触发一次，旧档兼容，保底卡、碎片与正常保底同时记账',()=>{
+  const initial=S.fresh();
+  delete initial.firstTenDone;
+  const s=S.importJSON(JSON.stringify(initial));
+  assert.equal(s.firstTenDone,false);
+  const single=S.draw(s,'up',1,()=>.99);
+  assert.equal(single[0].rarity,'SR');
+  assert.equal(s.firstTenDone,false);
+  const before=s.shards.h03;
+  const first=S.draw(s,'standard',10,()=>.99);
+  assert.equal(first.at(-1).id,'h03');
+  assert.equal(first.at(-1).shards,12);
+  assert.equal(s.shards.h03,before+12);
+  assert.deepEqual(s.pity.standard,{ur:10,ssr:0});
+  const reloaded=S.importJSON(S.exportJSON(s));
+  const second=S.draw(reloaded,'up',10,()=>.99);
+  assert(second.every(x=>!['h01','h02','h03'].includes(x.id)));
+  const ur=S.fresh();
+  ur.pity.standard.ur=50;
+  assert.equal(S.draw(ur,'standard',10,()=>.99).at(-1).rarity,'UR');
+  assert.deepEqual(ur.pity.standard,{ur:0,ssr:0});
+  const empty=S.fresh();
+  empty.tickets=9;
+  assert.throws(()=>S.draw(empty,'standard',10));
+  assert.equal(empty.firstTenDone,false);
+});
 test('6v6 teams, counter cycle, actual +18% damage and front-row targeting',()=>{
   const {b,hero,enemies}=freshBattle();
   assert.equal(b.units.length,12);assert.equal(new Set(b.units.map(u=>u.key)).size,12);

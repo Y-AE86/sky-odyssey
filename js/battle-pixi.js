@@ -7,15 +7,30 @@
   const accents = {东煌: 0x76dfd2, 圣辉: 0xffdf9c, 机巧: 0xffb07d, 秘影: 0xbc9bff};
   const imageCache = new Map();
   const clamp = n => Math.max(0, Math.min(1, n));
-  // Use the existing RGBA vertex channel as a per-sprite flash flag. A direct
-  // fragment blend gives the same premultiplied white silhouette without creating
-  // an extra off-screen render target for every unit struck by an area attack.
+  // Four neighbouring alpha samples outline a struck sprite in the same GPU batch.
+  // The fill keeps its original colour and texture, even on overlapping area hits.
   if (P) {
+    class ActorShader extends P.BatchShaderGenerator {
+      generateSampleSrc(count) {return super.generateSampleSrc(count).replace(/vTextureCoord/g,'uv');}
+    }
     class ActorBatch extends P.BatchRenderer {
       setShaderGenerator() {
-        super.setShaderGenerator({fragment:
-          'varying vec2 vTextureCoord; varying vec4 vColor; varying float vTextureId; uniform sampler2D uSamplers[%count%];' +
-          'void main(void){ vec4 color; %forloop% if(vColor.r<vColor.a*0.02){ gl_FragColor=vec4(mix(color.rgb,vec3(color.a),0.79),color.a)*vColor.a; } else { gl_FragColor=color*vColor; } }'});
+        this.shaderGenerator=new ActorShader(P.BatchRenderer.defaultVertexSrc,`
+          varying vec2 vTextureCoord; varying vec4 vColor; varying float vTextureId;
+          uniform sampler2D uSamplers[%count%];
+          vec4 actorPixel(vec2 uv){vec4 color; %forloop% return color;}
+          void main(){
+            vec4 base=actorPixel(vTextureCoord);
+            if(vColor.r >= vColor.a*.02){gl_FragColor=base*vColor;return;}
+            vec4 neighbors=vec4(actorPixel(vTextureCoord+vec2(.015,0.)).a,actorPixel(vTextureCoord-vec2(.015,0.)).a,
+                                actorPixel(vTextureCoord+vec2(0.,.012)).a,actorPixel(vTextureCoord-vec2(0.,.012)).a);
+            float low=min(min(neighbors.x,neighbors.y),min(neighbors.z,neighbors.w));
+            float high=max(max(neighbors.x,neighbors.y),max(neighbors.z,neighbors.w));
+            float inside=clamp((base.a-low)*1.45,0.,1.);
+            float outside=max(0.,high-base.a)*.82;
+            vec3 rim=vec3(1.,.94,.77);
+            gl_FragColor=vec4(mix(base.rgb,rim*base.a,inside)+rim*outside,base.a+outside)*vColor.a;
+          }`);
       }
     }
     P.extensions.add({name:'skyBattleActors',type:P.ExtensionType.RendererPlugin,ref:ActorBatch});
@@ -76,8 +91,8 @@
   }
   function bounds(slot, side) {
     const row = slot % 3, front = slot < 3;
-    const x = (front ? .38 : .216) - row * .055;
-    return {x: side === 'ally' ? x : 1-x, y: (front ? .55 : .526) + row * .129, depth: .92 + row * .08};
+    const x = (front ? .386 : .225) - row * .062;
+    return {x: side === 'ally' ? x : 1-x, y:(front ? .545 : .512)+row*.142,depth:[.88,.96,1.04][row]};
   }
   function polygon(cx,cy,rx,ry,sides,angle=0) {
     const points = [];
@@ -147,6 +162,14 @@
         this.ctx.imageSmoothingQuality = 'high';
       }
     }
+    footMark(ink,enemy) {
+      ink.ellipse(0,0,100,12,0x20172f,.45);
+      ink.ellipse(0,0,66,7.4,0x171123,.47);
+      if(enemy){
+        ink.ellipse(0,0,99,11.6,0x6a244b,.58,2.9);
+        ink.ellipse(0,0,91,9.8,0xd971a0,.44,1.35);
+      }
+    }
     async load() {
       const heroes = [...new Set(this.nodes.map(n => n.heroId))];
       const sources = await Promise.all(heroes.map(async id => {
@@ -171,17 +194,17 @@
             n.sprite.pluginName = 'skyBattleActors';
             // All foot shadows share the geometry. Moving and breathing adjust
             // transforms; neither action changes the two underlying ellipses.
-            if(!this.shadowShape) {
-              this.shadowShape=new P.Graphics();
-              const ink=new Paint(this.shadowShape,null);
-              ink.ellipse(0,0,100,12,0x17112e,.38);
-              ink.ellipse(0,0,73,7.44,0x191122,.34);
+            this.shadowShapes ||= {};
+            if(!this.shadowShapes[n.side]) {
+              const shape=new P.Graphics();
+              this.footMark(new Paint(shape,null),n.side==='enemy');
+              this.shadowShapes[n.side]=shape;
             }
-            n.shadow=this.shadowShape.clone();
+            n.shadow=this.shadowShapes[n.side].clone();
             this.shadows.addChild(n.shadow);
           } else if (this.app && direct) {
             const body = document.createElement('div');
-            body.className = 'battle-file-unit';
+            body.className='battle-file-unit '+n.side;
             const shadow = document.createElement('i');
             const portrait = img.cloneNode();
             portrait.alt = '';
@@ -293,22 +316,51 @@
           p.path([fx-r*.10,fy,fx-r*.19,fy-r*.065,fx-r*.18,fy+r*.05],0xffdf83,fade);
         }
       }
-      const count=this.powerSave ? 4 : e.ultimate ? 34 : 9;
+      if (e.ultimate) {
+        const groundY=(target.y+target.dy)*h;
+        const ringR=r*(.18+1.04*Math.sqrt(t));
+        p.ellipse(x,groundY,ringR,ringR*.26,color,fade*.83,h*.005);
+        p.ellipse(x,groundY,ringR*.90,ringR*.234,0xffedc8,fade*.68,h*.002);
+        for(let i=0;i<8;i++) {
+          const a=i*tau/8+.18;
+          const sx=x+Math.cos(a)*ringR*.94,sy=groundY+Math.sin(a)*ringR*.245;
+          const size=r*(i%2 ? .035 : .055)*fade;
+          p.path([sx,sy-size,sx+size*.48,sy,sx,sy+size,sx-size*.48,sy],i%2?color:0xffe5af,fade*.86);
+        }
+        const flash=Math.max(0,1-t/.43);
+        if(flash>0){
+          const core=r*(.10+.18*flash);
+          p.ellipse(x,y,core,core*.65,color,flash*.21);
+          p.path([x-core*1.6,y,x-core*.11,y-core*.16,x,y-core*1.33,x+core*.12,y-core*.16,
+            x+core*1.6,y,x+core*.12,y+core*.13,x,y+core,x-core*.11,y+core*.14],0xfffbeb,flash*.94);
+        }
+      }
+      const count=this.powerSave ? 4 : e.ultimate ? 46 : 9;
+      const spray=e.ultimate?r*Math.pow(t,.68):k;
       for(let i=0;i<count;i++) {
-        const a=i*2.39996 + target.slot*.69, speed=.40+(i%7)*.14;
-        const xx=x+Math.cos(a)*k*speed, yy=y+Math.sin(a)*k*speed + t*t*r*.24;
-        const l=h*(i%5===0 ? .017 : .007)*fade;
-        p.path([xx,yy,xx-Math.cos(a)*l,yy-Math.sin(a)*l],i%3===0?0xfff5dd:color,fade*.95,h*.0034*fade+.25);
+        const a=i*2.39996 + target.slot*.69, speed=.46+(i%7)*.18;
+        const xx=x+Math.cos(a)*spray*speed, yy=y+Math.sin(a)*spray*speed+t*t*r*.24;
+        const l=h*(i%5===0 ? .021 : .009)*fade;
+        const dx=Math.cos(a)*l,dy=Math.sin(a)*l;
+        if(e.ultimate && i%3===0){
+          p.path([xx+dx,yy+dy,xx-dy*.26,yy+dx*.26,xx-dx*.6,yy-dy*.6,xx+dy*.26,yy-dx*.26],0xfff8e7,fade);
+        }else p.path([xx,yy,xx-dx,yy-dy],color,fade*.95,h*.0034*fade+.25);
       }
       p.ellipse(x,y,Math.max(0.1,k*.58),Math.max(0.1,k*.58),color,fade*.56,h*.0035*fade+.3);
     }
     flagGeometry(ink,n,x,y,alpha) {
-      const bw=this.w*.043,bh=this.h*.005;
-      const fac=accents[Sky.D.hero(n.heroId).faction] || 0xffffff,col=n.side==='ally'?0x9fe8e0:0xf5a6ad;
-      ink.path([x-bw*.62,y,x-bw*.55,y-bh,x-bw*.48,y,x-bw*.55,y+bh],fac,alpha);
-      ink.path([x-bw*.44,y-bh*.65,x+bw*.47,y-bh*.65,x+bw*.47,y+bh*.8,x-bw*.44,y+bh*.8],0x12132a,.84*alpha);
-      if(n.hp) ink.path([x-bw*.43,y,x-bw*.43+bw*.88*clamp(n.hp/n.maxHp),y],col,alpha,bh*.85);
-      if(n.shield>0) ink.path([x-bw*.43,y+bh,x-bw*.43+bw*.88*clamp(n.shield/n.maxHp),y+bh],0xffdd83,alpha,bh*.45);
+      const bw=this.w*.041, bh=Math.max(3.2,this.h*.0075);
+      const fac=accents[Sky.D.hero(n.heroId).faction] || 0xffffff,col=n.side==='ally'?0x5ddcb5:0xf09aaa;
+      const left=x-bw*.5, right=x+bw*.5, top=y-bh*.5, bottom=y+bh*.5, edge=bh*.22;
+      ink.path([left-edge,top,right+edge,top,right+edge,bottom+edge*2.4,left-edge,bottom+edge*2.4],0x080d20,.65*alpha);
+      ink.path([left-edge,top-edge,right+edge,top-edge,right+edge,bottom+edge,left-edge,bottom+edge],0x162034,alpha);
+      ink.path([x-bw*.68,y,x-bw*.60,y-bh*.64,x-bw*.52,y,x-bw*.60,y+bh*.64],fac,alpha);
+      if(n.hp){
+        const end=left+bw*clamp(n.hp/n.maxHp);
+        ink.path([left,top,end,top,end,bottom,left,bottom],col,alpha);
+        ink.path([left,top+edge*.56,end,top+edge*.56],0xf4fff9,.72*alpha,edge);
+      }
+      if(n.shield>0) ink.path([left,bottom+edge,left+bw*clamp(n.shield/n.maxHp),bottom+edge],0xffdd83,alpha,bh*.38);
     }
     render(time) {
       if (!this.ready || this.disposed || !this.w) return;
@@ -337,15 +389,15 @@
         if(n.shadow) {
           n.shadow.position.set(x,(n.y+n.dy*.60)*h-1);
           n.shadow.scale.set(shadowWidth/100,size*.050/12);
-          n.shadow.alpha=alpha;
+          n.shadow.alpha=alpha*(n.heroId<='h03'?1:.8);
         } else if (!n.dom) {
-          this.shadowInk.ellipse(x,(n.y+n.dy*.60)*h-1,shadowWidth,size*.050,0x17112e,.38*alpha);
-          this.shadowInk.ellipse(x,(n.y+n.dy*.60)*h-1,shadowWidth*.73,size*.031,0x191122,.34*alpha);
+          c.save();c.translate(x,(n.y+n.dy*.60)*h-1);c.scale(shadowWidth/100,size*.050/12);
+          c.globalAlpha=alpha;this.footMark(this.shadowInk,n.side==='enemy');c.restore();
         }
         if(n.dom) {
           const {body,shadow,portrait}=n.dom;
           body.style.cssText='left:'+x+'px;top:'+y+'px;z-index:'+Math.round(n.y*100);
-          portrait.style.cssText='width:'+width+'px;height:'+size+'px;transform:translate(-50%,-98.5%) scaleX('+sign+');filter:'+(flashing?'brightness(2.5) saturate(.65)':alpha<1?'brightness(.35)':'none');
+          portrait.style.cssText='width:'+width+'px;height:'+size+'px;transform:translate(-50%,-98.5%) scaleX('+sign+');filter:'+(flashing?'drop-shadow(0 0 2px #fff3c9) drop-shadow(0 0 3px #fde3b1)':alpha<1?'brightness(.35)':'none');
           shadow.style.cssText='width:'+shadowWidth*2+'px;height:'+size*.10+'px;top:'+(-n.dy*.40*h)+'px';
         } else if(n.sprite) {
           n.sprite.position.set(x,y);
@@ -353,17 +405,17 @@
           n.sprite.tint=flashing?0x00ffff:alpha<1?0x595959:0xffffff;
         } else {
           c.save(); c.translate(x,y); c.scale(sign,1);
-          if(flashing || alpha<1) c.filter=flashing?'brightness(2.5)':'brightness(.35)';
+          if(flashing || alpha<1) c.filter=flashing?'drop-shadow(0 0 2px #fff3c9) drop-shadow(0 0 3px #fde3b1)':'brightness(.35)';
           c.drawImage(n.image,-width*.5,-size*.985,width,size); c.restore();
         }
         // Each flag and gauge is vector geometry at the canvas' actual backing density.
         if(n.flag) {
-          n.flag.position.set(x,y-size*.995); n.flag.alpha=alpha;
+          n.flag.position.set(x,y-size*1.012); n.flag.alpha=alpha;
           if(n.flagHP!==n.hp || n.flagShield!==n.shield || n.flagW!==w || n.flagH!==h) {
             n.flag.clear(); this.flagGeometry(n.flagInk,n,0,0,1);
             n.flagHP=n.hp; n.flagShield=n.shield; n.flagW=w; n.flagH=h;
           }
-        } else this.flagGeometry(this.ink,n,x,y-size*.995,alpha);
+        } else this.flagGeometry(this.ink,n,x,y-size*1.012,alpha);
       }
       this.effects=this.effects.filter(e=>time-e.start<e.duration);
       this.drewEffects=this.effects.length>0;
@@ -381,7 +433,7 @@
       this.observer.disconnect();
       if(this.app) {
         this.app.destroy(true,{children:true,texture:false,baseTexture:false});
-        this.shadowShape?.destroy();
+        for(const shape of Object.values(this.shadowShapes||{}))shape.destroy();
         for(const t of this.textures.values()) t.destroy(true);
       }
       this.host.replaceChildren();

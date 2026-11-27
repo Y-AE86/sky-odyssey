@@ -1,12 +1,9 @@
 .battle-page {
   position:absolute; inset:0; overflow:hidden; isolation:isolate; color:#fff4da;
-  background:#152039; font-variant-numeric:tabular-nums; --inkglass:rgba(16,20,45,.84);
+  background:transparent; font-variant-numeric:tabular-nums; --inkglass:rgba(16,20,45,.84);
 }
 .battle-back,.battle-shade,.battle-stage,.battle-dom-units,.battle-numbers {
   position:absolute; inset:0; pointer-events:none;
-}
-.battle-back {
-  background:url("../assets/scenes/bg_battle.png") center center/cover no-repeat;
 }
 .battle-back::after {
   content:""; position:absolute; inset:0;
@@ -25,8 +22,9 @@
 .battle-file-unit img {position:absolute; left:0; top:0; object-fit:contain; max-width:none;}
 .battle-file-unit i {
   position:absolute; display:block; transform:translate(-50%,-50%); border-radius:50%;
-  background:radial-gradient(ellipse,#110e24a8,rgba(18,15,39,.48) 48%,transparent 74%);
+  background:radial-gradient(ellipse,#100d24be,rgba(18,15,39,.56) 48%,transparent 74%);
 }
+.battle-file-unit.enemy i {border:1px solid #a149798c;box-shadow:0 0 .26cqw #8d315d88;}
 .battle-head {
   position:absolute; inset:0 0 auto; height:12%; box-sizing:border-box; display:flex; align-items:flex-start;
   justify-content:space-between; padding:1.3cqw 2.2cqw 0;
@@ -72,9 +70,12 @@
 .battle-card > :first-child {width:5.35cqw; height:5.35cqw; flex:0 0 5.35cqw; margin-left:-.25cqw;}
 .battle-card-info {display:grid; min-width:0; gap:.28cqw; flex:1;}
 .battle-card-info strong {font-size:1.02cqw; line-height:1.2; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;}
-.battle-card-bars,.battle-contrib>div {display:grid; gap:.1cqw; min-width:0;}
-.battle-card-bars > *,.battle-contrib>div > * {width:100%; height:.43cqw; min-height:0; margin:0;}
-.battle-rage {font-size:.72cqw; color:#acdce5; line-height:1.15;}
+.battle-card-bars,.battle-contrib>div {display:grid; gap:.14cqw; min-width:0;}
+.battle-card-bars > *,.battle-contrib>div > * {width:100%; height:.54cqw; min-height:0; margin:0;}
+.battle-card-bars .cyan {--tint:#38c997;}
+.battle-card-bars .gold {--tint:#efaa38;}
+.battle-card.is-charged .battle-card-bars .gold .channel i {background:linear-gradient(105deg,#db8d27 28%,#fff4af 45%,#e9a143 61%) 0/220% 100%;animation:battle-rage-sheen 1.6s linear infinite;}
+.battle-rage {font-size:.78cqw; color:#eed29a; line-height:1.15;}
 .battle-card.ready .battle-rage {color:#ffde80;}
 .battle-numbers {z-index:2; overflow:hidden;}
 .battle-float {
@@ -84,23 +85,32 @@
 }
 .battle-float.heal {color:#9affa9;} .battle-float.shield {color:#ffe69c;}
 .battle-total {
-  position:absolute; top:24%; right:2.2%; text-align:right; min-width:12%; padding:.3cqw 1cqw;
-  background:linear-gradient(90deg,transparent,rgba(18,14,35,.82)); border-right:.2cqw solid #e6c174;
+  position:absolute;top:19%;right:1.8%;min-width:17%;padding:.6cqw 1.35cqw .6cqw 2.5cqw;text-align:right;
+  isolation:isolate;clip-path:polygon(12% 0,100% 0,100% 85%,93% 100%,0 100%);
+  background:linear-gradient(105deg,#9c774475,#f3d492 82%,#a67943);
+}
+.battle-total::before{content:"";position:absolute;inset:1px;z-index:-1;clip-path:inherit;background:linear-gradient(105deg,#29223edc,#271935 60%,#372139);}
+.battle-total::after{content:"";position:absolute;inset:0 0 auto 40%;height:2px;background:linear-gradient(90deg,transparent,#fff0bc);}
+.battle-hits{display:block;color:#e8c5f2;font:italic 700 1.1cqw/1.1 Georgia,serif;letter-spacing:.12em;}
+.battle-total small {display:block; color:#f9ebc2; font-size:1.12cqw; letter-spacing:.18em;}
+.battle-total strong {
+  display:block;color:#ffe09a;font-size:5.4cqw;font-style:italic;line-height:1.03;
+  text-shadow:0 .15cqw 0 #76552a,0 .16cqw .65cqw #13091d;
 }
 .battle-total[hidden] {display:none;}
-.battle-total small {display:block; color:#f9ebc2; font-size:1.15cqw; letter-spacing:.22em;}
-.battle-total strong {display:block; color:#ffda89; font-size:3cqw; font-style:italic; line-height:1.05;}
 .battle-cutin {
   position:absolute; inset:0; z-index:5; overflow:hidden; pointer-events:none; background:#0c0b20;
   animation:battle-cut-in .85s both;
 }
 .battle-cut-image {
-  position:absolute; inset:0; background:var(--cut-image) center 32%/cover no-repeat;
-  clip-path:polygon(0 9%,100% 0,100% 85%,0 100%); animation:battle-cut-pan .85s ease-out both;
+  position:absolute;inset:2.4% -.3% -2.4%;background:var(--cut-image) center top/cover no-repeat;
+  clip-path:polygon(0 3%,100% 0,100% 90%,0 100%);animation:battle-cut-pan .85s ease-out both;
 }
 .battle-cut-streak {
-  position:absolute; inset:0; background:linear-gradient(169deg, transparent 60%,#ffe7acb8 60.15%,#f3d6ad 60.3%,#282039 60.5%,#26213985 79%,transparent 79.25%);
+  position:absolute;inset:0;clip-path:polygon(0 85%,100% 48%,100% 80%,0 100%);
+  background:linear-gradient(97deg,transparent 7%,#2a143e30 30%,#24132ee6 66%,#201329fa 96%);
 }
+.battle-cut-streak::after{content:"";position:absolute;inset:0;background:linear-gradient(108deg,transparent 28%,#dec8ff55 40%,#fff3d2a8 43%,transparent 47%) 0/250% 100%;animation:battle-rage-sheen .85s ease-out both;}
 .battle-cut-title {
   position:absolute; right:7%; bottom:19%; text-align:right; color:#fff5df;
   text-shadow:0 .2cqw .6cqw #121125,0 0 1.1cqw #19132b;
@@ -111,36 +121,43 @@
   position:absolute; inset:0; z-index:6; display:grid; place-items:center; background:rgba(8,10,27,.65); backdrop-filter:blur(6px);
 }
 .battle-report {
-  width:68%; box-sizing:border-box; padding:1.6cqw 2.4cqw 1.35cqw; color:#fff4d9;
+  width:70%;box-sizing:border-box;padding:.9cqw 2.4cqw 1.15cqw;color:#fff4d9;
   border:1px solid #eed298a3; border-top:.22cqw solid #e1c28b; background:linear-gradient(117deg,#21283fea,#211d36f5 65%,#28243af5);
   clip-path:polygon(1.03cqw 0,100% 0,100% calc(100% - 1.03cqw),calc(100% - 1.03cqw) 100%,0 100%,0 1.03cqw);
   box-shadow:0 1cqw 4cqw #0b0c16a6;
 }
-.battle-report-heading {display:grid; grid-template-columns:auto 1fr; align-items:end; column-gap:1cqw; padding-bottom:.65cqw;}
-.battle-report-heading>span {grid-column:1/-1; color:#d3cebf; font-size:.96cqw; letter-spacing:.08em;}
-.battle-report-heading h2 {font-size:3.3cqw; line-height:1.2; color:#f7dfa5; letter-spacing:.05em; margin:0;}
-.battle-report-heading p {color:#dbcbab; font-size:.93cqw; letter-spacing:.11em; margin:0 0 .32cqw;}
+.battle-report-heading {display:flex;align-items:center;gap:1.2cqw;padding-bottom:.6cqw;border-bottom:1px solid #ceb17878;}
+.battle-medal{width:9cqw;height:7.8cqw;object-fit:contain;filter:drop-shadow(0 .2cqw .55cqw #1c102a);}
+.battle-report-heading>div>span {color:#e5d8c4;font-size:.97cqw;letter-spacing:.07em;}
+.battle-report-heading h2 {font:700 3.1cqw/1.22 var(--display);color:#ffe0a0;letter-spacing:.08em;margin:.16cqw 0;}
+.battle-report-heading p {color:#d9cdb9;font-size:.91cqw;letter-spacing:.07em;margin:0;}
+.battle-report-stars{display:flex;align-items:center;gap:.08cqw;margin-left:auto;}
+.battle-report-stars img{width:2.9cqw;height:3.3cqw;object-fit:contain}.battle-report-stars img:nth-child(2){width:3.6cqw;height:4.1cqw;}
+.battle-report-stars .unearned{filter:grayscale(1);opacity:.23;}
 .battle-report-columns {display:grid; grid-template-columns:1.1fr .92fr; gap:2.25cqw;}
 .battle-report h3 {display:flex; justify-content:space-between; align-items:baseline; color:#ffefd1; font-size:1.25cqw; margin:0; padding:.55cqw 0; border-bottom:1px solid #d5bd8a60;}
 .battle-report h3 small {font-size:.82cqw; color:#ebce8d; font-weight:500;} .battle-report h3 em {color:#a2dce2; font-style:normal;}
-.battle-contrib {display:grid; grid-template-columns:3.45cqw 4.8cqw minmax(3cqw,1fr) 4.5cqw; gap:.35cqw; align-items:center;}
+.battle-contrib {display:grid; grid-template-columns:3.45cqw 7.4cqw minmax(3cqw,1fr) 4.3cqw; gap:.35cqw; align-items:center;}
 .battle-contrib > :first-child {width:3.45cqw; height:3.45cqw;}
-.battle-contrib>b {font-size:1.04cqw; white-space:nowrap;}
+.battle-contrib>b {display:flex;align-items:center;gap:.25cqw;font-size:1.04cqw;white-space:nowrap;}
+.battle-mvp{width:2.45cqw;height:2.4cqw;object-fit:contain;}
 .battle-contrib >span:last-child {font-size:.94cqw; display:grid; justify-items:end; color:#f8d88f;}
 .battle-contrib small {color:#9cdfdc; font-size:.73cqw;}
 .battle-drops ul {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.35cqw; list-style:none; padding:0; margin:.5cqw 0;}
 .battle-drops li {display:grid; justify-items:center; align-content:start; gap:.05cqw; min-width:0; font-size:.86cqw;}
 .battle-drops li strong {font-size:.92cqw; font-weight:600; color:#f6dca5;}
 .battle-loot-icon {position:relative; display:grid; width:4.8cqw; height:4.8cqw; place-items:center; color:#f0d189;}
-.battle-loot-icon svg {width:38%; height:38%;}
-.battle-loot-icon img {position:absolute; inset:0; width:100%; height:100%;}
-.battle-drops>p {font-size:.93cqw; color:#d7d1c2; padding-top:.3cqw; text-align:right;}
-.battle-drops>p b {padding-left:.5cqw; font-size:1.3cqw; color:#fddf9f;}
+.battle-loot-icon::before{content:"";position:absolute;inset:17%;background:radial-gradient(ellipse,#41405c,#1c2038);}
+.battle-loot-icon .loot-art{position:absolute;width:56%;height:56%;object-fit:contain;}
+.battle-loot-icon .loot-frame {position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
+.battle-cumulative {display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid #c5a77755;padding-top:.42cqw;font-size:1.02cqw;color:#e1d2b2;}
+.battle-cumulative b {font:700 1.65cqw/1.2 Georgia,serif;color:#ffe4ab;}
 .battle-report-actions {display:flex; justify-content:flex-end; gap:.55cqw; margin-top:.65cqw;}
 .battle-report-actions button {min-width:7.4cqw; min-height:2.6cqw; font-size:1.07cqw;}
 .battle-report-actions button:last-child {background:#ebd49f; color:#272435; border-color:#ffedc4; font-weight:700;}
 @keyframes battle-rise {0%{transform:translate(-50%,20%) scale(.84);opacity:1;} 22%{transform:translate(-50%,-34%) scale(1.03);} 72%{opacity:1;} 100%{transform:translate(-45%,-175%);opacity:0;}}
 @keyframes battle-ready {to{background:#5a472e;}}
+@keyframes battle-rage-sheen {from{background-position:100% 0}to{background-position:-85% 0}}
 @keyframes battle-cut-in {0%{clip-path:polygon(0 50%,100% 41%,100% 42%,0 51%);} 14%,86%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);} 100%{clip-path:polygon(0 58%,100% 48%,100% 48.1%,0 58.1%);}}
-@keyframes battle-cut-pan {from{transform:translateX(-.6%) scale(1.025);} to{transform:translateX(.35%) scale(1.035);}}
+@keyframes battle-cut-pan {from{transform:translateX(-.2%) scale(1.003);} to{transform:translateX(.18%) scale(1.012);}}
 #stage.power-save .battle-cutin,#stage.power-save .battle-cut-image {animation:none!important;}

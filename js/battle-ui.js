@@ -11,7 +11,7 @@
     return '<button type="button" data-battle="'+action+'">'+label+'</button>';
   }
   function bars(u) {
-    return Sky.ui.bar(u.hp/u.maxHp*100,'gold')+Sky.ui.bar(u.rage,'cyan');
+    return Sky.ui.bar(u.hp/u.maxHp*100,'cyan')+Sky.ui.bar(u.rage,'gold');
   }
   function card(u) {
     const h=Sky.D.hero(u.heroId);
@@ -29,6 +29,7 @@
       button.dataset.state=stamp;
       const ready=hp>0 && rage===100;
       button.disabled=s.auto || !ready;
+      button.classList.toggle('is-charged',ready);
       button.classList.toggle('ready',ready && !s.auto);
       button.classList.toggle('lost',hp<=0);
       button.querySelector('.battle-card-bars').innerHTML=bars({...u,hp,rage});
@@ -68,6 +69,7 @@
     cut.className='battle-cutin';
     cut.dataset.hero=hero.id;
     const poster=new URL(Sky.art(hero.id,'poster'),document.baseURI).href;
+    Sky.ui.cinematic(poster);
     cut.style.setProperty('--cut-image','url("'+poster+'")');
     cut.innerHTML='<div class="battle-cut-image"></div><div class="battle-cut-streak"></div><div class="battle-cut-title"><span>'+
       hero.faction+'　/　'+hero.name+'</span><strong>'+hero.ult+'</strong></div>';
@@ -76,7 +78,7 @@
     Sky.sound('ultimate');
   }
   function startImpact(s) {
-    s.phase='motion'; s.elapsed=0; s.hitIndex=0; s.sum=0;
+    s.phase='motion'; s.elapsed=0; s.hitIndex=0; s.sum=0; s.hitsShown=0;
     const action=s.action, ultimate=action.kind==='ultimate',hits=action.hits;
     s.duration=action.kind==='stun'?230:ultimate?610+Math.max(0,hits.length-1)*108:430;
     if(ultimate) {
@@ -89,6 +91,7 @@
       s.total.hidden=false;
       s.total.querySelector('small').textContent=hits.every(h=>h.kind==='heal')?'总治疗':hits.every(h=>h.kind==='shield')?'总护盾':'总伤害';
       s.total.querySelector('strong').textContent='0';
+      s.total.querySelector('.battle-hits').textContent='';
     }
   }
   function nextAction(s,now) {
@@ -114,7 +117,7 @@
   function advance(s,dt,now) {
     if(s.phase==='cutin') {
       if(now-s.cutStart<850) return;
-      s.cutin.remove(); s.cutin=null; startImpact(s);
+      s.cutin.remove(); s.cutin=null; Sky.ui.cinematic(null); startImpact(s);
       return;
     }
     s.elapsed+=dt*s.speed;
@@ -139,6 +142,9 @@
         if(hit.kind===kind && (kind!=='damage' || s.scene.byKey[a.actor].side!==s.scene.byKey[hit.target].side)) {
           s.sum+=hit.amount;
           s.total.querySelector('strong').textContent=pretty(s.sum);
+          s.hitsShown++;
+          s.total.querySelector('.battle-hits').textContent=kind==='damage'
+            ? s.hitsShown+(s.hitsShown===1?' HIT':' HITS') : s.hitsShown+' 次施加';
           s.totalUpdates++;
         }
       }
@@ -168,16 +174,8 @@
     }
     if(s.phase!=='result') s.frame=requestAnimationFrame(t=>loop(s,t));
   }
-  const lootGlyph={
-    diamonds:'<path d="m3 10 6-6h14l6 6-13 17zM3 10h26M10 5l6 22 6-22"/>',
-    coins:'<circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="8"/><path d="m16 11 3 5-3 5-3-5z"/>',
-    cores:'<path d="m16 2 9 12-9 16-9-16zM7 14l9 4 9-4M16 2v16"/>',
-    tickets:'<path d="m5 9 22-4 2 9a4 4 0 0 0 1 6L8 25l-1-4a4 4 0 0 0-1-8zM19 9l2 11"/>',
-    gear:'<path d="m9 25 14-18 4-2 1 4-16 17M5 20l9 8M5 29l4-6"/>'
-  };
-  function lootItem(key,label,value,rarity) {
-    const glyph='<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">'+lootGlyph[key]+'</svg>';
-    return '<li><span class="battle-loot-icon">'+glyph+'<img src="assets/ui/frame_'+rarity.toLowerCase()+'.png" alt=""></span><span>'+
+  function lootItem(src,label,value,rarity) {
+    return '<li><span class="battle-loot-icon"><img class="loot-art" src="'+src+'" alt=""><img class="loot-frame" src="assets/ui/frame_'+rarity.toLowerCase()+'.png" alt=""></span><span>'+
       label+'</span><strong>'+value+'</strong></li>';
   }
   function finish(s) {
@@ -186,36 +184,41 @@
     cancelAnimationFrame(s.frame);
     Sky.Battle.finish(s.battle);
     s.scene.resetMotion(); s.scene.state(s.battle.units); s.scene.render(performance.now());
-    s.cutin?.remove(); s.total.hidden=true; s.numbers.replaceChildren();
+    s.cutin?.remove(); Sky.ui.cinematic(null); s.total.hidden=true; s.numbers.replaceChildren();
     s.root.classList.remove('spotlight');
     const loot=Sky.Save.settle(Sky.ui.state,s.battle);
     Sky.ui.save();
-    const team=s.battle.units.filter(u=>u.side==='ally');
+    const team=s.battle.units.filter(u=>u.side==='ally').sort((a,b)=>b.damage-a.damage || a.slot-b.slot);
     const damage=team.reduce((n,u)=>n+u.damage,0),max=Math.max(1,...team.flatMap(u=>[u.damage,u.healing]));
     const win=s.battle.win;
+    const alive=team.filter(u=>u.hp>0).length;
+    const stars=win ? 1+Number(alive>=4)+Number(alive===6) : 0;
     if(win) Sky.sound('win');
-    const report=team.map(u=>{
+    const report=team.map((u,i)=>{
       const h=Sky.D.hero(u.heroId);
-      return '<div class="battle-contrib">'+Sky.ui.frame(h.id)+'<b>'+shortName(h.name)+'</b><div>'+
+      return '<div class="battle-contrib" data-hero="'+h.id+'" data-damage="'+u.damage+'">'+Sky.ui.frame(h.id)+'<b>'+shortName(h.name)+
+        (i===0?'<img class="battle-mvp" src="'+Sky.art.emblem('mvp')+'" alt="最高伤害 MVP" title="最高伤害 MVP">':'')+'</b><div>'+
         Sky.ui.bar(u.damage/max*100,'gold')+Sky.ui.bar(u.healing/max*100,'cyan')+'</div><span>'+
         pretty(u.damage)+'<small>'+pretty(u.healing)+'</small></span></div>';
     }).join('');
     let drops='';
-    for(const [key,name,q] of [['diamonds','星钻','UR'],['tickets','唤星券','SSR'],['coins','星币','R'],['cores','共鸣晶核','SR']]) {
-      if(loot[key]>0) drops+=lootItem(key,name,'×'+pretty(loot[key]),q);
+    for(const [key,art,name,q] of [['diamonds','gem','星钻','UR'],['tickets','ticket','唤星券','SSR'],['coins','coin','星币','R'],['cores','core','共鸣晶核','SR']]) {
+      if(loot[key]>0) drops+=lootItem(Sky.art.item(art),name,'×'+pretty(loot[key]),q);
     }
-    if(loot.gear) drops+=lootItem('gear',loot.gear.name,'×1',loot.gear.rarity);
+    if(loot.gear) drops+=lootItem(Sky.art.gear(loot.gear.slot,loot.gear.rarity),loot.gear.name,'×1',loot.gear.rarity);
     const spec=s.battle.spec, campaign=spec.kind==='campaign';
     const next=win && (campaign&&spec.id<10 || spec.kind==='tower'&&spec.id<30);
     const extra=spec.kind==='boss'?'最高纪录 '+pretty(Sky.ui.state.bossBest):spec.kind==='arena'?'累计胜场 '+Sky.ui.state.arenaWins:
       loot.first?'首次通关':'战斗结束';
     const panel=document.createElement('section');
     panel.className='battle-result'; panel.setAttribute('aria-label','战后结算');
-    panel.innerHTML='<div class="battle-report"><div class="battle-report-heading"><span>'+labels[spec.kind]+'　/　'+s.battle.title+'</span>'+
-      '<h2>'+(win?'作战胜利':'作战失利')+'</h2><p>'+(win?'VICTORY':'DEFEAT')+'　·　'+extra+'</p></div>'+
+    const assessment='<div class="battle-report-stars" data-stars="'+stars+'" aria-label="作战评星 '+stars+' / 3" title="胜利一星，至少四人存活两星，全员存活三星">'+
+      [1,2,3].map(i=>'<img alt="" class="'+(i<=stars?'earned':'unearned')+'" src="'+Sky.art.emblem('star')+'">').join('')+'</div>';
+    panel.innerHTML='<div class="battle-report"><div class="battle-report-heading"><img class="battle-medal" alt="" src="'+Sky.art.emblem(win?'victory':'defeat')+'"><div><span>'+labels[spec.kind]+'　/　'+s.battle.title+'</span>'+
+      '<h2>'+(win?'作战胜利':'作战失利')+'</h2><p>'+extra+'　·　'+alive+' / 6 存活</p></div>'+assessment+'</div>'+
       '<div class="battle-report-columns"><div class="battle-stats"><h3>星灵贡献 <small>伤害 <em>／ 治疗</em></small></h3>'+report+
-      '</div><div class="battle-drops"><h3>战利品 <small>已收入背包</small></h3><ul>'+drops+'</ul>'+
-      '<p>累计伤害 <b>'+pretty(damage)+'</b></p></div></div><div class="battle-report-actions">'+
+      '<p class="battle-cumulative">累计伤害 <b>'+pretty(damage)+'</b></p></div><div class="battle-drops"><h3>战利品 <small>已收入背包</small></h3><ul>'+drops+'</ul>'+
+      '</div></div><div class="battle-report-actions">'+
       control('return',campaign?'返回航线':'返回试炼')+control('again','再战')+(next?control('next',campaign?'下一关':'下一层'):'')+'</div></div>';
     s.root.append(panel);
     s.root.classList.add('resolved');
@@ -249,7 +252,7 @@
       '<header class="battle-head"><div class="battle-allegiance"><b>'+labels[spec.kind]+'</b><small></small></div>'+
       '<div class="battle-round"><b>'+battle.title+'</b><span>回合 <strong>01</strong> / 20</span></div>'+
       '<nav aria-label="战斗控制">'+control('speed','1×')+control('auto','自动')+control('skip','跳过战斗')+'</nav></header>'+
-      '<div class="battle-log">舰队入阵</div><div class="battle-total" hidden><small>总伤害</small><strong>0</strong></div>'+
+      '<div class="battle-log">舰队入阵</div><div class="battle-total" hidden><small>总伤害</small><strong>0</strong><span class="battle-hits"></span></div>'+
       '<div class="battle-bottom">'+battle.units.filter(u=>u.side==='ally').map(card).join('')+'</div></section>';
     const root=ui.root.querySelector('.battle-page');
     const powerSave=ui.state.settings.powerSave;
@@ -275,6 +278,7 @@
   }
   function destroy() {
     if(!current)return;
+    Sky.ui.cinematic(null);
     cancelAnimationFrame(current.frame);
     current.scene.destroy();
     current=null;

@@ -12,7 +12,7 @@
     "vw": 844,
     "vh": 390
   },
-  "images": 26,
+  "images": 80,
   "renderer": {
     "canvas": [
       2079,
@@ -22,19 +22,224 @@
     "textures": 8,
     "spriteCount": 12
   },
-  "manualCutMs": 853,
-  "combatDurationSeconds": 12.645,
+  "manualCutMs": 852,
+  "combatDurationSeconds": 14.652,
   "presentedFPS": [
-    60,
+    42,
     60
   ],
   "observedMedianBrowserFPS": 75,
   "segmentedDamageSample": [
-    247,
-    491,
-    726
+    241,
+    480,
+    720
   ],
-  "distinctPositiveTotals": 12,
+  "distinctPositiveTotals": 15,
   "completedNormally": true,
+  "wave1ArtCount": 35,
+  "screenArt": {
+    "lobby": [
+      "assets/icons/icon_bag.png",
+      "assets/icons/icon_codex.png",
+      "assets/icons/icon_formation.png",
+      "assets/icons/icon_gacha.png",
+      "assets/icons/icon_quest.png",
+      "assets/icons/icon_reward.png",
+      "assets/icons/icon_roster.png",
+      "assets/icons/icon_settings.png",
+      "assets/icons/icon_shop.png",
+      "assets/items/item_chest.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/emblem_star.png"
+    ],
+    "roster": [
+      "assets/icons/icon_gacha.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_shard.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "gear": [
+      "assets/items/gear_accessory_sr.png",
+      "assets/items/gear_armor_sr.png",
+      "assets/items/gear_relic_sr.png",
+      "assets/items/gear_weapon_sr.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "formation": [],
+    "gacha": [
+      "assets/icons/icon_gacha.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "summon": [
+      "assets/items/item_shard.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png"
+    ],
+    "route": [
+      "assets/icons/icon_codex.png",
+      "assets/icons/icon_formation.png",
+      "assets/icons/icon_gacha.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "victory": [
+      "assets/items/gear_weapon_sr.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/emblem_mvp.png",
+      "assets/ui/emblem_star.png",
+      "assets/ui/emblem_victory.png"
+    ],
+    "tower": [
+      "assets/icons/icon_formation.png",
+      "assets/items/gear_armor_ur.png",
+      "assets/items/gear_relic_ur.png",
+      "assets/ui/ui_btn_crimson.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "shop": [
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png"
+    ],
+    "bag-materials": [
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_dew.png",
+      "assets/items/item_dust.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_shard.png",
+      "assets/items/item_stamina.png",
+      "assets/items/item_ticket.png"
+    ],
+    "bag-gear": [
+      "assets/items/gear_accessory_sr.png",
+      "assets/items/gear_armor_sr.png",
+      "assets/items/gear_relic_sr.png",
+      "assets/items/gear_weapon_sr.png"
+    ],
+    "equipped-ur": [
+      "assets/items/gear_accessory_ur.png",
+      "assets/items/gear_armor_ur.png",
+      "assets/items/gear_relic_ur.png",
+      "assets/items/gear_weapon_ur.png"
+    ],
+    "defeat": [
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/ui/emblem_defeat.png",
+      "assets/ui/emblem_mvp.png",
+      "assets/ui/emblem_star.png"
+    ]
+  },
+  "mobileEdgeSamples": {
+    "lobby": [
+      {
+        "x": 32,
+        "count": 1178,
+        "spread": 544
+      },
+      {
+        "x": 809,
+        "count": 205,
+        "spread": 37
+      }
+    ],
+    "roster": [
+      {
+        "x": 32,
+        "count": 1203,
+        "spread": 584
+      },
+      {
+        "x": 809,
+        "count": 994,
+        "spread": 494
+      }
+    ],
+    "gacha": [
+      {
+        "x": 32,
+        "count": 1127,
+        "spread": 609
+      },
+      {
+        "x": 809,
+        "count": 433,
+        "spread": 323
+      }
+    ],
+    "summon": [
+      {
+        "x": 32,
+        "count": 118,
+        "spread": 29
+      },
+      {
+        "x": 809,
+        "count": 79,
+        "spread": 39
+      }
+    ],
+    "campaign": [
+      {
+        "x": 32,
+        "count": 912,
+        "spread": 176
+      },
+      {
+        "x": 809,
+        "count": 114,
+        "spread": 40
+      }
+    ],
+    "battle": [
+      {
+        "x": 32,
+        "count": 1144,
+        "spread": 527
+      },
+      {
+        "x": 809,
+        "count": 1148,
+        "spread": 537
+      }
+    ],
+    "trials": [
+      {
+        "x": 32,
+        "count": 912,
+        "spread": 176
+      },
+      {
+        "x": 809,
+        "count": 116,
+        "spread": 40
+      }
+    ]
+  },
+  "lateGameEvidence": "Imported test save, four UR items, level 1 vs tower 30. Real game resolution.",
   "consoleErrorsAndHTTPFailures": 0
 }

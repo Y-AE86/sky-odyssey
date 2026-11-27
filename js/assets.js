@@ -13,6 +13,11 @@
     if(kind==='chibi' && vectors[id] && !custom.has(id)) return vectors[id];
     return pathOf(id,kind);
   }
+  const slots=['weapon','armor','accessory','relic'];
+  art.icon = key => 'assets/icons/icon_'+key+'.png';
+  art.item = key => 'assets/items/item_'+key+'.png';
+  art.emblem = key => 'assets/ui/emblem_'+key+'.png';
+  art.gear = (slot,rarity) => 'assets/items/gear_'+slots[slot]+'_'+(rarity==='UR'?'ur':'sr')+'.png';
   art.isCustomChibi = id => custom.has(id);
   // Dimensions are available for local images without reading their pixels. The empty
   // slot is never used for drawing. A full-size replacement takes effect on the next launch.

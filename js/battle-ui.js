@@ -64,17 +64,35 @@
     s.numbers.append(number);
     number.addEventListener('animationend',()=>number.remove(),{once:true});
   }
-  function showCutin(s,now) {
+  function posterImage(s,id) {
+    if(!s.posters.has(id)){
+      const image=new Image();
+      image.decoding='async';
+      image.src=Sky.art(id,'poster');
+      s.posters.set(id,image);
+    }
+    return s.posters.get(id);
+  }
+  async function showCutin(s) {
+    s.phase='loading-cutin';
+    const image=posterImage(s,s.hero.id);
+    try {
+      await image.decode();
+    } catch {
+      if(current===s && s.phase==='loading-cutin') startImpact(s);
+      return;
+    }
+    if(current!==s || s.phase!=='loading-cutin') return;
     const hero=s.hero, cut=document.createElement('div');
     cut.className='battle-cutin';
     cut.dataset.hero=hero.id;
-    const poster=new URL(Sky.art(hero.id,'poster'),document.baseURI).href;
+    const poster=image.src;
     Sky.ui.cinematic(poster);
     cut.style.setProperty('--cut-image','url("'+poster+'")');
     cut.innerHTML='<div class="battle-cut-image"></div><div class="battle-cut-streak"></div><div class="battle-cut-title"><span>'+
       hero.faction+'　/　'+hero.name+'</span><strong>'+hero.ult+'</strong></div>';
     s.root.append(cut);
-    s.phase='cutin'; s.cutStart=now; s.cutins++; s.cutin=cut;
+    s.phase='cutin'; s.cutStart=performance.now(); s.cutins++; s.cutin=cut;
     Sky.sound('ultimate');
   }
   function startImpact(s) {
@@ -94,7 +112,7 @@
       s.total.querySelector('.battle-hits').textContent='';
     }
   }
-  function nextAction(s,now) {
+  function nextAction(s) {
     if(s.battle.done) {finish(s);return;}
     let action=null;
     if(!s.auto && s.queued.size) {
@@ -111,7 +129,7 @@
     speak(s,(unit.side==='ally'?'我方 · ':'敌方 · ')+shortName(s.hero.name)+'　'+
       (action.kind==='ultimate'?s.hero.ult:action.kind==='stun'?'冰冻':'普攻'));
     refreshUI(s);
-    if(action.kind==='ultimate' && unit.side==='ally') showCutin(s,now);
+    if(action.kind==='ultimate' && unit.side==='ally') showCutin(s);
     else startImpact(s);
   }
   function advance(s,dt,now) {
@@ -122,7 +140,7 @@
     }
     s.elapsed+=dt*s.speed;
     if(s.phase==='ready') {
-      if(s.elapsed>=s.duration) nextAction(s,now);
+      if(s.elapsed>=s.duration) nextAction(s);
       return;
     }
     if(s.phase!=='motion') return;
@@ -263,7 +281,7 @@
     const root=ui.root.querySelector('.battle-page');
     const powerSave=ui.state.settings.powerSave;
     const scene=new Sky.BattleScene(root.querySelector('.battle-stage'),battle.units,powerSave);
-    const s={root,battle,scene,powerSave,auto:true,speed:1,queued:new Set(),phase:'loading',elapsed:0,duration:450,
+    const s={root,battle,scene,powerSave,auto:true,speed:1,queued:new Set(),posters:new Map(),phase:'loading',elapsed:0,duration:450,
       cards:[...root.querySelectorAll('.battle-card')],groupCount:root.querySelector('.battle-allegiance small'),
       round:root.querySelector('.battle-round strong'),log:root.querySelector('.battle-log'),total:root.querySelector('.battle-total'),
       numbers:root.querySelector('.battle-numbers'),rage:{},cutins:0,burstCount:0,totalUpdates:0,presentedFrames:0,renderedMs:0};
@@ -274,6 +292,7 @@
       if(current!==s || s.phase==='result') return;
       s.phase='ready'; s.last=performance.now(); s.due=s.last+1000/(powerSave?30:60); scene.render(s.last);
       s.frame=requestAnimationFrame(t=>loop(s,t));
+      for(const id of ui.state.formation) if(Sky.D.illustrated.includes(id)) posterImage(s,id);
     }).catch(error=>{
       if(current!==s || s.phase==='result') return;
       // Surface a missing/replaced artwork to the player while preserving the

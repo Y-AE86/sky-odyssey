@@ -2,6 +2,10 @@
   {
     "mode": "http",
     "source": "pixi-texture",
+    "sources": {
+      "h04": "pixi-texture",
+      "h08": "pixi-texture"
+    },
     "artworkSizes": {
       "chibi": [
         1028,
@@ -20,6 +24,10 @@
   {
     "mode": "file",
     "source": "native-image",
+    "sources": {
+      "h04": "native-image",
+      "h08": "native-image"
+    },
     "artworkSizes": {
       "chibi": [
         1028,

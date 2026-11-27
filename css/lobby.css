@@ -1,7 +1,6 @@
 #bleed.clean .lobby-shade{display:none}#bleed.clean .backdrop,body:has(#stage.power-save) #bleed .backdrop{animation:none}body:has(#stage.power-save) #bleed .backdrop{transition:none}
 .lobby-art,.lobby-shade,.backdrop{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.backdrop{object-fit:cover;object-position:center 15%;opacity:0;transition:opacity .68s ease;animation:poster-breathe 16s ease-in-out infinite alternate}
-.backdrop.current{opacity:1}
+.backdrop{object-fit:cover;object-position:center 15%;animation:poster-breathe 16s ease-in-out infinite alternate}
 @keyframes poster-breathe{from{transform:scale(1)}to{transform:scale(1.012)}}
 .lobby-shade{background:linear-gradient(90deg,rgba(5,8,18,.26),transparent 16%,transparent 52%,rgba(10,14,30,.68) 94%),linear-gradient(0deg,rgba(9,10,23,.88) 0,rgba(12,13,27,.5) 12%,transparent 40%,transparent 82%,rgba(7,11,24,.68) 100%)}
 .lobby-interact{position:absolute;inset:0;width:100%;height:100%;cursor:pointer}

@@ -71,7 +71,7 @@
     for (const p of ['standard','up']) {counter(s.pity?.[p]?.ur,59); counter(s.pity?.[p]?.ssr,9);}
     valid(s.firstTenDone===undefined || typeof s.firstTenDone==='boolean');
     valid(s.settings && typeof s.settings.sound==='boolean' && typeof s.settings.powerSave==='boolean');
-    valid(['h01','h02','h03'].includes(s.settings.poster) && typeof s.welfare==='boolean');
+    valid(D.illustrated.includes(s.settings.poster) && typeof s.welfare==='boolean');
     valid(s.daily && /^\d{4}-\d{2}-\d{2}$/.test(s.daily.day) && typeof s.daily.claimed==='boolean');
     counter(s.daily.battles); counter(s.idleAt,8640000000000000);
     if(s.event!==undefined){

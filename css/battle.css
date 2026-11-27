@@ -138,6 +138,10 @@
   box-shadow:0 1cqw 4cqw #0b0c16a6;
 }
 .battle-report-heading {display:flex;align-items:center;gap:1.2cqw;padding-bottom:.6cqw;border-bottom:1px solid #ceb17878;}
+.battle-result[data-outcome="defeat"] .battle-report {
+  border-color:#a59eaf #755562 #844b61 #a4a3b4;
+  border-top-color:#c5c9d6;
+}
 .battle-medal{width:9cqw;height:7.8cqw;object-fit:contain;filter:drop-shadow(0 .2cqw .55cqw #1c102a);}
 .battle-report-heading>div>span {color:#e5d8c4;font-size:.97cqw;letter-spacing:.07em;}
 .battle-report-heading h2 {font:700 3.1cqw/1.22 var(--display);color:#ffe0a0;letter-spacing:.08em;margin:.16cqw 0;}
@@ -165,8 +169,8 @@
 .battle-recovery b {display:block;color:#ded7e3;font-weight:600;font-size:max(9px,.97cqw);letter-spacing:.07em;}
 .battle-recovery>div {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45cqw;margin-top:.4cqw;}
 .battle-recovery button {
-  min-height:max(23px,2.35cqw);padding:0 .15cqw;white-space:nowrap;color:#f3d9bb;
-  border-bottom:1px solid #bba27c85;background:#242236;font-size:max(9px,.96cqw);
+  min-height:max(23px,2.35cqw);padding:0 .15cqw;white-space:nowrap;color:#fff2e6;font-weight:600;
+  border-bottom:1px solid #bd94a797;background:#302a3d;font-size:max(9px,.96cqw);
 }
 .battle-recovery button:is(:hover,:focus-visible) {background:#423342;color:#fff1d8;}
 .battle-loot-icon {position:relative; display:grid; width:4.8cqw; height:4.8cqw; place-items:center; color:#f0d189;}

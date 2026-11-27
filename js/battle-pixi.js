@@ -6,6 +6,12 @@
   const palette = {ink: 0xc18aff, ice: 0x8fefff, water: 0x69ebcd, light: 0xffdf87, gear: 0xffae61, blood: 0xff698f};
   const accents = {东煌: 0x76dfd2, 圣辉: 0xffdf9c, 机巧: 0xffb07d, 秘影: 0xbc9bff};
   const imageCache = new Map();
+  // Width, height and midpoint between the boots in the standing PNG.
+  // Weapons and trailing capes often shift the centre of the image away from the feet.
+  const stances = {
+    h01:[1079,1081,.54], h02:[1028,1193,.49], h03:[946,1198,.57],
+    h04:[862,1138,.625], h05:[1090,1249,.505], h06:[774,1136,.57]
+  };
   const clamp = n => Math.max(0, Math.min(1, n));
   // Four neighbouring alpha samples outline a struck sprite in the same GPU batch.
   // The fill keeps its original colour and texture, even on overlapping area hits.
@@ -179,13 +185,23 @@
     }
     async load() {
       const heroes = [...new Set(this.nodes.map(n => n.heroId))];
+      const offline = Sky.art.loadOfflineTextures();
       const sources = await Promise.all(heroes.map(async id => {
-        const direct = location.protocol === 'file:' && Sky.art.isCustomChibi(id);
-        const url = direct ? Sky.art(id,'chibi') : await Sky.art.textureURL(id);
-        return [id, direct, await getImage(url)];
+        const fileImage=await getImage(Sky.art(id,'chibi'));
+        const stance=stances[id];
+        const original=stance && fileImage.naturalWidth===stance[0] && fileImage.naturalHeight===stance[1];
+        const phantom=Sky.art.isPhantom(id);
+        const packed=original && (await offline)?.[id];
+        let embeddedImage;
+        if(packed) {
+          try { embeddedImage=await getImage(packed); }
+          catch { /* A damaged entry can still use the decoded local PNG. */ }
+        }
+        const direct=location.protocol==='file:' && !phantom && !embeddedImage;
+        return {id,direct,phantom,stance:original && stance,img:embeddedImage || fileImage};
       }));
       if (this.disposed) return;
-      for(const [id,direct,img] of sources) {
+      for(const {id,direct,phantom,stance,img} of sources) {
         let texture;
         if (this.app && !direct) {
           const base = new P.BaseTexture(img,{mipmap:P.MIPMAP_MODES.ON, scaleMode:P.SCALE_MODES.LINEAR, anisotropicLevel:8});
@@ -194,9 +210,14 @@
         }
         for(const n of this.nodes.filter(n => n.heroId === id)) {
           n.image = img;
+          n.phantom=phantom;
+          n.footX=stance ? stance[2] : .5;
+          n.footY=stance ? 1-16/img.naturalHeight : .985;
+          // All six illustrations have 16px of transparent padding on each edge.
+          n.heightFactor=stance ? .972/(1-32/img.naturalHeight) : 1;
           if (texture) {
             n.sprite = new P.Sprite(texture);
-            n.sprite.anchor.set(.5,.985);
+            n.sprite.anchor.set(n.footX,n.footY);
             n.sprite.eventMode = 'none';
             n.sprite.pluginName = 'skyBattleActors';
             // Store the ally and enemy ground geometry once, then move each instance.
@@ -388,11 +409,11 @@
         const recoil=flashing ? Math.sin((n.hurt-time)/165*Math.PI)*.013*w*(n.side==='ally'?-1:1) : 0;
         const x=(n.x+n.dx)*w+recoil,y=(n.y+n.dy)*h;
         const breath=this.powerSave ? 1 : 1+.007*Math.sin(time/540+n.slot*1.8);
-        const size=h*(n.boss?.285:.204)*n.depth*breath;
+        const size=h*(n.boss?.285:.204)*n.depth*breath*n.heightFactor;
         const width=size*n.image.naturalWidth/n.image.naturalHeight;
         const sign=n.side==='enemy'?-1:1;
         const shadowWidth=size*.30*(1-Math.min(.30,Math.abs(n.dx)));
-        const shadowAlpha=n.side==='enemy' ? Math.max(.68,alpha) : alpha*(n.heroId<='h03'?1:.8);
+        const shadowAlpha=n.side==='enemy' ? Math.max(.68,alpha) : alpha*(n.phantom ? .8 : 1);
         if(n.shadow) {
           n.shadow.position.set(x,(n.y+n.dy*.60)*h-1);
           n.shadow.scale.set(shadowWidth/100,size*.050/12);
@@ -404,7 +425,8 @@
         if(n.dom) {
           const {body,shadow,portrait}=n.dom;
           body.style.cssText='left:'+x+'px;top:'+y+'px;z-index:'+Math.round(n.y*100);
-          portrait.style.cssText='width:'+width+'px;height:'+size+'px;transform:translate(-50%,-98.5%) scaleX('+sign+');filter:'+(flashing?'drop-shadow(0 0 2px #fff3c9) drop-shadow(0 0 3px #fde3b1)':alpha<1?'brightness(.35)':'none');
+          const anchorX=sign<0 ? 1-n.footX : n.footX;
+          portrait.style.cssText='width:'+width+'px;height:'+size+'px;transform:translate('+(-anchorX*100)+'%,'+(-n.footY*100)+'%) scaleX('+sign+');filter:'+(flashing?'drop-shadow(0 0 2px #fff3c9) drop-shadow(0 0 3px #fde3b1)':alpha<1?'brightness(.35)':'none');
           shadow.style.cssText='width:'+shadowWidth*2+'px;height:'+size*.10+'px;opacity:'+shadowAlpha+';top:'+(-n.dy*.40*h)+'px';
         } else if(n.sprite) {
           n.sprite.position.set(x,y);
@@ -413,7 +435,7 @@
         } else {
           c.save(); c.translate(x,y); c.scale(sign,1);
           if(flashing || alpha<1) c.filter=flashing?'drop-shadow(0 0 2px #fff3c9) drop-shadow(0 0 3px #fde3b1)':'brightness(.35)';
-          c.drawImage(n.image,-width*.5,-size*.985,width,size); c.restore();
+          c.drawImage(n.image,-width*n.footX,-size*n.footY,width,size); c.restore();
         }
         // Each flag and gauge is vector geometry at the canvas' actual backing density.
         if(n.flag) {
@@ -431,8 +453,8 @@
     }
     inspect() {
       return {renderer:this.app?'pixi-webgl':'canvas2d',resolution:this.ratio, canvas:[this.canvas.width,this.canvas.height],
-        stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,x:n.x,y:n.y,mirror:n.side==='enemy',depth:n.depth,
-          source:n.dom?'native-image':this.app?'pixi-texture':'canvas-image'})),textures:[...this.textures.values()].map(t=>({
+        stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,heroId:n.heroId,x:n.x,y:n.y,mirror:n.side==='enemy',depth:n.depth,
+          artwork:n.phantom?'phantom':'original',source:n.dom?'native-image':this.app?'pixi-texture':'canvas-image'})),textures:[...this.textures].map(([heroId,t])=>({heroId,
           width:t.baseTexture.realWidth,height:t.baseTexture.realHeight,mipmap:t.baseTexture.mipmap,scaleMode:t.baseTexture.scaleMode})),ready:!!this.ready};
     }
     destroy() {

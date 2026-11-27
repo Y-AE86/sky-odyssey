@@ -67,13 +67,13 @@
         S.D.slots.map((label,i) => {
           const item = s.bag.find(it => it.uid === s.equipment[h.id]?.[i]);
           const bonus = item && S.Save.gearStats(item);
-          const primary = bonus ? '<span class="pn-gear-stat" title="装备基础加成"><small>'+ (bonus.atk ? '攻击':'生命')+'</small><strong>+'+money(bonus.atk || bonus.hp)+'</strong></span>' : '';
+          const primary = bonus ? '<span class="pn-gear-stat" title="装备基础加成"><small>'+ (bonus.atk ? '攻击':'生命')+'</small><strong>+'+money(Math.round(bonus.atk || bonus.hp))+'</strong></span>' : '';
           return '<button class="pn-equip-slot" ' + act("gear-slot", i) + '>' + framedGear(i,item?.rarity) +
             '<span><small>' + label + '</small><b>' + escape(item?.name || "未装备") + '</b><em>' + (item ? escape(item.rarity) + '　+' + item.level : "选择星装") + '</em></span>'+primary+'</button>';
         }).join("") + '</div></div>';
     }
     if (P.rosterTab === 2) {
-      const special = ["UR","SSR"].includes(h.rarity);
+      const special = Boolean(h.weapon);
       return '<div class="pn-weapon"><div class="pn-weapon-emblem">' + (special ? photo(h.id,"weapon") : mark("blade")) + '</div><div class="pn-weapon-copy"><p>' + (special ? '已共鸣 · '+h.rarity : "通用武装") + '</p><h2>' + escape(special ? h.weapon : "基础武装") + '</h2><p>' + escape(special ? h.weaponDesc : "通过四格星装提升战斗属性。") + '</p>' + (special ? '<div class="pn-weapon-bonus"><span>生命 <b>+6%</b></span><span>攻击 <b>+6%</b></span></div>' : "") + '</div></div>';
     }
     const selected = h.skills[P.skill];
@@ -151,8 +151,8 @@
       '<div class="pn-reveal-light"></div><header><h2>召唤结果</h2><div class="pn-reveal-actions"><button '+act("skip")+(ready?' hidden':'')+' class="pn-skip">跳过动画 '+mark("arrow")+'</button>'+
       (one?'':'<button '+act("draw",10)+(ready?'':' hidden')+' aria-label="再抽十次，消耗十张唤星券" class="pn-repeat pn-button gold">再抽十次 <span class="pn-draw-cost">'+mark("ticket")+'×10</span></button>')+'</div></header>'+
       '<div class="pn-result-grid">' + P.draws.map((r,i)=>{
-        const h=hero(r.id), illustrated=['h01','h02','h03'].includes(r.id);
-        return '<div class="pn-result-card result-'+r.rarity.toLowerCase()+'" data-hero="'+r.id+'" style="--i:'+i+'"><div class="pn-result-front">'+
+        const h=hero(r.id), illustrated=S.D.illustrated.includes(r.id);
+        return '<div class="pn-result-card result-'+r.rarity.toLowerCase()+'" data-hero="'+r.id+'" style="--i:'+i+'"><div class="pn-result-front'+(illustrated?' illustrated':'')+'">'+
           photo(r.id,illustrated?"poster":"chibi","pn-card-scene"+(illustrated?"":" phantom"))+'<small>'+r.rarity+'</small>'+S.ui.frame(r.id)+'<b>'+escape(h.name)+'</b><em class="'+(r.isNew?'is-new':'')+'">'+
           (r.isNew?'NEW · 初次相遇':mark("shards")+' 碎片 ×'+r.shards)+'</em></div></div>';
       }).join("")+'</div>'+button("收下星灵","dismiss")+'</div>';

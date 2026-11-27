@@ -110,10 +110,20 @@
 .pn-equip-slot .pn-gear-stat {align-self:center;align-items:flex-end;margin-left:auto;padding:.28cqw 0 .28cqw .65cqw;border-left:1px solid #cfb68042;white-space:nowrap}
 .pn-gear-stat small {font-size:.88cqw;color:#c8d3dc}
 .pn-gear-stat strong {font:600 1.45cqw/1.15 Georgia,serif;color:#f5d79e;font-variant-numeric:tabular-nums}
-.pn-weapon {height:100%;display:flex;align-items:center;gap:2cqw;padding:1cqw}
-.pn-weapon-emblem {position:relative;display:grid;place-items:center;width:15cqw;aspect-ratio:1;flex:none;border-radius:50%;border:1px solid #e8ca8880;background:radial-gradient(circle,#997f4b43,transparent 70%)}
-.pn-weapon-emblem::before {content:"";position:absolute;inset:7%;border:1px dashed #ccba8290;border-radius:50%}
-.pn-weapon-emblem img,.pn-weapon-emblem .pn-mark {width:78%;height:78%;object-fit:contain;color:var(--p-gold)}
+.pn-weapon {height:100%;display:grid;grid-template-columns:46% 1fr;align-items:center;gap:1.6cqw;padding:1cqw .8cqw}
+.pn-weapon-emblem {
+  position:relative;isolation:isolate;display:grid;place-items:center;width:100%;aspect-ratio:1;
+  background:radial-gradient(ellipse at 50% 82%,#d1a45628,transparent 44%),radial-gradient(circle,#ad905827,transparent 67%);
+}
+.pn-weapon-emblem::before,.pn-weapon-emblem::after {content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%}
+.pn-weapon-emblem::before {inset:7%;border:1px solid #d0ab6352;outline:1px dashed #cfb77740;outline-offset:.55cqw}
+.pn-weapon-emblem::after {
+  inset:76% 9% 6%;border:1px solid #dfbd7baa;
+  background:radial-gradient(ellipse,#ffe3a14d,transparent 50%,#c1985440 64%,transparent 68%);
+  box-shadow:0 .16cqw .5cqw #c6a46930,inset 0 0 .8cqw #ae8b4433;
+}
+.pn-weapon-emblem img {width:93%;height:93%;object-fit:contain;object-position:center;filter:drop-shadow(0 .25cqw .45cqw #090e2780)}
+.pn-weapon-emblem .pn-mark {width:66%;height:66%}
 .pn-weapon-copy p,.pn-skill-detail p {color:var(--p-muted);font-size:1.16cqw;line-height:1.65}
 .pn-weapon-copy h2,.pn-skill-detail h2 {color:#fce3ae;margin:.3cqw 0 1cqw}
 .pn-weapon-bonus {display:flex;gap:1.4cqw;margin-top:1.1cqw;font-size:1.1cqw}
@@ -222,6 +232,13 @@ body:has(.pn-draw-results) #bleed[data-page="gacha"]::after {background:linear-g
 .pn-result-front>b {font-size:1.14cqw;margin-top:.12cqw;white-space:nowrap}
 .pn-result-front>em {color:#c4d1e5;font-size:.98cqw;margin-top:.24cqw}
 .pn-result-front>em.is-new {color:#b4f4d9}
+.pn-result-front.illustrated {justify-content:flex-end}
+.pn-result-front.illustrated .pn-card-scene {object-position:var(--card-focus,22%) center;opacity:1}
+.pn-result-card[data-hero="h01"],.pn-result-card[data-hero="h06"] {--card-focus:15%}
+.pn-result-card[data-hero="h05"] {--card-focus:18%}
+.pn-result-front.illustrated::before {background:linear-gradient(0deg,#0e1426 0%,#141a2be6 18%,#171b2e80 37%,transparent 60%)}
+.pn-result-front.illustrated>.quality {width:44%;max-height:none}
+.pn-result-front.illustrated>small {position:absolute;top:.54cqw;left:.54cqw;margin:0;padding:.12cqw .45cqw;background:#141a2bda;border-bottom:1px solid var(--grade)}
 .pn-draw-results.single .pn-result-grid {grid-template:1fr/1fr;width:26%;margin:2.75cqw 0}
 .pn-draw-results.single .pn-result-front>b {font-size:1.7cqw}
 .pn-draw-results.single .pn-result-front>small {font-size:2.1cqw;margin-left:1.65cqw}

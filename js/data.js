@@ -33,6 +33,8 @@
     ]
   }));
   const byId = Object.fromEntries(heroes.map(hero => [hero.id, hero]));
+  const illustrated = ['h01','h02','h03','h04','h05','h06'];
+  const nextPoster = id => illustrated[(illustrated.indexOf(id)+1) % illustrated.length];
   const starter = ['h04','h08','h05','h01','h02','h03'];
   const enemyTeams = [
     ['h08','h07','h04','h06','h05','h03'], ['h08','h06','h07','h05','h03','h02'],
@@ -53,6 +55,6 @@
     {kind: 'boss', name: '天城首领', desc: '挑战浮空机神与五名护卫，按历史最高伤害领取阶梯奖励。'},
     {kind: 'arena', name: '星环演武', desc: '迎战六人镜像小队，每三胜升段并额外获得唤星券。'}
   ];
-  Sky.D = {heroes, hero: id => byId[id], factions, advantage, rarities, slots, starter, enemyTeams,
+  Sky.D = {heroes, hero: id => byId[id], illustrated, nextPoster, factions, advantage, rarities, slots, starter, enemyTeams,
     stages, trials, chapters: ['浮空星港', '齿轮云巅'], bossThresholds: [3000,8000,15000,25000,40000]};
 })();

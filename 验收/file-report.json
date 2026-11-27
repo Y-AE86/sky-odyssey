@@ -20,19 +20,35 @@
     ],
     "gpu": "ANGLE (Intel, Intel(R) UHD Graphics 770 (0x00004680) Direct3D11 vs_5_0 ps_5_0, D3D11)",
     "textures": 8,
+    "originalHeroes": [
+      "h01",
+      "h02",
+      "h03",
+      "h04",
+      "h05",
+      "h06"
+    ],
     "spriteCount": 12
   },
-  "manualCutMs": 853,
-  "combatDurationSeconds": 12.434,
+  "embedded": {
+    "h01": "2d755db7e15ada571e96c59fdd5548ca843c605ec7f496825f19dbbe76f6ac77",
+    "h02": "f9d8b28cdb7ffd0b98d4001804cce6b368948661e3644f02116a34b4dadc2e14",
+    "h03": "df7bf54115a2ea1e242022800de855cb1af89b4275276f2b9803b8f330cc2459",
+    "h04": "b9737cf6dacb9aad79766bcacd4771319ea5b34472b65bb66e8059c86a986933",
+    "h05": "d6d3ccde1d3e9f1a1ad57dfc6e0654db60bcd501a0ff6b37391702c9dd169f2b",
+    "h06": "c066bdd51fa23bfdcb7a9d1dadb109e3a7db18f203c8cfbbdbd478b4860f997e"
+  },
+  "manualCutMs": 851,
+  "combatDurationSeconds": 12.995,
   "presentedFPS": [
-    59.6,
-    60.1
+    55.4,
+    60
   ],
   "observedMedianBrowserFPS": 75,
   "segmentedDamageSample": [
-    231,
-    470,
-    710
+    252,
+    486,
+    722
   ],
   "distinctPositiveTotals": 13,
   "completedNormally": true,
@@ -291,6 +307,75 @@
       "assets/banners/banner_boss.png": "c12abe8f58ca30563c5abf90c95ac70e20c86f9030e40b27c6254b9229abb713",
       "assets/banners/banner_arena.png": "ea9908972d9037e132f81a970af64db0f8b3b56f09324bd1230c0ef0889743a0"
     }
+  },
+  "wave3": {
+    "regularPoolSeed": 43267,
+    "drawn": [
+      "h02",
+      "h04",
+      "h08",
+      "h06",
+      "h03",
+      "h05",
+      "h07",
+      "h01",
+      "h08",
+      "h08"
+    ],
+    "weapons": {
+      "h01": "assets/weapons/weapon_h01.png",
+      "h02": "assets/weapons/weapon_h02.png",
+      "h03": "assets/weapons/weapon_h03.png",
+      "h04": "assets/weapons/weapon_h04.png",
+      "h05": "assets/weapons/weapon_h05.png",
+      "h06": "assets/weapons/weapon_h06.png"
+    },
+    "bossSeed": 72,
+    "formation": [
+      "h04",
+      "h05",
+      "h06",
+      "h01",
+      "h02",
+      "h03"
+    ],
+    "allyOriginals": [
+      "h01",
+      "h04",
+      "h02",
+      "h05",
+      "h03",
+      "h06"
+    ],
+    "originalTextures": [
+      "h01",
+      "h02",
+      "h03",
+      "h04",
+      "h05",
+      "h06"
+    ],
+    "cutins": [
+      {
+        "hero": "h06",
+        "duration": 863.3999999985099,
+        "image": "url(\"file:///C:/Users/EDY/.gemini/antigravity/scratch/sky-odyssey/assets/posters/lobby_cg_h06.png\")"
+      },
+      {
+        "hero": "h05",
+        "duration": 863.5999999940395,
+        "image": "url(\"file:///C:/Users/EDY/.gemini/antigravity/scratch/sky-odyssey/assets/posters/lobby_cg_h05.png\")"
+      },
+      {
+        "hero": "h04",
+        "duration": 862.1000000014901,
+        "image": "url(\"file:///C:/Users/EDY/.gemini/antigravity/scratch/sky-odyssey/assets/posters/lobby_cg_h04.png\")"
+      }
+    ],
+    "startupPosters": [
+      "lobby_cg_c07.png"
+    ],
+    "offlineBundleRequests": 2
   },
   "lateGameEvidence": "Imported test save, four UR items, level 1 vs tower 30. Real game resolution.",
   "consoleErrorsAndHTTPFailures": 0

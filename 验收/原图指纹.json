@@ -15,19 +15,19 @@
     "path": "assets/avatars/avatar_h04.png",
     "width": 1254,
     "height": 1254,
-    "sha256": "94CA78DEED1B7E8F9CF53961740E6276ABE85157AEC7452A0ABA7A73546C03DA"
+    "sha256": "787343D1E61C065087CF638DAE766CA84D1C78526694B0D4DD1F91F7817AFDA3"
   },
   {
     "path": "assets/avatars/avatar_h05.png",
     "width": 1254,
     "height": 1254,
-    "sha256": "D7C68C4C6C107B80643D9A05FAF76F02F163FD8A9423B8DADA73AFE72755C72F"
+    "sha256": "0AF7893FB6D3608E049749D5A3745C3424C3E6371DA530915E803B625798E49B"
   },
   {
     "path": "assets/avatars/avatar_h06.png",
     "width": 1254,
     "height": 1254,
-    "sha256": "1B4DA4C54F803B6290A65AD4FC05287F094A299400A01FFB931B9087A2FEF059"
+    "sha256": "D627A5EEF3C88C9066C42F64D40621290710EDB9EE432C5C7C1D9A32AE1F0F58"
   },
   {
     "path": "assets/avatars/avatar_h07.png",
@@ -97,21 +97,21 @@
   },
   {
     "path": "assets/chibi/chibi_h04.png",
-    "width": 1,
-    "height": 1,
-    "sha256": "2FE8E6C2A228CC8932B1A02EF77D563DDDC0618EB038EA3EA29338B35F37FDC6"
+    "width": 862,
+    "height": 1138,
+    "sha256": "B9737CF6DACB9AAD79766BCACD4771319EA5B34472B65BB66E8059C86A986933"
   },
   {
     "path": "assets/chibi/chibi_h05.png",
-    "width": 1,
-    "height": 1,
-    "sha256": "2FE8E6C2A228CC8932B1A02EF77D563DDDC0618EB038EA3EA29338B35F37FDC6"
+    "width": 1090,
+    "height": 1249,
+    "sha256": "D6D3CCDE1D3E9F1A1AD57DFC6E0654DB60BCD501A0FF6B37391702C9DD169F2B"
   },
   {
     "path": "assets/chibi/chibi_h06.png",
-    "width": 1,
-    "height": 1,
-    "sha256": "2FE8E6C2A228CC8932B1A02EF77D563DDDC0618EB038EA3EA29338B35F37FDC6"
+    "width": 774,
+    "height": 1136,
+    "sha256": "C066BDD51FA23BFDCB7A9D1DADB109E3A7DB18F203C8CFBBDBD478B4860F997E"
   },
   {
     "path": "assets/chibi/chibi_h07.png",
@@ -303,19 +303,19 @@
     "path": "assets/posters/lobby_cg_h04.png",
     "width": 1672,
     "height": 941,
-    "sha256": "3D578453E3D705564EA9C3C384EBCDBE3DCB9499B299B1DD9D505A6CDC7EC660"
+    "sha256": "66656FF9552120582AE7C07472A8673904093CC6755831FFAA039F0C8E73D7FA"
   },
   {
     "path": "assets/posters/lobby_cg_h05.png",
     "width": 1672,
     "height": 941,
-    "sha256": "4E4D9BB4AE8ECE341FCD9FEC94CBDD6EF4E442243FAE3F92A306ECC8C5277796"
+    "sha256": "B60B9927D2913DA044BADC48235676986B28A2BE7D5F25FCCF4610D0E1B76A64"
   },
   {
     "path": "assets/posters/lobby_cg_h06.png",
     "width": 1672,
     "height": 941,
-    "sha256": "27EE56EA63BF45E63639D75FF1BA12FE3E4C99E7C4B545CAE1DE09A74E076ECD"
+    "sha256": "23ED133E83A26EDEE3462287B424F000AC7FE8C4BA75F01294F722A0F9422B9B"
   },
   {
     "path": "assets/posters/lobby_cg_h07.png",
@@ -469,39 +469,39 @@
   },
   {
     "path": "assets/weapons/weapon_h01.png",
-    "width": 620,
-    "height": 620,
-    "sha256": "A6769CBAE98EB63BE032CE7851A696AE55ADEBE9854C1E5750DDFFC5C8181041"
+    "width": 521,
+    "height": 521,
+    "sha256": "43CE47A39B87B109BCF758411A3CBBAF16BED3DFE337963C8F0FF10D8E87A8AA"
   },
   {
     "path": "assets/weapons/weapon_h02.png",
-    "width": 620,
-    "height": 620,
-    "sha256": "83C4D0A7A2B36B819B55F1499952453D2AC74861A7A34EE7356B5AD45706BE09"
+    "width": 520,
+    "height": 520,
+    "sha256": "13AFB67106AAE8707753B6948F852E86C7C80525E3230C8A80A5D2A418B34160"
   },
   {
     "path": "assets/weapons/weapon_h03.png",
-    "width": 620,
-    "height": 620,
-    "sha256": "B8D49C960420CE5E983898B89BB6A220881BBBE7F6DF0E8CDE39C80EBA800B43"
+    "width": 520,
+    "height": 520,
+    "sha256": "5A8BAD332BF84889E1F706F5596145A6921C1DF7F851260528E11CEE564CD0D7"
   },
   {
     "path": "assets/weapons/weapon_h04.png",
-    "width": 620,
-    "height": 620,
-    "sha256": "C05A72671AA6403732F0660950A4B1325051FA2CB226A2B3837F58076F471420"
+    "width": 520,
+    "height": 520,
+    "sha256": "D24D3E16C833293251A09E3507662BDC1CDE97172D3D2E28B4E9D1933BAC7DB4"
   },
   {
     "path": "assets/weapons/weapon_h05.png",
-    "width": 620,
-    "height": 620,
-    "sha256": "A2A4F15494D36E8B8354CF8B510BC19CEEAD473CB6EDB648064DD3F9708C9470"
+    "width": 520,
+    "height": 520,
+    "sha256": "77972D7C053B939D8FEC9DF99344A137BCE66AE54037E1C2D25139EF2FFBE806"
   },
   {
     "path": "assets/weapons/weapon_h06.png",
-    "width": 620,
-    "height": 620,
-    "sha256": "F6E805F4FFE3D62499EBBB05545C83EF4420D48003C2E45099D508032C46EF25"
+    "width": 520,
+    "height": 520,
+    "sha256": "DEA3425A65B14B1F12FFF14D6BC0C05EE24D77BBB47B05F7AB7EF8D7122B90E3"
   },
   {
     "path": "assets/weapons/weapon_h07.png",

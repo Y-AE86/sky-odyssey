@@ -23,6 +23,25 @@ const presets=[
   {name:'4k',width:3840,height:2160,dpr:1,full:true,extra:true}
 ];
 const sha=buffer=>crypto.createHash('sha256').update(buffer).digest('hex');
+const stems={h01:'c07',h02:'protag',h03:'c15',h04:'h04',h05:'h05',h06:'h06'};
+const leads=Object.keys(stems);
+const artPath=(id,kind)=>kind==='weapon' ? 'assets/weapons/weapon_'+id+'.png' :
+  'assets/'+({poster:'posters/lobby_cg_',avatar:'avatars/avatar_',chibi:'chibi/chibi_'}[kind])+(stems[id]||id)+'.png';
+function originalSize(rel){
+  const file=fs.readFileSync(path.join(root,rel));
+  return [file.readUInt32BE(16),file.readUInt32BE(20)];
+}
+async function decoded(p,locator,src){
+  const view=await locator.evaluate(async img=>{
+    await img.decode();
+    const r=img.getBoundingClientRect();
+    return {url:img.currentSrc,width:img.naturalWidth,height:img.naturalHeight,area:r.width*r.height};
+  });
+  assert.equal(view.url,new URL(src,p.url()).href);
+  assert.deepEqual([view.width,view.height],originalSize(src));
+  assert(view.area>0,'image should occupy space: '+src);
+  return src;
+}
 const wave1Paths=[
   ...['gem','coin','ticket','core','shard','chest','dew','dust','stamina'].map(n=>'items/item_'+n),
   ...['weapon','armor','accessory','relic'].flatMap(n=>['sr','ur'].map(r=>'items/gear_'+n+'_'+r)),
@@ -248,7 +267,9 @@ async function artwork(p,spec) {
       assert.equal(sha(await response.body()),sha(pixels));
     }
   }
-  if(spec.file) {
+  return actual.length;
+}
+async function checkEmbedded(p) {
     const embedded=await p.evaluate(async()=>{
       const entries=Object.entries(Sky.offlineChibi);
       return Promise.all(entries.map(async([id,url])=>{
@@ -257,11 +278,9 @@ async function artwork(p,spec) {
         return [id,[...digest].map(byte=>byte.toString(16).padStart(2,'0')).join('')];
       }));
     });
-    const stems={h01:'c07',h02:'protag',h03:'c15'};
-    assert(Object.keys(stems).every(id=>embedded.some(([key])=>key===id)));
-    for(const [id,hash] of embedded) assert.equal(hash,sha(fs.readFileSync(path.join(root,'assets/chibi/chibi_'+(stems[id]||id)+'.png'))));
-  }
-  return actual.length;
+    assert.deepEqual(embedded.map(([id])=>id).sort(),leads);
+    for(const [id,hash] of embedded) assert.equal(hash,sha(fs.readFileSync(path.join(root,artPath(id,'chibi')))));
+    return Object.fromEntries(embedded);
 }
 async function runLobby(p,spec) {
   const initial=await state(p);
@@ -286,9 +305,28 @@ async function runLobby(p,spec) {
   } finally {
     await p.evaluate(original=>{Sky.ui.state.idleAt=original;Sky.ui.go('lobby');},initial.idleAt);
   }
-  const seen=new Set([initial.settings.poster]);
-  for(let n=0;n<3;n++) {await action(p,'poster').click();seen.add((await state(p)).settings.poster);}
-  assert.equal(seen.size,3);
+  for(const id of [...leads.slice(1),leads[0]]) {
+    await action(p,'poster').click();
+    await p.waitForFunction(id=>Sky.ui.state.settings.poster===id,id);
+    await decoded(p,p.locator('.backdrop.current'),artPath(id,'poster'));
+    assert.equal(await p.locator('.poster-dots i').count(),6);
+    assert(await p.locator('.poster-dots i').nth(leads.indexOf(id)).evaluate(n=>n.classList.contains('selected')));
+    assert.equal(await p.locator('.poster-info h1').textContent(),await p.evaluate(id=>Sky.D.hero(id).name,id));
+    if(leads.indexOf(id)>=3){
+      const lines=await p.locator('.hero-line').evaluate(node=>{
+        const real=Math.random,lines=[node.textContent];
+        // Advance through the three dialogue options via the ordinary interaction.
+        try {Math.random=()=>0;for(let i=0;i<2;i++){node.click();lines.push(node.textContent);}}
+        finally{Math.random=real;}
+        return lines;
+      });
+      assert.equal(new Set(lines).size,3,id+' interactive dialogue');
+      if(spec.name==='desktop' || spec.mobile && id==='h05'){
+        await p.waitForFunction(id=>Number(getComputedStyle(document.querySelector('.backdrop.current[data-poster="'+id+'"]')).opacity)>.99,id);
+        await screenshot(p,spec,'lobby-'+id);
+      }
+    }
+  }
   const dialogue=p.locator('.hero-line'),line=await dialogue.innerText();
   await dialogue.click();assert.notEqual(await dialogue.innerText(),line);
   await action(p,'clean').click();
@@ -318,7 +356,7 @@ async function runRoster(p,spec) {
     const {bag,equipment}=Sky.ui.state;
     return equipment.h01.map(uid=>{
       const stat=Sky.Save.gearStats(bag.find(item=>item.uid===uid));
-      return (stat.atk?'攻击':'生命')+'+'+(stat.atk||stat.hp).toLocaleString('zh-CN');
+      return (stat.atk?'攻击':'生命')+'+'+Math.round(stat.atk||stat.hp).toLocaleString('zh-CN');
     });
   });
   assert.deepEqual(bonuses,expectedBonuses,'each slot must display its actual equipment bonus');
@@ -473,12 +511,17 @@ async function inspectBattle(p,spec) {
   const constants=await p.evaluate(()=>[PIXI.MIPMAP_MODES.ON,PIXI.SCALE_MODES.LINEAR]);
   assert(info.textures.length>=3);
   assert(info.textures.every(t=>t.mipmap===constants[0] && t.scaleMode===constants[1]));
-  const existingAssets=['c07','c15','protag'].map(stem=>{
-    const png=fs.readFileSync(path.join(root,'assets/chibi/chibi_'+stem+'.png'));
-    return [png.readUInt32BE(16),png.readUInt32BE(20)];
-  });
-  for(const [w,h] of existingAssets) assert(info.textures.some(t=>t.width===w&&t.height===h));
-  return {canvas:info.canvas,gpu:context.gpu,textures:info.textures.length,
+  const originals=new Set();
+  for(const n of info.positions){
+    const original=leads.includes(n.heroId);
+    assert.equal(n.artwork,original?'original':'phantom',n.heroId);
+    if(!original)continue;
+    const t=info.textures.find(t=>t.heroId===n.heroId);
+    assert(t,n.heroId+' has its own Pixi GPU texture');
+    assert.deepEqual([t.width,t.height],originalSize(artPath(n.heroId,'chibi')));
+    originals.add(n.heroId);
+  }
+  return {canvas:info.canvas,gpu:context.gpu,textures:info.textures.length,originalHeroes:[...originals].sort(),
     spriteCount:info.positions.filter(n=>n.source==='pixi-texture').length};
 }
 async function recordMotion(p) {
@@ -599,6 +642,10 @@ async function runCampaign(p,spec) {
   assert(enemies.every((e,i)=>e&&e.id===expected[i].id && e.img===expected[i].src && e.frame.endsWith('frame_'+expected[i].rarity+'.png') && e.visible && e.centered),'all six portraits must appear inside their own frames');
   await panel(p,'start-route',1).click();await waitPage(p,'battle');
   await recordMotion(p);const renderer=await inspectBattle(p,spec),frameStart=await status(p);
+  assert.deepEqual(renderer.originalHeroes,leads,'opening lineup must show all six different illustrated heroes across both teams');
+  const openingPositions=await status(p);
+  assert.equal(openingPositions.positions.filter(n=>n.key[0]==='a' && n.artwork==='original').length,5);
+  const embedded=spec.file ? await checkEmbedded(p) : null;
   await checkBleed(p,spec,'battle');
   assert.equal(renderer.textures,8);
   if(out && (spec.name==='desktop' || spec.mobile))await screenshot(p,spec,'battle');
@@ -678,9 +725,88 @@ async function runCampaign(p,spec) {
   }
   await action(p,'home').click();
   const sorted=[...motion.drawTimes].sort((a,b)=>a-b);
-  return {renderer,manualCutMs:Math.round(motion.cuts.find(c=>c.hero==='h01').duration),
+  return {renderer,embedded,manualCutMs:Math.round(motion.cuts.find(c=>c.hero==='h01').duration),
     combatDurationSeconds:Math.round(motion.elapsed)/1000,presentedFPS,observedMedianBrowserFPS:Math.round(1000/sorted[Math.floor(sorted.length/2)]),
     segmentedDamageSample:increasing,distinctPositiveTotals:new Set(motion.totals.filter(v=>v>0)).size,completedNormally:!!spec.full};
+}
+async function importProgress(p,save) {
+  await action(p,'settings').click();await action(p,'import').click();
+  await p.locator('#save-json').fill(JSON.stringify(save));await action(p,'confirm-import').click();
+  assert.deepEqual(await state(p),save);
+}
+async function illustratedParty(p,spec) {
+  // An isolated, reproducible regular-pool draw. Only the PRNG used during the
+  // click is seeded. The game still chooses, reveals, credits and charges all cards.
+  const fixture=await p.evaluate(()=>Sky.Save.fresh());
+  await importProgress(p,fixture);
+  await action(p,'gacha').click();
+  await p.locator('[data-panel="draw"][data-value="10"]').evaluate(button=>{
+    let seed=43267;
+    const original=Math.random;
+    try{Math.random=()=>((seed=(Math.imul(1664525,seed)+1013904223)>>>0)/4294967296);button.click();}
+    finally{Math.random=original;}
+  });
+  await p.locator('.pn-repeat').waitFor({state:'visible'});
+  assert.equal((await state(p)).tickets,fixture.tickets-10);
+  const cards=p.locator('.pn-result-card'),drawn=await cards.evaluateAll(nodes=>nodes.map(n=>n.dataset.hero));
+  assert.deepEqual([...new Set(drawn.filter(id=>leads.includes(id)))].sort(),leads);
+  for(const id of leads) {
+    const lead=cards.filter({has:p.locator('.pn-result-front.illustrated')}).and(p.locator('[data-hero="'+id+'"]')).first();
+    await decoded(p,lead.locator('.pn-card-scene'),artPath(id,'poster'));
+    await decoded(p,lead.locator('.portrait'),artPath(id,'avatar'));
+  }
+  if(spec.name==='desktop'||spec.mobile)await screenshot(p,spec,'summon-illustrated');
+  await panel(p,'dismiss').click();await action(p,'home').click();await action(p,'roster').click();
+  await panel(p,'roster-tab',2).click();
+  const weapons={};
+  for(const id of leads) {
+    await panel(p,'hero',id).click();
+    await decoded(p,panel(p,'hero',id).locator('img.portrait'),artPath(id,'avatar'));
+    const img=p.locator('.pn-weapon-emblem>img');
+    weapons[id]=await decoded(p,img,artPath(id,'weapon'));
+    const fits=await img.evaluate(n=>{
+      const b=n.getBoundingClientRect(),pad=n.parentElement.getBoundingClientRect();
+      return getComputedStyle(n).objectFit==='contain' && b.left>=pad.left-1 && b.right<=pad.right+1 &&
+        b.top>=pad.top-1 && b.bottom<=pad.bottom+1 && Math.abs((b.left+b.right)-(pad.left+pad.right))<2 &&
+        Math.abs((b.top+b.bottom)-(pad.top+pad.bottom))<2;
+    });
+    assert(fits,'centered, uncropped weapon for '+id);
+    if(spec.name==='desktop'&&['h01','h04','h05','h06'].includes(id) || spec.mobile&&id==='h04')
+      await screenshot(p,spec,'weapon-'+id);
+  }
+  await action(p,'home').click();
+  // Use the heroes recruited above in a valid test formation. A boss has enough
+  // HP for all three newcomers to earn rage and cast through the normal turn queue.
+  const save=await state(p);
+  save.formation=['h04','h05','h06','h01','h02','h03'];
+  save.level=5;
+  await importProgress(p,save);
+  await action(p,'trials').click();await panel(p,'trial','boss').click();
+  await panel(p,'start-trial','boss').evaluate(button=>{
+    let seed=72;
+    const original=Math.random;
+    try{Math.random=()=>((seed=(Math.imul(1664525,seed)+1013904223)>>>0)/4294967296);button.click();}
+    finally{Math.random=original;}
+  });
+  await recordMotion(p);const renderer=await inspectBattle(p,spec);
+  const party=(await status(p)).positions.filter(n=>n.key[0]==='a');
+  assert(party.length===6 && party.every(n=>n.artwork==='original' && n.source==='pixi-texture'));
+  if(spec.name==='desktop'||spec.file)await screenshot(p,spec,'battle-leads');
+  await battle(p,'speed').click();await battle(p,'speed').click();
+  if(spec.name==='desktop' && out){
+    await p.locator('.battle-cutin[data-hero="h06"]').waitFor({timeout:45000});
+    await p.waitForTimeout(140);await screenshot(p,spec,'cutin-h06');
+  }
+  await p.waitForFunction(()=>['h04','h05','h06'].every(id=>window.__skyQaMotion.cuts.some(c=>c.hero===id)),null,{timeout:55000});
+  const cuts=await p.evaluate(()=>window.__skyQaMotion.cuts.filter(c=>['h04','h05','h06'].includes(c.hero)));
+  for(const id of leads.slice(3)){
+    const cut=cuts.find(c=>c.hero===id);
+    assert(cut && cut.duration>=800 && cut.image.includes(artPath(id,'poster')),id+' actual theatrical cut-in');
+  }
+  await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+  await battle(p,'return').click();await action(p,'home').click();
+  return {regularPoolSeed:43267,drawn,weapons,bossSeed:72,formation:save.formation,
+    allyOriginals:party.map(n=>n.heroId),originalTextures:renderer.originalHeroes,cutins:cuts};
 }
 async function run(browser,origin,spec) {
   const context=await browser.newContext({viewport:{width:spec.width,height:spec.height},deviceScaleFactor:spec.dpr,isMobile:!!spec.mobile,hasTouch:!!spec.mobile});
@@ -688,11 +814,12 @@ async function run(browser,origin,spec) {
   visualChecks.set(p,{});
   mobileEdges.set(p,{});
   wave2Checks.set(p,{artwork:{},contrast:{},masks:{}});
-  const issues=[],failed=[];
+  const issues=[],failed=[],requested=[];
   p.on('pageerror',e=>issues.push('page: '+e.message));
   p.on('console',m=>{if(m.type()==='error')issues.push('console: '+m.text());});
   p.on('response',r=>{if(r.status()>=400)issues.push('HTTP '+r.status()+' '+r.url());});
   p.on('request',r=>{
+    requested.push(r.url());
     if(/^https?:/.test(r.url()) && (spec.file || new URL(r.url()).origin!==origin)) issues.push('unexpected network URL '+r.url());
   });
   p.on('requestfailed',r=>{if(r.failure()?.errorText!=='net::ERR_ABORTED')failed.push(r.failure()?.errorText+' '+r.url());});
@@ -703,6 +830,10 @@ async function run(browser,origin,spec) {
     }
     await p.goto(spec.file?pathToFileURL(path.join(root,'index.html')).href:origin+'/index.html');
     await p.waitForFunction(()=>window.Sky?.ui?.state);
+    await decoded(p,p.locator('.backdrop.current'),artPath('h01','poster'));
+    const startupPosters=[...new Set(requested.filter(u=>u.includes('/assets/posters/')).map(u=>u.split('/').pop()))];
+    assert.deepEqual(startupPosters,['lobby_cg_c07.png'],'cold load should request just the selected lobby poster');
+    assert(!requested.some(url=>url.endsWith('/offline-textures.js')),'cold lobby should not load the offline battle bundle');
     const stage=await geometry(p,spec),images=await artwork(p,spec);
     await runLobby(p,spec);await runRoster(p,spec);await runGacha(p,spec);
     const combat=await runCampaign(p,spec);
@@ -712,6 +843,10 @@ async function run(browser,origin,spec) {
     assert.deepEqual(after.formation,before.formation);assert.equal(after.cleared,before.cleared);
     assert.deepEqual(after.pity,before.pity);
     await exerciseLateGameArt(p,spec);
+    const wave3=await illustratedParty(p,spec);
+    wave3.startupPosters=startupPosters;
+    wave3.offlineBundleRequests=requested.filter(url=>url.endsWith('/offline-textures.js')).length;
+    assert(spec.file ? wave3.offlineBundleRequests>=1 : wave3.offlineBundleRequests===0);
     if(spec.mobile) {
       await p.setViewportSize({width:390,height:844});await p.locator('#orientation:visible').waitFor();
       await p.locator('#portrait-continue').click();await p.locator('#orientation').waitFor({state:'hidden'});
@@ -724,7 +859,7 @@ async function run(browser,origin,spec) {
     const wave2=wave2Checks.get(p);
     assert.equal(Object.keys(wave2.artwork).length,6,'all six banners should appear');
     wave2.sha256=Object.fromEntries(Object.keys(wave2.artwork).map(src=>[src,sha(fs.readFileSync(path.join(root,src)))]));
-    return {name:spec.name,stage,images,...combat,wave1ArtCount:visible.size,screenArt:screens,mobileEdgeSamples:mobileEdges.get(p),wave2,
+    return {name:spec.name,stage,images,...combat,wave1ArtCount:visible.size,screenArt:screens,mobileEdgeSamples:mobileEdges.get(p),wave2,wave3,
       lateGameEvidence:'Imported test save, four UR items, level 1 vs tower 30. Real game resolution.',consoleErrorsAndHTTPFailures:issues.length};
   } catch(err) {
     const page=await p.evaluate(()=>({page:document.querySelector('#view')?.dataset.page,toast:document.querySelector('#toast')?.innerText,
@@ -740,11 +875,11 @@ async function replacementCheck(browser) {
   try {
     for(const part of ['index.html','js','css','assets','lib']) fs.cpSync(path.join(root,part),path.join(temp,part),{recursive:true});
     const files=[['chibi','chibi_'],['posters','lobby_cg_'],['avatars','avatar_']];
+    const replacements=['h04','h08'];
     const sizes={};
     for(const [folder,prefix] of files) {
       const original=fs.readFileSync(path.join(root,'assets',folder,prefix+'protag.png'));
-      const destination=path.join(temp,'assets',folder,prefix+'h04.png');
-      fs.writeFileSync(destination,original);
+      for(const id of replacements)fs.writeFileSync(path.join(temp,'assets',folder,prefix+id+'.png'),original);
       sizes[folder]=[original.readUInt32BE(16),original.readUInt32BE(20)];
     }
     server=await serve(temp);
@@ -758,27 +893,30 @@ async function replacementCheck(browser) {
         p.on('requestfailed',r=>{if(r.failure()?.errorText!=='net::ERR_ABORTED')errors.push(r.url());});
         p.on('request',r=>{if(mode==='file'&&/^https?:/.test(r.url()))errors.push('file made an HTTP request');});
         await p.goto(mode==='file'?pathToFileURL(path.join(temp,'index.html')).href:'http://127.0.0.1:'+server.address().port+'/index.html');
-        await action(p,'roster').click();await panel(p,'hero','h04').click();
+        await action(p,'roster').click();
         const checkPicture=async(selector,dims,ending)=>{
           const a=await p.locator(selector).first().evaluate(async img=>{await img.decode();return [img.naturalWidth,img.naturalHeight,new URL(img.src).pathname];});
           assert.deepEqual(a.slice(0,2),dims);assert(a[2].endsWith(ending));
         };
-        await checkPicture('.pn-portrait img',sizes.posters,'/lobby_cg_h04.png');
-        await checkPicture('[data-panel="hero"][data-value="h04"] img.portrait',sizes.avatars,'/avatar_h04.png');
-        await panel(p,'art','chibi').click();await checkPicture('.pn-portrait img',sizes.chibi,'/chibi_h04.png');
+        for(const id of replacements){
+          await panel(p,'hero',id).click();await panel(p,'art','poster').click();
+          await checkPicture('.pn-portrait img',sizes.posters,'/lobby_cg_'+id+'.png');
+          await checkPicture('[data-panel="hero"][data-value="'+id+'"] img.portrait',sizes.avatars,'/avatar_'+id+'.png');
+          await panel(p,'art','chibi').click();await checkPicture('.pn-portrait img',sizes.chibi,'/chibi_'+id+'.png');
+        }
         await action(p,'home').click();await action(p,'campaign').click();await panel(p,'start-route',1).click();
         await p.waitForFunction(()=>Sky.battlePage.inspect()?.ready);
-        const b=await status(p),source=b.positions.find(u=>u.key==='a0').source;
-        if(mode==='file') {
-          assert.equal(source,'native-image');
-          await checkPicture('.battle-file-unit img[src$="chibi_h04.png"]',sizes.chibi,'/chibi_h04.png');
-        } else {
-          assert.equal(source,'pixi-texture');
-          assert(b.textures.filter(t=>t.width===sizes.chibi[0]&&t.height===sizes.chibi[1]).length>=2);
+        const b=await status(p),sources={};
+        for(const id of replacements){
+          const units=b.positions.filter(u=>u.heroId===id);
+          assert(units.length && units.every(u=>u.source===(mode==='file'?'native-image':'pixi-texture')));
+          sources[id]=units[0].source;
+          if(mode==='file')await checkPicture('.battle-file-unit img[src$="chibi_'+id+'.png"]',sizes.chibi,'/chibi_'+id+'.png');
+          else assert(b.textures.some(t=>t.heroId===id && t.width===sizes.chibi[0] && t.height===sizes.chibi[1]));
         }
         await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
         assert.equal((await state(p)).cleared,1);assert.deepEqual([...new Set(errors)],[]);
-        result.push({mode,source,artworkSizes:sizes});
+        result.push({mode,source:sources.h04,sources,artworkSizes:sizes});
       } finally {await context.close();}
     }
     console.log(JSON.stringify({name:'replacement',results:result}));

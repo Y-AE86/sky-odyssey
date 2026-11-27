@@ -6,6 +6,46 @@ require('../js/save.js');
 require('../js/battle-engine.js');
 const {D,Save:S,Battle:B}=globalThis.Sky;
 const now=new Date(2026,10,27,14,0,0).getTime();
+test('六张看板按序循环，旧看板与未招募角色的选择均可存取及导入导出',()=>{
+  const expected=['h01','h02','h03','h04','h05','h06'];
+  assert.deepEqual(D.illustrated,expected);
+  const memory=new Map();
+  const previous=Object.getOwnPropertyDescriptor(globalThis,'localStorage');
+  Object.defineProperty(globalThis,'localStorage',{configurable:true,value:{
+    getItem:key=>memory.get(key) ?? null,setItem:(key,value)=>memory.set(key,value)
+  }});
+  try{
+    const s=S.fresh();
+    assert.equal(s.settings.poster,'h01');
+    assert(!s.owned.includes('h06'));
+    for(const id of expected){
+      assert.equal(s.settings.poster,id);
+      S.write(s);
+      assert.deepEqual(S.load(),s);
+      assert.deepEqual(S.importJSON(S.exportJSON(s)),s);
+      s.settings.poster=D.nextPoster(id);
+    }
+    assert.equal(s.settings.poster,'h01');
+    for(const id of expected.slice(0,3)){
+      const legacy=structuredClone(s);
+      legacy.settings.poster=id;
+      delete legacy.firstTenDone;
+      const loaded=S.importJSON(JSON.stringify(legacy));
+      assert.equal(loaded.settings.poster,id);
+      assert.deepEqual(loaded.formation,s.formation);
+    }
+    for(const invalid of ['h07','h08','h99','',null]){
+      s.settings.poster=invalid;
+      assert.throws(()=>S.write(s));
+      assert.throws(()=>S.importJSON(JSON.stringify(s)));
+    }
+    assert.equal(memory.size,1);
+    assert.equal(S.load().settings.poster,'h06');
+  }finally{
+    if(previous)Object.defineProperty(globalThis,'localStorage',previous);
+    else delete globalThis.localStorage;
+  }
+});
 test('整套星装强化一次扣款，余额不足时四件均保持原等级',()=>{
   const s=S.fresh(now);
   S.autoEquip(s,'h01');

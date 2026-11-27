@@ -4,10 +4,14 @@
   const root = document.getElementById('view'), stage = document.getElementById('stage');
   const overlay = document.getElementById('overlay'), notice = document.getElementById('toast');
   let state, invalidSave = false, lastFocus, toastTimer, lineIndex = 0, lobbyTimer;
+  let pendingPoster;
   const lines = {
     h01:['今夜的梅，开得正好。陪我再看一会儿？','这盏灯照过忘川，也认得你的归途。','星港的风里，有一缕梅香。'],
     h02:['把手给我。星海再冷，也有霜华为你引路。','听，落在杖尖的星光也有声音。','云层散开了。我们该起航了。'],
-    h03:['你听，锦鲤跃过水面，恰好落在这一拍。','清泉载月，这一曲只为故人。','这片星海的潮声，我替你记着。']
+    h03:['你听，锦鲤跃过水面，恰好落在这一拍。','清泉载月，这一曲只为故人。','这片星海的潮声，我替你记着。'],
+    h04:['往我翼下站些。云上的风，比城里凉。','盾上的凹痕？这一处，换回了一整船的人。','晨钟还没响。再坐一会儿吧，今天我守第一班。'],
+    h05:['听见那一声咔哒了吗？两把铳的节拍，终于对上了。','别动，你肩上落了颗星砂。正好借我校个准。','航图借我一角。我算出一条近路，能赶上今晚的流星雨。'],
+    h06:['灯借我熄一盏。你看，绯月原来这么亮。','脚步放轻些。听，那只夜莺又肯开口了。','你留的窗我看见了。下回不走屋顶，走正门。']
   };
   const bleed = document.getElementById('bleed');
   const image = (url,cls='ico') => '<img class="'+cls+'" alt="" draggable="false" src="'+url+'">';
@@ -55,13 +59,14 @@
   const format = n=>n.toLocaleString('zh-CN');
   const navButton=(action,key,label)=>'<button data-action="'+action+'">'+icon(key)+'<span>'+label+'</span></button>';
   function background(page){
+    pendingPoster=null;
     bleed.dataset.page=page;
     bleed.classList.remove('clean');
     bleed.replaceChildren();
     bleed.style.backgroundImage='';
     if(page==='lobby'){
-      bleed.innerHTML='<div class="lobby-art">'+Object.keys(lines).map(id=>
-        '<img class="backdrop" alt="" data-poster="'+id+'" src="'+S.art(id,'poster')+'">').join('')+'</div><div class="lobby-shade"></div>';
+      const id=state.settings.poster;
+      bleed.innerHTML='<div class="lobby-art"><img class="backdrop current" alt="" data-poster="'+id+'" fetchpriority="high" src="'+S.art(id,'poster')+'"></div><div class="lobby-shade"></div>';
     } else {
       bleed.style.backgroundImage='url("'+S.scene(page==='campaign'?'worldmap':page)+'")';
     }
@@ -75,7 +80,7 @@
     if(!prior)bleed.append(wings);
   }
   function lobby(){
-    const h=D.hero(state.settings.poster), st=D.stages[Math.min(state.cleared,9)];
+    const st=D.stages[Math.min(state.cleared,9)];
     root.innerHTML='<button class="lobby-interact" aria-label="与看板星灵交谈" data-action="line"></button>'+
       '<header class="lobby-top"><div class="commander"><span class="commander-badge"><img src="'+S.art('h02','avatar')+'" alt=""><i></i></span><div><b>星航指挥官</b><div><span>Lv. '+state.level+'</span>　战力 '+format(V.power(state))+'</div></div></div>'+
       '<div class="top-resources">'+[['gem',state.diamonds,'星钻'],['coin',state.coins,'星币'],['ticket',state.tickets,'唤星券']].map(([i,n,label])=>'<button title="'+label+'" aria-label="'+label+' '+n+'" data-action="bag">'+item(i)+'<b>'+format(n)+'</b></button>').join('')+'</div>'+
@@ -98,11 +103,32 @@
     const live=overlay.querySelector('[data-idle-live]');if(live && live.dataset.coins!==String(loot.coins)){live.dataset.coins=loot.coins;live.innerHTML=amount('coin','× '+format(loot.coins),'星币')+amount('core','× '+loot.cores,'晶核');}
   }
   function posterText(){
-    const id=state.settings.poster,h=D.hero(id),i=Object.keys(lines).indexOf(id);
-    bleed.querySelectorAll('.backdrop').forEach(el=>el.classList.toggle('current',el.dataset.poster===id));
+    const id=state.settings.poster,h=D.hero(id);
     root.querySelector('.hero-faction').textContent=h.rarity+'　/　'+h.faction+'　·　'+h.role.split(' · ')[0];
     root.querySelector('h1').textContent=h.name;root.querySelector('.hero-line').textContent='“'+lines[id][lineIndex]+'”';
-    root.querySelector('.poster-dots').innerHTML=Object.keys(lines).map((_,ix)=>'<i class="'+(ix===i?'selected':'')+'"></i>').join('');
+    root.querySelector('.poster-dots').innerHTML=D.illustrated.map(hero=>'<i class="'+(hero===id?'selected':'')+'"></i>').join('');
+  }
+  async function switchPoster(){
+    const id=D.nextPoster(pendingPoster?.dataset.poster || state.settings.poster);
+    pendingPoster=null;
+    if(id===state.settings.poster)return;
+    const art=bleed.querySelector('.lobby-art'), next=new Image();
+    next.className='backdrop current';next.alt='';next.dataset.poster=id;
+    next.decoding='async';next.src=S.art(id,'poster');
+    pendingPoster=next;
+    try{await next.decode();}catch{
+      if(pendingPoster===next){pendingPoster=null;toast('看板暂未载入，请再试一次');}
+      return;
+    }
+    if(pendingPoster!==next)return;
+    pendingPoster=null;
+    const previous=[...art.children];
+    for(const img of previous)img.classList.remove('current');
+    art.append(next);
+    state.settings.poster=id;lineIndex=0;posterText();save();
+    const retire=()=>previous.forEach(img=>img.remove());
+    if(state.settings.powerSave || matchMedia('(prefers-reduced-motion:reduce)').matches)retire();
+    else next.animate([{opacity:0},{opacity:1}],{duration:620,easing:'ease-in-out'}).finished.then(retire,retire);
   }
   function clean(on){root.classList.toggle('clean',on);bleed.classList.toggle('clean',on);const layer=root.querySelector('.lobby-interact');layer.setAttribute('aria-label',on?'退出净屏赏图':'与看板星灵交谈');if(on)layer.focus({preventScroll:true});}
   function speak(e){
@@ -187,8 +213,7 @@
         case 'trials':go('campaign',{trials:true});break;
         case 'line':speak(e);break;
         case 'clean':clean(true);break;
-        case 'poster':{
-          const ids=Object.keys(lines);state.settings.poster=ids[(ids.indexOf(state.settings.poster)+1)%ids.length];lineIndex=0;save();posterText();break;}
+        case 'poster':switchPoster();break;
         case 'sound':case 'power':{
           const key=a==='sound'?'sound':'powerSave',wasDialog=!overlay.hidden;state.settings[key]=!state.settings[key];save();
           if(a==='sound')S.sound('tap');

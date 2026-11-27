@@ -20,21 +20,30 @@
     ],
     "gpu": "ANGLE (Intel, Intel(R) UHD Graphics 770 (0x00004680) Direct3D11 vs_5_0 ps_5_0, D3D11)",
     "textures": 8,
+    "originalHeroes": [
+      "h01",
+      "h02",
+      "h03",
+      "h04",
+      "h05",
+      "h06"
+    ],
     "spriteCount": 12
   },
-  "manualCutMs": 853,
-  "combatDurationSeconds": 14.937,
+  "embedded": null,
+  "manualCutMs": 856,
+  "combatDurationSeconds": 15.346,
   "presentedFPS": [
-    59.2,
+    59.9,
     60
   ],
   "observedMedianBrowserFPS": 75,
   "segmentedDamageSample": [
-    256,
-    504,
-    729
+    251,
+    497,
+    717
   ],
-  "distinctPositiveTotals": 17,
+  "distinctPositiveTotals": 18,
   "completedNormally": true,
   "wave1ArtCount": 35,
   "screenArt": {
@@ -291,6 +300,75 @@
       "assets/banners/banner_boss.png": "c12abe8f58ca30563c5abf90c95ac70e20c86f9030e40b27c6254b9229abb713",
       "assets/banners/banner_arena.png": "ea9908972d9037e132f81a970af64db0f8b3b56f09324bd1230c0ef0889743a0"
     }
+  },
+  "wave3": {
+    "regularPoolSeed": 43267,
+    "drawn": [
+      "h02",
+      "h04",
+      "h08",
+      "h06",
+      "h03",
+      "h05",
+      "h07",
+      "h01",
+      "h08",
+      "h08"
+    ],
+    "weapons": {
+      "h01": "assets/weapons/weapon_h01.png",
+      "h02": "assets/weapons/weapon_h02.png",
+      "h03": "assets/weapons/weapon_h03.png",
+      "h04": "assets/weapons/weapon_h04.png",
+      "h05": "assets/weapons/weapon_h05.png",
+      "h06": "assets/weapons/weapon_h06.png"
+    },
+    "bossSeed": 72,
+    "formation": [
+      "h04",
+      "h05",
+      "h06",
+      "h01",
+      "h02",
+      "h03"
+    ],
+    "allyOriginals": [
+      "h01",
+      "h04",
+      "h02",
+      "h05",
+      "h03",
+      "h06"
+    ],
+    "originalTextures": [
+      "h01",
+      "h02",
+      "h03",
+      "h04",
+      "h05",
+      "h06"
+    ],
+    "cutins": [
+      {
+        "hero": "h06",
+        "duration": 863.7999999970198,
+        "image": "url(\"http://127.0.0.1:63762/assets/posters/lobby_cg_h06.png\")"
+      },
+      {
+        "hero": "h05",
+        "duration": 864.3999999985099,
+        "image": "url(\"http://127.0.0.1:63762/assets/posters/lobby_cg_h05.png\")"
+      },
+      {
+        "hero": "h04",
+        "duration": 863.2000000029802,
+        "image": "url(\"http://127.0.0.1:63762/assets/posters/lobby_cg_h04.png\")"
+      }
+    ],
+    "startupPosters": [
+      "lobby_cg_c07.png"
+    ],
+    "offlineBundleRequests": 0
   },
   "lateGameEvidence": "Imported test save, four UR items, level 1 vs tower 30. Real game resolution.",
   "consoleErrorsAndHTTPFailures": 0

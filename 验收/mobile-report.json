@@ -1,0 +1,40 @@
+{
+  "name": "mobile",
+  "stage": {
+    "x": 79.828125,
+    "y": 0,
+    "width": 693.328125,
+    "height": 389.984375,
+    "dpr": 3,
+    "transform": "none",
+    "safeLeft": 44,
+    "safeRight": 35,
+    "vw": 844,
+    "vh": 390
+  },
+  "images": 26,
+  "renderer": {
+    "canvas": [
+      2079,
+      1170
+    ],
+    "gpu": "ANGLE (Intel, Intel(R) UHD Graphics 770 (0x00004680) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "textures": 8,
+    "spriteCount": 12
+  },
+  "manualCutMs": 853,
+  "combatDurationSeconds": 12.645,
+  "presentedFPS": [
+    60,
+    60
+  ],
+  "observedMedianBrowserFPS": 75,
+  "segmentedDamageSample": [
+    247,
+    491,
+    726
+  ],
+  "distinctPositiveTotals": 12,
+  "completedNormally": true,
+  "consoleErrorsAndHTTPFailures": 0
+}

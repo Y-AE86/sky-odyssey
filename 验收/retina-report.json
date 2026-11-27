@@ -1,0 +1,40 @@
+{
+  "name": "retina",
+  "stage": {
+    "x": 0,
+    "y": 45,
+    "width": 1440,
+    "height": 810,
+    "dpr": 2,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1440,
+    "vh": 900
+  },
+  "images": 26,
+  "renderer": {
+    "canvas": [
+      2880,
+      1620
+    ],
+    "gpu": "ANGLE (Intel, Intel(R) UHD Graphics 770 (0x00004680) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "textures": 8,
+    "spriteCount": 12
+  },
+  "manualCutMs": 866,
+  "combatDurationSeconds": 13.127,
+  "presentedFPS": [
+    60.2,
+    59.9
+  ],
+  "observedMedianBrowserFPS": 75,
+  "segmentedDamageSample": [
+    230,
+    473,
+    719
+  ],
+  "distinctPositiveTotals": 15,
+  "completedNormally": true,
+  "consoleErrorsAndHTTPFailures": 0
+}

@@ -1,0 +1,40 @@
+{
+  "name": "4k",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 3840,
+    "height": 2160,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 3840,
+    "vh": 2160
+  },
+  "images": 26,
+  "renderer": {
+    "canvas": [
+      3840,
+      2160
+    ],
+    "gpu": "ANGLE (Intel, Intel(R) UHD Graphics 770 (0x00004680) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "textures": 8,
+    "spriteCount": 12
+  },
+  "manualCutMs": 870,
+  "combatDurationSeconds": 13.463,
+  "presentedFPS": [
+    35.7,
+    42.9
+  ],
+  "observedMedianBrowserFPS": 75,
+  "segmentedDamageSample": [
+    254,
+    505,
+    728
+  ],
+  "distinctPositiveTotals": 15,
+  "completedNormally": true,
+  "consoleErrorsAndHTTPFailures": 0
+}

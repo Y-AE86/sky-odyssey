@@ -1,0 +1,40 @@
+{
+  "name": "file",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "images": 26,
+  "renderer": {
+    "canvas": [
+      1280,
+      720
+    ],
+    "gpu": "ANGLE (Intel, Intel(R) UHD Graphics 770 (0x00004680) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "textures": 8,
+    "spriteCount": 12
+  },
+  "manualCutMs": 853,
+  "combatDurationSeconds": 13.055,
+  "presentedFPS": [
+    60,
+    59.6
+  ],
+  "observedMedianBrowserFPS": 75,
+  "segmentedDamageSample": [
+    239,
+    494,
+    726
+  ],
+  "distinctPositiveTotals": 15,
+  "completedNormally": true,
+  "consoleErrorsAndHTTPFailures": 0
+}

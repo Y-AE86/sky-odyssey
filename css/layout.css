@@ -1,0 +1,22 @@
+body{display:grid;place-items:center;min-width:0;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+#stage{width:min(100%,calc((100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))*16/9));aspect-ratio:16/9;position:relative;container-type:inline-size;overflow:hidden;isolation:isolate;background:#131626}
+#view{position:absolute;inset:0;overflow:hidden;font-size:1.1cqw}
+#overlay{position:absolute;inset:0;z-index:70;display:grid;place-items:center;background:rgba(4,6,18,.63);backdrop-filter:blur(5px)}
+.sky-dialog{width:min(54cqw,90%);max-height:84%;overflow:auto;overscroll-behavior:contain;background:linear-gradient(122deg,rgba(36,41,65,.98),rgba(15,18,36,.99) 65%);border:1px solid #aa916a;box-shadow:0 1.3cqw 5cqw #03051388;padding:2.2cqw 2.5cqw;font-size:1.15cqw;color:var(--ink)}
+.sky-dialog header{display:flex;align-items:center;justify-content:space-between;gap:1cqw;margin-bottom:1.6cqw;padding-bottom:.9cqw;border-bottom:1px solid #c3a97950}
+.sky-dialog h2{font:700 2.35cqw/1.1 var(--display);letter-spacing:.09em;color:var(--gold)}
+.sky-dialog header>button{color:var(--gold);font-size:1.7cqw;width:3cqw;height:3cqw;display:grid;place-items:center}
+.sky-dialog .dialog-copy{line-height:1.8;color:#dddbe3;margin:.8cqw 0}
+.sky-dialog .dialog-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:.6cqw;margin-top:1.3cqw}
+.sky-dialog .dialog-row{display:flex;justify-content:space-between;align-items:center;gap:1cqw;padding:1.05cqw .2cqw;border-bottom:1px solid #c3a97928}
+.sky-dialog .dialog-row strong{color:var(--gold)}.sky-dialog .dialog-row small{display:block;color:#c7c3ce;font-size:.94cqw;margin-top:.36cqw}
+.sky-dialog .catalog{display:grid;grid-template-columns:repeat(4,1fr);gap:.7cqw}
+.sky-dialog .catalog button,.sky-dialog .catalog .catalog-item{display:grid;place-items:center;align-content:start;padding:.5cqw;background:#171c30;border:1px solid #aa916a41;font-size:1cqw}
+.sky-dialog .catalog small{font-size:.85cqw;color:#cec7b9}
+.sky-dialog textarea{width:100%;height:12cqw;resize:vertical;background:#101424;color:#eee7d4;padding:.7cqw;border:1px solid var(--edge);font:1cqw/1.4 var(--body)}
+#toast{z-index:140;position:absolute;bottom:16%;left:50%;translate:-50% 0;pointer-events:none;max-width:84%;padding:.7cqw 1.8cqw;border:1px solid var(--edge);background:#11182bef;color:var(--gold);font-size:1.12cqw;text-align:center;box-shadow:0 .4cqw 1.6cqw #05081555}
+#orientation{position:fixed;inset:0;z-index:200;display:grid;place-items:center;text-align:center;background:radial-gradient(ellipse at 50% 35%,#35364e,#101222 70%);padding:8vw}
+#orientation span{font:70px/1 serif;color:#dfc08e}#orientation h2{font:600 34px/2 var(--display);letter-spacing:.13em}#orientation p{font-size:15px;color:#d7d0c2;margin:8px 0 30px}
+#orientation button{border:1px solid var(--edge);padding:12px 28px;color:var(--gold);background:#1d263d}
+@media(max-height:480px) and (orientation:landscape){.sky-dialog{font-size:max(9px,1.15cqw)}.sky-dialog button,.sky-dialog .dialog-row{min-height:23px}}
+

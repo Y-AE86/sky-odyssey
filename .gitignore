@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+验收复跑/
+.DS_Store
+Thumbs.db
+~$*

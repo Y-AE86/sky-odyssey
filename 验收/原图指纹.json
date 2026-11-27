@@ -1,0 +1,158 @@
+[
+  {
+    "path": "assets/avatars/avatar_c07.png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "7CE7C63301C510F93F2BDDAE5D5DE1531E51E114C53EB8787B14DC078787ACBB"
+  },
+  {
+    "path": "assets/avatars/avatar_c15.png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "023330BA4CCAF2C49E32D4D17FF62EF732C2D2FAF1F4E9010302777AFBDFA683"
+  },
+  {
+    "path": "assets/avatars/avatar_protag.png",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "E646FD4D637FEA9D82BBE5AB39AC8A75F88D45130441817B93DFD477F7788036"
+  },
+  {
+    "path": "assets/chibi/chibi_c07.png",
+    "width": 1079,
+    "height": 1081,
+    "sha256": "2D755DB7E15ADA571E96C59FDD5548CA843C605EC7F496825F19DBBE76F6AC77"
+  },
+  {
+    "path": "assets/chibi/chibi_c15.png",
+    "width": 946,
+    "height": 1198,
+    "sha256": "DF7BF54115A2EA1E242022800DE855CB1AF89B4275276F2B9803B8F330CC2459"
+  },
+  {
+    "path": "assets/chibi/chibi_protag.png",
+    "width": 1028,
+    "height": 1193,
+    "sha256": "F9D8B28CDB7FFD0B98D4001804CCE6B368948661E3644F02116A34B4DADC2E14"
+  },
+  {
+    "path": "assets/posters/lobby_cg_c07.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "1F2125127650C2AE571D8E3EEDD6C12BC7DAA6D2786FA14DD3F56B50AB63A0B7"
+  },
+  {
+    "path": "assets/posters/lobby_cg_c15.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "BCB6272A2413DD1D8B1F793E10A8EBB6CE3663931C71D2F1E1A59C112CFEE182"
+  },
+  {
+    "path": "assets/posters/lobby_cg_protag.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "EE76BB9DB8E317CDBD4699025966281BD2A35DD3114A8407993037F229577BC9"
+  },
+  {
+    "path": "assets/scenes/bg_battle.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "FFFECB985FC17CD4245FBBF21359BB3C6812E2ACEAF192095D3E76E25448FC13"
+  },
+  {
+    "path": "assets/scenes/bg_gacha.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "05452DA0057C592547C177F868E7DAD361526AC3BB3F627C32033252FA73D77C"
+  },
+  {
+    "path": "assets/scenes/bg_roster_alt.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "72A639A7226DF0FEF4CF8A7A3B831FC9CB0F76E5A0A0B1FFFDFE39E7DECDEE46"
+  },
+  {
+    "path": "assets/scenes/bg_roster.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "B90C97B178865D5B77B382BD8AF2DE310F14FED861E9BBA55F92B83D2D479129"
+  },
+  {
+    "path": "assets/ui/frame_r.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "49DFE33791979700EE30378D89534B74F7C91F968BAA09A05247163B20AC0551"
+  },
+  {
+    "path": "assets/ui/frame_sr.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "D1581D488D2312ECACF1EB5F2AF7CD3581A15E4E81527ABB30F46D6F4EB9EB7F"
+  },
+  {
+    "path": "assets/ui/frame_ssr.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "B65006993843B943E2DE90DF56152142DD27ED2E008B11EF0BAE8FD5BD2B961B"
+  },
+  {
+    "path": "assets/ui/frame_ur.png",
+    "width": 620,
+    "height": 620,
+    "sha256": "329A5D93E6CEE79EFBA72CD4EB9B7838BB05A651CD9740F9B5BBBF6CDA0358C5"
+  },
+  {
+    "path": "assets/ui/ui_badge_circle.png",
+    "width": 261,
+    "height": 281,
+    "sha256": "79CC8BE04B344A0676650225A5C969508154BDE542A1D4C23B56758444BDB9D6"
+  },
+  {
+    "path": "assets/ui/ui_bar_cyan.png",
+    "width": 1628,
+    "height": 130,
+    "sha256": "6A6A1E2F7F8302D304A0AAB2DFB21D3615464F90D3B261A955684C79EE339613"
+  },
+  {
+    "path": "assets/ui/ui_bar_gold.png",
+    "width": 1628,
+    "height": 127,
+    "sha256": "AC8565F334CB1F08234BC0086B8964C144BC15C477BDA019E6AF9E85BFA1E70F"
+  },
+  {
+    "path": "assets/ui/ui_btn_crimson.png",
+    "width": 413,
+    "height": 166,
+    "sha256": "5107DB6243D7763A28F4163A770F5BB96C82AF412263A0E312057F84F1B00C02"
+  },
+  {
+    "path": "assets/ui/ui_btn_cyan.png",
+    "width": 410,
+    "height": 169,
+    "sha256": "470937FFA28917CCAC5473506043EA3B533A1003936BA12708A13D7516CAA9E2"
+  },
+  {
+    "path": "assets/ui/ui_btn_dark.png",
+    "width": 403,
+    "height": 129,
+    "sha256": "06E78DDBAEE6711B21834E6CE7371EBC35195127A25B75FC4DDFBB8C574001F2"
+  },
+  {
+    "path": "assets/ui/ui_btn_gold.png",
+    "width": 414,
+    "height": 174,
+    "sha256": "EE175663D02E65AFA809568070BDBDC36307635936C6E0A417ED8774E407215F"
+  },
+  {
+    "path": "assets/ui/ui_tab_active.png",
+    "width": 559,
+    "height": 196,
+    "sha256": "5523BE3B23EF02150A1F32F4282810CCC1D10914FD75112E1A3C7B09CBDA7278"
+  },
+  {
+    "path": "assets/ui/ui_tab_idle.png",
+    "width": 547,
+    "height": 190,
+    "sha256": "2BECEF48242991F0CE470C497113EA324A3762DECB216BDF2A7740D0FA1BE74A"
+  }
+]

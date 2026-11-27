@@ -1,0 +1,212 @@
+[
+  {
+    "frame": "base",
+    "faces": [
+      {
+        "hero": "h01",
+        "white": 0,
+        "luma": 185.8
+      },
+      {
+        "hero": "h02",
+        "white": 0,
+        "luma": 180.4
+      },
+      {
+        "hero": "h03",
+        "white": 0,
+        "luma": 189.1
+      },
+      {
+        "hero": "h04",
+        "white": 0,
+        "luma": 209.6
+      },
+      {
+        "hero": "h05",
+        "white": 0,
+        "luma": 198.5
+      },
+      {
+        "hero": "h06",
+        "white": 0,
+        "luma": 163.9
+      }
+    ]
+  },
+  {
+    "frame": "shield-65",
+    "faces": [
+      {
+        "hero": "h01",
+        "white": 0,
+        "luma": 188.5
+      },
+      {
+        "hero": "h02",
+        "white": 0,
+        "luma": 187.5
+      },
+      {
+        "hero": "h03",
+        "white": 0,
+        "luma": 194.9
+      },
+      {
+        "hero": "h04",
+        "white": 0,
+        "luma": 209.1
+      },
+      {
+        "hero": "h05",
+        "white": 0,
+        "luma": 198.3
+      },
+      {
+        "hero": "h06",
+        "white": 0,
+        "luma": 160.9
+      }
+    ]
+  },
+  {
+    "frame": "shield-100",
+    "faces": [
+      {
+        "hero": "h01",
+        "white": 189,
+        "luma": 244.1
+      },
+      {
+        "hero": "h02",
+        "white": 170,
+        "luma": 240.2
+      },
+      {
+        "hero": "h03",
+        "white": 148,
+        "luma": 253.6
+      },
+      {
+        "hero": "h04",
+        "white": 0,
+        "luma": 209.1
+      },
+      {
+        "hero": "h05",
+        "white": 0,
+        "luma": 198.3
+      },
+      {
+        "hero": "h06",
+        "white": 0,
+        "luma": 160.9
+      }
+    ]
+  },
+  {
+    "frame": "heal-65",
+    "faces": [
+      {
+        "hero": "h01",
+        "white": 0,
+        "luma": 183.6
+      },
+      {
+        "hero": "h02",
+        "white": 0,
+        "luma": 182.4
+      },
+      {
+        "hero": "h03",
+        "white": 0,
+        "luma": 189.9
+      },
+      {
+        "hero": "h04",
+        "white": 0,
+        "luma": 208.7
+      },
+      {
+        "hero": "h05",
+        "white": 0,
+        "luma": 198.4
+      },
+      {
+        "hero": "h06",
+        "white": 0,
+        "luma": 160.0
+      }
+    ]
+  },
+  {
+    "frame": "heal-100",
+    "faces": [
+      {
+        "hero": "h01",
+        "white": 0,
+        "luma": 183.4
+      },
+      {
+        "hero": "h02",
+        "white": 1,
+        "luma": 185.7
+      },
+      {
+        "hero": "h03",
+        "white": 0,
+        "luma": 194.4
+      },
+      {
+        "hero": "h04",
+        "white": 87,
+        "luma": 234.4
+      },
+      {
+        "hero": "h05",
+        "white": 56,
+        "luma": 237.3
+      },
+      {
+        "hero": "h06",
+        "white": 83,
+        "luma": 218.4
+      }
+    ]
+  },
+  {
+    "frame": "freeze-all",
+    "faces": [
+      {
+        "hero": "h01",
+        "white": 0,
+        "luma": 184.9
+      },
+      {
+        "hero": "h02",
+        "white": 0,
+        "luma": 181.3
+      },
+      {
+        "hero": "h03",
+        "white": 0,
+        "luma": 189.5
+      },
+      {
+        "hero": "h04",
+        "white": 0,
+        "luma": 209.4
+      },
+      {
+        "hero": "h05",
+        "white": 0,
+        "luma": 198.4
+      },
+      {
+        "hero": "h06",
+        "white": 0,
+        "luma": 161.3
+      }
+    ]
+  }
+]

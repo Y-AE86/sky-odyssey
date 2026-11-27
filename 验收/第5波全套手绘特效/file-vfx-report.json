@@ -1,0 +1,1802 @@
+{
+  "name": "file",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "normal": {
+    "spark": {
+      "clock": 1229.8,
+      "actor": "a2",
+      "heroId": "h06",
+      "target": "e2",
+      "kind": "damage",
+      "amount": 164,
+      "ultimate": false,
+      "drawClock": 1229.8,
+      "cutVisible": false,
+      "labels": [
+        "−164"
+      ],
+      "counter": 0,
+      "procedural": false,
+      "effects": [
+        {
+          "key": "spark",
+          "heroId": "h06",
+          "actor": "a2",
+          "target": "e2",
+          "targets": null,
+          "role": "spark",
+          "hitIndex": 0,
+          "due": 174,
+          "source": "embedded",
+          "startedAt": 1229.8,
+          "impactAt": 1229.8,
+          "renderedImpactAt": 1229.8,
+          "frame": 0,
+          "frames": [
+            0
+          ],
+          "active": true,
+          "rotation": -0.10979892089031637,
+          "blendMode": 1
+        }
+      ],
+      "shake": 0,
+      "shakeStrength": 0
+    },
+    "atlases": {
+      "spark": {
+        "frameMs": 51,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h01": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h05": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h04": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h02": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h03": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h06": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      }
+    },
+    "h01": {
+      "hits": [
+        {
+          "clock": 1896.4,
+          "actor": "a3",
+          "heroId": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 81,
+          "ultimate": true,
+          "drawClock": 1896.4,
+          "cutVisible": false,
+          "labels": [
+            "−81"
+          ],
+          "counter": 81,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h01",
+              "heroId": "h01",
+              "actor": "a3",
+              "target": "e0",
+              "targets": null,
+              "role": "single",
+              "hitIndex": 0,
+              "due": 216,
+              "source": "embedded",
+              "startedAt": 1696.4,
+              "impactAt": 1896.4,
+              "renderedImpactAt": 1896.4,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 3.84,
+          "shakeStrength": 0.003
+        },
+        {
+          "clock": 1946.4,
+          "actor": "a3",
+          "heroId": "h01",
+          "target": "a3",
+          "kind": "damage",
+          "amount": 27,
+          "ultimate": true,
+          "drawClock": 1946.4,
+          "cutVisible": false,
+          "labels": [
+            "−27"
+          ],
+          "counter": 81,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "spark",
+              "heroId": "h01",
+              "actor": "a3",
+              "target": "a3",
+              "targets": null,
+              "role": "spark",
+              "hitIndex": 1,
+              "due": 252,
+              "source": "embedded",
+              "startedAt": 1946.4,
+              "impactAt": 1946.4,
+              "renderedImpactAt": 1946.4,
+              "frame": 0,
+              "frames": [
+                0
+              ],
+              "active": true,
+              "rotation": 0.07756718931253999,
+              "blendMode": 1
+            }
+          ],
+          "shake": 2.540387939958317,
+          "shakeStrength": 0.003
+        },
+        {
+          "clock": 2013.1,
+          "actor": "a3",
+          "heroId": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 157,
+          "ultimate": true,
+          "drawClock": 2013.1,
+          "cutVisible": false,
+          "labels": [
+            "−157"
+          ],
+          "counter": 238,
+          "procedural": false,
+          "effects": [],
+          "shake": 0.8153159465492679,
+          "shakeStrength": 0.003
+        },
+        {
+          "clock": 2113.2,
+          "actor": "a3",
+          "heroId": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 161,
+          "ultimate": true,
+          "drawClock": 2113.2,
+          "cutVisible": false,
+          "labels": [
+            "−161"
+          ],
+          "counter": 399,
+          "procedural": false,
+          "effects": [],
+          "shake": 0,
+          "shakeStrength": 0
+        }
+      ],
+      "framesSeen": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "h02": {
+      "hits": [
+        {
+          "clock": 3163.2,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 174,
+          "ultimate": true,
+          "drawClock": 3163.2,
+          "cutVisible": false,
+          "labels": [
+            "−174"
+          ],
+          "counter": 174,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": null,
+              "targets": [
+                "e0",
+                "e1",
+                "e2",
+                "e3",
+                "e4",
+                "e5"
+              ],
+              "role": "group",
+              "hitIndex": 0,
+              "due": 216,
+              "source": "embedded",
+              "startedAt": 2963.1,
+              "impactAt": 3163.2,
+              "renderedImpactAt": 3163.2,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            },
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e0",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 0,
+              "due": 216,
+              "source": "embedded",
+              "startedAt": 2963.1,
+              "impactAt": 3163.2,
+              "renderedImpactAt": 3163.2,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 3.84,
+          "shakeStrength": 0.003
+        },
+        {
+          "clock": 3246.5,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e1",
+          "kind": "damage",
+          "amount": 172,
+          "ultimate": true,
+          "drawClock": 3246.5,
+          "cutVisible": false,
+          "labels": [
+            "−172"
+          ],
+          "counter": 346,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e1",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 1,
+              "due": 296,
+              "source": "embedded",
+              "startedAt": 3029.9,
+              "impactAt": 3246.5,
+              "renderedImpactAt": 3246.5,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0.2945210846100672,
+          "shakeStrength": 0.003
+        },
+        {
+          "clock": 3329.9,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e2",
+          "kind": "damage",
+          "amount": 178,
+          "ultimate": true,
+          "drawClock": 3329.9,
+          "cutVisible": false,
+          "labels": [
+            "−178"
+          ],
+          "counter": 524,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e2",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 2,
+              "due": 376,
+              "source": "embedded",
+              "startedAt": 3113.1,
+              "impactAt": 3329.9,
+              "renderedImpactAt": 3329.9,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 3413.2,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e3",
+          "kind": "damage",
+          "amount": 196,
+          "ultimate": true,
+          "drawClock": 3413.2,
+          "cutVisible": false,
+          "labels": [
+            "−196"
+          ],
+          "counter": 720,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e3",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 3,
+              "due": 456,
+              "source": "embedded",
+              "startedAt": 3196.6,
+              "impactAt": 3413.2,
+              "renderedImpactAt": 3413.2,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 3496.5,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e4",
+          "kind": "damage",
+          "amount": 208,
+          "ultimate": true,
+          "drawClock": 3496.5,
+          "cutVisible": false,
+          "labels": [
+            "−208"
+          ],
+          "counter": 928,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e4",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 4,
+              "due": 536,
+              "source": "embedded",
+              "startedAt": 3279.9,
+              "impactAt": 3496.5,
+              "renderedImpactAt": 3496.5,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 3563.1,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e5",
+          "kind": "damage",
+          "amount": 231,
+          "ultimate": true,
+          "drawClock": 3563.1,
+          "cutVisible": false,
+          "labels": [
+            "−231"
+          ],
+          "counter": 1159,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e5",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 5,
+              "due": 616,
+              "source": "embedded",
+              "startedAt": 3346.6,
+              "impactAt": 3563.1,
+              "renderedImpactAt": 3563.1,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "h03": {
+      "hits": [
+        {
+          "clock": 4729.8,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a0",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 4729.8,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 245,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": null,
+              "targets": [
+                "a0",
+                "a1",
+                "a2",
+                "a3",
+                "a4",
+                "a5"
+              ],
+              "role": "group",
+              "hitIndex": 0,
+              "due": 288,
+              "source": "embedded",
+              "startedAt": 4446.5,
+              "impactAt": 4729.8,
+              "renderedImpactAt": 4729.8,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            },
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a0",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 0,
+              "due": 288,
+              "source": "embedded",
+              "startedAt": 4446.5,
+              "impactAt": 4729.8,
+              "renderedImpactAt": 4729.8,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 4779.8,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a1",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 4779.8,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 490,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a1",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 1,
+              "due": 343,
+              "source": "embedded",
+              "startedAt": 4496.6,
+              "impactAt": 4779.8,
+              "renderedImpactAt": 4779.8,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 4829.8,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a2",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 4829.8,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 735,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a2",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 2,
+              "due": 398,
+              "source": "embedded",
+              "startedAt": 4546.5,
+              "impactAt": 4829.8,
+              "renderedImpactAt": 4829.8,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 4896.6,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a3",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 4896.6,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 980,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a3",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 3,
+              "due": 453,
+              "source": "embedded",
+              "startedAt": 4596.5,
+              "impactAt": 4896.6,
+              "renderedImpactAt": 4896.6,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 4946.4,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a4",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 4946.4,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 1225,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a4",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 4,
+              "due": 508,
+              "source": "embedded",
+              "startedAt": 4663.2,
+              "impactAt": 4946.4,
+              "renderedImpactAt": 4946.4,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 4996.5,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a5",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 4996.5,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 1470,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a5",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 5,
+              "due": 563,
+              "source": "embedded",
+              "startedAt": 4713.2,
+              "impactAt": 4996.5,
+              "renderedImpactAt": 4996.5,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "h04": {
+      "hits": [
+        {
+          "clock": 6129.9,
+          "actor": "a0",
+          "heroId": "h04",
+          "target": "a0",
+          "kind": "shield",
+          "amount": 228,
+          "ultimate": true,
+          "drawClock": 6129.9,
+          "cutVisible": false,
+          "labels": [
+            "盾 +228"
+          ],
+          "counter": 228,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h04",
+              "heroId": "h04",
+              "actor": "a0",
+              "target": "a0",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 0,
+              "due": 216,
+              "source": "embedded",
+              "startedAt": 5929.8,
+              "impactAt": 6129.9,
+              "renderedImpactAt": 6129.9,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 6196.6,
+          "actor": "a0",
+          "heroId": "h04",
+          "target": "a1",
+          "kind": "shield",
+          "amount": 228,
+          "ultimate": true,
+          "drawClock": 6196.6,
+          "cutVisible": false,
+          "labels": [
+            "盾 +228"
+          ],
+          "counter": 456,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h04",
+              "heroId": "h04",
+              "actor": "a0",
+              "target": "a1",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 1,
+              "due": 281,
+              "source": "embedded",
+              "startedAt": 5979.9,
+              "impactAt": 6196.6,
+              "renderedImpactAt": 6196.6,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 6263.3,
+          "actor": "a0",
+          "heroId": "h04",
+          "target": "a2",
+          "kind": "shield",
+          "amount": 228,
+          "ultimate": true,
+          "drawClock": 6263.3,
+          "cutVisible": false,
+          "labels": [
+            "盾 +228"
+          ],
+          "counter": 684,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h04",
+              "heroId": "h04",
+              "actor": "a0",
+              "target": "a2",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 2,
+              "due": 346,
+              "source": "embedded",
+              "startedAt": 6046.5,
+              "impactAt": 6263.3,
+              "renderedImpactAt": 6263.3,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "h05": {
+      "hits": [
+        {
+          "clock": 7479.9,
+          "actor": "a1",
+          "heroId": "h05",
+          "target": "e4",
+          "kind": "damage",
+          "amount": 150,
+          "ultimate": true,
+          "drawClock": 7479.9,
+          "cutVisible": false,
+          "labels": [
+            "−150"
+          ],
+          "counter": 150,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h05",
+              "heroId": "h05",
+              "actor": "a1",
+              "target": "e4",
+              "targets": null,
+              "role": "projectile",
+              "hitIndex": 0,
+              "due": 216,
+              "source": "embedded",
+              "startedAt": 7279.9,
+              "impactAt": 7479.9,
+              "renderedImpactAt": 7479.9,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 3.84,
+          "shakeStrength": 0.003
+        },
+        {
+          "clock": 7596.5,
+          "actor": "a1",
+          "heroId": "h05",
+          "target": "e5",
+          "kind": "damage",
+          "amount": 128,
+          "ultimate": true,
+          "drawClock": 7596.5,
+          "cutVisible": false,
+          "labels": [
+            "−128"
+          ],
+          "counter": 278,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h05",
+              "heroId": "h05",
+              "actor": "a1",
+              "target": "e5",
+              "targets": null,
+              "role": "projectile",
+              "hitIndex": 1,
+              "due": 324,
+              "source": "embedded",
+              "startedAt": 7379.8,
+              "impactAt": 7596.5,
+              "renderedImpactAt": 7596.5,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0.8110495929218676,
+          "shakeStrength": 0.003
+        },
+        {
+          "clock": 7696.5,
+          "actor": "a1",
+          "heroId": "h05",
+          "target": "e1",
+          "kind": "damage",
+          "amount": 108,
+          "ultimate": true,
+          "drawClock": 7696.5,
+          "cutVisible": false,
+          "labels": [
+            "−108"
+          ],
+          "counter": 386,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h05",
+              "heroId": "h05",
+              "actor": "a1",
+              "target": "e1",
+              "targets": null,
+              "role": "projectile",
+              "hitIndex": 2,
+              "due": 432,
+              "source": "embedded",
+              "startedAt": 7479.9,
+              "impactAt": 7696.5,
+              "renderedImpactAt": 7696.5,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        },
+        {
+          "clock": 7813.2,
+          "actor": "a1",
+          "heroId": "h05",
+          "target": "e3",
+          "kind": "damage",
+          "amount": 127,
+          "ultimate": true,
+          "drawClock": 7813.2,
+          "cutVisible": false,
+          "labels": [
+            "−127"
+          ],
+          "counter": 513,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h05",
+              "heroId": "h05",
+              "actor": "a1",
+              "target": "e3",
+              "targets": null,
+              "role": "projectile",
+              "hitIndex": 3,
+              "due": 540,
+              "source": "embedded",
+              "startedAt": 7596.5,
+              "impactAt": 7813.2,
+              "renderedImpactAt": 7813.2,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 0,
+          "shakeStrength": 0
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "h06": {
+      "hits": [
+        {
+          "clock": 8946.6,
+          "actor": "a2",
+          "heroId": "h06",
+          "target": "e5",
+          "kind": "damage",
+          "amount": 398,
+          "ultimate": true,
+          "drawClock": 8946.6,
+          "cutVisible": false,
+          "labels": [
+            "−398"
+          ],
+          "counter": 398,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h06",
+              "heroId": "h06",
+              "actor": "a2",
+              "target": "e5",
+              "targets": null,
+              "role": "single",
+              "hitIndex": 0,
+              "due": 216,
+              "source": "embedded",
+              "startedAt": 8746.5,
+              "impactAt": 8946.6,
+              "renderedImpactAt": 8946.6,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1
+            }
+          ],
+          "shake": 7.4239999999999995,
+          "shakeStrength": 0.0058
+        },
+        {
+          "clock": 9063.2,
+          "actor": "a2",
+          "heroId": "h06",
+          "target": "a2",
+          "kind": "heal",
+          "amount": 159,
+          "ultimate": true,
+          "drawClock": 9063.2,
+          "cutVisible": false,
+          "labels": [
+            "+159"
+          ],
+          "counter": 398,
+          "procedural": false,
+          "effects": [],
+          "shake": 2.5446969813248836,
+          "shakeStrength": 0.0058
+        }
+      ],
+      "framesSeen": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "sr": [
+      {
+        "clock": 9638.3,
+        "actor": "a0",
+        "heroId": "h07",
+        "target": "e0",
+        "kind": "damage",
+        "amount": 186,
+        "ultimate": true,
+        "drawClock": 9638.3,
+        "cutVisible": false,
+        "labels": [
+          "−186"
+        ],
+        "counter": 186,
+        "procedural": true,
+        "effects": [],
+        "shake": 1.896240337416231,
+        "shakeStrength": 0
+      },
+      {
+        "clock": 11088.3,
+        "actor": "a1",
+        "heroId": "h08",
+        "target": "e0",
+        "kind": "damage",
+        "amount": 151,
+        "ultimate": true,
+        "drawClock": 11088.3,
+        "cutVisible": false,
+        "labels": [
+          "−151"
+        ],
+        "counter": 151,
+        "procedural": true,
+        "effects": [],
+        "shake": 1.8813932761184429,
+        "shakeStrength": 0
+      }
+    ]
+  },
+  "speeds": [
+    {
+      "selected": 1,
+      "measured": 1,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "renderMs": 600
+    },
+    {
+      "selected": 2,
+      "measured": 2,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "renderMs": 300
+    },
+    {
+      "selected": 3,
+      "measured": 3,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "renderMs": 200
+    }
+  ],
+  "embeddedSha256": {
+    "spark": "ac2ce9d40bf74a7b8e78323328fc41a51849343630147481507ff72ac8a2c1eb",
+    "h01": "1c4ce483ddde4ef95dc78cf8cf87c0d9823e3a0a1f081a5ebeb31340dc6467af",
+    "h02": "5ace7906aa0dfe9f1b62be374c0e9a5fc1b9a66ec31fece83b5d0d377b745b61",
+    "h03": "bc16cb26998c3c33cc1b0776ece7a45a5b650d9eedadd2e89d58ec013868426f",
+    "h04": "c8179a1e9cb7f59f554ddb4f9054b219d2811cba97e092e2b9e9b9fca5634140",
+    "h05": "ffcd87c9e7157ab4fde5a3b361144fd45841c286e2b6f170cbfb77bac55d324f",
+    "h06": "4a5bcacf285e9db7b19e88352de5734d0447df445c427b6e9944d42035b7491f"
+  },
+  "offlinePackRequests": 1,
+  "powerSave": {
+    "hits": [
+      {
+        "clock": 1141.8,
+        "actor": "a5",
+        "heroId": "h06",
+        "target": "e2",
+        "kind": "damage",
+        "amount": 164,
+        "ultimate": false,
+        "drawClock": 1141.8,
+        "cutVisible": false,
+        "labels": [
+          "−164"
+        ],
+        "counter": 0,
+        "procedural": true,
+        "effects": [],
+        "shake": 0,
+        "shakeStrength": 0
+      },
+      {
+        "clock": 2075.3,
+        "actor": "a5",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 414,
+        "ultimate": true,
+        "drawClock": 2075.3,
+        "cutVisible": false,
+        "labels": [
+          "−414"
+        ],
+        "counter": 414,
+        "procedural": true,
+        "effects": [],
+        "shake": 0,
+        "shakeStrength": 0
+      }
+    ],
+    "requests": 0
+  },
+  "errors": []
+}

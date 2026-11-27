@@ -1,0 +1,1073 @@
+{
+  "name": "mobile",
+  "stage": {
+    "x": 79.828125,
+    "y": 0,
+    "width": 693.328125,
+    "height": 389.984375,
+    "dpr": 3,
+    "transform": "none",
+    "safeLeft": 44,
+    "safeRight": 35,
+    "vw": 844,
+    "vh": 390
+  },
+  "images": 115,
+  "renderer": {
+    "canvas": [
+      2079,
+      1170
+    ],
+    "gpu": "ANGLE (AMD, AMD Radeon RX 9070 XT (0x00007550) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "textures": 8,
+    "originalHeroes": [
+      "h01",
+      "h02",
+      "h03",
+      "h04",
+      "h05",
+      "h06"
+    ],
+    "spriteCount": 12
+  },
+  "embedded": null,
+  "manualCutMs": 1308,
+  "combatDurationSeconds": 16.483,
+  "presentedFPS": [
+    46.7,
+    60
+  ],
+  "observedMedianBrowserFPS": 238,
+  "segmentedDamageSample": [
+    246,
+    493,
+    728
+  ],
+  "distinctPositiveTotals": 17,
+  "completedNormally": true,
+  "wave1ArtCount": 35,
+  "screenArt": {
+    "lobby": [
+      "assets/icons/icon_bag.png",
+      "assets/icons/icon_codex.png",
+      "assets/icons/icon_formation.png",
+      "assets/icons/icon_gacha.png",
+      "assets/icons/icon_quest.png",
+      "assets/icons/icon_reward.png",
+      "assets/icons/icon_roster.png",
+      "assets/icons/icon_settings.png",
+      "assets/icons/icon_shop.png",
+      "assets/items/item_chest.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/emblem_star.png"
+    ],
+    "roster": [
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_shard.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "gear": [
+      "assets/items/gear_accessory_sr.png",
+      "assets/items/gear_armor_sr.png",
+      "assets/items/gear_relic_sr.png",
+      "assets/items/gear_weapon_sr.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "formation": [],
+    "gacha": [
+      "assets/icons/icon_gacha.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "summon": [
+      "assets/items/item_shard.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png"
+    ],
+    "route": [
+      "assets/icons/icon_codex.png",
+      "assets/icons/icon_formation.png",
+      "assets/icons/icon_gacha.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "victory": [
+      "assets/items/gear_weapon_sr.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/emblem_mvp.png",
+      "assets/ui/emblem_star.png",
+      "assets/ui/emblem_victory.png"
+    ],
+    "tower": [
+      "assets/icons/icon_formation.png",
+      "assets/items/gear_armor_ur.png",
+      "assets/items/gear_relic_ur.png",
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/ui/ui_btn_crimson.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "tower rewards": [
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/ui/ui_btn_crimson.png"
+    ],
+    "boss rewards": [
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/ui/ui_btn_crimson.png"
+    ],
+    "arena rewards": [
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_crimson.png"
+    ],
+    "shop": [
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png"
+    ],
+    "bag-materials": [
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_dew.png",
+      "assets/items/item_dust.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_shard.png",
+      "assets/items/item_stamina.png",
+      "assets/items/item_ticket.png"
+    ],
+    "bag-gear": [
+      "assets/items/gear_accessory_sr.png",
+      "assets/items/gear_armor_sr.png",
+      "assets/items/gear_relic_sr.png",
+      "assets/items/gear_weapon_sr.png"
+    ],
+    "equipped-ur": [
+      "assets/items/gear_accessory_ur.png",
+      "assets/items/gear_armor_ur.png",
+      "assets/items/gear_relic_ur.png",
+      "assets/items/gear_weapon_ur.png"
+    ],
+    "defeat": [
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/ui/emblem_defeat.png",
+      "assets/ui/emblem_mvp.png",
+      "assets/ui/emblem_star.png"
+    ]
+  },
+  "mobileEdgeSamples": {
+    "lobby": [
+      {
+        "x": 32,
+        "count": 1196,
+        "spread": 520
+      },
+      {
+        "x": 809,
+        "count": 206,
+        "spread": 37
+      }
+    ],
+    "roster": [
+      {
+        "x": 32,
+        "count": 1209,
+        "spread": 585
+      },
+      {
+        "x": 809,
+        "count": 997,
+        "spread": 496
+      }
+    ],
+    "gacha": [
+      {
+        "x": 32,
+        "count": 1132,
+        "spread": 609
+      },
+      {
+        "x": 809,
+        "count": 410,
+        "spread": 326
+      }
+    ],
+    "summon": [
+      {
+        "x": 32,
+        "count": 177,
+        "spread": 65
+      },
+      {
+        "x": 809,
+        "count": 106,
+        "spread": 44
+      }
+    ],
+    "campaign": [
+      {
+        "x": 32,
+        "count": 1232,
+        "spread": 441
+      },
+      {
+        "x": 809,
+        "count": 774,
+        "spread": 256
+      }
+    ],
+    "battle": [
+      {
+        "x": 32,
+        "count": 1156,
+        "spread": 471
+      },
+      {
+        "x": 809,
+        "count": 1176,
+        "spread": 505
+      }
+    ],
+    "trials": [
+      {
+        "x": 32,
+        "count": 1119,
+        "spread": 208
+      },
+      {
+        "x": 809,
+        "count": 211,
+        "spread": 69
+      }
+    ]
+  },
+  "wave2": {
+    "artwork": {
+      "assets/banners/tile_campaign.png": [
+        ".route-tile"
+      ],
+      "assets/banners/banner_tower.png": [
+        ".trial-tile",
+        ".pn-trial-card[data-value=\"tower\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ],
+      "assets/banners/tile_idle_box.png": [
+        ".idle-tile"
+      ],
+      "assets/banners/tile_shop.png": [
+        ".small-tiles [data-action=shop]"
+      ],
+      "assets/banners/banner_boss.png": [
+        ".pn-trial-card[data-value=\"boss\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ],
+      "assets/banners/banner_arena.png": [
+        ".pn-trial-card[data-value=\"arena\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ]
+    },
+    "contrast": {
+      "lobby": [
+        {
+          "text": "第一章　浮空星港",
+          "minimum": 12.499
+        },
+        {
+          "text": "主线航线",
+          "minimum": 13.802
+        },
+        {
+          "text": "1-1　启明星门",
+          "minimum": 14.894
+        },
+        {
+          "text": "星穹试炼",
+          "minimum": 13.478
+        },
+        {
+          "text": "星匣挂机",
+          "minimum": 14.13
+        },
+        {
+          "text": "可领取　48 星币",
+          "minimum": 12.819
+        },
+        {
+          "text": "限时活动",
+          "minimum": 12.482
+        },
+        {
+          "text": "星港商店",
+          "minimum": 11.985
+        }
+      ],
+      "full idle chest": [
+        {
+          "text": "可领取　11,520 星币",
+          "minimum": 6.167
+        }
+      ],
+      "trial cards": [
+        {
+          "text": "星穹高塔",
+          "minimum": 15.442
+        },
+        {
+          "text": "已通关 0 / 30 层",
+          "minimum": 12.382
+        },
+        {
+          "text": "天城首领",
+          "minimum": 15.966
+        },
+        {
+          "text": "最高伤害 0",
+          "minimum": 13.048
+        },
+        {
+          "text": "星环演武",
+          "minimum": 14.754
+        },
+        {
+          "text": "累计胜场 0",
+          "minimum": 12.439
+        }
+      ],
+      "tower preview": [
+        {
+          "text": "星穹高塔",
+          "minimum": 14.226
+        }
+      ],
+      "boss preview": [
+        {
+          "text": "天城首领",
+          "minimum": 16.081
+        }
+      ],
+      "arena preview": [
+        {
+          "text": "星环演武",
+          "minimum": 14.699
+        }
+      ]
+    },
+    "masks": {
+      "#overlay": {
+        "area": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "sides": [
+          {
+            "x": 80,
+            "p90": 1.33
+          },
+          {
+            "x": 773,
+            "p90": 0.33
+          }
+        ]
+      },
+      ".pn-scrim": {
+        "area": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "sides": [
+          {
+            "x": 80,
+            "p90": 1
+          },
+          {
+            "x": 773,
+            "p90": 0.67
+          }
+        ]
+      },
+      ".pn-draw-results": {
+        "area": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "sides": [
+          {
+            "x": 80,
+            "p90": 1
+          },
+          {
+            "x": 773,
+            "p90": 0.67
+          }
+        ]
+      },
+      ".battle-result": {
+        "area": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "sides": [
+          {
+            "x": 80,
+            "p90": 1.67
+          },
+          {
+            "x": 773,
+            "p90": 1
+          }
+        ]
+      }
+    },
+    "sha256": {
+      "assets/banners/tile_campaign.png": "32a9a293fe8684ed6ce2b19681690b5b43259e6240610ef04ddda20de2612ed9",
+      "assets/banners/banner_tower.png": "18415e42a235f53476b2d9a3e3e479f11cc7dbb70f58d84f3591f913228289cf",
+      "assets/banners/tile_idle_box.png": "5578bc5fbf3dc351a9b7f168931185f51cec700c6fc5337a29d9db7697a7fcef",
+      "assets/banners/tile_shop.png": "4ff43eb40aff15a655cf784af8ef1c29ca35a7b556d272d1a20a4b723bffd83d",
+      "assets/banners/banner_boss.png": "c12abe8f58ca30563c5abf90c95ac70e20c86f9030e40b27c6254b9229abb713",
+      "assets/banners/banner_arena.png": "ea9908972d9037e132f81a970af64db0f8b3b56f09324bd1230c0ef0889743a0"
+    }
+  },
+  "wave3": {
+    "regularPoolSeed": 43267,
+    "drawn": [
+      "h02",
+      "h04",
+      "h08",
+      "h06",
+      "h03",
+      "h05",
+      "h07",
+      "h01",
+      "h08",
+      "h08"
+    ],
+    "weapons": {
+      "h01": "assets/weapons/weapon_h01.png",
+      "h02": "assets/weapons/weapon_h02.png",
+      "h03": "assets/weapons/weapon_h03.png",
+      "h04": "assets/weapons/weapon_h04.png",
+      "h05": "assets/weapons/weapon_h05.png",
+      "h06": "assets/weapons/weapon_h06.png"
+    },
+    "bossSeed": 72,
+    "formation": [
+      "h04",
+      "h05",
+      "h06",
+      "h01",
+      "h02",
+      "h03"
+    ],
+    "allyOriginals": [
+      "h01",
+      "h04",
+      "h02",
+      "h05",
+      "h03",
+      "h06"
+    ],
+    "originalTextures": [
+      "h01",
+      "h02",
+      "h03",
+      "h04",
+      "h05",
+      "h06"
+    ],
+    "portraits": {
+      "roster": {
+        "h04": {
+          "poster": "assets/posters/lobby_cg_h04.png",
+          "chibi": "assets/chibi/chibi_h04.png"
+        },
+        "h05": {
+          "poster": "assets/posters/lobby_cg_h05.png",
+          "chibi": "assets/chibi/chibi_h05.png"
+        },
+        "h06": {
+          "poster": "assets/posters/lobby_cg_h06.png",
+          "chibi": "assets/chibi/chibi_h06.png"
+        }
+      },
+      "formation": {
+        "h04": "assets/avatars/avatar_h04.png",
+        "h05": "assets/avatars/avatar_h05.png",
+        "h06": "assets/avatars/avatar_h06.png",
+        "h01": "assets/avatars/avatar_c07.png",
+        "h02": "assets/avatars/avatar_protag.png",
+        "h03": "assets/avatars/avatar_c15.png"
+      },
+      "battle": {
+        "h04": "assets/avatars/avatar_h04.png",
+        "h05": "assets/avatars/avatar_h05.png",
+        "h06": "assets/avatars/avatar_h06.png",
+        "h01": "assets/avatars/avatar_c07.png",
+        "h02": "assets/avatars/avatar_protag.png",
+        "h03": "assets/avatars/avatar_c15.png"
+      }
+    },
+    "cutins": [
+      {
+        "hero": "h06",
+        "duration": 1321.2999999523163,
+        "image": "url(\"http://127.0.0.1:63699/assets/posters/lobby_cg_h06.png\")",
+        "media": [
+          {
+            "source": "ult_h06.mp4",
+            "muted": false,
+            "rate": 2.433596,
+            "length": 3.041995
+          }
+        ]
+      },
+      {
+        "hero": "h05",
+        "duration": 1312.8999999761581,
+        "image": "url(\"http://127.0.0.1:63699/assets/posters/lobby_cg_h05.png\")",
+        "media": [
+          {
+            "source": "ult_h05.mp4",
+            "muted": false,
+            "rate": 2.433596,
+            "length": 3.041995
+          }
+        ]
+      },
+      {
+        "hero": "h04",
+        "duration": 1329.2999999523163,
+        "image": "url(\"http://127.0.0.1:63699/assets/posters/lobby_cg_h04.png\")",
+        "media": [
+          {
+            "source": "ult_h04.mp4",
+            "muted": false,
+            "rate": 2.433596,
+            "length": 3.041995
+          }
+        ]
+      }
+    ],
+    "startupPosters": [
+      "lobby_cg_c07.png"
+    ],
+    "offlineBundleRequests": 0,
+    "videoRequests": [
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h02.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h03.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h04.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h05.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h06.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h04.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h05.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h02.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h03.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h04.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h04.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h05.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h02.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h03.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h04.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h05.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h06.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h02.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h03.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h04.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h05.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h06.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h02.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h03.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h04.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h05.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h01.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h02.mp4",
+      "http://127.0.0.1:63699/assets/videos/ult_h03.mp4",
+      "http://127.0.0.1:63699/assets/videos/lobby_cg_h01.mp4"
+    ]
+  },
+  "wave4": {
+    "scenes": {
+      "campaign map": "assets/scenes/bg_worldmap.png",
+      "chapter 1": "assets/scenes/bg_battle.png",
+      "tower": "assets/scenes/bg_battle.png",
+      "trial return": "assets/scenes/bg_worldmap.png",
+      "boss": "assets/scenes/bg_battle_boss.png",
+      "arena": "assets/scenes/bg_battle.png",
+      "chapter 1 finale": "assets/scenes/bg_battle.png",
+      "next across chapters": "assets/scenes/bg_battle_ch2.png",
+      "chapter 2 retry": "assets/scenes/bg_battle_ch2.png",
+      "chapter 2 return": "assets/scenes/bg_worldmap.png",
+      "chapter 2 from map": "assets/scenes/bg_battle_ch2.png"
+    },
+    "badges": {
+      "badge_resonance": [
+        "resonance"
+      ],
+      "faction_donghuang": [
+        "roster filter",
+        "formation bond",
+        "codex list",
+        "roster hero tag"
+      ],
+      "faction_shenghui": [
+        "roster filter",
+        "formation bond",
+        "codex list",
+        "roster hero tag"
+      ],
+      "faction_jiqiao": [
+        "roster filter",
+        "formation bond",
+        "codex list",
+        "roster hero tag"
+      ],
+      "faction_miying": [
+        "roster filter",
+        "formation bond",
+        "codex list",
+        "codex details",
+        "roster hero tag"
+      ],
+      "skill_basic": [
+        "skill card"
+      ],
+      "skill_ult": [
+        "skill card"
+      ],
+      "skill_passive": [
+        "skill card"
+      ],
+      "skill_awaken": [
+        "skill card"
+      ]
+    },
+    "contrast": {
+      "route intel": [
+        {
+          "text": "启明星门",
+          "minimum": 13.046
+        },
+        {
+          "text": "推荐战力　5,400",
+          "minimum": 9.011
+        },
+        {
+          "text": "诺亚",
+          "minimum": 9.804
+        },
+        {
+          "text": "加百列",
+          "minimum": 10.753
+        },
+        {
+          "text": "艾莉娅",
+          "minimum": 11.481
+        },
+        {
+          "text": "莉莉丝",
+          "minimum": 10.2
+        },
+        {
+          "text": "薇尔",
+          "minimum": 11.174
+        },
+        {
+          "text": "凌波玉笛",
+          "minimum": 11.985
+        },
+        {
+          "text": "首通奖励",
+          "minimum": 9.222
+        },
+        {
+          "text": "100",
+          "minimum": 15.887
+        },
+        {
+          "text": "1",
+          "minimum": 16.106
+        },
+        {
+          "text": "出征",
+          "minimum": 9.668
+        }
+      ]
+    },
+    "lobby": [
+      "tile_campaign",
+      "banner_tower",
+      "tile_idle_box",
+      "tile_shop",
+      "tile_event"
+    ]
+  },
+  "wave5": {
+    "natural": {
+      "hit": {
+        "clock": 14978.3,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 536,
+        "ultimate": true,
+        "drawClock": 14978.3,
+        "cutVisible": false,
+        "labels": [
+          "暴击−536"
+        ],
+        "counter": 536,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h06",
+            "heroId": "h06",
+            "actor": "a2",
+            "target": "e3",
+            "targets": null,
+            "role": "single",
+            "hitIndex": 0,
+            "due": 216,
+            "source": "png",
+            "startedAt": 14911.6,
+            "impactAt": 14978.3,
+            "renderedImpactAt": 14978.3,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": true,
+            "magnification": 1.45
+          }
+        ],
+        "camera": {
+          "zoom": 1.117005058641105,
+          "x": -30.35355383035892,
+          "y": -33.12354616753712,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 72
+        },
+        "impact": {
+          "actor": "a2",
+          "target": "e3",
+          "critical": true,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 1,
+          "beats": 1
+        },
+        "kickPower": 0.009
+      },
+      "framesAtCapture": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaEnded": true,
+      "cutSkips": 0
+    },
+    "teammateEffects": [
+      {
+        "clock": 23128.4,
+        "actor": "a0",
+        "heroId": "h04",
+        "target": "a0",
+        "kind": "shield",
+        "amount": 293,
+        "ultimate": true,
+        "drawClock": 23128.4,
+        "cutVisible": false,
+        "labels": [
+          "盾 +293"
+        ],
+        "counter": 293,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h04",
+            "heroId": "h04",
+            "actor": "a0",
+            "target": "a0",
+            "targets": null,
+            "role": "target",
+            "hitIndex": 0,
+            "due": 216,
+            "source": "png",
+            "startedAt": 23061.8,
+            "impactAt": 23128.4,
+            "renderedImpactAt": 23128.4,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": false,
+            "magnification": 1
+          }
+        ],
+        "camera": {
+          "zoom": 1.115,
+          "x": -28.781031022953925,
+          "y": -24.67595,
+          "kick": false,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "a5",
+          "critical": false,
+          "finisher": true,
+          "hold": 65,
+          "sparks": 0,
+          "beat": 4,
+          "beats": 4
+        },
+        "kickPower": 0
+      },
+      {
+        "clock": 17444.9,
+        "actor": "a1",
+        "heroId": "h05",
+        "target": "e1",
+        "kind": "damage",
+        "amount": 151,
+        "ultimate": true,
+        "drawClock": 17444.9,
+        "cutVisible": false,
+        "labels": [
+          "−151"
+        ],
+        "counter": 151,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h05",
+            "heroId": "h05",
+            "actor": "a1",
+            "target": "e1",
+            "targets": null,
+            "role": "projectile",
+            "hitIndex": 0,
+            "due": 216,
+            "source": "png",
+            "startedAt": 17378.3,
+            "impactAt": 17444.9,
+            "renderedImpactAt": 17444.9,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": false,
+            "magnification": 1
+          }
+        ],
+        "camera": {
+          "zoom": 1.117335684957856,
+          "x": -30.45681843942925,
+          "y": -28.97414918606632,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a1",
+          "target": "e1",
+          "critical": false,
+          "finisher": false,
+          "hold": 0,
+          "sparks": 9,
+          "beat": 1,
+          "beats": 4
+        },
+        "kickPower": 0.0058
+      }
+    ],
+    "skipped": {
+      "hit": {
+        "clock": 23924.2,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 402,
+        "ultimate": true,
+        "drawClock": 23924.2,
+        "cutVisible": false,
+        "labels": [
+          "−402"
+        ],
+        "counter": 402,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h06",
+            "heroId": "h06",
+            "actor": "a2",
+            "target": "e3",
+            "targets": null,
+            "role": "single",
+            "hitIndex": 0,
+            "due": 216,
+            "source": "png",
+            "startedAt": 23724.2,
+            "impactAt": 23924.2,
+            "renderedImpactAt": 23924.2,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": true,
+            "magnification": 1.45
+          }
+        ],
+        "camera": {
+          "zoom": 1.1184691829990665,
+          "x": -30.810844196537253,
+          "y": -33.47376471396149,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 72
+        },
+        "impact": {
+          "actor": "a2",
+          "target": "e3",
+          "critical": false,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 1,
+          "beats": 1
+        },
+        "kickPower": 0.009
+      },
+      "framesAtCapture": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaEnded": false,
+      "cutSkips": 1,
+      "heal": {
+        "clock": 24515.9,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "a2",
+        "kind": "heal",
+        "amount": 161,
+        "ultimate": true,
+        "drawClock": 24515.9,
+        "cutVisible": false,
+        "labels": [
+          "+161"
+        ],
+        "counter": 402,
+        "procedural": false,
+        "effects": [],
+        "camera": {
+          "zoom": 1.115,
+          "x": -28.52592209848285,
+          "y": -32.343999999999994,
+          "kick": false,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a2",
+          "target": "e3",
+          "critical": false,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 1,
+          "beats": 1
+        },
+        "kickPower": 0
+      },
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8
+      ],
+      "settled": true
+    },
+    "offlinePackRequests": 0
+  },
+  "lateGameEvidence": "Imported test save, four UR items, level 1 vs tower 30. Real game resolution.",
+  "consoleErrorsAndHTTPFailures": 0
+}

@@ -1,0 +1,79 @@
+{
+  "beats": {
+    "h01": [
+      {
+        "beat": 1,
+        "hold": 0,
+        "sparks": 9,
+        "power": 0.0058
+      },
+      {
+        "beat": 2,
+        "hold": 0,
+        "sparks": 11,
+        "power": 0.0068
+      },
+      {
+        "beat": 3,
+        "hold": 72,
+        "sparks": 14,
+        "power": 0.009
+      }
+    ],
+    "h05": [
+      {
+        "beat": 1,
+        "hold": 0,
+        "sparks": 9,
+        "power": 0.0058
+      },
+      {
+        "beat": 2,
+        "hold": 0,
+        "sparks": 10,
+        "power": 0.006466666666666667
+      },
+      {
+        "beat": 3,
+        "hold": 0,
+        "sparks": 12,
+        "power": 0.007133333333333333
+      },
+      {
+        "beat": 4,
+        "hold": 72,
+        "sparks": 14,
+        "power": 0.009
+      }
+    ]
+  },
+  "trails": 4,
+  "tints": {
+    "white": [
+      0,
+      17,
+      0,
+      17,
+      0,
+      17
+    ],
+    "red": [
+      83,
+      92,
+      100,
+      50,
+      67,
+      83
+    ],
+    "restored": [
+      142,
+      279,
+      283,
+      329,
+      333,
+      350
+    ]
+  },
+  "settled": true,
+  "errors": []
+}

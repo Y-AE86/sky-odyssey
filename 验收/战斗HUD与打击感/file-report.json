@@ -1,0 +1,993 @@
+{
+  "name": "file",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "images": 115,
+  "renderer": {
+    "canvas": [
+      1280,
+      720
+    ],
+    "gpu": "ANGLE (AMD, AMD Radeon RX 9070 XT (0x00007550) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "textures": 8,
+    "originalHeroes": [
+      "h01",
+      "h02",
+      "h03",
+      "h04",
+      "h05",
+      "h06"
+    ],
+    "spriteCount": 12
+  },
+  "embedded": {
+    "h01": "2d755db7e15ada571e96c59fdd5548ca843c605ec7f496825f19dbbe76f6ac77",
+    "h02": "f9d8b28cdb7ffd0b98d4001804cce6b368948661e3644f02116a34b4dadc2e14",
+    "h03": "df7bf54115a2ea1e242022800de855cb1af89b4275276f2b9803b8f330cc2459",
+    "h04": "7872ef0b0593bddc7587c44d8f7a6fbd2b55cce6bfeb4d974e31e464c0f51667",
+    "h05": "20f56bb1f8671f36edd6cec8ae6e2c734c5381bcd9bbccc84618a0d20860cc05",
+    "h06": "71523194b036e413e9ed63ee93413c2b92c3a8fd2a61f06b9eb4ce7a0daf1cb7"
+  },
+  "manualCutMs": 1313,
+  "combatDurationSeconds": 16,
+  "presentedFPS": [
+    59.1,
+    60
+  ],
+  "observedMedianBrowserFPS": 238,
+  "segmentedDamageSample": [
+    246,
+    482,
+    716
+  ],
+  "distinctPositiveTotals": 13,
+  "completedNormally": true,
+  "wave1ArtCount": 35,
+  "screenArt": {
+    "lobby": [
+      "assets/icons/icon_bag.png",
+      "assets/icons/icon_codex.png",
+      "assets/icons/icon_formation.png",
+      "assets/icons/icon_gacha.png",
+      "assets/icons/icon_quest.png",
+      "assets/icons/icon_reward.png",
+      "assets/icons/icon_roster.png",
+      "assets/icons/icon_settings.png",
+      "assets/icons/icon_shop.png",
+      "assets/items/item_chest.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/emblem_star.png"
+    ],
+    "roster": [
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_shard.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "gear": [
+      "assets/items/gear_accessory_sr.png",
+      "assets/items/gear_armor_sr.png",
+      "assets/items/gear_relic_sr.png",
+      "assets/items/gear_weapon_sr.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "formation": [],
+    "gacha": [
+      "assets/icons/icon_gacha.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_cyan.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "summon": [
+      "assets/items/item_shard.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png"
+    ],
+    "route": [
+      "assets/icons/icon_codex.png",
+      "assets/icons/icon_formation.png",
+      "assets/icons/icon_gacha.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "victory": [
+      "assets/items/gear_weapon_sr.png",
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/emblem_mvp.png",
+      "assets/ui/emblem_star.png",
+      "assets/ui/emblem_victory.png"
+    ],
+    "tower": [
+      "assets/icons/icon_formation.png",
+      "assets/items/gear_armor_ur.png",
+      "assets/items/gear_relic_ur.png",
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/ui/ui_btn_crimson.png",
+      "assets/ui/ui_tab_active.png",
+      "assets/ui/ui_tab_idle.png"
+    ],
+    "tower rewards": [
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/ui/ui_btn_crimson.png"
+    ],
+    "boss rewards": [
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/ui/ui_btn_crimson.png"
+    ],
+    "arena rewards": [
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_crimson.png"
+    ],
+    "shop": [
+      "assets/items/item_gem.png",
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_gold.png"
+    ],
+    "bag-materials": [
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/items/item_dew.png",
+      "assets/items/item_dust.png",
+      "assets/items/item_gem.png",
+      "assets/items/item_shard.png",
+      "assets/items/item_stamina.png",
+      "assets/items/item_ticket.png"
+    ],
+    "bag-gear": [
+      "assets/items/gear_accessory_sr.png",
+      "assets/items/gear_armor_sr.png",
+      "assets/items/gear_relic_sr.png",
+      "assets/items/gear_weapon_sr.png"
+    ],
+    "equipped-ur": [
+      "assets/items/gear_accessory_ur.png",
+      "assets/items/gear_armor_ur.png",
+      "assets/items/gear_relic_ur.png",
+      "assets/items/gear_weapon_ur.png"
+    ],
+    "defeat": [
+      "assets/items/item_coin.png",
+      "assets/items/item_core.png",
+      "assets/ui/emblem_defeat.png",
+      "assets/ui/emblem_mvp.png",
+      "assets/ui/emblem_star.png"
+    ]
+  },
+  "mobileEdgeSamples": {},
+  "wave2": {
+    "artwork": {
+      "assets/banners/tile_campaign.png": [
+        ".route-tile"
+      ],
+      "assets/banners/banner_tower.png": [
+        ".trial-tile",
+        ".pn-trial-card[data-value=\"tower\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ],
+      "assets/banners/tile_idle_box.png": [
+        ".idle-tile"
+      ],
+      "assets/banners/tile_shop.png": [
+        ".small-tiles [data-action=shop]"
+      ],
+      "assets/banners/banner_boss.png": [
+        ".pn-trial-card[data-value=\"boss\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ],
+      "assets/banners/banner_arena.png": [
+        ".pn-trial-card[data-value=\"arena\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ]
+    },
+    "contrast": {
+      "lobby": [
+        {
+          "text": "第一章　浮空星港",
+          "minimum": 12.499
+        },
+        {
+          "text": "主线航线",
+          "minimum": 13.802
+        },
+        {
+          "text": "1-1　启明星门",
+          "minimum": 14.894
+        },
+        {
+          "text": "星穹试炼",
+          "minimum": 12.912
+        },
+        {
+          "text": "星匣挂机",
+          "minimum": 13.393
+        },
+        {
+          "text": "可领取　48 星币",
+          "minimum": 15.321
+        },
+        {
+          "text": "限时活动",
+          "minimum": 11.896
+        },
+        {
+          "text": "星港商店",
+          "minimum": 14.097
+        }
+      ],
+      "full idle chest": [
+        {
+          "text": "可领取　11,520 星币",
+          "minimum": 12.82
+        }
+      ],
+      "trial cards": [
+        {
+          "text": "星穹高塔",
+          "minimum": 15.465
+        },
+        {
+          "text": "已通关 0 / 30 层",
+          "minimum": 12.667
+        },
+        {
+          "text": "天城首领",
+          "minimum": 15.966
+        },
+        {
+          "text": "最高伤害 0",
+          "minimum": 13.215
+        },
+        {
+          "text": "星环演武",
+          "minimum": 14.753
+        },
+        {
+          "text": "累计胜场 0",
+          "minimum": 12.593
+        }
+      ],
+      "tower preview": [
+        {
+          "text": "星穹高塔",
+          "minimum": 14.551
+        }
+      ],
+      "boss preview": [
+        {
+          "text": "天城首领",
+          "minimum": 16.06
+        }
+      ],
+      "arena preview": [
+        {
+          "text": "星环演武",
+          "minimum": 14.872
+        }
+      ]
+    },
+    "masks": {},
+    "sha256": {
+      "assets/banners/tile_campaign.png": "32a9a293fe8684ed6ce2b19681690b5b43259e6240610ef04ddda20de2612ed9",
+      "assets/banners/banner_tower.png": "18415e42a235f53476b2d9a3e3e479f11cc7dbb70f58d84f3591f913228289cf",
+      "assets/banners/tile_idle_box.png": "5578bc5fbf3dc351a9b7f168931185f51cec700c6fc5337a29d9db7697a7fcef",
+      "assets/banners/tile_shop.png": "4ff43eb40aff15a655cf784af8ef1c29ca35a7b556d272d1a20a4b723bffd83d",
+      "assets/banners/banner_boss.png": "c12abe8f58ca30563c5abf90c95ac70e20c86f9030e40b27c6254b9229abb713",
+      "assets/banners/banner_arena.png": "ea9908972d9037e132f81a970af64db0f8b3b56f09324bd1230c0ef0889743a0"
+    }
+  },
+  "wave3": {
+    "regularPoolSeed": 43267,
+    "drawn": [
+      "h02",
+      "h04",
+      "h08",
+      "h06",
+      "h03",
+      "h05",
+      "h07",
+      "h01",
+      "h08",
+      "h08"
+    ],
+    "weapons": {
+      "h01": "assets/weapons/weapon_h01.png",
+      "h02": "assets/weapons/weapon_h02.png",
+      "h03": "assets/weapons/weapon_h03.png",
+      "h04": "assets/weapons/weapon_h04.png",
+      "h05": "assets/weapons/weapon_h05.png",
+      "h06": "assets/weapons/weapon_h06.png"
+    },
+    "bossSeed": 72,
+    "formation": [
+      "h04",
+      "h05",
+      "h06",
+      "h01",
+      "h02",
+      "h03"
+    ],
+    "allyOriginals": [
+      "h01",
+      "h04",
+      "h02",
+      "h05",
+      "h03",
+      "h06"
+    ],
+    "originalTextures": [
+      "h01",
+      "h02",
+      "h03",
+      "h04",
+      "h05",
+      "h06"
+    ],
+    "portraits": {
+      "roster": {
+        "h04": {
+          "poster": "assets/posters/lobby_cg_h04.png",
+          "chibi": "assets/chibi/chibi_h04.png"
+        },
+        "h05": {
+          "poster": "assets/posters/lobby_cg_h05.png",
+          "chibi": "assets/chibi/chibi_h05.png"
+        },
+        "h06": {
+          "poster": "assets/posters/lobby_cg_h06.png",
+          "chibi": "assets/chibi/chibi_h06.png"
+        }
+      },
+      "formation": {
+        "h04": "assets/avatars/avatar_h04.png",
+        "h05": "assets/avatars/avatar_h05.png",
+        "h06": "assets/avatars/avatar_h06.png",
+        "h01": "assets/avatars/avatar_c07.png",
+        "h02": "assets/avatars/avatar_protag.png",
+        "h03": "assets/avatars/avatar_c15.png"
+      },
+      "battle": {
+        "h04": "assets/avatars/avatar_h04.png",
+        "h05": "assets/avatars/avatar_h05.png",
+        "h06": "assets/avatars/avatar_h06.png",
+        "h01": "assets/avatars/avatar_c07.png",
+        "h02": "assets/avatars/avatar_protag.png",
+        "h03": "assets/avatars/avatar_c15.png"
+      }
+    },
+    "cutins": [
+      {
+        "hero": "h06",
+        "duration": 1312.4000000953674,
+        "image": "url(\"file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/posters/lobby_cg_h06.png\")",
+        "media": [
+          {
+            "source": "ult_h06.mp4",
+            "muted": false,
+            "rate": 2.433596,
+            "length": 3.041995
+          }
+        ]
+      },
+      {
+        "hero": "h05",
+        "duration": 1313.1000000238419,
+        "image": "url(\"file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/posters/lobby_cg_h05.png\")",
+        "media": [
+          {
+            "source": "ult_h05.mp4",
+            "muted": false,
+            "rate": 2.433596,
+            "length": 3.041995
+          }
+        ]
+      },
+      {
+        "hero": "h04",
+        "duration": 1329,
+        "image": "url(\"file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/posters/lobby_cg_h04.png\")",
+        "media": [
+          {
+            "source": "ult_h04.mp4",
+            "muted": false,
+            "rate": 2.433596,
+            "length": 3.041995
+          }
+        ]
+      }
+    ],
+    "startupPosters": [
+      "lobby_cg_c07.png"
+    ],
+    "offlineBundleRequests": 2,
+    "videoRequests": [
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h06.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h06.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h06.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h06.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h04.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h05.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h01.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h02.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/ult_h03.mp4",
+      "file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/videos/lobby_cg_h01.mp4"
+    ]
+  },
+  "wave4": {
+    "scenes": {
+      "campaign map": "assets/scenes/bg_worldmap.png",
+      "chapter 1": "assets/scenes/bg_battle.png",
+      "tower": "assets/scenes/bg_battle.png",
+      "trial return": "assets/scenes/bg_worldmap.png",
+      "boss": "assets/scenes/bg_battle_boss.png",
+      "arena": "assets/scenes/bg_battle.png",
+      "chapter 1 finale": "assets/scenes/bg_battle.png",
+      "next across chapters": "assets/scenes/bg_battle_ch2.png",
+      "chapter 2 retry": "assets/scenes/bg_battle_ch2.png",
+      "chapter 2 return": "assets/scenes/bg_worldmap.png",
+      "chapter 2 from map": "assets/scenes/bg_battle_ch2.png"
+    },
+    "badges": {
+      "badge_resonance": [
+        "resonance"
+      ],
+      "faction_donghuang": [
+        "roster filter",
+        "formation bond",
+        "codex list",
+        "roster hero tag"
+      ],
+      "faction_shenghui": [
+        "roster filter",
+        "formation bond",
+        "codex list",
+        "roster hero tag"
+      ],
+      "faction_jiqiao": [
+        "roster filter",
+        "formation bond",
+        "codex list",
+        "roster hero tag"
+      ],
+      "faction_miying": [
+        "roster filter",
+        "formation bond",
+        "codex list",
+        "codex details",
+        "roster hero tag"
+      ],
+      "skill_basic": [
+        "skill card"
+      ],
+      "skill_ult": [
+        "skill card"
+      ],
+      "skill_passive": [
+        "skill card"
+      ],
+      "skill_awaken": [
+        "skill card"
+      ]
+    },
+    "contrast": {
+      "route intel": [
+        {
+          "text": "启明星门",
+          "minimum": 13.357
+        },
+        {
+          "text": "推荐战力　5,400",
+          "minimum": 9.119
+        },
+        {
+          "text": "诺亚",
+          "minimum": 9.825
+        },
+        {
+          "text": "加百列",
+          "minimum": 10.771
+        },
+        {
+          "text": "艾莉娅",
+          "minimum": 11.463
+        },
+        {
+          "text": "莉莉丝",
+          "minimum": 10.244
+        },
+        {
+          "text": "薇尔",
+          "minimum": 11.174
+        },
+        {
+          "text": "凌波玉笛",
+          "minimum": 11.947
+        },
+        {
+          "text": "首通奖励",
+          "minimum": 9.239
+        },
+        {
+          "text": "100",
+          "minimum": 15.913
+        },
+        {
+          "text": "1",
+          "minimum": 16.225
+        },
+        {
+          "text": "出征",
+          "minimum": 11.354
+        }
+      ]
+    },
+    "lobby": [
+      "tile_campaign",
+      "banner_tower",
+      "tile_idle_box",
+      "tile_shop",
+      "tile_event"
+    ]
+  },
+  "wave5": {
+    "natural": {
+      "hit": {
+        "clock": 12877.1,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 536,
+        "ultimate": true,
+        "drawClock": 12877.1,
+        "cutVisible": false,
+        "labels": [
+          "暴击−536"
+        ],
+        "counter": 536,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h06",
+            "heroId": "h06",
+            "actor": "a2",
+            "target": "e3",
+            "targets": null,
+            "role": "single",
+            "hitIndex": 0,
+            "due": 216,
+            "source": "embedded",
+            "startedAt": 12810.4,
+            "impactAt": 12877.1,
+            "renderedImpactAt": 12877.1,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": true,
+            "magnification": 1.45
+          }
+        ],
+        "camera": {
+          "zoom": 1.155,
+          "x": -61.30419233393861,
+          "y": -77.88351206628792,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 72
+        },
+        "impact": {
+          "actor": "a2",
+          "target": "e3",
+          "critical": true,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 1,
+          "beats": 1
+        }
+      },
+      "framesAtCapture": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "mediaEnded": true,
+      "cutSkips": 0
+    },
+    "teammateEffects": [
+      {
+        "clock": 20577.2,
+        "actor": "a0",
+        "heroId": "h04",
+        "target": "a0",
+        "kind": "shield",
+        "amount": 293,
+        "ultimate": true,
+        "drawClock": 20577.2,
+        "cutVisible": false,
+        "labels": [
+          "盾 +293"
+        ],
+        "counter": 293,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h04",
+            "heroId": "h04",
+            "actor": "a0",
+            "target": "a0",
+            "targets": null,
+            "role": "target",
+            "hitIndex": 0,
+            "due": 216,
+            "source": "embedded",
+            "startedAt": 20510.5,
+            "impactAt": 20577.2,
+            "renderedImpactAt": 20577.2,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": false,
+            "magnification": 1
+          }
+        ],
+        "camera": {
+          "zoom": 1.115,
+          "x": -18.922666666666665,
+          "y": -45.555600000000005,
+          "kick": false,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "a5",
+          "critical": false,
+          "finisher": true,
+          "hold": 65,
+          "sparks": 0,
+          "beat": 4,
+          "beats": 4
+        }
+      },
+      {
+        "clock": 14893.8,
+        "actor": "a1",
+        "heroId": "h05",
+        "target": "e1",
+        "kind": "damage",
+        "amount": 151,
+        "ultimate": true,
+        "drawClock": 14893.8,
+        "cutVisible": false,
+        "labels": [
+          "−151"
+        ],
+        "counter": 151,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h05",
+            "heroId": "h05",
+            "actor": "a1",
+            "target": "e1",
+            "targets": null,
+            "role": "projectile",
+            "hitIndex": 0,
+            "due": 216,
+            "source": "embedded",
+            "startedAt": 14827.1,
+            "impactAt": 14893.8,
+            "renderedImpactAt": 14893.8,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": false,
+            "magnification": 1
+          }
+        ],
+        "camera": {
+          "zoom": 1.1407777777777777,
+          "x": -105.26018370370366,
+          "y": -63.22951999999994,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a1",
+          "target": "e1",
+          "critical": false,
+          "finisher": false,
+          "hold": 0,
+          "sparks": 9,
+          "beat": 1,
+          "beats": 4
+        }
+      }
+    ],
+    "skipped": {
+      "hit": {
+        "clock": 21414.7,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 422,
+        "ultimate": true,
+        "drawClock": 21414.7,
+        "cutVisible": false,
+        "labels": [
+          "暴击−422"
+        ],
+        "counter": 422,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h06",
+            "heroId": "h06",
+            "actor": "a2",
+            "target": "e3",
+            "targets": null,
+            "role": "single",
+            "hitIndex": 0,
+            "due": 216,
+            "source": "embedded",
+            "startedAt": 21214.7,
+            "impactAt": 21414.7,
+            "renderedImpactAt": 21414.7,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": true,
+            "magnification": 1.45
+          }
+        ],
+        "camera": {
+          "zoom": 1.155,
+          "x": -61.30419233393861,
+          "y": -77.88351206628792,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 72
+        },
+        "impact": {
+          "actor": "a2",
+          "target": "e3",
+          "critical": true,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 1,
+          "beats": 1
+        }
+      },
+      "framesAtCapture": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaEnded": false,
+      "cutSkips": 1,
+      "heal": {
+        "clock": 21598.1,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "a2",
+        "kind": "heal",
+        "amount": 169,
+        "ultimate": true,
+        "drawClock": 21598.1,
+        "cutVisible": false,
+        "labels": [
+          "+169"
+        ],
+        "counter": 422,
+        "procedural": false,
+        "effects": [],
+        "camera": {
+          "zoom": 1.115,
+          "x": -50.02279989762925,
+          "y": -59.711682850766884,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a2",
+          "target": "e3",
+          "critical": true,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 1,
+          "beats": 1
+        }
+      },
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "settled": true
+    },
+    "offlinePackRequests": 2,
+    "embeddedSha256": {
+      "spark": "ac2ce9d40bf74a7b8e78323328fc41a51849343630147481507ff72ac8a2c1eb",
+      "h01": "1c4ce483ddde4ef95dc78cf8cf87c0d9823e3a0a1f081a5ebeb31340dc6467af",
+      "h02": "5ace7906aa0dfe9f1b62be374c0e9a5fc1b9a66ec31fece83b5d0d377b745b61",
+      "h03": "bc16cb26998c3c33cc1b0776ece7a45a5b650d9eedadd2e89d58ec013868426f",
+      "h04": "c8179a1e9cb7f59f554ddb4f9054b219d2811cba97e092e2b9e9b9fca5634140",
+      "h05": "ffcd87c9e7157ab4fde5a3b361144fd45841c286e2b6f170cbfb77bac55d324f",
+      "h06": "4a5bcacf285e9db7b19e88352de5734d0447df445c427b6e9944d42035b7491f"
+    }
+  },
+  "lateGameEvidence": "Imported test save, four UR items, level 1 vs tower 30. Real game resolution.",
+  "consoleErrorsAndHTTPFailures": 0
+}

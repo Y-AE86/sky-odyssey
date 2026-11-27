@@ -1,0 +1,149 @@
+[
+  {
+    "key": "desktop",
+    "shots": [
+      "hud-ready",
+      "heal-ring",
+      "shield",
+      "right-edge",
+      "combo-finish"
+    ],
+    "canvas": [
+      1280,
+      720
+    ],
+    "stage": [
+      1280,
+      720
+    ],
+    "offset": 67.1875,
+    "minimumMargin": 8.9599609375,
+    "rightEdge": 8.9599609375,
+    "kickEdge": 8.9599609375,
+    "iceTop": 0.44095580917888366,
+    "healSize": 30.976,
+    "shieldSize": 25.856,
+    "healGap": 18.004017691179683,
+    "shieldGap": 18.008741925715185,
+    "healAlpha": [
+      0.44849999999999995,
+      0.44849999999999995
+    ],
+    "shieldAlpha": [
+      0.45499999999999996,
+      0.45499999999999996
+    ],
+    "bottom": 0.20399305555555555,
+    "offlinePackRequests": 0,
+    "maxZoom": 1.1119590832585815
+  },
+  {
+    "key": "retina",
+    "shots": [
+      "right-edge",
+      "combo-finish"
+    ],
+    "canvas": [
+      2880,
+      1620
+    ],
+    "stage": [
+      1440,
+      810
+    ],
+    "offset": 75.59375,
+    "minimumMargin": 10.0799560546875,
+    "rightEdge": 10.0799560546875,
+    "kickEdge": 10.0799560546875,
+    "iceTop": 0.44095587384848395,
+    "healSize": 34.848,
+    "shieldSize": 29.088,
+    "healGap": 20.25643658896979,
+    "shieldGap": 20.257582879080985,
+    "healAlpha": [
+      0.44849999999999995,
+      0.44849999999999995
+    ],
+    "shieldAlpha": [
+      0.45499999999999996,
+      0.45499999999999996
+    ],
+    "bottom": 0.20399305555555555,
+    "offlinePackRequests": 0,
+    "maxZoom": 1.1108429864963698
+  },
+  {
+    "key": "mobile",
+    "shots": [
+      "hud-ready",
+      "heal-ring",
+      "right-edge"
+    ],
+    "canvas": [
+      2079,
+      1170
+    ],
+    "stage": [
+      693.328125,
+      389.984375
+    ],
+    "offset": 36.3984375,
+    "minimumMargin": 6,
+    "rightEdge": 6,
+    "kickEdge": 6,
+    "iceTop": 0.4409557448870762,
+    "healSize": 16.7785,
+    "shieldSize": 14.0052,
+    "healGap": 9.75890672129782,
+    "shieldGap": 9.760922692701683,
+    "healAlpha": [
+      0.44849999999999995,
+      0.44849999999999995
+    ],
+    "shieldAlpha": [
+      0.45499999999999996,
+      0.45499999999999996
+    ],
+    "bottom": 0.20397451820986418,
+    "offlinePackRequests": 0,
+    "maxZoom": 1.1070338755673321
+  },
+  {
+    "key": "file",
+    "shots": [
+      "hud-ready",
+      "heal-ring",
+      "shield",
+      "right-edge",
+      "combo-finish"
+    ],
+    "canvas": [
+      1280,
+      720
+    ],
+    "stage": [
+      1280,
+      720
+    ],
+    "offset": 67.1875,
+    "minimumMargin": 8.9599609375,
+    "rightEdge": 8.9599609375,
+    "kickEdge": 8.9599609375,
+    "iceTop": 0.4409558240836178,
+    "healSize": 30.976,
+    "shieldSize": 25.856,
+    "healGap": 18.00255265556723,
+    "shieldGap": 18.01338680381741,
+    "healAlpha": [
+      0.44849999999999995,
+      0.44849999999999995
+    ],
+    "shieldAlpha": [
+      0.45499999999999996,
+      0.45499999999999996
+    ],
+    "bottom": 0.20399305555555555,
+    "offlinePackRequests": 1,
+    "maxZoom": 1.110845175313524
+  }
+]

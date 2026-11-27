@@ -1,0 +1,103 @@
+{
+  "data": [
+    {
+      "src": "assets/videos/lobby_cg_h01.mp4",
+      "duration": 5.041667,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 11,
+      "audioDecodedBytes": 10694
+    },
+    {
+      "src": "assets/videos/lobby_cg_h02.mp4",
+      "duration": 5.041667,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 11,
+      "audioDecodedBytes": 9835
+    },
+    {
+      "src": "assets/videos/lobby_cg_h03.mp4",
+      "duration": 5.041667,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 11,
+      "audioDecodedBytes": 9731
+    },
+    {
+      "src": "assets/videos/lobby_cg_h04.mp4",
+      "duration": 5.041667,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 11,
+      "audioDecodedBytes": 9801
+    },
+    {
+      "src": "assets/videos/lobby_cg_h05.mp4",
+      "duration": 5.041667,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 11,
+      "audioDecodedBytes": 10046
+    },
+    {
+      "src": "assets/videos/lobby_cg_h06.mp4",
+      "duration": 5.041667,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 10,
+      "audioDecodedBytes": 9595
+    },
+    {
+      "src": "assets/videos/ult_h01.mp4",
+      "duration": 3.041995,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 11,
+      "audioDecodedBytes": 9821
+    },
+    {
+      "src": "assets/videos/ult_h02.mp4",
+      "duration": 3.041995,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 10,
+      "audioDecodedBytes": 9721
+    },
+    {
+      "src": "assets/videos/ult_h03.mp4",
+      "duration": 3.041995,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 10,
+      "audioDecodedBytes": 9656
+    },
+    {
+      "src": "assets/videos/ult_h04.mp4",
+      "duration": 3.041995,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 10,
+      "audioDecodedBytes": 9804
+    },
+    {
+      "src": "assets/videos/ult_h05.mp4",
+      "duration": 3.041995,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 10,
+      "audioDecodedBytes": 9732
+    },
+    {
+      "src": "assets/videos/ult_h06.mp4",
+      "duration": 3.041995,
+      "width": 1280,
+      "height": 720,
+      "decodedFrames": 10,
+      "audioDecodedBytes": 9815
+    }
+  ],
+  "issues": [],
+  "h03Source": "03_凌波玉笛_大招有声_3s.mp4",
+  "assets": 98
+}

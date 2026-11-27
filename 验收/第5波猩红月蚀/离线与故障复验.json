@@ -1,0 +1,62 @@
+[
+  {
+    "fault": false,
+    "unmuted": true,
+    "packRequests": 1,
+    "snapshot": {
+      "vfx": {
+        "ready": [
+          "h06"
+        ],
+        "last": {
+          "heroId": "h06",
+          "actor": "a1",
+          "target": "e4",
+          "source": "embedded",
+          "startedAt": 4774,
+          "impactAt": 4841.1,
+          "renderedImpactAt": 4841.1,
+          "frame": 3,
+          "frames": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "active": true
+        },
+        "procedural": []
+      },
+      "pixels": {
+        "blackCorner": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "impact": [
+          255,
+          254,
+          255,
+          254
+        ]
+      }
+    },
+    "errors": []
+  },
+  {
+    "fault": true,
+    "unmuted": true,
+    "packRequests": 0,
+    "snapshot": {
+      "vfx": {
+        "ready": [],
+        "last": null,
+        "procedural": [
+          "h06"
+        ]
+      }
+    },
+    "errors": []
+  }
+]

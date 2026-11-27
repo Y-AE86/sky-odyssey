@@ -1,0 +1,58 @@
+[
+  {
+    "origin": "file",
+    "allSynthEffects": [
+      "tap",
+      "tab",
+      "back",
+      "collect",
+      "upgrade",
+      "summon",
+      "slash",
+      "cast",
+      "hit",
+      "crit",
+      "shield",
+      "heal",
+      "ult_start",
+      "win",
+      "lose"
+    ],
+    "synthesizedOscillators": 63,
+    "compressorPeak": 0.7015464305877686,
+    "sampleDecoded": 16384,
+    "samplePitch": 1.0044791917549445,
+    "compressedSample": false,
+    "sampleVolume": 0.10439999999999999,
+    "invalidSample": "synth",
+    "errors": []
+  },
+  {
+    "origin": "http",
+    "allSynthEffects": [
+      "tap",
+      "tab",
+      "back",
+      "collect",
+      "upgrade",
+      "summon",
+      "slash",
+      "cast",
+      "hit",
+      "crit",
+      "shield",
+      "heal",
+      "ult_start",
+      "win",
+      "lose"
+    ],
+    "synthesizedOscillators": 63,
+    "compressorPeak": 0.7177864909172058,
+    "sampleDecoded": 16384,
+    "samplePitch": 1.0304446653695776,
+    "compressedSample": true,
+    "sampleVolume": 0.55,
+    "invalidSample": "synth",
+    "errors": []
+  }
+]

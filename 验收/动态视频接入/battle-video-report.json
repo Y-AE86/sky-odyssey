@@ -1,0 +1,657 @@
+[
+  {
+    "label": "desktop-1x-sound",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 1,
+      "activation": true,
+      "ult": "九幽墨莲斩"
+    },
+    "shot": {
+      "start": 1823.5,
+      "hero": "h01",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h01.mp4",
+          "duration": 3.041995,
+          "muted": false,
+          "rate": 1,
+          "mediaTime": 0,
+          "audioBytes": 5084,
+          "renderWidth": 1280,
+          "renderHeight": 720,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "九幽墨莲斩",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_c07.png\")",
+      "native": null,
+      "firstFrame": 56.799999952316284,
+      "playback": {
+        "source": "ult_h01.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "rate": 1,
+        "mediaTime": 3.041995,
+        "audioBytes": 49713,
+        "renderWidth": 1280,
+        "renderHeight": 720,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "ended": 3099,
+      "screenTime": 3099.5999999046326,
+      "firstHit": 3183.5999999046326
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 1,
+    "errors": []
+  },
+  {
+    "label": "desktop-2x-sound-off",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": false,
+      "powerSave": false,
+      "speed": 2,
+      "activation": true,
+      "ult": "霜天星落"
+    },
+    "shot": {
+      "start": 670.7000000476837,
+      "hero": "h02",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h02.mp4",
+          "duration": 3.041995,
+          "muted": true,
+          "rate": 1.60105,
+          "mediaTime": 0.007052,
+          "audioBytes": 5078,
+          "renderWidth": 1280,
+          "renderHeight": 720,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "霜天星落",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_protag.png\")",
+      "native": null,
+      "firstFrame": 81.89999997615814,
+      "playback": {
+        "source": "ult_h02.mp4",
+        "duration": 3.041995,
+        "muted": true,
+        "rate": 1.60105,
+        "mediaTime": 3.041995,
+        "audioBytes": 49938,
+        "renderWidth": 1280,
+        "renderHeight": 720,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "ended": 1980.8999999761581,
+      "screenTime": 1981.3999999761581,
+      "firstHit": 2016.6000000238419
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 6,
+    "errors": []
+  },
+  {
+    "label": "desktop-3x-h03",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 3,
+      "activation": true,
+      "ult": "清音沧澜曲"
+    },
+    "shot": {
+      "start": 525,
+      "hero": "h03",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h03.mp4",
+          "duration": 3.041995,
+          "muted": false,
+          "rate": 2.433596,
+          "mediaTime": 0.002797,
+          "audioBytes": 5560,
+          "renderWidth": 1280,
+          "renderHeight": 720,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "清音沧澜曲",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_c15.png\")",
+      "native": null,
+      "firstFrame": 35.60000002384186,
+      "playback": {
+        "source": "ult_h03.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "rate": 2.433596,
+        "mediaTime": 3.041995,
+        "audioBytes": 50009,
+        "renderWidth": 1280,
+        "renderHeight": 720,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "ended": 1298.3000000715256,
+      "screenTime": 1298.8999999761581,
+      "firstHit": 1333.5
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 6,
+    "errors": []
+  },
+  {
+    "label": "desktop-no-activation",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 3,
+      "activation": false,
+      "ult": "九幽墨莲斩"
+    },
+    "shot": {
+      "start": 514.5,
+      "hero": "h01",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h01.mp4",
+          "duration": 3.041995,
+          "muted": true,
+          "rate": 2.433596,
+          "mediaTime": 0.002786,
+          "audioBytes": 5447,
+          "renderWidth": 1280,
+          "renderHeight": 720,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "九幽墨莲斩",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_c07.png\")",
+      "native": null,
+      "firstFrame": 76.60000002384186,
+      "playback": {
+        "source": "ult_h01.mp4",
+        "duration": 3.041995,
+        "muted": true,
+        "rate": 2.433596,
+        "mediaTime": 3.041995,
+        "audioBytes": 49713,
+        "renderWidth": 1280,
+        "renderHeight": 720,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "ended": 1331.1999999284744,
+      "screenTime": 1331.7999999523163,
+      "firstHit": 1366.1000000238419
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 1,
+    "errors": []
+  },
+  {
+    "label": "desktop-autoplay-policy",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 3,
+      "activation": true,
+      "ult": "九幽墨莲斩"
+    },
+    "shot": {
+      "start": 536.6000000238419,
+      "hero": "h01",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h01.mp4",
+          "duration": 3.041995,
+          "muted": true,
+          "rate": 2.433596,
+          "mediaTime": 0.014294,
+          "audioBytes": 5447,
+          "renderWidth": 1280,
+          "renderHeight": 720,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "九幽墨莲斩",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_c07.png\")",
+      "native": null,
+      "firstFrame": 69,
+      "playback": {
+        "source": "ult_h01.mp4",
+        "duration": 3.041995,
+        "muted": true,
+        "rate": 2.433596,
+        "mediaTime": 3.041995,
+        "audioBytes": 49713,
+        "renderWidth": 1280,
+        "renderHeight": 720,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "ended": 1320.6999999284744,
+      "screenTime": 1321.3999999761581,
+      "firstHit": 1351.5999999046326
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 1,
+    "settled": true,
+    "totalUpdates": 1,
+    "errors": []
+  },
+  {
+    "label": "desktop-missing-h03",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 1,
+      "activation": true,
+      "ult": "清音沧澜曲"
+    },
+    "shot": {
+      "start": 916.2000000476837,
+      "hero": "h03",
+      "mode": "lobby",
+      "playing": [
+        {
+          "source": "lobby_cg_h03.mp4",
+          "duration": 5.041667,
+          "muted": true,
+          "rate": 1,
+          "mediaTime": 0.006712,
+          "audioBytes": 5307,
+          "renderWidth": 1291.519287109375,
+          "renderHeight": 722.1600341796875,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "清音沧澜曲",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_c15.png\")",
+      "native": null,
+      "firstFrame": 61.299999952316284,
+      "playback": {
+        "source": "lobby_cg_h03.mp4",
+        "duration": 5.041667,
+        "muted": true,
+        "rate": 1,
+        "mediaTime": 0.808121,
+        "audioBytes": 18972,
+        "renderWidth": 1303.103515625,
+        "renderHeight": 728.637451171875,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "screenTime": 849.7999999523163,
+      "firstHit": 933.8999999761581
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "lobby_cg_h03.mp4"
+    ],
+    "partialResponses": 7,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 6,
+    "errors": []
+  },
+  {
+    "label": "desktop-bad-ultimate",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 1,
+      "activation": true,
+      "ult": "魔导齐射"
+    },
+    "shot": {
+      "start": 973.5,
+      "hero": "h05",
+      "mode": "poster",
+      "playing": [],
+      "title": "魔导齐射",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_h05.png\")",
+      "native": null,
+      "screenTime": 850.0999999046326,
+      "firstHit": 933.7999999523163
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4",
+      "lobby_cg_h05.mp4"
+    ],
+    "partialResponses": 7,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 4,
+    "errors": []
+  },
+  {
+    "label": "mobile-tap-skip",
+    "width": 844,
+    "height": 390,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 1,
+      "activation": true,
+      "ult": "天穹圣壁"
+    },
+    "shot": {
+      "start": 940.6000000238419,
+      "hero": "h04",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h04.mp4",
+          "duration": 3.041995,
+          "muted": false,
+          "rate": 1,
+          "mediaTime": 0,
+          "audioBytes": 4978,
+          "renderWidth": 693.328125,
+          "renderHeight": 389.984375,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "天穹圣壁",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_h04.png\")",
+      "native": null,
+      "firstFrame": 65.09999990463257,
+      "playback": {
+        "source": "ult_h04.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "rate": 1,
+        "mediaTime": 0.338894,
+        "audioBytes": 11601,
+        "renderWidth": 693.328125,
+        "renderHeight": 389.984375,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "click": 391.59999990463257,
+      "clickInStage": true,
+      "screenTime": 392.39999997615814,
+      "firstHit": 466.59999990463257
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 3,
+    "errors": []
+  },
+  {
+    "label": "mobile-wing-tap",
+    "width": 844,
+    "height": 390,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 1,
+      "activation": true,
+      "ult": "天穹圣壁"
+    },
+    "shot": {
+      "start": 943.8999999761581,
+      "hero": "h04",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h04.mp4",
+          "duration": 3.041995,
+          "muted": false,
+          "rate": 1,
+          "mediaTime": 0.001236,
+          "audioBytes": 5361,
+          "renderWidth": 693.328125,
+          "renderHeight": 389.984375,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "天穹圣壁",
+      "background": "url(\"http://127.0.0.1:50229/assets/posters/lobby_cg_h04.png\")",
+      "native": null,
+      "firstFrame": 53,
+      "playback": {
+        "source": "ult_h04.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "rate": 1,
+        "mediaTime": 0.245198,
+        "audioBytes": 9804,
+        "renderWidth": 693.328125,
+        "renderHeight": 389.984375,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "click": 279.7999999523163,
+      "clickInStage": false,
+      "screenTime": 280.2999999523163,
+      "firstHit": 349.7999999523163
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 3,
+    "errors": []
+  },
+  {
+    "label": "file-2x",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 2,
+      "activation": true,
+      "ult": "猩红月蚀"
+    },
+    "shot": {
+      "start": 802.8000000715256,
+      "hero": "h06",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h06.mp4",
+          "duration": 3.041995,
+          "muted": false,
+          "rate": 1.60105,
+          "mediaTime": 0.00191,
+          "audioBytes": 5318,
+          "renderWidth": 1280,
+          "renderHeight": 720,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "猩红月蚀",
+      "background": "url(\"file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/posters/lobby_cg_h06.png\")",
+      "native": null,
+      "firstFrame": 27.699999928474426,
+      "playback": {
+        "source": "ult_h06.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "rate": 1.60105,
+        "mediaTime": 3.041995,
+        "audioBytes": 49943,
+        "renderWidth": 1280,
+        "renderHeight": 720,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "ended": 1960.5999999046326,
+      "screenTime": 1961.1999999284744,
+      "firstHit": 1999.7999999523163
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h06.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 0,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 1,
+    "errors": []
+  },
+  {
+    "label": "file-power-save",
+    "width": 1280,
+    "height": 720,
+    "kickoff": {
+      "sound": true,
+      "powerSave": true,
+      "speed": 1,
+      "activation": true,
+      "ult": "九幽墨莲斩"
+    },
+    "shot": {
+      "start": 935.3999999761581,
+      "hero": "h01",
+      "mode": "poster",
+      "playing": [],
+      "title": "九幽墨莲斩",
+      "background": "url(\"file:///C:/Users/Administrator/.gemini/antigravity/scratch/sky-odyssey/assets/posters/lobby_cg_c07.png\")",
+      "native": null,
+      "screenTime": 853.1000000238419,
+      "firstHit": 933.2999999523163
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4"
+    ],
+    "partialResponses": 0,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 1,
+    "errors": []
+  }
+]

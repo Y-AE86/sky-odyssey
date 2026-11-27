@@ -1,0 +1,178 @@
+{
+  "fixture": "Chrome MediaRecorder H.264 baseline, 320 × 180, 1.904 seconds, silent, temporary",
+  "manifest": "Enabled poster videos: h01, h02, h04",
+  "cases": [
+    {
+      "name": "HTTP desktop",
+      "lobbyInfo": {
+        "muted": true,
+        "loop": true,
+        "playsInline": true,
+        "poster": "assets/posters/lobby_cg_c07.png",
+        "duration": 1.904133,
+        "width": 1280.0009765625,
+        "loopSeam": {
+          "loops": 2,
+          "hiddenFrames": 0
+        }
+      },
+      "ready": {
+        "hero": "h01",
+        "power": false,
+        "delayMs": 1.1,
+        "durationMs": 866,
+        "poster": "lobby_cg_c07.png",
+        "playback": {
+          "advancing": 0.144,
+          "paused": false,
+          "readyState": 4,
+          "opacity": "1",
+          "loop": false,
+          "muted": true
+        }
+      },
+      "power": {
+        "hero": "h01",
+        "power": true,
+        "delayMs": 0.5,
+        "durationMs": 867,
+        "poster": "lobby_cg_c07.png",
+        "playback": null
+      },
+      "corrupt": {
+        "hero": "h02",
+        "power": false,
+        "delayMs": 0.5,
+        "durationMs": 867,
+        "poster": "lobby_cg_protag.png",
+        "playback": null
+      },
+      "slow": {
+        "hero": "h04",
+        "power": false,
+        "delayMs": 9.4,
+        "durationMs": 858,
+        "poster": "lobby_cg_h04.png",
+        "playback": null
+      },
+      "requests": [
+        "lobby_cg_h01.mp4",
+        "lobby_cg_h02.mp4",
+        "lobby_cg_h04.mp4"
+      ],
+      "errors": []
+    },
+    {
+      "name": "HTTP landscape mobile",
+      "lobbyInfo": {
+        "muted": true,
+        "loop": true,
+        "playsInline": true,
+        "poster": "assets/posters/lobby_cg_c07.png",
+        "duration": 1.904133,
+        "width": 844.004150390625,
+        "loopSeam": {
+          "loops": 2,
+          "hiddenFrames": 0
+        }
+      },
+      "ready": {
+        "hero": "h01",
+        "power": false,
+        "delayMs": 1,
+        "durationMs": 866,
+        "poster": "lobby_cg_c07.png",
+        "playback": {
+          "advancing": 0.4406,
+          "paused": false,
+          "readyState": 4,
+          "opacity": "1",
+          "loop": false,
+          "muted": true
+        }
+      },
+      "power": {
+        "hero": "h01",
+        "power": true,
+        "delayMs": 0.7,
+        "durationMs": 866,
+        "poster": "lobby_cg_c07.png",
+        "playback": null
+      },
+      "corrupt": {
+        "hero": "h02",
+        "power": false,
+        "delayMs": 0.5,
+        "durationMs": 867,
+        "poster": "lobby_cg_protag.png",
+        "playback": null
+      },
+      "slow": {
+        "hero": "h04",
+        "power": false,
+        "delayMs": 9.1,
+        "durationMs": 858,
+        "poster": "lobby_cg_h04.png",
+        "playback": null
+      },
+      "requests": [
+        "lobby_cg_h01.mp4",
+        "lobby_cg_h02.mp4",
+        "lobby_cg_h04.mp4"
+      ],
+      "errors": []
+    },
+    {
+      "name": "file desktop",
+      "lobbyInfo": {
+        "muted": true,
+        "loop": true,
+        "playsInline": true,
+        "poster": "assets/posters/lobby_cg_c07.png",
+        "duration": 1.904133,
+        "width": 1280.00390625,
+        "loopSeam": {
+          "loops": 2,
+          "hiddenFrames": 0
+        }
+      },
+      "ready": {
+        "hero": "h01",
+        "power": false,
+        "delayMs": 1.4,
+        "durationMs": 866,
+        "poster": "lobby_cg_c07.png",
+        "playback": {
+          "advancing": 0.3567,
+          "paused": false,
+          "readyState": 4,
+          "opacity": "1",
+          "loop": false,
+          "muted": true
+        }
+      },
+      "power": {
+        "hero": "h01",
+        "power": true,
+        "delayMs": 0.6,
+        "durationMs": 866,
+        "poster": "lobby_cg_c07.png",
+        "playback": null
+      },
+      "corrupt": {
+        "hero": "h02",
+        "power": false,
+        "delayMs": 0.5,
+        "durationMs": 866,
+        "poster": "lobby_cg_protag.png",
+        "playback": null
+      },
+      "requests": [
+        "lobby_cg_h01.mp4",
+        "lobby_cg_h02.mp4",
+        "lobby_cg_h04.mp4"
+      ],
+      "errors": []
+    }
+  ]
+}

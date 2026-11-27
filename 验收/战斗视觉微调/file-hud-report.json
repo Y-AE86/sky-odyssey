@@ -1,0 +1,4770 @@
+{
+  "name": "file",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "hud": {
+    "stage": {
+      "round": "回合 01 / 20",
+      "title": "天城首领 · 浮空机神",
+      "oldLog": false,
+      "stage": {
+        "x": 0,
+        "y": 0,
+        "w": 1280,
+        "h": 720,
+        "right": 1280,
+        "bottom": 720
+      },
+      "canvas": [
+        1280,
+        720
+      ],
+      "layers": [
+        "groundFxLayer",
+        "unitLayer",
+        "overFxLayer"
+      ],
+      "buttons": [
+        {
+          "label": "1×",
+          "action": "speed",
+          "box": {
+            "x": 1098.296875,
+            "y": 15.375,
+            "w": 34.046875,
+            "h": 34.046875,
+            "right": 1132.34375,
+            "bottom": 49.421875
+          },
+          "radius": "50%"
+        },
+        {
+          "label": "手动",
+          "action": "auto",
+          "box": {
+            "x": 1138.984375,
+            "y": 15.375,
+            "w": 34.046875,
+            "h": 34.046875,
+            "right": 1173.03125,
+            "bottom": 49.421875
+          },
+          "radius": "50%"
+        },
+        {
+          "label": "跳过",
+          "action": "skip",
+          "box": {
+            "x": 1179.671875,
+            "y": 15.375,
+            "w": 34.046875,
+            "h": 34.046875,
+            "right": 1213.71875,
+            "bottom": 49.421875
+          },
+          "radius": "50%"
+        },
+        {
+          "label": "♫",
+          "action": "audio-mute",
+          "box": {
+            "x": 1220.359375,
+            "y": 15.375,
+            "w": 34.046875,
+            "h": 34.046875,
+            "right": 1254.40625,
+            "bottom": 49.421875
+          },
+          "radius": "50%"
+        }
+      ],
+      "cards": [
+        {
+          "box": {
+            "x": 343.71875,
+            "y": 623.078125,
+            "w": 96,
+            "h": 93.6875,
+            "right": 439.71875,
+            "bottom": 716.765625
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "3.95312px",
+          "portrait": true,
+          "name": "幽冥墨姬，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 443.03125,
+            "y": 623.078125,
+            "w": 96,
+            "h": 93.6875,
+            "right": 539.03125,
+            "bottom": 716.765625
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "3.95312px",
+          "portrait": true,
+          "name": "冰灵 · 霜华，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 542.34375,
+            "y": 623.078125,
+            "w": 96,
+            "h": 93.6875,
+            "right": 638.34375,
+            "bottom": 716.765625
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "3.95312px",
+          "portrait": true,
+          "name": "凌波玉笛，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 641.65625,
+            "y": 623.078125,
+            "w": 96,
+            "h": 93.6875,
+            "right": 737.65625,
+            "bottom": 716.765625
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "3.95312px",
+          "portrait": true,
+          "name": "艾莉娅 · 圣翼，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 740.96875,
+            "y": 623.078125,
+            "w": 96,
+            "h": 93.6875,
+            "right": 836.96875,
+            "bottom": 716.765625
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "3.95312px",
+          "portrait": true,
+          "name": "薇尔 · 星轨，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 840.28125,
+            "y": 623.078125,
+            "w": 96,
+            "h": 93.6875,
+            "right": 936.28125,
+            "bottom": 716.765625
+          },
+          "label": "",
+          "diamonds": 4,
+          "hp": "3.95312px",
+          "portrait": true,
+          "name": "莉莉丝 · 绯月，生命 3300 / 4500，怒气 100，冰冻中"
+        }
+      ]
+    },
+    "photos": {
+      "hud-ready": {
+        "positions": [],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 494.08000000000004,
+            "y": 330.21290357831504,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 335.36,
+            "y": 523.9252927258248,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234042,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 129.28,
+            "y": 534.1669619208701,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0.04616395877766787,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 129.28,
+            "y": 570.8286448188747,
+            "layer": "ground"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234044,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 865.28,
+            "y": 458.52615867451937,
+            "layer": "over"
+          }
+        ],
+        "placed": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "alpha": 0.25723942324713195,
+            "relativeTop": -0.0776918266178755,
+            "width": 151.03445434570312,
+            "height": 151.0344696044922,
+            "y": 254.69566345214844,
+            "releasing": false
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "alpha": 0.26799667740665645,
+            "relativeTop": -0.08180347865371583,
+            "width": 178.87515258789062,
+            "height": 178.87515258789062,
+            "y": 434.4877014160156,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "alpha": 0.43834679438718355,
+            "relativeTop": 0.44708644937950776,
+            "width": 143.5915870666504,
+            "height": 87.07147216796875,
+            "y": 490.6312255859375,
+            "releasing": false
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "alpha": 0.40097017475036234,
+            "relativeTop": 0.7576354368817603,
+            "width": 181.99374389648438,
+            "height": 65.51776123046875,
+            "y": 538.0697631835938,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "alpha": 0.4843175062582465,
+            "relativeTop": 0.44708643092636885,
+            "width": 133.12554931640625,
+            "height": 80.72506713867188,
+            "y": 418.16363525390625,
+            "releasing": false
+          }
+        ],
+        "bodies": {
+          "a3": {
+            "key": "a3",
+            "x": 224.87490844726562,
+            "y": 241.96929931640625,
+            "width": 106.99169921875,
+            "height": 128.327880859375,
+            "left": 224.87490844726562,
+            "right": 948.1333923339844
+          },
+          "e3": {
+            "key": "e3",
+            "x": 914.992919921875,
+            "y": 241.96929931640625,
+            "width": 128.431396484375,
+            "height": 128.327880859375,
+            "left": 914.992919921875,
+            "right": 236.57568359375
+          },
+          "a0": {
+            "key": "a0",
+            "x": 424.24896240234375,
+            "y": 264.7611389160156,
+            "width": 129.3167724609375,
+            "height": 129.55642700195312,
+            "left": 424.24896240234375,
+            "right": 726.4342651367188
+          },
+          "e0": {
+            "key": "e0",
+            "x": 713.64013671875,
+            "y": 214.41085815429688,
+            "width": 144.5596923828125,
+            "height": 180.69964599609375,
+            "left": 713.64013671875,
+            "right": 421.8001708984375
+          },
+          "a4": {
+            "key": "a4",
+            "x": 134.98666381835938,
+            "y": 331.18084716796875,
+            "width": 141.64102172851562,
+            "height": 141.52676391601562,
+            "left": 134.98666381835938,
+            "right": 1003.372314453125
+          },
+          "e4": {
+            "key": "e4",
+            "x": 978.3804931640625,
+            "y": 331.1084289550781,
+            "width": 122.0775146484375,
+            "height": 141.67160034179688,
+            "left": 978.3804931640625,
+            "right": 179.5419921875
+          },
+          "a1": {
+            "key": "a1",
+            "x": 354.8614196777344,
+            "y": 354.77349853515625,
+            "width": 122.16036987304688,
+            "height": 141.767822265625,
+            "left": 354.8614196777344,
+            "right": 802.9782104492188
+          },
+          "e1": {
+            "key": "e1",
+            "x": 816.8687133789062,
+            "y": 354.845947265625,
+            "width": 118.0762939453125,
+            "height": 141.6229248046875,
+            "left": 816.8687133789062,
+            "right": 345.05499267578125
+          },
+          "a5": {
+            "key": "a5",
+            "x": 48.13939666748047,
+            "y": 422.33563232421875,
+            "width": 138.7018814086914,
+            "height": 152.75701904296875,
+            "left": 48.13939666748047,
+            "right": 1093.1587219238281
+          },
+          "e5": {
+            "key": "e5",
+            "x": 1047.0787353515625,
+            "y": 422.33563232421875,
+            "width": 138.701904296875,
+            "height": 152.75701904296875,
+            "left": 1047.0787353515625,
+            "right": 94.2193603515625
+          },
+          "a2": {
+            "key": "a2",
+            "x": 266.9497375488281,
+            "y": 446.9209289550781,
+            "width": 120.01800537109375,
+            "height": 151.98898315429688,
+            "left": 266.9497375488281,
+            "right": 893.0322570800781
+          },
+          "e2": {
+            "key": "e2",
+            "x": 883.7637939453125,
+            "y": 446.97235107421875,
+            "width": 121.75238037109375,
+            "height": 152.19049072265625,
+            "left": 883.7637939453125,
+            "right": 274.48382568359375
+          }
+        },
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0
+        },
+        "impact": null,
+        "active": [],
+        "total": {
+          "hidden": true,
+          "text": "总伤害0",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "right": 0,
+            "bottom": 0
+          },
+          "number": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "right": 0,
+            "bottom": 0
+          }
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 1280,
+          "h": 720,
+          "right": 1280,
+          "bottom": 720
+        }
+      },
+      "basic-flight": {
+        "positions": [
+          {
+            "target": "a2",
+            "text": "抵挡",
+            "kind": "battle-float damage resist",
+            "box": {
+              "x": 314.1875,
+              "y": 366.78125,
+              "w": 42.34375,
+              "h": 21.5,
+              "right": 356.53125,
+              "bottom": 388.28125
+            },
+            "gap": 46.476315803006344,
+            "fontSize": 21.504
+          },
+          {
+            "target": "e5",
+            "text": "−40",
+            "kind": "battle-float damage",
+            "box": {
+              "x": 1079.4375,
+              "y": 344.515625,
+              "w": 50.375,
+              "h": 25.859375,
+              "right": 1129.8125,
+              "bottom": 370.375
+            },
+            "gap": 41.57395494436702,
+            "fontSize": 25.856
+          }
+        ],
+        "shots": [
+          {
+            "key": "proj_h01",
+            "actor": "a0",
+            "target": "e0",
+            "progress": 0.4,
+            "rotation": -0.1751292378067929,
+            "x": 635.030789153426,
+            "y": 293.4930214790848,
+            "source": "embedded",
+            "blendMode": 1
+          }
+        ],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 723.3114474745207,
+            "y": 304.8945236849365,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 335.36,
+            "y": 523.6692315854431,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234043,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 129.28,
+            "y": 534.4693835108136,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 1.2509647414293534,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 129.28,
+            "y": 570.8464343241656,
+            "layer": "ground"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234042,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 865.28,
+            "y": 459.00680569815864,
+            "layer": "over"
+          }
+        ],
+        "placed": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "alpha": 0.4509940422350309,
+            "relativeTop": -0.0835685142346706,
+            "width": 152.95220947265625,
+            "height": 152.9522247314453,
+            "y": 228.4184112548828,
+            "releasing": false
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "alpha": 0.4302745303981271,
+            "relativeTop": -0.07574768060544361,
+            "width": 177.65573120117188,
+            "height": 177.65576171875,
+            "y": 434.84136962890625,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "alpha": 0.7977696533011185,
+            "relativeTop": 0.447086383660715,
+            "width": 142.47677612304688,
+            "height": 86.39547729492188,
+            "y": 491.2716369628906,
+            "releasing": false
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "alpha": 0.7005830387384494,
+            "relativeTop": 0.7127763415400227,
+            "width": 218.35512733459473,
+            "height": 78.6077880859375,
+            "y": 531.5425415039062,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "alpha": 0.7050546427124846,
+            "relativeTop": 0.4470862766123564,
+            "width": 131.35369873046875,
+            "height": 79.65069580078125,
+            "y": 419.18145751953125,
+            "releasing": false
+          }
+        ],
+        "bodies": {
+          "a3": {
+            "key": "a3",
+            "x": 224.12579345703125,
+            "y": 240.46607971191406,
+            "width": 108.26138305664062,
+            "height": 129.8507537841797,
+            "left": 224.12579345703125,
+            "right": 947.6128234863281
+          },
+          "e3": {
+            "key": "e3",
+            "x": 914.2613525390625,
+            "y": 240.46607971191406,
+            "width": 129.95556640625,
+            "height": 129.8507537841797,
+            "left": 914.2613525390625,
+            "right": 235.7830810546875
+          },
+          "a0": {
+            "key": "a0",
+            "x": 653.2996215820312,
+            "y": 239.27328491210938,
+            "width": 129.65155029296875,
+            "height": 129.89190673828125,
+            "left": 653.2996215820312,
+            "right": 497.048828125
+          },
+          "e0": {
+            "key": "e0",
+            "x": 713.4530029296875,
+            "y": 213.95001220703125,
+            "width": 144.93402099609375,
+            "height": 181.16751098632812,
+            "left": 713.4530029296875,
+            "right": 421.61297607421875
+          },
+          "a4": {
+            "key": "a4",
+            "x": 135.6355743408203,
+            "y": 332.41162109375,
+            "width": 140.3931121826172,
+            "height": 140.2799072265625,
+            "left": 135.6355743408203,
+            "right": 1003.9713134765625
+          },
+          "e4": {
+            "key": "e4",
+            "x": 978.9290161132812,
+            "y": 332.33984375,
+            "width": 121.00189208984375,
+            "height": 140.4234619140625,
+            "left": 978.9290161132812,
+            "right": 180.069091796875
+          },
+          "a1": {
+            "key": "a1",
+            "x": 355.6580810546875,
+            "y": 356.635009765625,
+            "width": 120.53451538085938,
+            "height": 139.88101196289062,
+            "left": 355.6580810546875,
+            "right": 803.8074035644531
+          },
+          "e1": {
+            "key": "e1",
+            "x": 817.5130615234375,
+            "y": 356.7065124511719,
+            "width": 116.5047607421875,
+            "height": 139.73800659179688,
+            "left": 817.5130615234375,
+            "right": 345.982177734375
+          },
+          "a5": {
+            "key": "a5",
+            "x": 48.769351959228516,
+            "y": 423.50628662109375,
+            "width": 137.62504196166992,
+            "height": 151.571044921875,
+            "left": 48.769351959228516,
+            "right": 1093.6056060791016
+          },
+          "e5": {
+            "key": "e5",
+            "x": 1047.525634765625,
+            "y": 423.50628662109375,
+            "width": 137.625,
+            "height": 151.571044921875,
+            "left": 1047.525634765625,
+            "right": 94.849365234375
+          },
+          "a2": {
+            "key": "a2",
+            "x": 266.7096252441406,
+            "y": 446.39459228515625,
+            "width": 120.43923950195312,
+            "height": 152.5224609375,
+            "left": 266.7096252441406,
+            "right": 892.8511352539062
+          },
+          "e2": {
+            "key": "e2",
+            "x": 883.5501098632812,
+            "y": 446.4461975097656,
+            "width": 122.17974853515625,
+            "height": 152.72470092773438,
+            "left": 883.5501098632812,
+            "right": 274.2701416015625
+          }
+        },
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "e5",
+          "target": "e5",
+          "critical": false,
+          "finisher": false,
+          "hold": 43,
+          "sparks": 8,
+          "beat": 0,
+          "beats": 1
+        },
+        "active": [
+          {
+            "key": "spark",
+            "role": "spark",
+            "frame": 8,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 1
+          },
+          {
+            "key": "spark",
+            "role": "spark",
+            "frame": 7,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 1
+          }
+        ],
+        "total": {
+          "hidden": true,
+          "text": "总伤害0",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "right": 0,
+            "bottom": 0
+          },
+          "number": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "right": 0,
+            "bottom": 0
+          }
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 1280,
+          "h": 720,
+          "right": 1280,
+          "bottom": 720
+        }
+      },
+      "combo-finish": {
+        "positions": [
+          {
+            "target": "e0",
+            "text": "暴击−173",
+            "kind": "battle-float damage critical combo-hit",
+            "box": {
+              "x": 623.0625,
+              "y": 81.40625,
+              "w": 123.15625,
+              "h": 37.5,
+              "right": 746.21875,
+              "bottom": 118.90625
+            },
+            "gap": 47.725768868828595,
+            "fontSize": 37.504
+          },
+          {
+            "target": "e0",
+            "text": "−163",
+            "kind": "battle-float damage combo-hit",
+            "box": {
+              "x": 817.2784423828125,
+              "y": 109.12672424316406,
+              "w": 71.25555419921875,
+              "h": 30.654525756835938,
+              "right": 888.5339965820312,
+              "bottom": 139.78125
+            },
+            "gap": 26.850768868828595,
+            "fontSize": 25.856
+          },
+          {
+            "target": "e0",
+            "text": "暴击−171",
+            "kind": "battle-float damage critical combo-hit",
+            "box": {
+              "x": 948.473388671875,
+              "y": 94.4072265625,
+              "w": 132.80322265625,
+              "h": 42.1708984375,
+              "right": 1081.276611328125,
+              "bottom": 136.578125
+            },
+            "gap": 30.053893868828595,
+            "fontSize": 37.504
+          }
+        ],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 494.08000000000004,
+            "y": 330.43462418284,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 335.36,
+            "y": 523.6719637796318,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234042,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 129.28,
+            "y": 534.0500338904948,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 5.721712886875429,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 129.28,
+            "y": 570.8217666994409,
+            "layer": "ground"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234042,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 865.28,
+            "y": 458.51761267292443,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 808.9599999999999,
+            "y": 389.2940449092005,
+            "layer": "ground"
+          }
+        ],
+        "placed": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "alpha": 0.45823427980449183,
+            "relativeTop": -0.08579621993442156,
+            "width": 169.20660400390625,
+            "height": 169.2066650390625,
+            "y": 253.57492065429688,
+            "releasing": false
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "alpha": 0.24393014682449052,
+            "relativeTop": -0.0690767066856371,
+            "width": 194.7400360107422,
+            "height": 194.74002075195312,
+            "y": 455.0907287597656,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "alpha": 0.4840377676838283,
+            "relativeTop": 0.44708631575165925,
+            "width": 159.70788192749023,
+            "height": 96.84417724609375,
+            "y": 515.5469970703125,
+            "releasing": false
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "alpha": 0.4382163120572593,
+            "relativeTop": 0.6891350462967121,
+            "width": 267.0777816772461,
+            "height": 96.14801025390625,
+            "y": 556.6715698242188,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "alpha": 0.4434450062311482,
+            "relativeTop": 0.4470865272234449,
+            "width": 147.658935546875,
+            "height": 89.53787231445312,
+            "y": 435.4416198730469,
+            "releasing": false
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "alpha": 0.252,
+            "relativeTop": 0.7462661441356042,
+            "width": 261.76068115234375,
+            "height": 94.23385620117188,
+            "y": 356.3310241699219,
+            "releasing": false
+          }
+        ],
+        "bodies": {
+          "a3": {
+            "key": "a3",
+            "x": 205.34091186523438,
+            "y": 240.3338623046875,
+            "width": 118.42813110351562,
+            "height": 142.04495239257812,
+            "left": 205.34091186523438,
+            "right": 956.23095703125
+          },
+          "e3": {
+            "key": "e3",
+            "x": 970.6155395507812,
+            "y": 240.3338623046875,
+            "width": 142.15960693359375,
+            "height": 142.04495239257812,
+            "left": 970.6155395507812,
+            "right": 167.224853515625
+          },
+          "a0": {
+            "key": "a0",
+            "x": 426.57720947265625,
+            "y": 265.85699462890625,
+            "width": 142.88916015625,
+            "height": 143.15402221679688,
+            "left": 426.57720947265625,
+            "right": 710.5336303710938
+          },
+          "e0": {
+            "key": "e0",
+            "x": 787.4789428710938,
+            "y": 174.50827026367188,
+            "width": 157.52593994140625,
+            "height": 243.643310546875,
+            "left": 787.4789428710938,
+            "right": 334.9951171875
+          },
+          "a4": {
+            "key": "a4",
+            "x": 105.74986267089844,
+            "y": 339.41180419921875,
+            "width": 156.65516662597656,
+            "height": 156.52883911132812,
+            "left": 105.74986267089844,
+            "right": 1017.594970703125
+          },
+          "e4": {
+            "key": "e4",
+            "x": 1040.963134765625,
+            "y": 339.33172607421875,
+            "width": 135.0179443359375,
+            "height": 156.68902587890625,
+            "left": 1040.963134765625,
+            "right": 104.0189208984375
+          },
+          "a1": {
+            "key": "a1",
+            "x": 349.3409729003906,
+            "y": 365.1311340332031,
+            "width": 135.49673461914062,
+            "height": 157.24472045898438,
+            "left": 349.3409729003906,
+            "right": 795.1622924804688
+          },
+          "e1": {
+            "key": "e1",
+            "x": 861.6677856445312,
+            "y": 365.21148681640625,
+            "width": 130.9666748046875,
+            "height": 157.083984375,
+            "left": 861.6677856445312,
+            "right": 287.36553955078125
+          },
+          "a5": {
+            "key": "a5",
+            "x": 8.960000038146973,
+            "y": 439.58612060546875,
+            "width": 154.26937007904053,
+            "height": 169.90203857421875,
+            "left": 8.960000038146973,
+            "right": 1116.7706298828125
+          },
+          "e5": {
+            "key": "e5",
+            "x": 1116.7706298828125,
+            "y": 439.58612060546875,
+            "width": 154.2694091796875,
+            "height": 169.90203857421875,
+            "left": 1116.7706298828125,
+            "right": 8.9599609375
+          },
+          "a2": {
+            "key": "a2",
+            "x": 251.60728454589844,
+            "y": 466.7734680175781,
+            "width": 133.5511016845703,
+            "height": 169.12704467773438,
+            "left": 251.60728454589844,
+            "right": 894.8416137695312
+          },
+          "e2": {
+            "key": "e2",
+            "x": 935.6265258789062,
+            "y": 466.8306884765625,
+            "width": 135.48114013671875,
+            "height": 169.351318359375,
+            "left": 935.6265258789062,
+            "right": 208.892333984375
+          }
+        },
+        "camera": {
+          "zoom": 1.1089083336740968,
+          "x": -44.15208554357069,
+          "y": -28.24345898127706,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 38.69999999999982
+        },
+        "impact": {
+          "actor": "a0",
+          "target": "e0",
+          "critical": true,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 3,
+          "beats": 3
+        },
+        "active": [
+          {
+            "key": "h01",
+            "role": "single",
+            "frame": 4,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.75
+          },
+          {
+            "key": "h01",
+            "role": "single",
+            "frame": 3,
+            "finisher": true,
+            "magnification": 1.45,
+            "alpha": 1
+          }
+        ],
+        "total": {
+          "hidden": false,
+          "text": "总伤害\n507\n3 HITS",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 622.2734375,
+            "y": 519.234375,
+            "w": 169.828125,
+            "h": 53.890625,
+            "right": 792.1015625,
+            "bottom": 573.125
+          },
+          "number": {
+            "x": 690.2646484375,
+            "y": 509.71026611328125,
+            "w": 132.7437744140625,
+            "h": 66.9373779296875,
+            "right": 823.0084228515625,
+            "bottom": 576.6476440429688
+          }
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 1280,
+          "h": 720,
+          "right": 1280,
+          "bottom": 720
+        }
+      },
+      "heal-ring": {
+        "positions": [
+          {
+            "target": "a0",
+            "text": "+245",
+            "kind": "battle-float heal",
+            "box": {
+              "x": 448.80029296875,
+              "y": 153.93246459960938,
+              "w": 109.3994140625,
+              "h": 44.864410400390625,
+              "right": 558.19970703125,
+              "bottom": 198.796875
+            },
+            "gap": 23.89703652761702,
+            "fontSize": 30.976
+          },
+          {
+            "target": "a1",
+            "text": "+245",
+            "kind": "battle-float heal",
+            "box": {
+              "x": 364.1812744140625,
+              "y": 262.34930419921875,
+              "w": 102.32498168945312,
+              "h": 41.96319580078125,
+              "right": 466.5062561035156,
+              "bottom": 304.3125
+            },
+            "gap": 20.960573666094092,
+            "fontSize": 30.976
+          },
+          {
+            "target": "a2",
+            "text": "+245",
+            "kind": "battle-float heal",
+            "box": {
+              "x": 312.0843811035156,
+              "y": 395.25311279296875,
+              "w": 30.20623779296875,
+              "h": 12.38751220703125,
+              "right": 342.2906188964844,
+              "bottom": 407.640625
+            },
+            "gap": 18.00255265556723,
+            "fontSize": 30.976
+          }
+        ],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 494.08000000000004,
+            "y": 329.8907119887054,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 335.36,
+            "y": 523.9163870850842,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234043,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 129.28,
+            "y": 534.5232414752925,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 6.933582252997691,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 129.28,
+            "y": 570.8496024397231,
+            "layer": "ground"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234043,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 865.28,
+            "y": 458.9450904103922,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "phase": "active",
+            "rotation": 1.2118693661222624,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 785.92,
+            "y": 389.6754624622767,
+            "layer": "ground"
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0.26582707068836714,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 494.08000000000004,
+            "y": 390.44658474964706,
+            "layer": "ground"
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a1",
+            "phase": "active",
+            "rotation": 0.13291353534418357,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 414.72,
+            "y": 492.5381508058383,
+            "layer": "ground"
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 335.36,
+            "y": 594.5998870964089,
+            "layer": "ground"
+          }
+        ],
+        "placed": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "alpha": 0.45057647084842833,
+            "relativeTop": -0.0834401137828843,
+            "width": 170.30633544921875,
+            "height": 170.3063507080078,
+            "y": 223.4285125732422,
+            "releasing": false
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "alpha": 0.3906925453859186,
+            "relativeTop": -0.06356869408813025,
+            "width": 192.5665283203125,
+            "height": 192.5665283203125,
+            "y": 427.82843017578125,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "alpha": 0.7137434267544028,
+            "relativeTop": 0.4470863035265512,
+            "width": 158.04728889465332,
+            "height": 95.83718872070312,
+            "y": 487.9755554199219,
+            "releasing": false
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "alpha": 0.7649015957381035,
+            "relativeTop": 0.6845299958507746,
+            "width": 268.6020965576172,
+            "height": 96.69677734375,
+            "y": 527.8982543945312,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "alpha": 0.45832707577196646,
+            "relativeTop": 0.44708638790054794,
+            "width": 146.1646728515625,
+            "height": 88.63177490234375,
+            "y": 407.62359619140625,
+            "releasing": false
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "alpha": 0.4509220398435776,
+            "relativeTop": 0.7057959615820918,
+            "width": 296.15362548828125,
+            "height": 106.61532592773438,
+            "y": 321.68487548828125,
+            "releasing": false
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a0",
+            "alpha": 0.5647749930211163,
+            "relativeTop": 0.7219202929124503,
+            "width": 199.53482055664062,
+            "height": 71.83255004882812,
+            "y": 339.932861328125,
+            "releasing": false
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a1",
+            "alpha": 0.5076859977282984,
+            "relativeTop": 0.7588435772273561,
+            "width": 183.96942138671875,
+            "height": 66.22897338867188,
+            "y": 456.1412658691406,
+            "releasing": false
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a2",
+            "alpha": 0.3471044298054109,
+            "relativeTop": 0.7952444931699366,
+            "width": 165.477783203125,
+            "height": 59.57196044921875,
+            "y": 572.84326171875,
+            "releasing": false
+          }
+        ],
+        "bodies": {
+          "a3": {
+            "key": "a3",
+            "x": 203.64013671875,
+            "y": 209.27227783203125,
+            "width": 120.23797607421875,
+            "height": 144.21572875976562,
+            "left": 203.64013671875,
+            "right": 956.1218872070312
+          },
+          "e3": {
+            "key": "e3",
+            "x": 970.2647705078125,
+            "y": 209.27227783203125,
+            "width": 144.3321533203125,
+            "height": 144.21572875976562,
+            "left": 970.2647705078125,
+            "right": 165.403076171875
+          },
+          "a0": {
+            "key": "a0",
+            "x": 425.5284118652344,
+            "y": 235.49905395507812,
+            "width": 144.39352416992188,
+            "height": 144.6611328125,
+            "left": 425.5284118652344,
+            "right": 710.0780639648438
+          },
+          "e0": {
+            "key": "e0",
+            "x": 746.9794311523438,
+            "y": 179.278564453125,
+            "width": 161.41363525390625,
+            "height": 201.7669677734375,
+            "left": 746.9794311523438,
+            "right": 371.60693359375
+          },
+          "a4": {
+            "key": "a4",
+            "x": 105.04779052734375,
+            "y": 310.8482360839844,
+            "width": 156.49441528320312,
+            "height": 156.36822509765625,
+            "left": 105.04779052734375,
+            "right": 1018.4577941894531
+          },
+          "e4": {
+            "key": "e4",
+            "x": 1041.8489990234375,
+            "y": 310.76824951171875,
+            "width": 134.87939453125,
+            "height": 156.52822875976562,
+            "left": 1041.8489990234375,
+            "right": 103.2716064453125
+          },
+          "a1": {
+            "key": "a1",
+            "x": 349.62371826171875,
+            "y": 338.0246276855469,
+            "width": 134.12554931640625,
+            "height": 155.65347290039062,
+            "left": 349.62371826171875,
+            "right": 796.250732421875
+          },
+          "e1": {
+            "key": "e1",
+            "x": 862.68896484375,
+            "y": 338.10418701171875,
+            "width": 129.641357421875,
+            "height": 155.49435424804688,
+            "left": 862.68896484375,
+            "right": 287.669677734375
+          },
+          "a5": {
+            "key": "a5",
+            "x": 8.960000038146973,
+            "y": 412.80450439453125,
+            "width": 152.6653356552124,
+            "height": 168.13543701171875,
+            "left": 8.960000038146973,
+            "right": 1118.3746643066406
+          },
+          "e5": {
+            "key": "e5",
+            "x": 1118.3746337890625,
+            "y": 412.80450439453125,
+            "width": 152.6654052734375,
+            "height": 168.13543701171875,
+            "left": 1118.3746337890625,
+            "right": 8.9599609375
+          },
+          "a2": {
+            "key": "a2",
+            "x": 251.18795776367188,
+            "y": 438.56231689453125,
+            "width": 133.336181640625,
+            "height": 168.85491943359375,
+            "left": 251.18795776367188,
+            "right": 895.4758605957031
+          },
+          "e2": {
+            "key": "e2",
+            "x": 936.3660888671875,
+            "y": 438.61944580078125,
+            "width": 135.2630615234375,
+            "height": 169.07879638671875,
+            "left": 936.3660888671875,
+            "right": 208.370849609375
+          }
+        },
+        "camera": {
+          "zoom": 1.1108324703740198,
+          "x": -45.33920092195517,
+          "y": -57.871618917167126,
+          "kick": false,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a0",
+          "target": "e0",
+          "critical": true,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 3,
+          "beats": 3
+        },
+        "active": [
+          {
+            "key": "h03",
+            "role": "group",
+            "frame": 5,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.559
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 5,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.44849999999999995
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 4,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.44849999999999995
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 4,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.44849999999999995
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 3,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.44849999999999995
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 2,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.44849999999999995
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 1,
+            "finisher": true,
+            "magnification": 1.45,
+            "alpha": 0.44849999999999995
+          }
+        ],
+        "total": {
+          "hidden": false,
+          "text": "总治疗\n735\n3 次施加",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 557.28125,
+            "y": 519.234375,
+            "w": 165.4375,
+            "h": 53.890625,
+            "right": 722.71875,
+            "bottom": 573.125
+          },
+          "number": {
+            "x": 625.767578125,
+            "y": 519.234375,
+            "w": 102.4801025390625,
+            "h": 53.890625,
+            "right": 728.2476806640625,
+            "bottom": 573.125
+          }
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 1280,
+          "h": 720,
+          "right": 1280,
+          "bottom": 720
+        }
+      },
+      "shield": {
+        "positions": [
+          {
+            "target": "a0",
+            "text": "盾 +143",
+            "kind": "battle-float shield",
+            "box": {
+              "x": 435.4359436035156,
+              "y": 179.84326171875,
+              "w": 136.59689331054688,
+              "h": 38.70361328125,
+              "right": 572.0328369140625,
+              "bottom": 218.546875
+            },
+            "gap": 21.934112450138656,
+            "fontSize": 25.856
+          },
+          {
+            "target": "a1",
+            "text": "盾 +228",
+            "kind": "battle-float shield",
+            "box": {
+              "x": 396.625,
+              "y": 311.9375,
+              "w": 38.21875,
+              "h": 10.34375,
+              "right": 434.84375,
+              "bottom": 322.28125
+            },
+            "gap": 18.01338680381741,
+            "fontSize": 25.856
+          }
+        ],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 494.08000000000004,
+            "y": 330.6771512720933,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 335.36,
+            "y": 523.1533211585063,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234043,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 865.28,
+            "y": 458.7686948166391,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "phase": "active",
+            "rotation": 2.303834612632514,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 785.92,
+            "y": 389.709740301889,
+            "layer": "ground"
+          },
+          {
+            "key": "status_shield",
+            "target": "a1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 414.72,
+            "y": 427.0484472458207,
+            "layer": "over"
+          }
+        ],
+        "placed": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "alpha": 0.4504312581632649,
+            "relativeTop": -0.08339533797174044,
+            "width": 167.85446166992188,
+            "height": 167.85446166992188,
+            "y": 241.34536743164062,
+            "releasing": false
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "alpha": 0.39058658079437136,
+            "relativeTop": -0.06353614126675941,
+            "width": 194.22622680664062,
+            "height": 194.22625732421875,
+            "y": 441.59124755859375,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "alpha": 0.4803632695791345,
+            "relativeTop": 0.4470863215120894,
+            "width": 146.6280517578125,
+            "height": 88.91275024414062,
+            "y": 422.85357666015625,
+            "releasing": false
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "alpha": 0.45108608249813253,
+            "relativeTop": 0.6802010247499178,
+            "width": 320.19110107421875,
+            "height": 115.26882934570312,
+            "y": 333.0978698730469,
+            "releasing": false
+          },
+          {
+            "key": "status_shield",
+            "target": "a1",
+            "alpha": 0.1584039056974088,
+            "relativeTop": -0.0826676433529081,
+            "width": 184.02102661132812,
+            "height": 184.02102661132812,
+            "y": 340.1257019042969,
+            "releasing": false
+          }
+        ],
+        "bodies": {
+          "a3": {
+            "key": "a3",
+            "x": 205.08853149414062,
+            "y": 226.6287078857422,
+            "width": 118.87515258789062,
+            "height": 142.5811309814453,
+            "left": 205.08853149414062,
+            "right": 956.0363159179688
+          },
+          "e3": {
+            "key": "e3",
+            "x": 970.3455200195312,
+            "y": 226.6287078857422,
+            "width": 142.69622802734375,
+            "height": 142.5811309814453,
+            "left": 970.3455200195312,
+            "right": 166.958251953125
+          },
+          "a0": {
+            "key": "a0",
+            "x": 426.8858337402344,
+            "y": 253.2366485595703,
+            "width": 142.32546997070312,
+            "height": 142.5892791748047,
+            "left": 426.8858337402344,
+            "right": 710.7886962890625
+          },
+          "e0": {
+            "key": "e0",
+            "x": 747.804443359375,
+            "y": 197.8213653564453,
+            "width": 159.10174560546875,
+            "height": 198.8772430419922,
+            "left": 747.804443359375,
+            "right": 373.09381103515625
+          },
+          "a4": {
+            "key": "a4",
+            "x": 106.48100280761719,
+            "y": 327.5924072265625,
+            "width": 155.27622985839844,
+            "height": 155.15103149414062,
+            "left": 106.48100280761719,
+            "right": 1018.2427673339844
+          },
+          "e4": {
+            "key": "e4",
+            "x": 1041.5546875,
+            "y": 327.5130310058594,
+            "width": 133.829345703125,
+            "height": 155.30978393554688,
+            "left": 1041.5546875,
+            "right": 104.615966796875
+          },
+          "a1": {
+            "key": "a1",
+            "x": 349.8115234375,
+            "y": 353.03399658203125,
+            "width": 134.55068969726562,
+            "height": 156.14688110351562,
+            "left": 349.8115234375,
+            "right": 795.6377868652344
+          },
+          "e1": {
+            "key": "e1",
+            "x": 862.0341186523438,
+            "y": 353.1138000488281,
+            "width": 130.05230712890625,
+            "height": 155.98727416992188,
+            "left": 862.0341186523438,
+            "right": 287.91357421875
+          },
+          "a5": {
+            "key": "a5",
+            "x": 8.960000038146973,
+            "y": 426.37188720703125,
+            "width": 154.29816341400146,
+            "height": 169.9337158203125,
+            "left": 8.960000038146973,
+            "right": 1116.7418365478516
+          },
+          "e5": {
+            "key": "e5",
+            "x": 1116.7418212890625,
+            "y": 426.37188720703125,
+            "width": 154.2982177734375,
+            "height": 169.9337158203125,
+            "left": 1116.7418212890625,
+            "right": 8.9599609375
+          },
+          "a2": {
+            "key": "a2",
+            "x": 251.08009338378906,
+            "y": 452.4127197265625,
+            "width": 134.49305725097656,
+            "height": 170.3199462890625,
+            "left": 251.08009338378906,
+            "right": 894.4268493652344
+          },
+          "e2": {
+            "key": "e2",
+            "x": 935.137451171875,
+            "y": 452.4703369140625,
+            "width": 136.4366455078125,
+            "height": 170.54583740234375,
+            "left": 935.137451171875,
+            "right": 208.4259033203125
+          }
+        },
+        "camera": {
+          "zoom": 1.1088738072834867,
+          "x": -44.13078414161987,
+          "y": -41.40663459194528,
+          "kick": false,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a2",
+          "target": "a5",
+          "critical": false,
+          "finisher": true,
+          "hold": 65,
+          "sparks": 0,
+          "beat": 4,
+          "beats": 4
+        },
+        "active": [
+          {
+            "key": "h04",
+            "role": "target",
+            "frame": 3,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.45499999999999996
+          },
+          {
+            "key": "h04",
+            "role": "target",
+            "frame": 3,
+            "finisher": false,
+            "magnification": 1,
+            "alpha": 0.45499999999999996
+          },
+          {
+            "key": "h04",
+            "role": "target",
+            "frame": 2,
+            "finisher": true,
+            "magnification": 1.45,
+            "alpha": 0.45499999999999996
+          }
+        ],
+        "total": {
+          "hidden": false,
+          "text": "总护盾\n371\n2 次施加",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 560.4140625,
+            "y": 519.234375,
+            "w": 159.171875,
+            "h": 53.890625,
+            "right": 719.5859375,
+            "bottom": 573.125
+          },
+          "number": {
+            "x": 628.900390625,
+            "y": 519.234375,
+            "w": 96.2144775390625,
+            "h": 53.890625,
+            "right": 725.1148681640625,
+            "bottom": 573.125
+          }
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 1280,
+          "h": 720,
+          "right": 1280,
+          "bottom": 720
+        }
+      },
+      "right-edge": {
+        "positions": [
+          {
+            "target": "e5",
+            "text": "−411",
+            "kind": "battle-float damage",
+            "box": {
+              "x": 1165.9156494140625,
+              "y": 337.546875,
+              "w": 22.668701171875,
+              "h": 10.34375,
+              "right": 1188.5843505859375,
+              "bottom": 347.890625
+            },
+            "gap": 18.00079466137572,
+            "fontSize": 25.856
+          }
+        ],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 494.08000000000004,
+            "y": 330.0945148781246,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 335.36,
+            "y": 524.035382986254,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.6063829787234042,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 865.28,
+            "y": 458.55786651520117,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "phase": "active",
+            "rotation": 3.33951299076595,
+            "perspective": 0.36,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 785.92,
+            "y": 389.68434544015383,
+            "layer": "ground"
+          },
+          {
+            "key": "status_shield",
+            "target": "a1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "embedded",
+            "blendMode": 1,
+            "x": 414.72,
+            "y": 426.65118787134656,
+            "layer": "over"
+          }
+        ],
+        "placed": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "alpha": 0.2722341810597136,
+            "relativeTop": -0.0851099947488375,
+            "width": 165.8709716796875,
+            "height": 165.8709716796875,
+            "y": 220.07818603515625,
+            "releasing": false
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "alpha": 0.23713806309873708,
+            "relativeTop": -0.06557591771375235,
+            "width": 187.9860382080078,
+            "height": 187.98602294921875,
+            "y": 418.93658447265625,
+            "releasing": false
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "alpha": 0.4758419985242917,
+            "relativeTop": 0.4470863777902249,
+            "width": 143.96466064453125,
+            "height": 87.2977294921875,
+            "y": 398.4097900390625,
+            "releasing": false
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "alpha": 0.44220309296408056,
+            "relativeTop": 0.7284573236896029,
+            "width": 262.9544677734375,
+            "height": 94.66363525390625,
+            "y": 320.1801452636719,
+            "releasing": false
+          },
+          {
+            "key": "status_shield",
+            "target": "a1",
+            "alpha": 0.265691173443351,
+            "relativeTop": -0.08034802355164528,
+            "width": 179.96725463867188,
+            "height": 179.96722412109375,
+            "y": 317.5401916503906,
+            "releasing": false
+          }
+        ],
+        "bodies": {
+          "a3": {
+            "key": "a3",
+            "x": 199.97694396972656,
+            "y": 207.41360473632812,
+            "width": 115.98704528808594,
+            "height": 139.11709594726562,
+            "left": 199.97694396972656,
+            "right": 964.0360107421875
+          },
+          "e3": {
+            "key": "e3",
+            "x": 946.9430541992188,
+            "y": 207.41360473632812,
+            "width": 139.22930908203125,
+            "height": 139.11709594726562,
+            "left": 946.9430541992188,
+            "right": 193.82763671875
+          },
+          "a0": {
+            "key": "a0",
+            "x": 415.7373046875,
+            "y": 232.0357208251953,
+            "width": 140.23516845703125,
+            "height": 140.4950714111328,
+            "left": 415.7373046875,
+            "right": 724.0275268554688
+          },
+          "e0": {
+            "key": "e0",
+            "x": 728.9608154296875,
+            "y": 177.43431091308594,
+            "width": 156.76513671875,
+            "height": 195.9563446044922,
+            "left": 728.9608154296875,
+            "right": 394.2740478515625
+          },
+          "a4": {
+            "key": "a4",
+            "x": 102.72941589355469,
+            "y": 304.0705261230469,
+            "width": 153.42872619628906,
+            "height": 153.30496215820312,
+            "left": 102.72941589355469,
+            "right": 1023.8418579101562
+          },
+          "e4": {
+            "key": "e4",
+            "x": 1015.60400390625,
+            "y": 303.9920654296875,
+            "width": 132.237060546875,
+            "height": 153.46188354492188,
+            "left": 1015.60400390625,
+            "right": 132.158935546875
+          },
+          "a1": {
+            "key": "a1",
+            "x": 340.83502197265625,
+            "y": 329.8583984375,
+            "width": 132.10675048828125,
+            "height": 153.31063842773438,
+            "left": 340.83502197265625,
+            "right": 807.0582275390625
+          },
+          "e1": {
+            "key": "e1",
+            "x": 840.8873901367188,
+            "y": 329.936767578125,
+            "width": 127.6900634765625,
+            "height": 153.15390014648438,
+            "left": 840.8873901367188,
+            "right": 311.42254638671875
+          },
+          "a5": {
+            "key": "a5",
+            "x": 8.960000038146973,
+            "y": 403.16650390625,
+            "width": 149.83829402923584,
+            "height": 165.02191162109375,
+            "left": 8.960000038146973,
+            "right": 1121.2017059326172
+          },
+          "e5": {
+            "key": "e5",
+            "x": 1126.3377685546875,
+            "y": 373.9758605957031,
+            "width": 144.7022705078125,
+            "height": 203.11917114257812,
+            "left": 1126.3377685546875,
+            "right": 8.9599609375
+          },
+          "a2": {
+            "key": "a2",
+            "x": 245.73684692382812,
+            "y": 429.7080993652344,
+            "width": 129.70794677734375,
+            "height": 164.26022338867188,
+            "left": 245.73684692382812,
+            "right": 904.5552062988281
+          },
+          "e2": {
+            "key": "e2",
+            "x": 913.3460693359375,
+            "y": 429.763671875,
+            "width": 131.5823974609375,
+            "height": 164.47802734375,
+            "left": 913.3460693359375,
+            "right": 235.071533203125
+          }
+        },
+        "camera": {
+          "zoom": 1.0823708320080683,
+          "x": -43.313500887656346,
+          "y": -54.27100134542508,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 72
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "e5",
+          "critical": false,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 1,
+          "beats": 1
+        },
+        "active": [
+          {
+            "key": "h06",
+            "role": "single",
+            "frame": 3,
+            "finisher": true,
+            "magnification": 1.45,
+            "alpha": 1
+          }
+        ],
+        "total": {
+          "hidden": false,
+          "text": "总伤害\n411\n1 HIT",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 629.0859375,
+            "y": 519.234375,
+            "w": 156.203125,
+            "h": 53.890625,
+            "right": 785.2890625,
+            "bottom": 573.125
+          },
+          "number": {
+            "x": 696.8565063476562,
+            "y": 505.46533203125,
+            "w": 125.8817138671875,
+            "h": 72.7523193359375,
+            "right": 822.7382202148438,
+            "bottom": 578.2176513671875
+          }
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 1280,
+          "h": 720,
+          "right": 1280,
+          "bottom": 720
+        }
+      }
+    },
+    "projectiles": {
+      "proj_h06-e": [
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.01942857142857065,
+          "rotation": -3.062347016811388,
+          "x": 989.9456428631751,
+          "y": 497.0715705577975,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1723.6
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.11428571428571428,
+          "rotation": -3.069635544902159,
+          "x": 926.6232554999536,
+          "y": 492.22038383461563,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1740.2
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.20971428571428596,
+          "rotation": -3.0868133001274893,
+          "x": 862.919407971894,
+          "y": 488.12730847231717,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1756.9
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.3045714285714283,
+          "rotation": -3.1122048134127884,
+          "x": 799.5970206086735,
+          "y": 485.42005191459674,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1773.5
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.4005714285714281,
+          "rotation": 3.139124194073998,
+          "x": 735.5117129157754,
+          "y": 484.5284753827301,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1790.3
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.49485714285714233,
+          "rotation": 3.104625350443062,
+          "x": 672.5707857173933,
+          "y": 485.7571695579001,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1806.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.5908571428571421,
+          "rotation": 3.0694389109340428,
+          "x": 608.4854780244953,
+          "y": 489.2608266680654,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1823.6
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.6857142857142857,
+          "rotation": 3.037762890124824,
+          "x": 545.1630906612738,
+          "y": 494.8656248857607,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1840.2
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.7811428571428574,
+          "rotation": 3.011820828132202,
+          "x": 481.4592431332143,
+          "y": 502.371896670243,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1856.9
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.8759999999999998,
+          "rotation": 2.994122004031168,
+          "x": 418.13685576999364,
+          "y": 511.2459929860865,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1873.5
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.9719999999999995,
+          "rotation": 2.9859034080349756,
+          "x": 354.0515480770956,
+          "y": 521.0809917196588,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 1890.3
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.018857142857149095,
+          "rotation": -3.062134047385195,
+          "x": 992.6692337341981,
+          "y": 496.5320084696855,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14057.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.11371428571429402,
+          "rotation": -3.069333534599221,
+          "x": 929.1204085741049,
+          "y": 491.6471289974482,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14073.7
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.2091428571428592,
+          "rotation": -3.0863938886309112,
+          "x": 865.188759166065,
+          "y": 487.5163706860328,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14090.4
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.30400000000000416,
+          "rotation": -3.1116513892434945,
+          "x": 801.6399340059718,
+          "y": 484.76871150737287,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14107
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.4,
+          "rotation": 3.1398179041074745,
+          "x": 737.3254603499781,
+          "y": 483.8343766435492,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14123.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.49485714285714494,
+          "rotation": 3.105235995099307,
+          "x": 673.7766351898849,
+          "y": 485.03440607165055,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14140.4
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.5902857142857205,
+          "rotation": 3.070370087585627,
+          "x": 609.844985781838,
+          "y": 488.48178638815955,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14157.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.6857142857142857,
+          "rotation": 3.0385941115273924,
+          "x": 545.9133363737981,
+          "y": 494.08649419579996,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14173.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.7805714285714307,
+          "rotation": 3.012864535421045,
+          "x": 482.3645112137049,
+          "y": 501.5170480667175,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14190.4
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.8760000000000062,
+          "rotation": 2.995083345828462,
+          "x": 418.4328618056579,
+          "y": 510.41634410594264,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14207.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.9714285714285714,
+          "rotation": 2.986900352283036,
+          "x": 354.501212397618,
+          "y": 520.1689247026552,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14223.8
+        }
+      ],
+      "proj_h01-a": [
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.018857142857143898,
+          "rotation": -0.3754700646631568,
+          "x": 539.1802142632691,
+          "y": 323.60201876388174,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2323.5
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.11428571428571428,
+          "rotation": -0.3584079881144733,
+          "x": 563.1787839883907,
+          "y": 314.3233035089715,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2340.2
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.20971428571428727,
+          "rotation": -0.3175833869558652,
+          "x": 587.1773537135128,
+          "y": 305.83752124808575,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2356.9
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.30514285714285766,
+          "rotation": -0.25495440623358845,
+          "x": 611.1759234386344,
+          "y": 298.73109536610247,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2373.6
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.4,
+          "rotation": -0.1751292378067929,
+          "x": 635.030789153426,
+          "y": 293.4930214790848,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2390.2
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.018857142857149095,
+          "rotation": -0.37433172115398294,
+          "x": 538.9568387854503,
+          "y": 324.31803094883526,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14657.1
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.11428571428571428,
+          "rotation": -0.3573201610890294,
+          "x": 562.9771346053847,
+          "y": 315.0606913263766,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14673.8
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.2091428571428592,
+          "rotation": -0.31686783146109965,
+          "x": 586.853596318615,
+          "y": 306.64050123847085,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14690.4
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.3045714285714348,
+          "rotation": -0.25443879584226897,
+          "x": 610.873892138552,
+          "y": 299.5395854401853,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14707.1
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.39942857142857974,
+          "rotation": -0.174806520810607,
+          "x": 634.7503538517823,
+          "y": 294.30129470521405,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14723.7
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.4954285714285756,
+          "rotation": -0.08320847206063182,
+          "x": 658.9144837784235,
+          "y": 291.1498862412225,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14740.5
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.5902857142857205,
+          "rotation": 0.009128706355006731,
+          "x": 682.7909454916537,
+          "y": 290.2697415281449,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14757.1
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.6851428571428655,
+          "rotation": 0.09362322189194534,
+          "x": 706.6674072048841,
+          "y": 291.5215135329983,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14773.7
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.7805714285714307,
+          "rotation": 0.16234996478551533,
+          "x": 730.6877030248183,
+          "y": 294.6520375061189,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14790.4
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.8760000000000062,
+          "rotation": 0.20893776159007635,
+          "x": 754.7079988447554,
+          "y": 299.2113548877955,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14807.1
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.9714285714285714,
+          "rotation": 0.23016277706831875,
+          "x": 778.7282946646898,
+          "y": 304.62322372611607,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 14823.8
+        }
+      ],
+      "proj_h05-e": [
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.019428571428571947,
+          "rotation": -3.0320604197863217,
+          "x": 960.871720030928,
+          "y": 302.7233098630752,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2923.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.11428571428571428,
+          "rotation": -3.042269044295581,
+          "x": 915.7158776503139,
+          "y": 297.93703437313803,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2940.2
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.20971428571428727,
+          "rotation": -3.0663119824042315,
+          "x": 870.2880121228278,
+          "y": 293.9130914486702,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2956.9
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.30514285714285766,
+          "rotation": -3.1021485235745176,
+          "x": 824.8601465953428,
+          "y": 291.26768441606833,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2973.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.4,
+          "rotation": 3.136858088549713,
+          "x": 779.7043042147288,
+          "y": 290.4629703780035,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 2990.2
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.495428571428573,
+          "rotation": 3.0878821585646503,
+          "x": 734.2764386872427,
+          "y": 291.78769799953506,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3006.9
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.5908571428571434,
+          "rotation": 3.038952193745559,
+          "x": 688.8485731597577,
+          "y": 295.3623455458668,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3023.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.6857142857142857,
+          "rotation": 2.9948396606618504,
+          "x": 643.6927307791436,
+          "y": 301.05583097752697,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3040.2
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.7811428571428587,
+          "rotation": 2.9589102010183908,
+          "x": 598.2648652516575,
+          "y": 308.6554671131385,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3056.9
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.8765714285714291,
+          "rotation": 2.9344058601610152,
+          "x": 552.8369997241725,
+          "y": 317.6837329843025,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3073.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.9720000000000021,
+          "rotation": 2.9232027352728007,
+          "x": 507.4091341966864,
+          "y": 327.56385029324844,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3090.3
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.01942857142856935,
+          "rotation": -3.0309552697271256,
+          "x": 961.0831996962993,
+          "y": 303.3864663930126,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15223.8
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.11485714285714493,
+          "rotation": -3.041213154768225,
+          "x": 915.6347531058068,
+          "y": 298.5173529858446,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15240.5
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.20971428571428988,
+          "rotation": -3.0650880156209044,
+          "x": 870.4584529020847,
+          "y": 294.46069447270537,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15257.1
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.30514285714285505,
+          "rotation": -3.1008545222775408,
+          "x": 825.0100063115971,
+          "y": 291.7507005802157,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15273.8
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.40057142857143063,
+          "rotation": 3.1379389792852526,
+          "x": 779.5615597211045,
+          "y": 290.8783044460402,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15290.5
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.4954285714285756,
+          "rotation": 3.0893138935817452,
+          "x": 734.3852595173823,
+          "y": 292.12864086029526,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15307.1
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.5908571428571407,
+          "rotation": 3.040443569596716,
+          "x": 688.9368129268947,
+          "y": 295.625379443693,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15323.8
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.6862857142857164,
+          "rotation": 2.996138614837287,
+          "x": 643.4883663364021,
+          "y": 301.27681389641,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15340.5
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.7811428571428612,
+          "rotation": 2.960497824209003,
+          "x": 598.31206613268,
+          "y": 308.7499449527061,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15357.1
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.8765714285714264,
+          "rotation": 2.936035912815846,
+          "x": 552.8636195421925,
+          "y": 317.687112349285,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15373.8
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.9714285714285714,
+          "rotation": 2.924901330755158,
+          "x": 507.6873193384703,
+          "y": 327.4119516990918,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 15390.4
+        }
+      ],
+      "proj_h05-a": [
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.019428571428571947,
+          "rotation": -0.08098921066590829,
+          "x": 229.43842941111794,
+          "y": 399.7057458883035,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3523.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.11428571428571428,
+          "rotation": -0.07349878169251202,
+          "x": 290.94757901353864,
+          "y": 394.8897895166653,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3540.2
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.21028571428571532,
+          "rotation": -0.05569431084649716,
+          "x": 353.19780270755575,
+          "y": 390.81016386024413,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3557
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.30514285714285766,
+          "rotation": -0.029520461561320984,
+          "x": 414.7069523099765,
+          "y": 388.1453949452572,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3573.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.4,
+          "rotation": 0.0028783422771309244,
+          "x": 476.21610191239716,
+          "y": 387.295885271954,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3590.2
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.49600000000000105,
+          "rotation": 0.03902974459708208,
+          "x": 538.4663256064143,
+          "y": 388.5850050881832,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3607
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.5902857142857153,
+          "rotation": 0.07459038712990144,
+          "x": 599.6049381630376,
+          "y": 392.0627366406036,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3623.5
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.6862857142857164,
+          "rotation": 0.10756455878228578,
+          "x": 661.8551618570548,
+          "y": 397.76457124290306,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3640.3
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.7811428571428587,
+          "rotation": 0.13405948135972454,
+          "x": 723.3643114594754,
+          "y": 405.26003599957323,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3656.9
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.8765714285714291,
+          "rotation": 0.1523321574520763,
+          "x": 785.2439981076934,
+          "y": 414.2194972635809,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3673.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.9720000000000021,
+          "rotation": 0.1606943778984744,
+          "x": 847.1236847559132,
+          "y": 424.0263791995953,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 3690.3
+        }
+      ],
+      "proj_h02-a": [
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.0188571428571413,
+          "rotation": -0.17009185897424328,
+          "x": 431.463077466757,
+          "y": 422.20251664477,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4090.2
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.11428571428571169,
+          "rotation": -0.1593057224395716,
+          "x": 473.6572685343462,
+          "y": 415.1336663260787,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4106.9
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.20971428571428727,
+          "rotation": -0.13382332458473556,
+          "x": 515.8514596019377,
+          "y": 408.853201697814,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4123.6
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.304571428571427,
+          "rotation": -0.09592567800204903,
+          "x": 557.792990842774,
+          "y": 403.97186098474015,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4140.2
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.3999999999999974,
+          "rotation": -0.048376972250731405,
+          "x": 599.9871819103632,
+          "y": 400.89265911353397,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4156.9
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.495428571428573,
+          "rotation": 0.004328195201360451,
+          "x": 642.1813729779547,
+          "y": 399.95028114906927,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4173.6
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.5902857142857127,
+          "rotation": 0.05693147688386995,
+          "x": 684.122904218791,
+          "y": 401.24022216629373,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4190.2
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.6857142857142832,
+          "rotation": 0.10512120775722511,
+          "x": 726.3170952863802,
+          "y": 404.68845843435537,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4206.9
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.7811428571428587,
+          "rotation": 0.14422055953069063,
+          "x": 768.5112863539716,
+          "y": 410.0120189154787,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4223.6
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.8759999999999984,
+          "rotation": 0.1708025738316099,
+          "x": 810.4528175948079,
+          "y": 416.7180326571919,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4240.2
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.9714285714285689,
+          "rotation": 0.18309286435170746,
+          "x": 852.6470086623972,
+          "y": 424.313870748583,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4256.9
+        }
+      ],
+      "proj_h02-e": [
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.0188571428571387,
+          "rotation": -3.057118719523119,
+          "x": 1020.5827877743936,
+          "y": 398.86514637516314,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4656.9
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.11428571428571428,
+          "rotation": -3.0650257443724747,
+          "x": 961.6549569308713,
+          "y": 394.055013327301,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4673.6
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.20914285714285402,
+          "rotation": -3.0834674185440396,
+          "x": 903.0799873498896,
+          "y": 390.05635911561643,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4690.2
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.30514285714285505,
+          "rotation": -3.1112627761311007,
+          "x": 843.7992952438333,
+          "y": 387.39413611184096,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4707
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.4,
+          "rotation": 3.137867299413944,
+          "x": 785.2243256628483,
+          "y": 386.5921616505429,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4723.6
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.4948571428571397,
+          "rotation": 3.1003331912124326,
+          "x": 726.6493560818667,
+          "y": 387.9042595714849,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4740.2
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.5897142857142846,
+          "rotation": 3.0627329022712075,
+          "x": 668.0743865008817,
+          "y": 391.43897197795286,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4756.8
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.6857142857142857,
+          "rotation": 3.0280762499326905,
+          "x": 608.7936943948253,
+          "y": 397.1894334344039,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4773.6
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.7811428571428561,
+          "rotation": 3.000076620979328,
+          "x": 549.8658635513063,
+          "y": 404.789841829675,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4790.3
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.8759999999999959,
+          "rotation": 2.9809829632096103,
+          "x": 491.29089397032453,
+          "y": 413.76159853488343,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4806.9
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.9714285714285714,
+          "rotation": 2.9721251657889334,
+          "x": 432.36306312680233,
+          "y": 423.63934735203406,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 4823.6
+        }
+      ],
+      "proj_h03-a": [
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.018857142857143898,
+          "rotation": -0.1259930977831785,
+          "x": 356.6424786407566,
+          "y": 519.51773906456,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5223.6
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.11428571428571428,
+          "rotation": -0.1179224052420853,
+          "x": 413.8326860181548,
+          "y": 512.4528292318233,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5240.3
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.20914285714285402,
+          "rotation": -0.09906754109988612,
+          "x": 470.68043706395054,
+          "y": 506.211760899273,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5256.9
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.3045714285714296,
+          "rotation": -0.0707820722804428,
+          "x": 527.8706444413518,
+          "y": 501.30293884906183,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5273.6
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.4,
+          "rotation": -0.035604803562079713,
+          "x": 585.06085181875,
+          "y": 498.2312463174187,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5290.3
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.4948571428571397,
+          "rotation": 0.003064468924466139,
+          "x": 641.9086028645459,
+          "y": 497.2959800956421,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5306.9
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.5902857142857153,
+          "rotation": 0.042138891262501824,
+          "x": 699.0988102419471,
+          "y": 498.5955785596052,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5323.6
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.6857142857142857,
+          "rotation": 0.07780711308218505,
+          "x": 756.2890176193453,
+          "y": 502.05261306558936,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5340.3
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.7805714285714255,
+          "rotation": 0.10671477373366096,
+          "x": 813.1367686651411,
+          "y": 507.34819361608106,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5356.9
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.876000000000001,
+          "rotation": 0.12670025345273564,
+          "x": 870.3269760425424,
+          "y": 514.0992239104796,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5373.6
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.9708571428571408,
+          "rotation": 0.1358773299640065,
+          "x": 927.1747270883382,
+          "y": 521.6560373679648,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 5390.2
+        }
+      ],
+      "proj_h04-a": [
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.018285714285713246,
+          "rotation": -0.1550591877768167,
+          "x": 303.35681794600515,
+          "y": 302.38150359279916,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6706.9
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.11428571428571428,
+          "rotation": -0.14524546182307477,
+          "x": 350.54576706420767,
+          "y": 295.1869440222171,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6723.7
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.2091428571428592,
+          "rotation": -0.12236588255108884,
+          "x": 397.1729429786226,
+          "y": 288.86382330499464,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6740.3
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.3045714285714296,
+          "rotation": -0.08798014115858344,
+          "x": 444.08100549493,
+          "y": 283.8757133782035,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6757
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.3994285714285745,
+          "rotation": -0.04540263684749173,
+          "x": 490.7081814093449,
+          "y": 280.7407390095187,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6773.6
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.49485714285714494,
+          "rotation": 0.002040195608238112,
+          "x": 537.6162439256524,
+          "y": 279.72061093357286,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6790.3
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.5902857142857153,
+          "rotation": 0.049704732639194886,
+          "x": 584.5243064419598,
+          "y": 280.95099363426425,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6807
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.6851428571428603,
+          "rotation": 0.09291973445044004,
+          "x": 631.1514823563747,
+          "y": 284.31598128881546,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6823.6
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.7805714285714307,
+          "rotation": 0.12830533486726511,
+          "x": 678.0595448726822,
+          "y": 289.5758820120647,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6840.3
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.8754285714285703,
+          "rotation": 0.15245014490767883,
+          "x": 724.6867207870944,
+          "y": 296.2248193875744,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6856.9
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.970857142857146,
+          "rotation": 0.16369470500426989,
+          "x": 771.5947833034045,
+          "y": 303.7698487988032,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 6873.6
+        }
+      ],
+      "proj_h06-a": [
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.0188571428571387,
+          "rotation": -0.0751078190398526,
+          "x": 247.21755065360782,
+          "y": 496.99292640293476,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13490.3
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.11485714285714493,
+          "rotation": -0.06818906227432443,
+          "x": 315.4569050451052,
+          "y": 492.03796018414135,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13507.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.21028571428571013,
+          "rotation": -0.05200977449800059,
+          "x": 383.290072803311,
+          "y": 487.90421599323946,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13523.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.30514285714285505,
+          "rotation": -0.028129528287744582,
+          "x": 450.71705392824003,
+          "y": 485.1583152402217,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13540.4
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.40057142857143063,
+          "rotation": 0.0016146079033214113,
+          "x": 518.5502216864533,
+          "y": 484.2280400147956,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13557.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.4954285714285756,
+          "rotation": 0.034206393806408886,
+          "x": 585.9772028113823,
+          "y": 485.42015231787605,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13573.7
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.5908571428571407,
+          "rotation": 0.06705706755197953,
+          "x": 653.810370569588,
+          "y": 488.8577063377591,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13590.4
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.6857142857142857,
+          "rotation": 0.09682795299027723,
+          "x": 721.2373516945171,
+          "y": 494.41000814523187,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13607
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.7811428571428612,
+          "rotation": 0.12122680287831808,
+          "x": 789.0705194527303,
+          "y": 501.86278122601993,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13623.7
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.8765714285714264,
+          "rotation": 0.13795680023115225,
+          "x": 856.9036872109361,
+          "y": 510.73946208294547,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13640.4
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.9720000000000021,
+          "rotation": 0.14561759590006115,
+          "x": 924.7368549691494,
+          "y": 520.4634034259193,
+          "source": "embedded",
+          "blendMode": 1,
+          "t": 13657.1
+        }
+      ]
+    },
+    "statuses": {
+      "status_shield-a0": {
+        "first": {
+          "key": "status_shield",
+          "target": "a0",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 494.08000000000004,
+          "y": 330.21290357831504,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_shield",
+          "target": "a0",
+          "phase": "release",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 471.06787750715444,
+          "y": 322.2444245272344,
+          "layer": "over"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 0
+      },
+      "status_shield-a2": {
+        "first": {
+          "key": "status_shield",
+          "target": "a2",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 335.36,
+          "y": 523.9252927258248,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_shield",
+          "target": "a2",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 335.36,
+          "y": 523.7034636469028,
+          "layer": "over"
+        },
+        "phases": [
+          "active"
+        ],
+        "motion": 0
+      },
+      "status_freeze-a5": {
+        "first": {
+          "key": "status_freeze",
+          "target": "a5",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.6063829787234042,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 129.28,
+          "y": 534.1669619208701,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_freeze",
+          "target": "a5",
+          "phase": "release",
+          "rotation": 0,
+          "perspective": 0.6063829787234043,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 129.28,
+          "y": 544.3507077127846,
+          "layer": "over"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 0
+      },
+      "status_curse-a5": {
+        "first": {
+          "key": "status_curse",
+          "target": "a5",
+          "phase": "active",
+          "rotation": 0.04616395877766787,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 129.28,
+          "y": 570.8286448188747,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_curse",
+          "target": "a5",
+          "phase": "release",
+          "rotation": 7.227670231958736,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 129.28,
+          "y": 570.8452084001979,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 7.181506273181068
+      },
+      "status_freeze-e1": {
+        "first": {
+          "key": "status_freeze",
+          "target": "e1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.6063829787234044,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 865.28,
+          "y": 458.52615867451937,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_freeze",
+          "target": "e1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.6063829787234043,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 865.28,
+          "y": 458.51507978798134,
+          "layer": "over"
+        },
+        "phases": [
+          "active"
+        ],
+        "motion": 0
+      },
+      "status_curse-e0": {
+        "first": {
+          "key": "status_curse",
+          "target": "e0",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 808.9599999999999,
+          "y": 389.2940449092005,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_curse",
+          "target": "e0",
+          "phase": "active",
+          "rotation": 5.950787351137266,
+          "perspective": 0.36000000000000004,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 785.92,
+          "y": 389.6980911892476,
+          "layer": "ground"
+        },
+        "phases": [
+          "active"
+        ],
+        "motion": 5.950787351137266
+      },
+      "status_heal_ring-a0": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a0",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 494.08000000000004,
+          "y": 390.44532171905485,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a0",
+          "phase": "release",
+          "rotation": 1.5637881585676587,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 494.08000000000004,
+          "y": 390.45798534139607,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5637881585676587
+      },
+      "status_heal_ring-a1": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 414.72,
+          "y": 492.5370540154313,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a1",
+          "phase": "release",
+          "rotation": 1.5517051099000057,
+          "perspective": 0.35999999999999993,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 414.72,
+          "y": 492.54151343163574,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5517051099000057
+      },
+      "status_heal_ring-a2": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a2",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 335.36,
+          "y": 594.5998870964089,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a2",
+          "phase": "release",
+          "rotation": 1.5393804002589986,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 335.36,
+          "y": 594.582094140951,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5393804002589986
+      },
+      "status_heal_ring-a3": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a3",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 288,
+          "y": 366.69225023796884,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a3",
+          "phase": "release",
+          "rotation": 1.5676547341413085,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 288,
+          "y": 366.698149767003,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5676547341413085
+      },
+      "status_heal_ring-a4": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a4",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 208.64000000000001,
+          "y": 468.7715027849665,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a4",
+          "phase": "release",
+          "rotation": 1.5555716854736554,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 208.64000000000001,
+          "y": 468.78394866917967,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5555716854736554
+      },
+      "status_heal_ring-a5": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a5",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 129.28,
+          "y": 570.8481427360703,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a5",
+          "phase": "release",
+          "rotation": 1.5398637222057021,
+          "perspective": 0.36,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 129.28,
+          "y": 570.8493400317482,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5434886368060023
+      },
+      "status_shield-a1": {
+        "first": {
+          "key": "status_shield",
+          "target": "a1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 414.72,
+          "y": 427.0484472458207,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_shield",
+          "target": "a1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "embedded",
+          "blendMode": 1,
+          "x": 414.72,
+          "y": 426.57056573297507,
+          "layer": "over"
+        },
+        "phases": [
+          "active"
+        ],
+        "motion": 0
+      }
+    },
+    "impacts": [
+      {
+        "actor": "e5",
+        "target": "a2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 1906.9
+      },
+      {
+        "actor": "e5",
+        "target": "e5",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 1990.2
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": true,
+        "finisher": false,
+        "hold": 72,
+        "sparks": 14,
+        "beat": 0,
+        "beats": 1,
+        "t": 2581.9
+      },
+      {
+        "actor": "e3",
+        "target": "a0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 3106.9
+      },
+      {
+        "actor": "e3",
+        "target": "e3",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 3190.2
+      },
+      {
+        "actor": "a4",
+        "target": "e1",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 3706.9
+      },
+      {
+        "actor": "a1",
+        "target": "e1",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 4273.6
+      },
+      {
+        "actor": "e4",
+        "target": "a1",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 4840.2
+      },
+      {
+        "actor": "a2",
+        "target": "e2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 5406.9
+      },
+      {
+        "actor": "e2",
+        "target": "a2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 5973.6
+      },
+      {
+        "actor": "e2",
+        "target": "e2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 6057
+      },
+      {
+        "actor": "a3",
+        "target": "e0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 6890.3
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": true,
+        "finisher": false,
+        "hold": 72,
+        "sparks": 14,
+        "beat": 1,
+        "beats": 3,
+        "t": 7757
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": false,
+        "finisher": false,
+        "hold": 0,
+        "sparks": 11,
+        "beat": 2,
+        "beats": 3,
+        "t": 7940.3
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": true,
+        "finisher": true,
+        "hold": 72,
+        "sparks": 14,
+        "beat": 3,
+        "beats": 3,
+        "t": 8057
+      },
+      {
+        "actor": "a2",
+        "target": "a5",
+        "critical": false,
+        "finisher": true,
+        "hold": 65,
+        "sparks": 0,
+        "beat": 4,
+        "beats": 4,
+        "t": 9723.7
+      },
+      {
+        "actor": "a3",
+        "target": "a2",
+        "critical": false,
+        "finisher": true,
+        "hold": 65,
+        "sparks": 0,
+        "beat": 3,
+        "beats": 3,
+        "t": 11015.4
+      },
+      {
+        "actor": "a5",
+        "target": "e5",
+        "critical": false,
+        "finisher": true,
+        "hold": 72,
+        "sparks": 14,
+        "beat": 1,
+        "beats": 1,
+        "t": 12073.8
+      },
+      {
+        "actor": "e0",
+        "target": "a0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 13073.7
+      },
+      {
+        "actor": "e0",
+        "target": "e0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 13157
+      },
+      {
+        "actor": "a5",
+        "target": "e2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 13673.8
+      },
+      {
+        "actor": "e5",
+        "target": "a2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 14240.3
+      },
+      {
+        "actor": "e5",
+        "target": "e5",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 14323.8
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 14840.4
+      },
+      {
+        "actor": "e3",
+        "target": "a0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 15407
+      }
+    ],
+    "finals": [
+      {
+        "key": "h01",
+        "heroId": "h01",
+        "actor": "a0",
+        "target": "e0",
+        "targets": null,
+        "role": "single",
+        "hitIndex": 2,
+        "due": 432,
+        "source": "embedded",
+        "startedAt": 7757,
+        "impactAt": 8057,
+        "renderedImpactAt": 8057,
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "active": true,
+        "rotation": 0,
+        "blendMode": 1,
+        "finisher": true,
+        "magnification": 1.45
+      },
+      {
+        "key": "h03",
+        "heroId": "h03",
+        "actor": "a2",
+        "target": "a5",
+        "targets": null,
+        "role": "target",
+        "hitIndex": 5,
+        "due": 563,
+        "source": "embedded",
+        "startedAt": 9390.4,
+        "impactAt": null,
+        "renderedImpactAt": null,
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "active": true,
+        "rotation": 0,
+        "blendMode": 1,
+        "finisher": true,
+        "magnification": 1.45
+      },
+      {
+        "key": "h04",
+        "heroId": "h04",
+        "actor": "a3",
+        "target": "a2",
+        "targets": null,
+        "role": "target",
+        "hitIndex": 2,
+        "due": 346,
+        "source": "embedded",
+        "startedAt": 10673.7,
+        "impactAt": 11015.4,
+        "renderedImpactAt": 11015.4,
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "active": true,
+        "rotation": 0,
+        "blendMode": 1,
+        "finisher": true,
+        "magnification": 1.45
+      },
+      {
+        "key": "h06",
+        "heroId": "h06",
+        "actor": "a5",
+        "target": "e5",
+        "targets": null,
+        "role": "single",
+        "hitIndex": 0,
+        "due": 216,
+        "source": "embedded",
+        "startedAt": 11873.7,
+        "impactAt": 12073.8,
+        "renderedImpactAt": 12073.8,
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "active": true,
+        "rotation": 0,
+        "blendMode": 1,
+        "finisher": true,
+        "magnification": 1.45
+      }
+    ],
+    "criticals": 102,
+    "composition": {
+      "rightEdge": {
+        "key": "e5",
+        "x": 1116.5655517578125,
+        "y": 439.8117370605469,
+        "width": 154.4744873046875,
+        "height": 170.12783813476562,
+        "left": 1116.5655517578125,
+        "right": 8.9599609375,
+        "zoom": 1.1086623408831318,
+        "kick": false
+      },
+      "allEdges": {
+        "key": "e5",
+        "margin": 8.9599609375,
+        "zoom": 1.1086623408831318,
+        "kick": false
+      },
+      "kickEdge": {
+        "key": "e5",
+        "x": 1116.58837890625,
+        "y": 441.56463623046875,
+        "width": 154.45166015625,
+        "height": 170.1026611328125,
+        "left": 1116.58837890625,
+        "right": 8.9599609375,
+        "zoom": 1.1086897799647462,
+        "kick": true
+      },
+      "freezeTop": {
+        "key": "status_freeze",
+        "target": "e1",
+        "alpha": 0.7333991168017864,
+        "relativeTop": 0.4409558240836178,
+        "width": 156.16357421875,
+        "height": 94.6949462890625,
+        "y": 408.4317932128906,
+        "releasing": false
+      },
+      "damageTotalOffset": 67.1875
+    },
+    "gapCount": 1383,
+    "worstGaps": [
+      {
+        "gap": 18.000580973187766,
+        "target": "e1",
+        "kind": "battle-float damage"
+      },
+      {
+        "gap": 18.000594407551603,
+        "target": "a0",
+        "kind": "battle-float damage resist"
+      },
+      {
+        "gap": 18.00079466137572,
+        "target": "e5",
+        "kind": "battle-float damage"
+      },
+      {
+        "gap": 18.001101515820324,
+        "target": "a2",
+        "kind": "battle-float damage resist"
+      },
+      {
+        "gap": 18.002224666761492,
+        "target": "e5",
+        "kind": "battle-float damage"
+      }
+    ],
+    "maxZoom": 1.110845175313524,
+    "maxHold": 72,
+    "settled": true
+  },
+  "embeddedSha256": {
+    "spark": "ac2ce9d40bf74a7b8e78323328fc41a51849343630147481507ff72ac8a2c1eb",
+    "h01": "1c4ce483ddde4ef95dc78cf8cf87c0d9823e3a0a1f081a5ebeb31340dc6467af",
+    "h02": "5ace7906aa0dfe9f1b62be374c0e9a5fc1b9a66ec31fece83b5d0d377b745b61",
+    "h03": "bc16cb26998c3c33cc1b0776ece7a45a5b650d9eedadd2e89d58ec013868426f",
+    "h04": "c8179a1e9cb7f59f554ddb4f9054b219d2811cba97e092e2b9e9b9fca5634140",
+    "h05": "ffcd87c9e7157ab4fde5a3b361144fd45841c286e2b6f170cbfb77bac55d324f",
+    "h06": "4a5bcacf285e9db7b19e88352de5734d0447df445c427b6e9944d42035b7491f"
+  },
+  "battleArtSha256": {
+    "proj_h01": "05086ce39622e3873dba7f4a8155a9ef0ee9eff096100dd8c541317cecb6ead6",
+    "proj_h02": "cfc84b32c65931b7dfd78050d75a14367cccc724421dfa130ea5a211be8c61c8",
+    "proj_h03": "7b15e74ea8a45d8edc0283569383355aa1a49c0581defe1d2d4609adf01d06c3",
+    "proj_h04": "9eed3f0772a7000e9a4c88576d00605e8c4d5d971ba0fa3fcdd7688cdb4c636f",
+    "proj_h05": "fd9c2d19e890d02b29ff98a14ea17333c1eaf8340a61efc2f08f0f3a5df940c1",
+    "proj_h06": "3085f317e9246316ba22e7911146cf8d107d57c63d0174e8c228fab7e9bbe5ac",
+    "status_curse": "f8d9df5f69f8f7753ceea65e0bb49968bf1fe9f543f7604950e91735a4ec1d22",
+    "status_freeze": "2d16b95ce57bf21b6b357041f1b1fbcb7edaab59d6db94f4d5488979800e9e82",
+    "status_heal_ring": "8dfe84aceecc367ecd7b378fb2a9950eafad59635cb8b319a221b8bdc9e40f67",
+    "status_shield": "b5ca4915226ab556ec3fd325e18ff9859d883fee3e9c99bfe914194a7921ab5f"
+  },
+  "offlinePackRequests": 1,
+  "powerSave": {
+    "hits": [
+      {
+        "clock": 1262.6,
+        "actor": "a5",
+        "heroId": "h06",
+        "target": "e2",
+        "kind": "damage",
+        "amount": 164,
+        "ultimate": false,
+        "drawClock": 1262.6,
+        "cutVisible": false,
+        "labels": [
+          "−164"
+        ],
+        "counter": 0,
+        "procedural": true,
+        "effects": [],
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "e2",
+          "critical": false,
+          "finisher": false,
+          "hold": 0,
+          "sparks": 0,
+          "beat": 0,
+          "beats": 1
+        },
+        "kickPower": 0
+      },
+      {
+        "clock": 1695.9,
+        "actor": "a5",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 414,
+        "ultimate": true,
+        "drawClock": 1695.9,
+        "cutVisible": false,
+        "labels": [
+          "暴击−414"
+        ],
+        "counter": 414,
+        "procedural": true,
+        "effects": [],
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "e3",
+          "critical": true,
+          "finisher": true,
+          "hold": 0,
+          "sparks": 0,
+          "beat": 1,
+          "beats": 1
+        },
+        "kickPower": 0
+      }
+    ],
+    "requests": 0,
+    "hud": {
+      "zoom": 1,
+      "kick": false,
+      "hold": 0
+    }
+  },
+  "errors": []
+}

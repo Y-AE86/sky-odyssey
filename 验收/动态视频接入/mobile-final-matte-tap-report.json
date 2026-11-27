@@ -1,0 +1,134 @@
+[
+  {
+    "label": "mobile-tap-skip",
+    "width": 844,
+    "height": 390,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 1,
+      "activation": true,
+      "ult": "天穹圣壁"
+    },
+    "shot": {
+      "start": 1689.6999999284744,
+      "hero": "h04",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h04.mp4",
+          "duration": 3.041995,
+          "muted": false,
+          "rate": 1,
+          "mediaTime": 0,
+          "audioBytes": 4978,
+          "renderWidth": 693.328125,
+          "renderHeight": 389.984375,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "天穹圣壁",
+      "background": "url(\"http://127.0.0.1:55847/assets/posters/lobby_cg_h04.png\")",
+      "native": null,
+      "firstFrame": 83,
+      "playback": {
+        "source": "ult_h04.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "rate": 1,
+        "mediaTime": 0.260149,
+        "audioBytes": 10165,
+        "renderWidth": 693.328125,
+        "renderHeight": 389.984375,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "click": 312.2000000476837,
+      "clickInStage": true,
+      "screenTime": 313.10000002384186,
+      "firstHit": 383.2000000476837
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 3,
+    "errors": []
+  },
+  {
+    "label": "mobile-wing-tap",
+    "width": 844,
+    "height": 390,
+    "kickoff": {
+      "sound": true,
+      "powerSave": false,
+      "speed": 1,
+      "activation": true,
+      "ult": "天穹圣壁"
+    },
+    "shot": {
+      "start": 841.2000000476837,
+      "hero": "h04",
+      "mode": "ultimate",
+      "playing": [
+        {
+          "source": "ult_h04.mp4",
+          "duration": 3.041995,
+          "muted": false,
+          "rate": 1,
+          "mediaTime": 0.00166,
+          "audioBytes": 5361,
+          "renderWidth": 693.328125,
+          "renderHeight": 389.984375,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "opacity": 0
+        }
+      ],
+      "title": "天穹圣壁",
+      "background": "url(\"http://127.0.0.1:55847/assets/posters/lobby_cg_h04.png\")",
+      "native": null,
+      "firstFrame": 52.799999952316284,
+      "playback": {
+        "source": "ult_h04.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "rate": 1,
+        "mediaTime": 0.256276,
+        "audioBytes": 10165,
+        "renderWidth": 693.328125,
+        "renderHeight": 389.984375,
+        "naturalWidth": 1280,
+        "naturalHeight": 720,
+        "opacity": 1
+      },
+      "click": 296.1999999284744,
+      "clickInStage": false,
+      "screenTime": 296.6999999284744,
+      "firstHit": 366.59999990463257
+    },
+    "mediaRequests": [
+      "lobby_cg_h01.mp4",
+      "ult_h04.mp4",
+      "ult_h05.mp4",
+      "ult_h01.mp4",
+      "ult_h02.mp4",
+      "ult_h03.mp4"
+    ],
+    "partialResponses": 6,
+    "rejectedSound": 0,
+    "settled": true,
+    "totalUpdates": 3,
+    "errors": []
+  }
+]

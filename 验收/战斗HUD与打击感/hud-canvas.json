@@ -1,0 +1,17 @@
+{
+  "renderer": "canvas2d",
+  "frame": 16,
+  "impact": {
+    "actor": "e3",
+    "target": "a0",
+    "critical": false,
+    "finisher": false,
+    "hold": 43,
+    "sparks": 8,
+    "beat": 0,
+    "beats": 1
+  },
+  "nativeFx": 0,
+  "settled": true,
+  "errors": []
+}

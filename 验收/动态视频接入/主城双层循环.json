@@ -1,0 +1,175 @@
+{
+  "cases": [
+    {
+      "name": "HTTP desktop",
+      "loop": {
+        "decks": 2,
+        "ownerSequence": [
+          1,
+          0
+        ],
+        "lowestCoverage": 0.99536,
+        "overlapFrames": 167,
+        "duration": 5.041667,
+        "timing": [
+          {
+            "oldLeft": 0.649,
+            "nextTime": 0,
+            "startAt": 4672.2,
+            "elapsedMs": 671,
+            "newTime": 0.629,
+            "oldTime": 0
+          },
+          {
+            "oldLeft": 0.641,
+            "nextTime": 0,
+            "startAt": 9114,
+            "elapsedMs": 663,
+            "newTime": 0.622,
+            "oldTime": 0
+          }
+        ],
+        "videos": [
+          {
+            "paused": false,
+            "muted": true,
+            "defaultMuted": true,
+            "playsInline": true,
+            "loop": false
+          },
+          {
+            "paused": true,
+            "muted": true,
+            "defaultMuted": true,
+            "playsInline": true,
+            "loop": false
+          }
+        ]
+      },
+      "postPowerPngWidth": 1672,
+      "powerReleasesDecks": true,
+      "switchReleasesDecks": true,
+      "leaveReleasesDecks": true,
+      "issues": [],
+      "cancelledRequests": 0
+    },
+    {
+      "name": "HTTP mobile landscape",
+      "loop": {
+        "decks": 2,
+        "ownerSequence": [
+          1,
+          0
+        ],
+        "lowestCoverage": 0.995338,
+        "overlapFrames": 168,
+        "duration": 5.041667,
+        "timing": [
+          {
+            "oldLeft": 0.649,
+            "nextTime": 0,
+            "startAt": 4560.5,
+            "elapsedMs": 663,
+            "newTime": 0.62,
+            "oldTime": 0
+          },
+          {
+            "oldLeft": 0.641,
+            "nextTime": 0,
+            "startAt": 9002.3,
+            "elapsedMs": 658,
+            "newTime": 0.617,
+            "oldTime": 0
+          }
+        ],
+        "videos": [
+          {
+            "paused": false,
+            "muted": true,
+            "defaultMuted": true,
+            "playsInline": true,
+            "loop": false
+          },
+          {
+            "paused": true,
+            "muted": true,
+            "defaultMuted": true,
+            "playsInline": true,
+            "loop": false
+          }
+        ]
+      },
+      "postPowerPngWidth": 1672,
+      "powerReleasesDecks": true,
+      "switchReleasesDecks": true,
+      "leaveReleasesDecks": true,
+      "issues": [],
+      "cancelledRequests": 0
+    },
+    {
+      "name": "file desktop",
+      "loop": {
+        "decks": 2,
+        "ownerSequence": [
+          1,
+          0
+        ],
+        "lowestCoverage": 1,
+        "overlapFrames": 171,
+        "duration": 5.041667,
+        "timing": [
+          {
+            "oldLeft": 0.648,
+            "nextTime": 0,
+            "startAt": 4525.7,
+            "elapsedMs": 675,
+            "newTime": 0.629,
+            "oldTime": 0
+          },
+          {
+            "oldLeft": 0.649,
+            "nextTime": 0,
+            "startAt": 8963.4,
+            "elapsedMs": 675,
+            "newTime": 0.626,
+            "oldTime": 0
+          }
+        ],
+        "videos": [
+          {
+            "paused": false,
+            "muted": true,
+            "defaultMuted": true,
+            "playsInline": true,
+            "loop": false
+          },
+          {
+            "paused": true,
+            "muted": true,
+            "defaultMuted": true,
+            "playsInline": true,
+            "loop": false
+          }
+        ]
+      },
+      "postPowerPngWidth": 1672,
+      "powerReleasesDecks": true,
+      "switchReleasesDecks": true,
+      "leaveReleasesDecks": true,
+      "issues": [],
+      "cancelledRequests": 0
+    }
+  ],
+  "fallbacks": [
+    {
+      "mode": "blocked",
+      "pngFallback": true,
+      "issues": []
+    },
+    {
+      "mode": "corrupt",
+      "pngFallback": true,
+      "issues": []
+    }
+  ]
+}

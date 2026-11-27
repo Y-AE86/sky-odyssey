@@ -1,0 +1,46 @@
+[
+  {
+    "mode": "http",
+    "source": "pixi-texture",
+    "sources": {
+      "h04": "pixi-texture",
+      "h08": "pixi-texture"
+    },
+    "artworkSizes": {
+      "chibi": [
+        1028,
+        1193
+      ],
+      "posters": [
+        1672,
+        941
+      ],
+      "avatars": [
+        1254,
+        1254
+      ]
+    }
+  },
+  {
+    "mode": "file",
+    "source": "native-image",
+    "sources": {
+      "h04": "native-image",
+      "h08": "native-image"
+    },
+    "artworkSizes": {
+      "chibi": [
+        1028,
+        1193
+      ],
+      "posters": [
+        1672,
+        941
+      ],
+      "avatars": [
+        1254,
+        1254
+      ]
+    }
+  }
+]

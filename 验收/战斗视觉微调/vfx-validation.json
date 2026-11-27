@@ -1,0 +1,190 @@
+{
+  "values": {
+    "shield": {
+      "source": "embedded",
+      "atlasAlpha": [
+        {
+          "alpha": 0.45499999999999996,
+          "role": "target"
+        },
+        {
+          "alpha": 0.45499999999999996,
+          "role": "target"
+        },
+        {
+          "alpha": 0.45499999999999996,
+          "role": "target"
+        }
+      ],
+      "stateAlpha": [
+        {
+          "key": "status_shield:a0",
+          "alpha": 0.44590509755852203
+        },
+        {
+          "key": "status_shield:a1",
+          "alpha": 0.3237860659978929
+        },
+        {
+          "key": "status_shield:a2",
+          "alpha": 0.18421515328097812
+        }
+      ]
+    },
+    "heal": {
+      "source": "embedded",
+      "atlasAlpha": [
+        {
+          "alpha": 0.559,
+          "role": "group"
+        },
+        {
+          "alpha": 0.44849999999999995,
+          "role": "target"
+        },
+        {
+          "alpha": 0.44849999999999995,
+          "role": "target"
+        },
+        {
+          "alpha": 0.44849999999999995,
+          "role": "target"
+        },
+        {
+          "alpha": 0.44849999999999995,
+          "role": "target"
+        },
+        {
+          "alpha": 0.44849999999999995,
+          "role": "target"
+        },
+        {
+          "alpha": 0.44849999999999995,
+          "role": "target"
+        }
+      ],
+      "stateAlpha": [
+        {
+          "key": "status_heal_ring:a0",
+          "alpha": 0.45884520012515473
+        },
+        {
+          "key": "status_heal_ring:a1",
+          "alpha": 0.5230443411388471
+        },
+        {
+          "key": "status_heal_ring:a2",
+          "alpha": 0.5549102678238705
+        },
+        {
+          "key": "status_heal_ring:a3",
+          "alpha": 0.5297568659631652
+        },
+        {
+          "key": "status_heal_ring:a4",
+          "alpha": 0.47941409673083674
+        },
+        {
+          "key": "status_heal_ring:a5",
+          "alpha": 0.33817879741448414
+        }
+      ]
+    }
+  },
+  "freeze": [
+    {
+      "hero": "h04",
+      "widthRatio": 0.9399999166346726,
+      "heightRatio": 0.5700001553900629,
+      "top": 0.5400000832042334,
+      "pieces": 0
+    },
+    {
+      "hero": "h01",
+      "widthRatio": 0.9400000510954923,
+      "heightRatio": 0.5699999884462251,
+      "top": 0.5400000113369696,
+      "pieces": 0
+    },
+    {
+      "hero": "h05",
+      "widthRatio": 0.9400000197479854,
+      "heightRatio": 0.5699998962059342,
+      "top": 0.5399999012151152,
+      "pieces": 0
+    },
+    {
+      "hero": "h02",
+      "widthRatio": 0.9399999273825673,
+      "heightRatio": 0.5700000017960817,
+      "top": 0.5400001023733013,
+      "pieces": 0
+    },
+    {
+      "hero": "h06",
+      "widthRatio": 0.9400000078361693,
+      "heightRatio": 0.5699999134946442,
+      "top": 0.5400000764217827,
+      "pieces": 0
+    },
+    {
+      "hero": "h03",
+      "widthRatio": 0.9399999224846555,
+      "heightRatio": 0.5699999765206489,
+      "top": 0.5400000302354739,
+      "pieces": 0
+    }
+  ],
+  "thaw": [
+    {
+      "t": 200,
+      "widthRatio": 0.9400000701084308,
+      "heightRatio": 0.5699998843519777,
+      "top": 0.5399999920475396,
+      "pieces": 4
+    },
+    {
+      "t": 215,
+      "widthRatio": 0.9672069563107591,
+      "heightRatio": 0.5779479525964711,
+      "top": 0.5389362993579545,
+      "pieces": 4
+    },
+    {
+      "t": 230,
+      "widthRatio": 0.994350061779784,
+      "heightRatio": 0.5858568781979323,
+      "top": 0.5373231089215917,
+      "pieces": 4
+    },
+    {
+      "t": 260,
+      "widthRatio": 1.048441629412094,
+      "heightRatio": 0.6015572516760576,
+      "top": 0.532448065349931,
+      "pieces": 4
+    },
+    {
+      "t": 320,
+      "widthRatio": 1.1558275542133296,
+      "heightRatio": 0.6324740167661979,
+      "top": 0.5160965109085479,
+      "pieces": 4
+    },
+    {
+      "t": 380,
+      "widthRatio": 1.2621139334105362,
+      "heightRatio": 0.6627244574217136,
+      "top": 0.4909324768353372,
+      "pieces": 4
+    },
+    {
+      "t": 419,
+      "widthRatio": 1.3305912329688407,
+      "heightRatio": 0.6820178819952023,
+      "top": 0.4698440853137949,
+      "pieces": 4
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,209 @@
+[
+  {
+    "name": "desktop",
+    "measurements": {
+      "contrast": {
+        "event tile": [
+          {
+            "text": "限时活动",
+            "minimum": 11.896
+          }
+        ],
+        "route intel": [
+          {
+            "text": "启明星门",
+            "minimum": 13.357
+          },
+          {
+            "text": "推荐战力　5,400",
+            "minimum": 9.119
+          },
+          {
+            "text": "诺亚",
+            "minimum": 9.825
+          },
+          {
+            "text": "加百列",
+            "minimum": 10.771
+          },
+          {
+            "text": "艾莉娅",
+            "minimum": 11.463
+          },
+          {
+            "text": "莉莉丝",
+            "minimum": 10.244
+          },
+          {
+            "text": "薇尔",
+            "minimum": 11.174
+          },
+          {
+            "text": "凌波玉笛",
+            "minimum": 11.947
+          },
+          {
+            "text": "首通奖励",
+            "minimum": 9.239
+          },
+          {
+            "text": "100",
+            "minimum": 15.913
+          },
+          {
+            "text": "1",
+            "minimum": 16.225
+          },
+          {
+            "text": "出征",
+            "minimum": 11.354
+          }
+        ]
+      },
+      "codex": {
+        "width": 625,
+        "scrollWidth": 625,
+        "cardCount": 8,
+        "badgeCount": 8
+      }
+    }
+  },
+  {
+    "name": "mobile",
+    "measurements": {
+      "contrast": {
+        "event tile": [
+          {
+            "text": "限时活动",
+            "minimum": 12.466
+          }
+        ],
+        "route intel": [
+          {
+            "text": "启明星门",
+            "minimum": 13.046
+          },
+          {
+            "text": "推荐战力　5,400",
+            "minimum": 9.011
+          },
+          {
+            "text": "诺亚",
+            "minimum": 9.804
+          },
+          {
+            "text": "加百列",
+            "minimum": 10.753
+          },
+          {
+            "text": "艾莉娅",
+            "minimum": 11.481
+          },
+          {
+            "text": "莉莉丝",
+            "minimum": 10.2
+          },
+          {
+            "text": "薇尔",
+            "minimum": 11.174
+          },
+          {
+            "text": "凌波玉笛",
+            "minimum": 11.985
+          },
+          {
+            "text": "首通奖励",
+            "minimum": 9.222
+          },
+          {
+            "text": "100",
+            "minimum": 15.887
+          },
+          {
+            "text": "1",
+            "minimum": 16.106
+          },
+          {
+            "text": "出征",
+            "minimum": 9.531
+          }
+        ]
+      },
+      "codex": {
+        "width": 435,
+        "scrollWidth": 435,
+        "cardCount": 8,
+        "badgeCount": 8
+      }
+    }
+  },
+  {
+    "name": "file",
+    "measurements": {
+      "contrast": {
+        "event tile": [
+          {
+            "text": "限时活动",
+            "minimum": 11.896
+          }
+        ],
+        "route intel": [
+          {
+            "text": "启明星门",
+            "minimum": 13.357
+          },
+          {
+            "text": "推荐战力　5,400",
+            "minimum": 9.119
+          },
+          {
+            "text": "诺亚",
+            "minimum": 9.825
+          },
+          {
+            "text": "加百列",
+            "minimum": 10.771
+          },
+          {
+            "text": "艾莉娅",
+            "minimum": 11.463
+          },
+          {
+            "text": "莉莉丝",
+            "minimum": 10.244
+          },
+          {
+            "text": "薇尔",
+            "minimum": 11.174
+          },
+          {
+            "text": "凌波玉笛",
+            "minimum": 11.947
+          },
+          {
+            "text": "首通奖励",
+            "minimum": 9.239
+          },
+          {
+            "text": "100",
+            "minimum": 15.913
+          },
+          {
+            "text": "1",
+            "minimum": 16.225
+          },
+          {
+            "text": "出征",
+            "minimum": 11.354
+          }
+        ]
+      },
+      "codex": {
+        "width": 625,
+        "scrollWidth": 625,
+        "cardCount": 8,
+        "badgeCount": 8
+      }
+    }
+  }
+]

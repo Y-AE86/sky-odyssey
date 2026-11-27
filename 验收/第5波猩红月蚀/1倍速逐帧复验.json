@@ -1,0 +1,152 @@
+[
+  {
+    "mode": "desktop",
+    "capture": false,
+    "result": {
+      "hit": {
+        "clock": 1658.8,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 395,
+        "drawClock": 1658.8,
+        "cutVisible": false,
+        "labels": [
+          "−395"
+        ],
+        "procedural": false,
+        "atlas": {
+          "heroId": "h06",
+          "actor": "a2",
+          "target": "e3",
+          "source": "png",
+          "startedAt": 1582.8999999761581,
+          "impactAt": 1658.8,
+          "renderedImpactAt": 1658.8,
+          "frame": 3,
+          "frames": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "active": true
+        }
+      },
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "heal": 158,
+      "settled": true
+    }
+  },
+  {
+    "mode": "mobile",
+    "capture": false,
+    "result": {
+      "hit": {
+        "clock": 1005.6,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 394,
+        "drawClock": 1005.6,
+        "cutVisible": false,
+        "labels": [
+          "−394"
+        ],
+        "procedural": false,
+        "atlas": {
+          "heroId": "h06",
+          "actor": "a2",
+          "target": "e3",
+          "source": "png",
+          "startedAt": 930.8999999761581,
+          "impactAt": 1005.6,
+          "renderedImpactAt": 1005.6,
+          "frame": 3,
+          "frames": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "active": true
+        }
+      },
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "heal": 158,
+      "settled": true
+    }
+  },
+  {
+    "mode": "file",
+    "capture": false,
+    "result": {
+      "hit": {
+        "clock": 896.9,
+        "actor": "a2",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 402,
+        "drawClock": 896.9,
+        "cutVisible": false,
+        "labels": [
+          "−402"
+        ],
+        "procedural": false,
+        "atlas": {
+          "heroId": "h06",
+          "actor": "a2",
+          "target": "e3",
+          "source": "embedded",
+          "startedAt": 825.2999999523163,
+          "impactAt": 896.9,
+          "renderedImpactAt": 896.9,
+          "frame": 3,
+          "frames": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "active": true
+        }
+      },
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "heal": 161,
+      "settled": true
+    }
+  }
+]

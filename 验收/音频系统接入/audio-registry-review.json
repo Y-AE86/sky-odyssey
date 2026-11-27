@@ -1,0 +1,10 @@
+{
+  "manifest": {
+    "sfx_shield": "assets/audio/sfx_shield.mp3",
+    "with space": "assets/audio/with%20space.MP3",
+    "sfx_hit": "assets/audio/sfx_hit.ogg",
+    "sfx_heal": "assets/audio/sfx_heal.WAV"
+  },
+  "idempotent": true,
+  "sourceUnmodified": true
+}

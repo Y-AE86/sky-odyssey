@@ -1,0 +1,3460 @@
+{
+  "name": "mobile",
+  "stage": {
+    "x": 79.828125,
+    "y": 0,
+    "width": 693.328125,
+    "height": 389.984375,
+    "dpr": 3,
+    "transform": "none",
+    "safeLeft": 44,
+    "safeRight": 35,
+    "vw": 844,
+    "vh": 390
+  },
+  "hud": {
+    "stage": {
+      "round": "回合 01 / 20",
+      "title": "天城首领 · 浮空机神",
+      "oldLog": false,
+      "stage": {
+        "x": 79.828125,
+        "y": 0,
+        "w": 693.328125,
+        "h": 389.984375,
+        "right": 773.15625,
+        "bottom": 389.984375
+      },
+      "canvas": [
+        2079,
+        1170
+      ],
+      "layers": [
+        "groundFxLayer",
+        "unitLayer",
+        "overFxLayer"
+      ],
+      "buttons": [
+        {
+          "label": "1×",
+          "box": {
+            "x": 665.296875,
+            "y": 3.546875,
+            "w": 28,
+            "h": 28,
+            "right": 693.296875,
+            "bottom": 31.546875
+          },
+          "radius": "50%"
+        },
+        {
+          "label": "手动",
+          "box": {
+            "x": 698.296875,
+            "y": 3.546875,
+            "w": 28,
+            "h": 28,
+            "right": 726.296875,
+            "bottom": 31.546875
+          },
+          "radius": "50%"
+        },
+        {
+          "label": "跳过",
+          "box": {
+            "x": 731.296875,
+            "y": 3.546875,
+            "w": 28,
+            "h": 28,
+            "right": 759.296875,
+            "bottom": 31.546875
+          },
+          "radius": "50%"
+        }
+      ],
+      "cards": [
+        {
+          "box": {
+            "x": 266.0390625,
+            "y": 337.484375,
+            "w": 51.984375,
+            "h": 50.75,
+            "right": 318.0234375,
+            "bottom": 388.234375
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "2.14062px",
+          "portrait": true,
+          "name": "幽冥墨姬，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 319.8203125,
+            "y": 337.484375,
+            "w": 51.984375,
+            "h": 50.75,
+            "right": 371.8046875,
+            "bottom": 388.234375
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "2.14062px",
+          "portrait": true,
+          "name": "冰灵 · 霜华，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 373.6015625,
+            "y": 337.484375,
+            "w": 51.984375,
+            "h": 50.75,
+            "right": 425.5859375,
+            "bottom": 388.234375
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "2.14062px",
+          "portrait": true,
+          "name": "凌波玉笛，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 427.3828125,
+            "y": 337.484375,
+            "w": 51.984375,
+            "h": 50.75,
+            "right": 479.3671875,
+            "bottom": 388.234375
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "2.14062px",
+          "portrait": true,
+          "name": "艾莉娅 · 圣翼，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 481.1640625,
+            "y": 337.484375,
+            "w": 51.984375,
+            "h": 50.75,
+            "right": 533.1484375,
+            "bottom": 388.234375
+          },
+          "label": "✦",
+          "diamonds": 4,
+          "hp": "2.14062px",
+          "portrait": true,
+          "name": "薇尔 · 星轨，生命 3300 / 4500，怒气 100，可释放必杀"
+        },
+        {
+          "box": {
+            "x": 534.9453125,
+            "y": 337.484375,
+            "w": 51.984375,
+            "h": 50.75,
+            "right": 586.9296875,
+            "bottom": 388.234375
+          },
+          "label": "",
+          "diamonds": 4,
+          "hp": "2.14062px",
+          "portrait": true,
+          "name": "莉莉丝 · 绯月，生命 3300 / 4500，怒气 100，冰冻中"
+        }
+      ]
+    },
+    "photos": {
+      "hud-ready": {
+        "positions": [],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 267.498,
+            "y": 178.85108713756375,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 181.566,
+            "y": 283.8069505227607,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 69.99300000000001,
+            "y": 270.7393381473276,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0.07487462493136272,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 69.99300000000001,
+            "y": 309.199354317104,
+            "layer": "ground"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 468.46799999999996,
+            "y": 231.1135043139782,
+            "layer": "over"
+          }
+        ],
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0
+        },
+        "impact": null,
+        "active": [],
+        "total": {
+          "hidden": true,
+          "text": "总伤害0",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "right": 0,
+            "bottom": 0
+          },
+          "number": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "right": 0,
+            "bottom": 0
+          }
+        },
+        "stage": {
+          "x": 79.828125,
+          "y": 0,
+          "w": 693,
+          "h": 390,
+          "right": 772.828125,
+          "bottom": 390
+        }
+      },
+      "basic-flight": {
+        "positions": [
+          {
+            "target": "a2",
+            "text": "抵挡",
+            "kind": "battle-float damage resist",
+            "box": {
+              "x": 249.9296875,
+              "y": 198.65625,
+              "w": 22.921875,
+              "h": 11.640625,
+              "right": 272.8515625,
+              "bottom": 210.296875
+            },
+            "gap": 25.183740471310955
+          },
+          {
+            "target": "e5",
+            "text": "−40",
+            "kind": "battle-float damage",
+            "box": {
+              "x": 689.1796875,
+              "y": 186.609375,
+              "w": 27.296875,
+              "h": 14,
+              "right": 716.4765625,
+              "bottom": 200.609375
+            },
+            "gap": 22.521531011706685
+          }
+        ],
+        "shots": [
+          {
+            "key": "proj_h01",
+            "actor": "a0",
+            "target": "e0",
+            "progress": 0.4005714285714281,
+            "rotation": -0.1751465014673265,
+            "x": 344.21859847255956,
+            "y": 158.948040377428,
+            "source": "png",
+            "blendMode": 1
+          }
+        ],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 391.63049200101017,
+            "y": 165.1578166421331,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 181.566,
+            "y": 283.6478954262293,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 69.99300000000001,
+            "y": 271.02763488561925,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 1.2616112498249066,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 69.99300000000001,
+            "y": 309.2083635901756,
+            "layer": "ground"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 468.46799999999996,
+            "y": 231.5995269760939,
+            "layer": "over"
+          }
+        ],
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "e5",
+          "target": "e5",
+          "critical": false,
+          "finisher": false,
+          "hold": 43,
+          "sparks": 8,
+          "beat": 0,
+          "beats": 1
+        },
+        "active": [
+          {
+            "key": "spark",
+            "role": "spark",
+            "frame": 8,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "spark",
+            "role": "spark",
+            "frame": 7,
+            "finisher": false,
+            "magnification": 1
+          }
+        ],
+        "total": {
+          "hidden": true,
+          "text": "总伤害0",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "right": 0,
+            "bottom": 0
+          },
+          "number": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "right": 0,
+            "bottom": 0
+          }
+        },
+        "stage": {
+          "x": 79.828125,
+          "y": 0,
+          "w": 693,
+          "h": 390,
+          "right": 772.828125,
+          "bottom": 390
+        }
+      },
+      "combo-finish": {
+        "positions": [
+          {
+            "target": "e0",
+            "text": "暴击−173",
+            "kind": "battle-float damage critical combo-hit",
+            "box": {
+              "x": 395.0625,
+              "y": 42.9375,
+              "w": 66.25,
+              "h": 20.3125,
+              "right": 461.3125,
+              "bottom": 63.25
+            },
+            "gap": 25.852813545153964
+          },
+          {
+            "target": "e0",
+            "text": "−163",
+            "kind": "battle-float damage combo-hit",
+            "box": {
+              "x": 500.0032653808594,
+              "y": 57.97222137451172,
+              "w": 38.587188720703125,
+              "h": 16.59027862548828,
+              "right": 538.5904541015625,
+              "bottom": 74.5625
+            },
+            "gap": 14.540313545153964
+          },
+          {
+            "target": "e0",
+            "text": "暴击−171",
+            "kind": "battle-float damage critical combo-hit",
+            "box": {
+              "x": 571.2186889648438,
+              "y": 49.93653106689453,
+              "w": 71.5313720703125,
+              "h": 22.87596893310547,
+              "right": 642.7500610351562,
+              "bottom": 72.8125
+            },
+            "gap": 16.290313545153964
+          }
+        ],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 267.498,
+            "y": 178.9755426156749,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 181.566,
+            "y": 283.66827398581216,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 69.99300000000001,
+            "y": 270.6125161008036,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 5.743180436633346,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 69.99300000000001,
+            "y": 309.1953911281501,
+            "layer": "ground"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 468.46799999999996,
+            "y": 231.09732810085768,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 437.976,
+            "y": 210.86711249292873,
+            "layer": "ground"
+          }
+        ],
+        "camera": {
+          "zoom": 1.1239352243767315,
+          "x": -52.78359536958436,
+          "y": -17.848052038629728,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 38.600000000000364
+        },
+        "impact": {
+          "actor": "a0",
+          "target": "e0",
+          "critical": true,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 3,
+          "beats": 3
+        },
+        "active": [
+          {
+            "key": "h01",
+            "role": "single",
+            "frame": 4,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h01",
+            "role": "single",
+            "frame": 3,
+            "finisher": true,
+            "magnification": 1.45
+          }
+        ],
+        "total": {
+          "hidden": false,
+          "text": "总伤害\n507\n3 HITS",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 381.296875,
+            "y": 281.25,
+            "w": 90.375,
+            "h": 29.1875,
+            "right": 471.671875,
+            "bottom": 310.4375
+          },
+          "number": {
+            "x": 416.4690856933594,
+            "y": 275.5101318359375,
+            "w": 73.496337890625,
+            "h": 37.050323486328125,
+            "right": 489.9654235839844,
+            "bottom": 312.5604553222656
+          }
+        },
+        "stage": {
+          "x": 79.828125,
+          "y": 0,
+          "w": 693,
+          "h": 390,
+          "right": 772.828125,
+          "bottom": 390
+        }
+      },
+      "heal-ring": {
+        "positions": [
+          {
+            "target": "a0",
+            "text": "+245",
+            "kind": "battle-float heal",
+            "box": {
+              "x": 361.207763671875,
+              "y": 87.07758331298828,
+              "w": 49.459503173828125,
+              "h": 20.28179168701172,
+              "right": 410.6672668457031,
+              "bottom": 107.359375
+            },
+            "gap": 12.94516787481541
+          },
+          {
+            "target": "a1",
+            "text": "+245",
+            "kind": "battle-float heal",
+            "box": {
+              "x": 314.91973876953125,
+              "y": 145.76412963867188,
+              "w": 46.2230224609375,
+              "h": 18.954620361328125,
+              "right": 361.14276123046875,
+              "bottom": 164.71875
+            },
+            "gap": 11.35319031764027
+          },
+          {
+            "target": "a2",
+            "text": "+245",
+            "kind": "battle-float heal",
+            "box": {
+              "x": 283.296875,
+              "y": 215.00936889648438,
+              "w": 13.65625,
+              "h": 5.600006103515625,
+              "right": 296.953125,
+              "bottom": 220.609375
+            },
+            "gap": 9.759360471587854
+          }
+        ],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 267.498,
+            "y": 178.73617092368735,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 181.566,
+            "y": 283.7132654944952,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 69.99300000000001,
+            "y": 271.0627510468396,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "a5",
+            "phase": "active",
+            "rotation": 7.071288730938431,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 69.99300000000001,
+            "y": 309.20946097021374,
+            "layer": "ground"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 468.46799999999996,
+            "y": 231.57845904983935,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "phase": "active",
+            "rotation": 1.3281082943050848,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 425.502,
+            "y": 211.0761862749752,
+            "layer": "ground"
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0.26582707068836714,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 267.498,
+            "y": 211.49331784136524,
+            "layer": "ground"
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a1",
+            "phase": "active",
+            "rotation": 0.13291353534418357,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 224.532,
+            "y": 266.79285188768125,
+            "layer": "ground"
+          },
+          {
+            "key": "status_heal_ring",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 181.566,
+            "y": 322.07260204670297,
+            "layer": "ground"
+          }
+        ],
+        "camera": {
+          "zoom": 1.115,
+          "x": 7.859774999999992,
+          "y": -32.343999999999994,
+          "kick": false,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a0",
+          "target": "e0",
+          "critical": true,
+          "finisher": true,
+          "hold": 72,
+          "sparks": 14,
+          "beat": 3,
+          "beats": 3
+        },
+        "active": [
+          {
+            "key": "h03",
+            "role": "group",
+            "frame": 5,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 5,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 4,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 4,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 3,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 2,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h03",
+            "role": "target",
+            "frame": 1,
+            "finisher": true,
+            "magnification": 1.45
+          }
+        ],
+        "total": {
+          "hidden": false,
+          "text": "总治疗\n735\n3 次施加",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 382.4921875,
+            "y": 281.25,
+            "w": 87.984375,
+            "h": 29.1875,
+            "right": 470.4765625,
+            "bottom": 310.4375
+          },
+          "number": {
+            "x": 417.9627685546875,
+            "y": 281.25,
+            "w": 55.508270263671875,
+            "h": 29.1875,
+            "right": 473.4710388183594,
+            "bottom": 310.4375
+          }
+        },
+        "stage": {
+          "x": 79.828125,
+          "y": 0,
+          "w": 693,
+          "h": 390,
+          "right": 772.828125,
+          "bottom": 390
+        }
+      },
+      "shield": {
+        "positions": [
+          {
+            "target": "a0",
+            "text": "盾 +143",
+            "kind": "battle-float shield",
+            "box": {
+              "x": 347.3100891113281,
+              "y": 100.54627990722656,
+              "w": 61.504852294921875,
+              "h": 17.422470092773438,
+              "right": 408.81494140625,
+              "bottom": 117.96875
+            },
+            "gap": 11.891045203868629
+          },
+          {
+            "target": "a1",
+            "text": "盾 +228",
+            "kind": "battle-float shield",
+            "box": {
+              "x": 321.54998779296875,
+              "y": 169.515625,
+              "w": 17.2125244140625,
+              "h": 4.65625,
+              "right": 338.76251220703125,
+              "bottom": 174.171875
+            },
+            "gap": 9.754188155538031
+          }
+        ],
+        "shots": [],
+        "rings": [
+          {
+            "key": "status_shield",
+            "target": "a0",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 267.498,
+            "y": 179.11459703843673,
+            "layer": "over"
+          },
+          {
+            "key": "status_shield",
+            "target": "a2",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 181.566,
+            "y": 283.44155717143843,
+            "layer": "over"
+          },
+          {
+            "key": "status_freeze",
+            "target": "e1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 468.46799999999996,
+            "y": 231.22492213663568,
+            "layer": "over"
+          },
+          {
+            "key": "status_curse",
+            "target": "e0",
+            "phase": "active",
+            "rotation": 2.532821810494171,
+            "perspective": 0.36,
+            "source": "png",
+            "blendMode": 1,
+            "x": 425.502,
+            "y": 211.0926804022912,
+            "layer": "ground"
+          },
+          {
+            "key": "status_shield",
+            "target": "a1",
+            "phase": "active",
+            "rotation": 0,
+            "perspective": 1,
+            "source": "png",
+            "blendMode": 1,
+            "x": 224.532,
+            "y": 231.1873617171823,
+            "layer": "over"
+          }
+        ],
+        "camera": {
+          "zoom": 1.115,
+          "x": -0.017324999999992485,
+          "y": -23.667799999999993,
+          "kick": false,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a2",
+          "target": "a5",
+          "critical": false,
+          "finisher": true,
+          "hold": 65,
+          "sparks": 0,
+          "beat": 4,
+          "beats": 4
+        },
+        "active": [
+          {
+            "key": "h04",
+            "role": "target",
+            "frame": 3,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h04",
+            "role": "target",
+            "frame": 3,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h04",
+            "role": "target",
+            "frame": 2,
+            "finisher": true,
+            "magnification": 1.45
+          }
+        ],
+        "total": {
+          "hidden": false,
+          "text": "总护盾\n371\n2 次施加",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px",
+          "box": {
+            "x": 384.1875,
+            "y": 281.25,
+            "w": 84.59375,
+            "h": 29.1875,
+            "right": 468.78125,
+            "bottom": 310.4375
+          },
+          "number": {
+            "x": 419.6580810546875,
+            "y": 281.25,
+            "w": 52.117645263671875,
+            "h": 29.1875,
+            "right": 471.7757263183594,
+            "bottom": 310.4375
+          }
+        },
+        "stage": {
+          "x": 79.828125,
+          "y": 0,
+          "w": 693,
+          "h": 390,
+          "right": 772.828125,
+          "bottom": 390
+        }
+      }
+    },
+    "projectiles": {
+      "proj_h06-e": [
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.018857142857143898,
+          "rotation": -3.0671138197492653,
+          "x": 559.1639598025199,
+          "y": 269.25802456867996,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3018.9
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.11428571428571428,
+          "rotation": -3.0739778399219926,
+          "x": 522.4377750110114,
+          "y": 266.61412409850266,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3035.6
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.20971428571428727,
+          "rotation": -3.09012449505341,
+          "x": 485.7115902195018,
+          "y": 264.3972457510352,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3052.3
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.30514285714285766,
+          "rotation": -3.114149301788259,
+          "x": 448.9854054279932,
+          "y": 262.9249240743509,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3069
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.4,
+          "rotation": 3.1394583836460583,
+          "x": 412.47913791068504,
+          "y": 262.4477160570693,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3085.6
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.49485714285714233,
+          "rotation": 3.1068531776184614,
+          "x": 375.972870393377,
+          "y": 263.113850432878,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3102.2
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.5908571428571434,
+          "rotation": 3.073782088291715,
+          "x": 339.02676832766696,
+          "y": 265.01175206679613,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3119
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.6857142857142857,
+          "rotation": 3.0439938880266917,
+          "x": 302.52050081035884,
+          "y": 268.04774415479204,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3135.6
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.7811428571428587,
+          "rotation": 3.0195812769241757,
+          "x": 265.7943160188493,
+          "y": 272.1136759224817,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3152.3
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.876000000000001,
+          "rotation": 3.0029152874311147,
+          "x": 229.2880485015412,
+          "y": 276.92048825826396,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3168.9
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.9714285714285714,
+          "rotation": 2.995190407564473,
+          "x": 192.56186371003264,
+          "y": 282.2153716755166,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3185.6
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.019428571428579743,
+          "rotation": -3.066537642108208,
+          "x": 557.5106786380398,
+          "y": 269.26837864157386,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15969.2
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.11428571428571428,
+          "rotation": -3.0734075489544788,
+          "x": 521.1430698653653,
+          "y": 266.62938230788006,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15985.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.20971428571428988,
+          "rotation": -3.0896071011471204,
+          "x": 484.5563791121275,
+          "y": 264.4003748040859,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16002.5
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.30514285714286543,
+          "rotation": -3.1137152008372224,
+          "x": 447.9696883588898,
+          "y": 262.9153928928309,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16019.2
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.4,
+          "rotation": 3.1397871327664957,
+          "x": 411.60207958621515,
+          "y": 262.42510080895244,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16035.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.4954285714285756,
+          "rotation": 3.1068637663562915,
+          "x": 375.01538883297746,
+          "y": 263.08524706005653,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16052.5
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.5902857142857205,
+          "rotation": 3.0740648952035863,
+          "x": 338.6477800602988,
+          "y": 264.946604043758,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16069.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.6857142857142857,
+          "rotation": 3.0439775425361524,
+          "x": 302.0610893070651,
+          "y": 267.98299137022633,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16085.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.7811428571428612,
+          "rotation": 3.0194782329477676,
+          "x": 265.4743985538274,
+          "y": 272.03403570472534,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16102.5
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.8765714285714369,
+          "rotation": 3.0026804885517913,
+          "x": 228.88770780058968,
+          "y": 276.85627657914415,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16119.2
+        },
+        {
+          "key": "proj_h06",
+          "actor": "e5",
+          "target": "a2",
+          "progress": 0.9714285714285714,
+          "rotation": 2.9950065029409463,
+          "x": 192.52009902791502,
+          "y": 282.10501596306653,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16135.8
+        }
+      ],
+      "proj_h01-a": [
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.019428571428571947,
+          "rotation": -0.37678251572843513,
+          "x": 292.5350628969613,
+          "y": 175.22730225454936,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3619
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.11428571428571428,
+          "rotation": -0.3596890171779904,
+          "x": 305.39783187079826,
+          "y": 170.23517198634212,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3635.6
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.20971428571428727,
+          "rotation": -0.31871245835154294,
+          "x": 318.3380874047189,
+          "y": 165.6419090260486,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3652.3
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.30514285714285766,
+          "rotation": -0.25583482086885134,
+          "x": 331.27834293863924,
+          "y": 161.79581841657154,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3669
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.4005714285714281,
+          "rotation": -0.1751465014673265,
+          "x": 344.21859847255956,
+          "y": 158.948040377428,
+          "source": "png",
+          "blendMode": 1,
+          "t": 3685.7
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.02,
+          "rotation": -0.3776028401173969,
+          "x": 293.1129871154464,
+          "y": 175.2767557995895,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16569.2
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.11485714285713454,
+          "rotation": -0.3603001953948999,
+          "x": 305.9273172255537,
+          "y": 170.29288698516834,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16585.8
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.21028571428571013,
+          "rotation": -0.3190410062885128,
+          "x": 318.8188420953621,
+          "y": 165.71024541251305,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16602.5
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.30514285714284467,
+          "rotation": -0.2562521891877857,
+          "x": 331.63317220546935,
+          "y": 161.89692316126033,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16619.1
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.4011428571428613,
+          "rotation": -0.1747341492421917,
+          "x": 344.60189183497886,
+          "y": 159.0429778022122,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16635.9
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.49599999999999583,
+          "rotation": -0.08324715044912459,
+          "x": 357.41622194508614,
+          "y": 157.3769758317858,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16652.5
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.5914285714285714,
+          "rotation": 0.010552718846250399,
+          "x": 370.3077468148946,
+          "y": 156.91686539109406,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16669.2
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.686285714285706,
+          "rotation": 0.09575474757062663,
+          "x": 383.1220769250018,
+          "y": 157.6189952037274,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16685.8
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.7817142857142816,
+          "rotation": 0.164936076469398,
+          "x": 396.01360179481026,
+          "y": 159.3388973158737,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16702.5
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.8771428571428571,
+          "rotation": 0.21171065309399817,
+          "x": 408.90512666461865,
+          "y": 161.8318004348604,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16719.2
+        },
+        {
+          "key": "proj_h01",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.9719999999999916,
+          "rotation": 0.23282940079769626,
+          "x": 421.7194567747259,
+          "y": 164.76660465225484,
+          "source": "png",
+          "blendMode": 1,
+          "t": 16735.8
+        }
+      ],
+      "proj_h05-e": [
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.019428571428569377,
+          "rotation": -3.0354069393493774,
+          "x": 528.3741779514393,
+          "y": 163.9849398277882,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4652.4
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.11428571428571443,
+          "rotation": -3.0453073499064156,
+          "x": 503.13790432676575,
+          "y": 161.39236996053134,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4669
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.20971428571428494,
+          "rotation": -3.0686204503055987,
+          "x": 477.74960495736605,
+          "y": 159.2127033270403,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4685.7
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.30514285714285544,
+          "rotation": -3.1033604023025885,
+          "x": 452.3613055879664,
+          "y": 157.77971403659262,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4702.4
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.4000000000000005,
+          "rotation": 3.137005572109647,
+          "x": 427.1250319632928,
+          "y": 157.34373525582888,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4719
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.4948571428571456,
+          "rotation": 3.0898235670896264,
+          "x": 401.88875833861925,
+          "y": 158.0532513903337,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4735.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.5902857142857161,
+          "rotation": 3.04236880728155,
+          "x": 376.50045896921955,
+          "y": 159.9820952860857,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4752.3
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.6857142857142866,
+          "rotation": 2.999299189523689,
+          "x": 351.11215959981985,
+          "y": 163.0810407181263,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4769
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.7805714285714304,
+          "rotation": 2.9645976214793435,
+          "x": 325.8758859751466,
+          "y": 167.17003151594074,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4785.6
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.8760000000000009,
+          "rotation": 2.9407212290518534,
+          "x": 300.48758660574697,
+          "y": 172.05629290212846,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4802.3
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.9714285714285714,
+          "rotation": 2.929753517848919,
+          "x": 275.09928723634727,
+          "y": 177.40595073280676,
+          "source": "png",
+          "blendMode": 1,
+          "t": 4819
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.019428571428579743,
+          "rotation": -3.035337884733446,
+          "x": 528.4081319269748,
+          "y": 164.09271559283687,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17169.2
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.11428571428571428,
+          "rotation": -3.0452293486835416,
+          "x": 503.1685737102648,
+          "y": 161.49780216317274,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17185.8
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.20971428571428988,
+          "rotation": -3.0685312079848894,
+          "x": 477.77696996212546,
+          "y": 159.3153745621709,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17202.5
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.30457142857142444,
+          "rotation": -3.103021690570648,
+          "x": 452.53741174541545,
+          "y": 157.88503938037144,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17219.1
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.40057142857144107,
+          "rotation": 3.136846765385547,
+          "x": 426.9937624658468,
+          "y": 157.44031586928634,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17235.9
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.4954285714285756,
+          "rotation": 3.08966602252472,
+          "x": 401.7542042491368,
+          "y": 158.15293697300234,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17252.5
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.5902857142857101,
+          "rotation": 3.0425140463409086,
+          "x": 376.5146460324268,
+          "y": 160.06930115392797,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17269.1
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.6857142857142857,
+          "rotation": 2.9994576262873944,
+          "x": 351.1230422842875,
+          "y": 163.16315069078976,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17285.8
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.7811428571428612,
+          "rotation": 2.96458981209128,
+          "x": 325.7314385361482,
+          "y": 167.27375314522752,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17302.5
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.8759999999999959,
+          "rotation": 2.9409025843677385,
+          "x": 300.49188031943817,
+          "y": 172.1266554456419,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17319.1
+        },
+        {
+          "key": "proj_h05",
+          "actor": "e3",
+          "target": "a0",
+          "progress": 0.9714285714285714,
+          "rotation": 2.929945070792839,
+          "x": 275.1002765712989,
+          "y": 177.46959342355962,
+          "source": "png",
+          "blendMode": 1,
+          "t": 17335.8
+        }
+      ],
+      "proj_h05-a": [
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.01942857142856935,
+          "rotation": -0.08104107429714358,
+          "x": 124.22753744672103,
+          "y": 216.49948608759752,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5252.4
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.11428571428571428,
+          "rotation": -0.07354690718915076,
+          "x": 157.52818825315777,
+          "y": 213.89046925163984,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5269
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.2097142857142847,
+          "rotation": -0.05586735419526933,
+          "x": 191.02944538975265,
+          "y": 211.69151265390283,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5285.7
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.3045714285714296,
+          "rotation": -0.029725502384323154,
+          "x": 224.3300961961894,
+          "y": 210.24247814221033,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5302.3
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.4,
+          "rotation": 0.0028688048129426598,
+          "x": 257.83135333278426,
+          "y": 209.77601166926075,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5319
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.4954285714285704,
+          "rotation": 0.03881978944670683,
+          "x": 291.3326104693792,
+          "y": 210.4661492713549,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5335.7
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.5902857142857153,
+          "rotation": 0.07461727455699219,
+          "x": 324.6332612758159,
+          "y": 212.35738740359494,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5352.3
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.6857142857142857,
+          "rotation": 0.10742740997633744,
+          "x": 358.1345184124108,
+          "y": 215.42395049157352,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5369
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.7811428571428561,
+          "rotation": 0.13411627616863547,
+          "x": 391.63577554900576,
+          "y": 219.5053303433294,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5385.7
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.876000000000001,
+          "rotation": 0.15231705274288537,
+          "x": 424.93642635544245,
+          "y": 224.32734825755648,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5402.3
+        },
+        {
+          "key": "proj_h05",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.9714285714285714,
+          "rotation": 0.16074582404680954,
+          "x": 458.4376834920373,
+          "y": 229.63745420861773,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5419
+        }
+      ],
+      "proj_h02-a": [
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.018857142857143898,
+          "rotation": -0.17017660866588127,
+          "x": 233.6047550836452,
+          "y": 228.68616135741314,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5819
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.11428571428571428,
+          "rotation": -0.15938398910680468,
+          "x": 256.4481807685787,
+          "y": 224.85726201381505,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5835.7
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.2091428571428592,
+          "rotation": -0.13408080363147887,
+          "x": 279.15481947336366,
+          "y": 221.47390624210868,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5852.3
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.3045714285714296,
+          "rotation": -0.0959697981765562,
+          "x": 301.9982451582972,
+          "y": 218.8115829309543,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5869
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.4,
+          "rotation": -0.04839551646453807,
+          "x": 324.84167084323076,
+          "y": 217.1439235209177,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5885.7
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.49485714285714494,
+          "rotation": 0.004016639422874855,
+          "x": 347.5483095480157,
+          "y": 216.63321182404852,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5902.3
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.5902857142857153,
+          "rotation": 0.05696974496321152,
+          "x": 370.3917352329492,
+          "y": 217.3328585121838,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5919
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.6857142857142857,
+          "rotation": 0.10518525412372799,
+          "x": 393.23516091788275,
+          "y": 219.20108768107912,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5935.7
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.7805714285714307,
+          "rotation": 0.14410534132836403,
+          "x": 415.94179962266776,
+          "y": 222.06533287265754,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5952.3
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.876000000000001,
+          "rotation": 0.1709016832813758,
+          "x": 438.7852253076012,
+          "y": 225.71817343509446,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5969
+        },
+        {
+          "key": "proj_h02",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.970857142857146,
+          "rotation": 0.18317114289338815,
+          "x": 461.4918640123862,
+          "y": 229.80789329546585,
+          "source": "png",
+          "blendMode": 1,
+          "t": 5985.6
+        }
+      ],
+      "proj_h02-e": [
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.01942857142856935,
+          "rotation": -3.0611059267166842,
+          "x": 568.6229345448561,
+          "y": 216.02699743154116,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6385.7
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.11485714285713974,
+          "rotation": -3.0687120509128785,
+          "x": 535.1362293764469,
+          "y": 213.4243385873918,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6402.4
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.2097142857142847,
+          "rotation": -3.0863557236941266,
+          "x": 501.8500434006618,
+          "y": 211.2633044694259,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6419
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.3045714285714296,
+          "rotation": -3.1125427890058974,
+          "x": 468.5638574248767,
+          "y": 209.83959810033394,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6435.6
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.4,
+          "rotation": 3.138000269024275,
+          "x": 435.07715225646746,
+          "y": 209.4008684969509,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6452.3
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.4954285714285704,
+          "rotation": 3.102001129382553,
+          "x": 401.5904470880582,
+          "y": 210.12105428012447,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6469
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.5908571428571407,
+          "rotation": 3.0659480640191026,
+          "x": 368.103741919649,
+          "y": 212.05968628553063,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6485.7
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.6857142857142857,
+          "rotation": 3.033303847661223,
+          "x": 334.8175559438639,
+          "y": 215.14584234973952,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6502.3
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.7811428571428561,
+          "rotation": 3.006574617645404,
+          "x": 301.3308507754547,
+          "y": 219.26443672794355,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6519
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.876000000000001,
+          "rotation": 2.9883363252653807,
+          "x": 268.04466479966965,
+          "y": 224.1258850891296,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6535.6
+        },
+        {
+          "key": "proj_h02",
+          "actor": "e4",
+          "target": "a1",
+          "progress": 0.9719999999999969,
+          "rotation": 2.9798525401000444,
+          "x": 234.35744043863627,
+          "y": 229.51088401257533,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6552.4
+        }
+      ],
+      "proj_h03-a": [
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.018857142857143898,
+          "rotation": -0.1260554868558005,
+          "x": 193.09464868031338,
+          "y": 281.4054774445357,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6952.3
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.11428571428571428,
+          "rotation": -0.1179820605716906,
+          "x": 224.0571831418085,
+          "y": 277.5786065817842,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6969
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.2091428571428592,
+          "rotation": -0.09911916989509317,
+          "x": 254.83431320533163,
+          "y": 274.1979097679848,
+          "source": "png",
+          "blendMode": 1,
+          "t": 6985.6
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.3045714285714296,
+          "rotation": -0.07082095619968312,
+          "x": 285.79684766682675,
+          "y": 271.5387717131848,
+          "source": "png",
+          "blendMode": 1,
+          "t": 7002.3
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.4,
+          "rotation": -0.035627394385165496,
+          "x": 316.7593821283219,
+          "y": 269.8746716784245,
+          "source": "png",
+          "blendMode": 1,
+          "t": 7019
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.4954285714285704,
+          "rotation": 0.003297233181730443,
+          "x": 347.721916589817,
+          "y": 269.3683164170142,
+          "source": "png",
+          "blendMode": 1,
+          "t": 7035.7
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.5902857142857153,
+          "rotation": 0.042152802940497655,
+          "x": 378.4990466533401,
+          "y": 270.0712685428627,
+          "source": "png",
+          "blendMode": 1,
+          "t": 7052.3
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.6857142857142857,
+          "rotation": 0.0778376011244446,
+          "x": 409.4615811148352,
+          "y": 271.9433448652605,
+          "source": "png",
+          "blendMode": 1,
+          "t": 7069
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.7811428571428561,
+          "rotation": 0.10690736505111528,
+          "x": 440.4241155763304,
+          "y": 274.83110522130704,
+          "source": "png",
+          "blendMode": 1,
+          "t": 7085.7
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.876000000000001,
+          "rotation": 0.126752483621089,
+          "x": 471.2012456398535,
+          "y": 278.4674163564987,
+          "source": "png",
+          "blendMode": 1,
+          "t": 7102.3
+        },
+        {
+          "key": "proj_h03",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.9714285714285714,
+          "rotation": 0.1359539322928114,
+          "x": 502.1637801013486,
+          "y": 282.5853461465778,
+          "source": "png",
+          "blendMode": 1,
+          "t": 7119
+        }
+      ],
+      "proj_h04-a": [
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.018857142857149095,
+          "rotation": -0.15511660732877336,
+          "x": 164.4306528768419,
+          "y": 163.77349067137737,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8435.7
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.11371428571428363,
+          "rotation": -0.14541384258498902,
+          "x": 189.67109761909043,
+          "y": 159.9230265837559,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8452.3
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.20971428571428988,
+          "rotation": -0.1222470950318374,
+          "x": 215.21564410522535,
+          "y": 156.45757327650912,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8469.1
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.3045714285714348,
+          "rotation": -0.08801533755363933,
+          "x": 240.45608884747668,
+          "y": 153.77482734184684,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8485.7
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.4,
+          "rotation": -0.045137326896524256,
+          "x": 265.848584461667,
+          "y": 152.0702572024565,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8502.4
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.49485714285714494,
+          "rotation": 0.0020597773089849475,
+          "x": 291.0890292039183,
+          "y": 151.52491507250292,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8519
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.5902857142857205,
+          "rotation": 0.049753282533928175,
+          "x": 316.48152481811144,
+          "y": 152.1916730426373,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8535.7
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.6857142857142857,
+          "rotation": 0.09323379629004055,
+          "x": 341.8740204323018,
+          "y": 154.02884404722343,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8552.4
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.7805714285714307,
+          "rotation": 0.1284002852969707,
+          "x": 367.11446517455306,
+          "y": 156.86390299774794,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8569
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.8765714285714264,
+          "rotation": 0.15277349937224893,
+          "x": 392.6590116606852,
+          "y": 160.51238657630347,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8585.8
+        },
+        {
+          "key": "proj_h04",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.9714285714285714,
+          "rotation": 0.16383425061072074,
+          "x": 417.8994564029365,
+          "y": 164.5776278366756,
+          "source": "png",
+          "blendMode": 1,
+          "t": 8602.4
+        }
+      ],
+      "proj_h06-a": [
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.0188571428571387,
+          "rotation": -0.07432046748828111,
+          "x": 133.86207143693073,
+          "y": 269.176306423623,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15402.4
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.11428571428571428,
+          "rotation": -0.06744547414221637,
+          "x": 170.58572436065526,
+          "y": 266.53890003300194,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15419.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.20971428571427947,
+          "rotation": -0.051287105500413585,
+          "x": 207.3093772843758,
+          "y": 264.32927164161356,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15435.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.30457142857142444,
+          "rotation": -0.027413586662573156,
+          "x": 243.81312809478385,
+          "y": 262.87095784711096,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15452.4
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.4,
+          "rotation": 0.0023397255962906297,
+          "x": 280.5367810185084,
+          "y": 262.39640856815544,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15469.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.49485714285714494,
+          "rotation": 0.03495682519196328,
+          "x": 317.0405318289164,
+          "y": 263.07192430843855,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15485.7
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.5908571428571407,
+          "rotation": 0.06803930223014978,
+          "x": 353.9840868659535,
+          "y": 264.98002695156725,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15502.5
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.6857142857142857,
+          "rotation": 0.09783796934527737,
+          "x": 390.48783767636155,
+          "y": 268.0267800856894,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15519.1
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.7811428571428509,
+          "rotation": 0.12226037952324735,
+          "x": 427.211490600082,
+          "y": 272.104203108975,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15535.8
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.8765714285714264,
+          "rotation": 0.13900989970476976,
+          "x": 463.9351435238066,
+          "y": 276.95382623300685,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15552.5
+        },
+        {
+          "key": "proj_h06",
+          "actor": "a5",
+          "target": "e2",
+          "progress": 0.9714285714285714,
+          "rotation": 0.1466694503027808,
+          "x": 500.43889433421464,
+          "y": 282.2307260257171,
+          "source": "png",
+          "blendMode": 1,
+          "t": 15569.1
+        }
+      ]
+    },
+    "statuses": {
+      "status_shield-a0": {
+        "first": {
+          "key": "status_shield",
+          "target": "a0",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 267.498,
+          "y": 178.85108713756375,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_shield",
+          "target": "a0",
+          "phase": "release",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 255.03819140982856,
+          "y": 174.68559182042932,
+          "layer": "over"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 0
+      },
+      "status_shield-a2": {
+        "first": {
+          "key": "status_shield",
+          "target": "a2",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 181.566,
+          "y": 283.8069505227607,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_shield",
+          "target": "a2",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 181.566,
+          "y": 283.36944045364555,
+          "layer": "over"
+        },
+        "phases": [
+          "active"
+        ],
+        "motion": 0
+      },
+      "status_freeze-a5": {
+        "first": {
+          "key": "status_freeze",
+          "target": "a5",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 69.99300000000001,
+          "y": 270.7393381473276,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_freeze",
+          "target": "a5",
+          "phase": "release",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 69.99300000000001,
+          "y": 270.92486025844937,
+          "layer": "over"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 0
+      },
+      "status_curse-a5": {
+        "first": {
+          "key": "status_curse",
+          "target": "a5",
+          "phase": "active",
+          "rotation": 0.07487462493136272,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 69.99300000000001,
+          "y": 309.199354317104,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_curse",
+          "target": "a5",
+          "phase": "release",
+          "rotation": 7.361711518470288,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 69.99300000000001,
+          "y": 309.2058692618948,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 7.286836893538925
+      },
+      "status_freeze-e1": {
+        "first": {
+          "key": "status_freeze",
+          "target": "e1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 468.46799999999996,
+          "y": 231.1135043139782,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_freeze",
+          "target": "e1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 468.46799999999996,
+          "y": 231.3890550514185,
+          "layer": "over"
+        },
+        "phases": [
+          "active"
+        ],
+        "motion": 0
+      },
+      "status_curse-e0": {
+        "first": {
+          "key": "status_curse",
+          "target": "e0",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 437.976,
+          "y": 210.86711249292873,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_curse",
+          "target": "e0",
+          "phase": "active",
+          "rotation": 5.180922618082566,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 425.502,
+          "y": 211.092356566968,
+          "layer": "ground"
+        },
+        "phases": [
+          "active"
+        ],
+        "motion": 5.180922618082566
+      },
+      "status_heal_ring-a0": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a0",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 267.498,
+          "y": 211.49227899428942,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a0",
+          "phase": "release",
+          "rotation": 1.5533967367134767,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 267.498,
+          "y": 211.5001404013816,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5533967367134767
+      },
+      "status_heal_ring-a1": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 224.532,
+          "y": 266.792443905533,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a1",
+          "phase": "release",
+          "rotation": 1.5413136880458236,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 224.532,
+          "y": 266.7923039986189,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5413136880458236
+      },
+      "status_heal_ring-a2": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a2",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 181.566,
+          "y": 322.07260204670297,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a2",
+          "phase": "release",
+          "rotation": 1.5695880219281335,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 181.566,
+          "y": 322.0634049873749,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5695880219281335
+      },
+      "status_heal_ring-a3": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a3",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 155.925,
+          "y": 198.62484321436304,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a3",
+          "phase": "release",
+          "rotation": 1.5575049732604804,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 155.925,
+          "y": 198.63005255943446,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5575049732604804
+      },
+      "status_heal_ring-a4": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a4",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 112.959,
+          "y": 253.92014154717867,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a4",
+          "phase": "release",
+          "rotation": 1.5454219245928251,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 112.959,
+          "y": 253.9248889274599,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.5454219245928251
+      },
+      "status_heal_ring-a5": {
+        "first": {
+          "key": "status_heal_ring",
+          "target": "a5",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 69.99300000000001,
+          "y": 309.2079786653602,
+          "layer": "ground"
+        },
+        "last": {
+          "key": "status_heal_ring",
+          "target": "a5",
+          "phase": "release",
+          "rotation": 1.533338875925172,
+          "perspective": 0.36,
+          "source": "png",
+          "blendMode": 1,
+          "x": 69.99300000000001,
+          "y": 309.1986307687757,
+          "layer": "ground"
+        },
+        "phases": [
+          "active",
+          "release"
+        ],
+        "motion": 1.533338875925172
+      },
+      "status_shield-a1": {
+        "first": {
+          "key": "status_shield",
+          "target": "a1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 224.532,
+          "y": 231.1873617171823,
+          "layer": "over"
+        },
+        "last": {
+          "key": "status_shield",
+          "target": "a1",
+          "phase": "active",
+          "rotation": 0,
+          "perspective": 1,
+          "source": "png",
+          "blendMode": 1,
+          "x": 224.532,
+          "y": 231.35166258968334,
+          "layer": "over"
+        },
+        "phases": [
+          "active"
+        ],
+        "motion": 0
+      }
+    },
+    "impacts": [
+      {
+        "actor": "e5",
+        "target": "a2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 3202.2
+      },
+      {
+        "actor": "e5",
+        "target": "e5",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 3285.6
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": true,
+        "finisher": false,
+        "hold": 72,
+        "sparks": 14,
+        "beat": 0,
+        "beats": 1,
+        "t": 4406.6
+      },
+      {
+        "actor": "e3",
+        "target": "a0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 4835.7
+      },
+      {
+        "actor": "e3",
+        "target": "e3",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 4919
+      },
+      {
+        "actor": "a4",
+        "target": "e1",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 5435.6
+      },
+      {
+        "actor": "a1",
+        "target": "e1",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 6002.4
+      },
+      {
+        "actor": "e4",
+        "target": "a1",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 6569
+      },
+      {
+        "actor": "a2",
+        "target": "e2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 7135.7
+      },
+      {
+        "actor": "e2",
+        "target": "a2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 7702.3
+      },
+      {
+        "actor": "e2",
+        "target": "e2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 7785.7
+      },
+      {
+        "actor": "a3",
+        "target": "e0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 8619.1
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": true,
+        "finisher": false,
+        "hold": 72,
+        "sparks": 14,
+        "beat": 1,
+        "beats": 3,
+        "t": 9485.7
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": false,
+        "finisher": false,
+        "hold": 0,
+        "sparks": 11,
+        "beat": 2,
+        "beats": 3,
+        "t": 9669
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": true,
+        "finisher": true,
+        "hold": 72,
+        "sparks": 14,
+        "beat": 3,
+        "beats": 3,
+        "t": 9785.7
+      },
+      {
+        "actor": "a2",
+        "target": "a5",
+        "critical": false,
+        "finisher": true,
+        "hold": 65,
+        "sparks": 0,
+        "beat": 4,
+        "beats": 4,
+        "t": 12435.7
+      },
+      {
+        "actor": "a3",
+        "target": "a2",
+        "critical": false,
+        "finisher": true,
+        "hold": 65,
+        "sparks": 0,
+        "beat": 3,
+        "beats": 3,
+        "t": 14256.6
+      },
+      {
+        "actor": "e0",
+        "target": "a0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 14985.8
+      },
+      {
+        "actor": "e0",
+        "target": "e0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 15069.2
+      },
+      {
+        "actor": "a5",
+        "target": "e2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 15585.8
+      },
+      {
+        "actor": "e5",
+        "target": "a2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 16152.5
+      },
+      {
+        "actor": "e5",
+        "target": "e5",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 16235.8
+      },
+      {
+        "actor": "a0",
+        "target": "e0",
+        "critical": true,
+        "finisher": false,
+        "hold": 72,
+        "sparks": 14,
+        "beat": 0,
+        "beats": 1,
+        "t": 16752.5
+      },
+      {
+        "actor": "e3",
+        "target": "a0",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1,
+        "t": 17352.5
+      }
+    ],
+    "finals": [
+      {
+        "key": "h01",
+        "heroId": "h01",
+        "actor": "a0",
+        "target": "e0",
+        "targets": null,
+        "role": "single",
+        "hitIndex": 2,
+        "due": 432,
+        "source": "png",
+        "startedAt": 9485.7,
+        "impactAt": 9785.7,
+        "renderedImpactAt": 9785.7,
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7,
+          8
+        ],
+        "active": true,
+        "rotation": 0,
+        "blendMode": 1,
+        "finisher": true,
+        "magnification": 1.45
+      },
+      {
+        "key": "h03",
+        "heroId": "h03",
+        "actor": "a2",
+        "target": "a5",
+        "targets": null,
+        "role": "target",
+        "hitIndex": 5,
+        "due": 563,
+        "source": "png",
+        "startedAt": 11635.7,
+        "impactAt": null,
+        "renderedImpactAt": null,
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8
+        ],
+        "active": true,
+        "rotation": 0,
+        "blendMode": 1,
+        "finisher": true,
+        "magnification": 1.45
+      },
+      {
+        "key": "h04",
+        "heroId": "h04",
+        "actor": "a3",
+        "target": "a2",
+        "targets": null,
+        "role": "target",
+        "hitIndex": 2,
+        "due": 346,
+        "source": "png",
+        "startedAt": 13402.5,
+        "impactAt": 14256.6,
+        "renderedImpactAt": 14256.6,
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7,
+          8
+        ],
+        "active": true,
+        "rotation": 0,
+        "blendMode": 1,
+        "finisher": true,
+        "magnification": 1.45
+      }
+    ],
+    "criticals": 132,
+    "gapCount": 1230,
+    "worstGaps": [
+      {
+        "gap": 9.750048022344998,
+        "target": "e5",
+        "kind": "battle-float damage"
+      },
+      {
+        "gap": 9.750060816457136,
+        "target": "a2",
+        "kind": "battle-float damage resist"
+      },
+      {
+        "gap": 9.750087159011201,
+        "target": "e0",
+        "kind": "battle-float damage"
+      },
+      {
+        "gap": 9.750297844921903,
+        "target": "e2",
+        "kind": "battle-float damage"
+      },
+      {
+        "gap": 9.750444161695498,
+        "target": "e0",
+        "kind": "battle-float damage combo-hit"
+      }
+    ],
+    "maxZoom": 1.155,
+    "maxHold": 72,
+    "settled": true
+  },
+  "offlinePackRequests": 0,
+  "powerSave": {
+    "hits": [
+      {
+        "clock": 1380,
+        "actor": "a5",
+        "heroId": "h06",
+        "target": "e2",
+        "kind": "damage",
+        "amount": 164,
+        "ultimate": false,
+        "drawClock": 1380,
+        "cutVisible": false,
+        "labels": [
+          "−164"
+        ],
+        "counter": 0,
+        "procedural": true,
+        "effects": [],
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "e2",
+          "critical": false,
+          "finisher": false,
+          "hold": 0,
+          "sparks": 0,
+          "beat": 0,
+          "beats": 1
+        },
+        "kickPower": 0
+      },
+      {
+        "clock": 1813.4,
+        "actor": "a5",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 414,
+        "ultimate": true,
+        "drawClock": 1813.4,
+        "cutVisible": false,
+        "labels": [
+          "暴击−414"
+        ],
+        "counter": 414,
+        "procedural": true,
+        "effects": [],
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "e3",
+          "critical": true,
+          "finisher": true,
+          "hold": 0,
+          "sparks": 0,
+          "beat": 1,
+          "beats": 1
+        },
+        "kickPower": 0
+      }
+    ],
+    "requests": 0,
+    "hud": {
+      "zoom": 1,
+      "kick": false,
+      "hold": 0
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,138 @@
+{
+  "prefs": {
+    "music": false,
+    "muted": false,
+    "musicVolume": 0.33,
+    "soundVolume": 0.64,
+    "powerSave": false,
+    "sound": true,
+    "poster": "h01"
+  },
+  "legacy": {
+    "music": true,
+    "muted": false,
+    "musicVolume": 0.46,
+    "soundVolume": 0.82,
+    "sound": false,
+    "powerSave": false,
+    "poster": "h01"
+  },
+  "counts": {
+    "tap": 2,
+    "collect": 1,
+    "tab": 2,
+    "upgrade": 1,
+    "back": 1,
+    "summon": 1
+  },
+  "layout": {
+    "left": 96.453125,
+    "right": 753.75,
+    "button": {
+      "x": 671.890625,
+      "y": 12.46875,
+      "width": 26,
+      "height": 26,
+      "top": 12.46875,
+      "right": 697.890625,
+      "bottom": 38.46875,
+      "left": 671.890625
+    }
+  },
+  "controls": [
+    {
+      "rect": {
+        "x": 257.625,
+        "y": 141.265625,
+        "width": 337.734375,
+        "height": 48.15625,
+        "top": 141.265625,
+        "right": 595.359375,
+        "bottom": 189.421875,
+        "left": 257.625
+      },
+      "button": {
+        "x": 518.421875,
+        "y": 151.328125,
+        "width": 75.5625,
+        "height": 27.03125,
+        "top": 151.328125,
+        "right": 593.984375,
+        "bottom": 178.359375,
+        "left": 518.421875
+      },
+      "slider": {
+        "x": 285,
+        "y": 165.15625,
+        "width": 124.796875,
+        "height": 16,
+        "top": 165.15625,
+        "right": 409.796875,
+        "bottom": 181.15625,
+        "left": 285
+      }
+    },
+    {
+      "rect": {
+        "x": 257.625,
+        "y": 189.421875,
+        "width": 337.734375,
+        "height": 48.15625,
+        "top": 189.421875,
+        "right": 595.359375,
+        "bottom": 237.578125,
+        "left": 257.625
+      },
+      "button": {
+        "x": 518.421875,
+        "y": 199.484375,
+        "width": 75.5625,
+        "height": 27.03125,
+        "top": 199.484375,
+        "right": 593.984375,
+        "bottom": 226.515625,
+        "left": 518.421875
+      },
+      "slider": {
+        "x": 285,
+        "y": 213.3125,
+        "width": 124.796875,
+        "height": 16,
+        "top": 213.3125,
+        "right": 409.796875,
+        "bottom": 229.3125,
+        "left": 285
+      }
+    }
+  ],
+  "battleButtons": [
+    {
+      "left": 632.296875,
+      "right": 660.296875,
+      "width": 28,
+      "height": 28,
+      "glyph": "1×"
+    },
+    {
+      "left": 665.296875,
+      "right": 693.296875,
+      "width": 28,
+      "height": 28,
+      "glyph": "自动"
+    },
+    {
+      "left": 698.296875,
+      "right": 726.296875,
+      "width": 28,
+      "height": 28,
+      "glyph": "跳过"
+    },
+    {
+      "left": 731.296875,
+      "right": 759.296875,
+      "width": 28,
+      "height": 28,
+      "glyph": "♫"
+    }
+  ]
+}

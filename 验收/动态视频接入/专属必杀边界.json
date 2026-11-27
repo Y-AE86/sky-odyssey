@@ -1,0 +1,79 @@
+[
+  {
+    "mode": "denied",
+    "durationMs": 3103,
+    "attempts": [
+      {
+        "muted": false,
+        "rate": 1,
+        "activation": true
+      },
+      {
+        "muted": true,
+        "rate": 1,
+        "activation": true
+      }
+    ],
+    "info": {
+      "muted": true,
+      "audioBytes": 11786,
+      "rate": 1
+    },
+    "damageAndSettlement": true,
+    "issues": []
+  },
+  {
+    "mode": "watchdog",
+    "durationMs": 3303,
+    "attempts": [
+      {
+        "muted": false,
+        "rate": 1,
+        "activation": true
+      }
+    ],
+    "info": {
+      "muted": false,
+      "audioBytes": 11453,
+      "rate": 1
+    },
+    "damageAndSettlement": true,
+    "issues": []
+  },
+  {
+    "mode": "skip",
+    "durationMs": 394,
+    "attempts": [
+      {
+        "muted": false,
+        "rate": 1,
+        "activation": true
+      }
+    ],
+    "info": {
+      "muted": false,
+      "audioBytes": 12141,
+      "rate": 1
+    },
+    "damageAndSettlement": true,
+    "issues": []
+  },
+  {
+    "mode": "wing",
+    "durationMs": 451,
+    "attempts": [
+      {
+        "muted": false,
+        "rate": 1,
+        "activation": true
+      }
+    ],
+    "info": {
+      "muted": false,
+      "audioBytes": 12487,
+      "rate": 1
+    },
+    "damageAndSettlement": true,
+    "issues": []
+  }
+]

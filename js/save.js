@@ -146,15 +146,28 @@
     });
   }
   const gearValue = item => (D.rarities.indexOf(item.rarity)+1)*14+item.level*5;
+  const gearFactors = [
+    {hp:0, atk:.65, def:0}, {hp:5, atk:0, def:.25},
+    {hp:0, atk:.4, def:0}, {hp:2, atk:0, def:.15}
+  ];
+  function gearStats(item) {
+    const value=gearValue(item), factor=gearFactors[item.slot];
+    return {hp:value*factor.hp, atk:value*factor.atk, def:value*factor.def};
+  }
   function stats(s,id) {
     const h = D.hero(id);
     const grow = 1+(s.level-1)*.075+(s.stars[id]-1)*.105;
     const native = h.weapon ? 1.06 : 1;
     const passive = s.stars[id]>=3 ? 1.08 : 1;
-    const eq = s.equipment[id].map(uid => s.bag.find(item=>item.uid===uid)).map(item => item ? gearValue(item) : 0);
-    return {hp:Math.round((h.hp*grow+eq[1]*5+eq[3]*2)*native),
-      atk:Math.round((h.atk*grow+eq[0]*.65+eq[2]*.4)*native*passive),
-      def:Math.round(h.def*grow+eq[1]*.25+eq[3]*.15),speed:h.speed};
+    let hp=h.hp*grow, atk=h.atk*grow, def=h.def*grow;
+    for (const uid of s.equipment[id]) {
+      const item=s.bag.find(it=>it.uid===uid);
+      if (!item) continue;
+      const bonus=gearStats(item);
+      hp+=bonus.hp; atk+=bonus.atk; def+=bonus.def;
+    }
+    return {hp:Math.round(hp*native), atk:Math.round(atk*native*passive),
+      def:Math.round(def), speed:h.speed};
   }
   function power(s,id) {
     if (!id) return s.formation.reduce((v,h) => v+power(s,h),0);
@@ -294,5 +307,5 @@
   }
   globalThis.Sky.Save={KEY,poolRates,fresh,validate,load,write,exportJSON:s=>JSON.stringify(validate(s),null,2),
     importJSON,refreshDaily,idle,claimIdle,claimDaily,claimWelfare,launchEvent,claimEvent,bonds,stats,power,upgradeCost,upgrade,starCost,
-    starUp,assign,equip,wearer,autoEquip,enhanceCost,enhance,equippedUpgrade,enhanceAll,exchange,draw,settle};
+    starUp,assign,equip,wearer,autoEquip,gearStats,enhanceCost,enhance,equippedUpgrade,enhanceAll,exchange,draw,settle};
 })();

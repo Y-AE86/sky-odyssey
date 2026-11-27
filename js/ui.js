@@ -13,6 +13,7 @@
   const image = (url,cls='ico') => '<img class="'+cls+'" alt="" draggable="false" src="'+url+'">';
   const icon = key => image(S.art.icon(key));
   const item = key => image(S.art.item(key),'item-icon');
+  const tilePaint = key => image(S.art.banner(key),'tile-paint');
   const amount = (key,quantity,label='') => '<span class="item-amount">'+item(key)+label+' '+quantity+'</span>';
   const closeMark = '<span aria-hidden="true">×</span>';
   const btn = (label,action,color='gold') => '<button class="gem-btn '+color+'" data-action="'+action+'">'+label+'</button>';
@@ -81,9 +82,9 @@
       '<div class="quick-settings"><button data-action="settings" title="画质、音效与存档设置" aria-label="画质、音效与存档设置">'+icon('settings')+'<span>'+(state.settings.powerSave?'省电静态':'极致画质')+'</span></button></div></header>'+
       '<nav class="side-tools" aria-label="主城服务">'+[['quests','quest','任务'],['welfare','reward','福利'],['atlas','codex','图鉴'],['bag','bag','背包']].map(x=>navButton(...x)).join('')+'</nav>'+
       '<div class="city-title"><i></i><span>浮空星途</span><em>SKY ODYSSEY</em></div>'+
-      '<section class="lobby-tiles" aria-label="航行中心"><button class="route-tile" data-action="campaign"><span class="route-art"></span><span class="tile-inside"><small>第'+(st.chapter===1?'一':'二')+'章　'+D.chapters[st.chapter-1]+'</small><strong>主线航线</strong><span>'+st.code+'　'+st.name+'</span></span><i class="tile-arrow" aria-hidden="true">›</i></button>'+
-      '<div class="tile-middle"><button class="trial-tile" data-action="trials">'+image(S.art.icon('formation'),'trial-emblem')+'<strong>星穹试炼</strong></button><button class="idle-tile" data-action="idle"><span class="idle-emblem">'+item('chest')+'</span><strong>星匣挂机</strong><small id="idle-count"></small></button></div>'+
-      '<div class="small-tiles">'+navButton('event','reward','限时活动')+navButton('shop','shop','星港商店')+'</div></section>'+
+      '<section class="lobby-tiles" aria-label="航行中心"><button class="route-tile" data-action="campaign">'+tilePaint('campaign')+'<span class="tile-inside"><small>第'+(st.chapter===1?'一':'二')+'章　'+D.chapters[st.chapter-1]+'</small><strong>主线航线</strong><span>'+st.code+'　'+st.name+'</span></span><i class="tile-arrow" aria-hidden="true">›</i></button>'+
+      '<div class="tile-middle"><button class="trial-tile" data-action="trials">'+tilePaint('tower')+image(S.art.icon('formation'),'trial-emblem')+'<strong>星穹试炼</strong></button><button class="idle-tile" data-action="idle">'+tilePaint('idle')+'<span class="idle-emblem">'+item('chest')+'</span><strong>星匣挂机</strong><small id="idle-count"></small></button></div>'+
+      '<div class="small-tiles">'+navButton('event','reward','限时活动')+'<button data-action="shop">'+tilePaint('shop')+icon('shop')+'<span>星港商店</span></button></div></section>'+
       '<section class="poster-info"><div class="hero-sigil">'+image(S.art.emblem('star'),'hero-star')+'<span class="hero-faction"></span></div><h1></h1><p class="hero-line" data-action="line"></p><div class="poster-controls"><button data-action="poster">切换看板</button><button data-action="clean">净屏赏图</button><span class="poster-dots" aria-hidden="true"></span></div></section>'+
       '<nav class="main-dock" aria-label="主功能">'+navButton('formation','formation','编队')+navButton('roster','roster','星灵')+navButton('gacha','gacha','星穹召唤')+'</nav>';
     posterText();tickIdle();

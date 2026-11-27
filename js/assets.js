@@ -17,6 +17,9 @@
   art.icon = key => 'assets/icons/icon_'+key+'.png';
   art.item = key => 'assets/items/item_'+key+'.png';
   art.emblem = key => 'assets/ui/emblem_'+key+'.png';
+  const banners = {campaign:'tile_campaign', idle:'tile_idle_box', shop:'tile_shop',
+    tower:'banner_tower', boss:'banner_boss', arena:'banner_arena'};
+  art.banner = key => 'assets/banners/'+banners[key]+'.png';
   art.gear = (slot,rarity) => 'assets/items/gear_'+slots[slot]+'_'+(rarity==='UR'?'ur':'sr')+'.png';
   art.isCustomChibi = id => custom.has(id);
   // Dimensions are available for local images without reading their pixels. The empty

@@ -12,7 +12,7 @@
     "vw": 1920,
     "vh": 1080
   },
-  "images": 80,
+  "images": 86,
   "renderer": {
     "canvas": [
       1920,
@@ -22,19 +22,19 @@
     "textures": 8,
     "spriteCount": 12
   },
-  "manualCutMs": 866,
-  "combatDurationSeconds": 13.609,
+  "manualCutMs": 853,
+  "combatDurationSeconds": 12.1,
   "presentedFPS": [
     59.9,
-    59.9
+    59.6
   ],
   "observedMedianBrowserFPS": 75,
   "segmentedDamageSample": [
-    242,
-    487,
-    721
+    247,
+    500,
+    727
   ],
-  "distinctPositiveTotals": 15,
+  "distinctPositiveTotals": 13,
   "completedNormally": true,
   "wave1ArtCount": 35,
   "screenArt": {
@@ -115,9 +115,25 @@
       "assets/icons/icon_formation.png",
       "assets/items/gear_armor_ur.png",
       "assets/items/gear_relic_ur.png",
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
       "assets/ui/ui_btn_crimson.png",
       "assets/ui/ui_tab_active.png",
       "assets/ui/ui_tab_idle.png"
+    ],
+    "tower rewards": [
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/ui/ui_btn_crimson.png"
+    ],
+    "boss rewards": [
+      "assets/items/item_core.png",
+      "assets/items/item_gem.png",
+      "assets/ui/ui_btn_crimson.png"
+    ],
+    "arena rewards": [
+      "assets/items/item_ticket.png",
+      "assets/ui/ui_btn_crimson.png"
     ],
     "shop": [
       "assets/items/item_gem.png",
@@ -155,6 +171,127 @@
     ]
   },
   "mobileEdgeSamples": {},
+  "wave2": {
+    "artwork": {
+      "assets/banners/tile_campaign.png": [
+        ".route-tile"
+      ],
+      "assets/banners/banner_tower.png": [
+        ".trial-tile",
+        ".pn-trial-card[data-value=\"tower\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ],
+      "assets/banners/tile_idle_box.png": [
+        ".idle-tile"
+      ],
+      "assets/banners/tile_shop.png": [
+        ".small-tiles [data-action=shop]"
+      ],
+      "assets/banners/banner_boss.png": [
+        ".pn-trial-card[data-value=\"boss\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ],
+      "assets/banners/banner_arena.png": [
+        ".pn-trial-card[data-value=\"arena\"]",
+        ".pn-trial-intel .pn-trial-cover"
+      ]
+    },
+    "contrast": {
+      "lobby": [
+        {
+          "text": "第一章　浮空星港",
+          "minimum": 12.467
+        },
+        {
+          "text": "主线航线",
+          "minimum": 13.684
+        },
+        {
+          "text": "1-1　启明星门",
+          "minimum": 14.894
+        },
+        {
+          "text": "星穹试炼",
+          "minimum": 13.054
+        },
+        {
+          "text": "星匣挂机",
+          "minimum": 13.214
+        },
+        {
+          "text": "可领取　48 星币",
+          "minimum": 15.342
+        },
+        {
+          "text": "限时活动",
+          "minimum": 11.349
+        },
+        {
+          "text": "星港商店",
+          "minimum": 12.882
+        }
+      ],
+      "full idle chest": [
+        {
+          "text": "可领取　11,520 星币",
+          "minimum": 11.348
+        }
+      ],
+      "trial cards": [
+        {
+          "text": "星穹高塔",
+          "minimum": 15.344
+        },
+        {
+          "text": "已通关 0 / 30 层",
+          "minimum": 12.667
+        },
+        {
+          "text": "天城首领",
+          "minimum": 15.915
+        },
+        {
+          "text": "最高伤害 0",
+          "minimum": 13.199
+        },
+        {
+          "text": "星环演武",
+          "minimum": 14.727
+        },
+        {
+          "text": "累计胜场 0",
+          "minimum": 12.593
+        }
+      ],
+      "tower preview": [
+        {
+          "text": "星穹高塔",
+          "minimum": 14.403
+        }
+      ],
+      "boss preview": [
+        {
+          "text": "天城首领",
+          "minimum": 15.966
+        }
+      ],
+      "arena preview": [
+        {
+          "text": "星环演武",
+          "minimum": 14.778
+        }
+      ]
+    },
+    "masks": {},
+    "sha256": {
+      "assets/banners/tile_campaign.png": "32a9a293fe8684ed6ce2b19681690b5b43259e6240610ef04ddda20de2612ed9",
+      "assets/banners/banner_tower.png": "18415e42a235f53476b2d9a3e3e479f11cc7dbb70f58d84f3591f913228289cf",
+      "assets/banners/tile_idle_box.png": "5578bc5fbf3dc351a9b7f168931185f51cec700c6fc5337a29d9db7697a7fcef",
+      "assets/banners/tile_shop.png": "4ff43eb40aff15a655cf784af8ef1c29ca35a7b556d272d1a20a4b723bffd83d",
+      "assets/banners/banner_boss.png": "c12abe8f58ca30563c5abf90c95ac70e20c86f9030e40b27c6254b9229abb713",
+      "assets/banners/banner_arena.png": "ea9908972d9037e132f81a970af64db0f8b3b56f09324bd1230c0ef0889743a0"
+    }
+  },
   "lateGameEvidence": "Imported test save, four UR items, level 1 vs tower 30. Real game resolution.",
   "consoleErrorsAndHTTPFailures": 0
 }

@@ -60,7 +60,7 @@
     const half=(group.length-1)*pitch/2;
     const center=Math.max(half+pitch/2,Math.min(100-half-pitch/2,n.x*100));
     number.style.left=(center-half+index*pitch)+'%';
-    number.style.top=(n.y*100-15-(index%2)*2)+'%';
+    number.style.top=(n.y*100-18-(index%2)*2)+'%';
     s.numbers.append(number);
     number.addEventListener('animationend',()=>number.remove(),{once:true});
   }
@@ -201,23 +201,26 @@
         Sky.ui.bar(u.damage/max*100,'gold')+Sky.ui.bar(u.healing/max*100,'cyan')+'</div><span>'+
         pretty(u.damage)+'<small>'+pretty(u.healing)+'</small></span></div>';
     }).join('');
-    let drops='';
+    const drops=[];
     for(const [key,art,name,q] of [['diamonds','gem','星钻','UR'],['tickets','ticket','唤星券','SSR'],['coins','coin','星币','R'],['cores','core','共鸣晶核','SR']]) {
-      if(loot[key]>0) drops+=lootItem(Sky.art.item(art),name,'×'+pretty(loot[key]),q);
+      if(loot[key]>0) drops.push(lootItem(Sky.art.item(art),name,'×'+pretty(loot[key]),q));
     }
-    if(loot.gear) drops+=lootItem(Sky.art.gear(loot.gear.slot,loot.gear.rarity),loot.gear.name,'×1',loot.gear.rarity);
+    if(loot.gear) drops.push(lootItem(Sky.art.gear(loot.gear.slot,loot.gear.rarity),loot.gear.name,'×1',loot.gear.rarity));
+    const recovery=!win && drops.length<=2 ? '<nav class="battle-recovery" aria-label="推荐提升"><b>推荐提升</b><div>'+
+      control('resonate','共鸣升级')+control('gear','强化星装')+control('formation','调整编队')+'</div></nav>' : '';
     const spec=s.battle.spec, campaign=spec.kind==='campaign';
     const next=win && (campaign&&spec.id<10 || spec.kind==='tower'&&spec.id<30);
     const extra=spec.kind==='boss'?'最高纪录 '+pretty(Sky.ui.state.bossBest):spec.kind==='arena'?'累计胜场 '+Sky.ui.state.arenaWins:
       loot.first?'首次通关':'战斗结束';
     const panel=document.createElement('section');
     panel.className='battle-result'; panel.setAttribute('aria-label','战后结算');
+    panel.dataset.outcome=win?'victory':'defeat';
     const assessment='<div class="battle-report-stars" data-stars="'+stars+'" aria-label="作战评星 '+stars+' / 3" title="胜利一星，至少四人存活两星，全员存活三星">'+
       [1,2,3].map(i=>'<img alt="" class="'+(i<=stars?'earned':'unearned')+'" src="'+Sky.art.emblem('star')+'">').join('')+'</div>';
     panel.innerHTML='<div class="battle-report"><div class="battle-report-heading"><img class="battle-medal" alt="" src="'+Sky.art.emblem(win?'victory':'defeat')+'"><div><span>'+labels[spec.kind]+'　/　'+s.battle.title+'</span>'+
       '<h2>'+(win?'作战胜利':'作战失利')+'</h2><p>'+extra+'　·　'+alive+' / 6 存活</p></div>'+assessment+'</div>'+
       '<div class="battle-report-columns"><div class="battle-stats"><h3>星灵贡献 <small>伤害 <em>／ 治疗</em></small></h3>'+report+
-      '<p class="battle-cumulative">累计伤害 <b>'+pretty(damage)+'</b></p></div><div class="battle-drops"><h3>战利品 <small>已收入背包</small></h3><ul>'+drops+'</ul>'+
+      '<p class="battle-cumulative">累计伤害 <b>'+pretty(damage)+'</b></p></div><div class="battle-drops"><h3>战利品 <small>已收入背包</small></h3><ul>'+drops.join('')+'</ul>'+recovery+
       '</div></div><div class="battle-report-actions">'+
       control('return',campaign?'返回航线':'返回试炼')+control('again','再战')+(next?control('next',campaign?'下一关':'下一层'):'')+'</div></div>';
     s.root.append(panel);
@@ -239,6 +242,9 @@
       refreshUI(s); return;
     }
     if(key==='skip'){finish(s);return;}
+    if(key==='resonate' || key==='gear' || key==='formation'){
+      Sky.ui.go('roster',{rosterTab:key==='gear'?1:0,formation:key==='formation'});return;
+    }
     const spec=s.battle.spec;
     if(key==='return') Sky.ui.go('campaign',{trials:spec.kind!=='campaign'});
     if(key==='again') Sky.ui.go('battle',{...spec});
@@ -247,7 +253,7 @@
   function start(spec) {
     destroy();
     const ui=Sky.ui, battle=Sky.Battle.create(ui.state,spec);
-    ui.root.innerHTML='<section class="battle-page" aria-label="六对六星盘战斗"><div class="battle-back"></div>'+
+    ui.root.innerHTML='<section class="battle-page" aria-label="六对六星盘战斗">'+
       '<div class="battle-shade"></div><div class="battle-stage"></div><div class="battle-numbers"></div>'+
       '<header class="battle-head"><div class="battle-allegiance"><b>'+labels[spec.kind]+'</b><small></small></div>'+
       '<div class="battle-round"><b>'+battle.title+'</b><span>回合 <strong>01</strong> / 20</span></div>'+

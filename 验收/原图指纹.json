@@ -48,6 +48,42 @@
     "sha256": "E646FD4D637FEA9D82BBE5AB39AC8A75F88D45130441817B93DFD477F7788036"
   },
   {
+    "path": "assets/banners/banner_arena.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "EA9908972D9037E132F81A970AF64DB0F8B3B56F09324BD1230C0EF0889743A0"
+  },
+  {
+    "path": "assets/banners/banner_boss.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "C12ABE8F58CA30563C5ABF90C95AC70E20C86F9030E40B27C6254B9229ABB713"
+  },
+  {
+    "path": "assets/banners/banner_tower.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "18415E42A235F53476B2D9A3E3E479F11CC7DBB70F58D84F3591F913228289CF"
+  },
+  {
+    "path": "assets/banners/tile_campaign.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "32A9A293FE8684ED6CE2B19681690B5B43259E6240610EF04DDDA20DE2612ED9"
+  },
+  {
+    "path": "assets/banners/tile_idle_box.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "5578BC5FBF3DC351A9B7F168931185F51CEC700C6FC5337A29D9DB7697A7FCEF"
+  },
+  {
+    "path": "assets/banners/tile_shop.png",
+    "width": 1672,
+    "height": 941,
+    "sha256": "4FF43EB40AFF15A655CF784AF8EF1C29CA35A7B556D272D1A20A4B723BFFD83D"
+  },
+  {
     "path": "assets/chibi/chibi_c07.png",
     "width": 1079,
     "height": 1081,

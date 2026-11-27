@@ -163,11 +163,18 @@
       }
     }
     footMark(ink,enemy) {
+      if(enemy) {
+        // Fade the crimson spill into the ground beyond the brighter perimeter.
+        for(let step=0;step<6;step++) {
+          ink.ellipse(0,0,129-step*5,22-step*1.75,0xfb3159,.045+step*.011);
+        }
+      }
       ink.ellipse(0,0,100,12,0x20172f,.45);
       ink.ellipse(0,0,66,7.4,0x171123,.47);
       if(enemy){
-        ink.ellipse(0,0,99,11.6,0x6a244b,.58,2.9);
-        ink.ellipse(0,0,91,9.8,0xd971a0,.44,1.35);
+        ink.ellipse(0,0,101,14.2,0x691330,.92,6);
+        ink.ellipse(0,0,101,14.2,0xff536e,.97,3.7);
+        ink.ellipse(0,0,91,10.9,0xffa3ab,.72,1.6);
       }
     }
     async load() {
@@ -192,8 +199,7 @@
             n.sprite.anchor.set(.5,.985);
             n.sprite.eventMode = 'none';
             n.sprite.pluginName = 'skyBattleActors';
-            // All foot shadows share the geometry. Moving and breathing adjust
-            // transforms; neither action changes the two underlying ellipses.
+            // Store the ally and enemy ground geometry once, then move each instance.
             this.shadowShapes ||= {};
             if(!this.shadowShapes[n.side]) {
               const shape=new P.Graphics();
@@ -386,19 +392,20 @@
         const width=size*n.image.naturalWidth/n.image.naturalHeight;
         const sign=n.side==='enemy'?-1:1;
         const shadowWidth=size*.30*(1-Math.min(.30,Math.abs(n.dx)));
+        const shadowAlpha=n.side==='enemy' ? Math.max(.68,alpha) : alpha*(n.heroId<='h03'?1:.8);
         if(n.shadow) {
           n.shadow.position.set(x,(n.y+n.dy*.60)*h-1);
           n.shadow.scale.set(shadowWidth/100,size*.050/12);
-          n.shadow.alpha=alpha*(n.heroId<='h03'?1:.8);
+          n.shadow.alpha=shadowAlpha;
         } else if (!n.dom) {
           c.save();c.translate(x,(n.y+n.dy*.60)*h-1);c.scale(shadowWidth/100,size*.050/12);
-          c.globalAlpha=alpha;this.footMark(this.shadowInk,n.side==='enemy');c.restore();
+          c.globalAlpha=shadowAlpha;this.footMark(this.shadowInk,n.side==='enemy');c.restore();
         }
         if(n.dom) {
           const {body,shadow,portrait}=n.dom;
           body.style.cssText='left:'+x+'px;top:'+y+'px;z-index:'+Math.round(n.y*100);
           portrait.style.cssText='width:'+width+'px;height:'+size+'px;transform:translate(-50%,-98.5%) scaleX('+sign+');filter:'+(flashing?'drop-shadow(0 0 2px #fff3c9) drop-shadow(0 0 3px #fde3b1)':alpha<1?'brightness(.35)':'none');
-          shadow.style.cssText='width:'+shadowWidth*2+'px;height:'+size*.10+'px;top:'+(-n.dy*.40*h)+'px';
+          shadow.style.cssText='width:'+shadowWidth*2+'px;height:'+size*.10+'px;opacity:'+shadowAlpha+';top:'+(-n.dy*.40*h)+'px';
         } else if(n.sprite) {
           n.sprite.position.set(x,y);
           n.sprite.scale.set(sign*width/n.image.naturalWidth,size/n.image.naturalHeight);

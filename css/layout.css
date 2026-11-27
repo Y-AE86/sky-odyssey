@@ -5,10 +5,25 @@ body{display:grid;place-items:center;min-width:0;padding:env(safe-area-inset-top
 #bleed .cinema-wing{display:none}
 @media (orientation:landscape) and (pointer:coarse),(orientation:landscape) and (max-height:500px){
   #bleed{position:fixed;inset:0;width:100vw;height:100dvh;aspect-ratio:auto}
-  #bleed{--wings:linear-gradient(to right,#000 var(--play-left),transparent var(--play-left),transparent var(--play-right),#000 var(--play-right))}
+  #bleed{--wings:linear-gradient(to right,#000 var(--stage-left),transparent var(--stage-left),transparent calc(100% - var(--stage-right)),#000 calc(100% - var(--stage-right)))}
   #bleed .cinema-wing{position:absolute;inset:0;display:block;background:center 25%/cover no-repeat;mask-image:var(--wings)}
-  body:has(#overlay:not([hidden]),.pn-scrim,.battle-result) #bleed::after{content:"";position:absolute;inset:0;background:rgba(4,6,18,.63);backdrop-filter:blur(5px);mask-image:var(--wings)}
   body:has(.battle-page.spotlight) #bleed:not(:has(.cinema-wing))::after{content:"";position:absolute;inset:0;background:rgba(5,6,25,.66);mask-image:var(--wings)}
+  /* One continuous backdrop samples the scene on both sides of the safe stage.
+     Content uses the positive insets to stay in the original 16:9 play area. */
+  #stage:has(#overlay:not([hidden]),.pn-scrim,.pn-draw-results,.battle-result),
+  #stage #view:has(.pn-scrim,.pn-draw-results,.battle-result),
+  #view .battle-page:has(.battle-result){overflow:visible}
+  #stage #overlay,#stage :is(.pn-scrim,.pn-draw-results,.battle-result){
+    inset:calc(0px - var(--stage-top)) calc(0px - var(--stage-right)) calc(0px - var(--stage-bottom)) calc(0px - var(--stage-left));
+    padding:var(--stage-top) var(--stage-right) var(--stage-bottom) var(--stage-left);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  }
+  #stage .pn-draw-results{
+    padding:calc(var(--stage-top) + 1.1cqw) calc(var(--stage-right) + 3.5cqw) calc(var(--stage-bottom) + 1.2cqw) calc(var(--stage-left) + 3.5cqw);
+    background:linear-gradient(115deg,#131a30d9,#0a1527cf);
+  }
+  body:has(#view .pn-draw-results) #bleed[data-page="gacha"]::after{background:none}
+  #stage .pn-page[inert]{mask-image:linear-gradient(90deg,transparent,#000 3.5%,#000 96.5%,transparent)}
 }
 #view{position:absolute;inset:0;overflow:hidden;font-size:1.1cqw}
 #overlay{position:absolute;inset:0;z-index:70;display:grid;place-items:center;background:rgba(4,6,18,.63);backdrop-filter:blur(5px)}
@@ -26,13 +41,13 @@ body{display:grid;place-items:center;min-width:0;padding:env(safe-area-inset-top
 .bag-tabs{display:flex;gap:.5cqw;margin-bottom:1.2cqw}
 .bag-tabs button{padding:.45cqw 1.5cqw;border-bottom:1px solid #9c8e8055;color:#c5c1cd}
 .bag-tabs [aria-pressed=true]{color:#ffda98;border-color:#e0b976;background:#b9925320}
-.bag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65cqw}
+.bag-grid,.bag-guide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65cqw}
 .bag-slot{display:flex;align-items:center;gap:.45cqw;min-width:0;padding:.5cqw .35cqw;background:linear-gradient(105deg,#39415888,#20273d80);border-bottom:1px solid #ac95673b}
 .bag-slot b,.bag-slot small{display:block}.bag-slot b{font-size:1.02cqw}.bag-slot small{font-size:.9cqw;color:#d8cbb4}
 .bag-icon{width:3.4cqw;height:3.4cqw;object-fit:contain}.bag-slot .quality{width:3.7cqw}
 .gear-slot .gear-art{width:62%;height:62%;object-fit:contain;background:#182039;border-radius:8%}
 .bag-subhead{font-size:1.03cqw;font-weight:600;margin:1.3cqw 0 .5cqw;color:var(--gold)}
-.bag-guide{display:flex;gap:.7cqw}.bag-guide figure{display:flex;align-items:center;gap:.35cqw;margin:0;padding:.3cqw .7cqw;background:#161d30}
+.bag-guide figure{display:flex;align-items:center;gap:.45cqw;margin:0;padding:.3cqw .35cqw;background:#161d30}
 .bag-guide figcaption{font-size:.93cqw}
 .sky-dialog textarea{width:100%;height:12cqw;resize:vertical;background:#101424;color:#eee7d4;padding:.7cqw;border:1px solid var(--edge);font:1cqw/1.4 var(--body)}
 #toast{z-index:140;position:absolute;bottom:16%;left:50%;translate:-50% 0;pointer-events:none;max-width:84%;padding:.7cqw 1.8cqw;border:1px solid var(--edge);background:#11182bef;color:var(--gold);font-size:1.12cqw;text-align:center;box-shadow:0 .4cqw 1.6cqw #05081555}

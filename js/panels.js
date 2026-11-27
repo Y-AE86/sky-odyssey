@@ -13,7 +13,7 @@
   const button = (text, action, value = "", color = "gold", disabled = false) =>
     '<button type="button" class="pn-button ' + color + '" ' + act(action, value) + (disabled ? " disabled" : "") + '>' + text + '</button>';
   const titleNames = {roster:"星灵养成", gacha:"星穹召唤", campaign:"航线推图"};
-  const glyphs = {arrow:'→',back:'‹',close:'×',lock:'锁',check:'✓'};
+  const glyphs = {arrow:'→',back:'‹',close:'×',check:'✓'};
   const navArt = {orbit:'gacha',ranks:'formation',flag:'codex',duel:'formation',star:'gacha'};
   const itemArt = {coin:'coin',diamond:'gem',ticket:'ticket',shards:'shard',core:'core'};
   const gearArt = {blade:0,castle:3,crown:1};
@@ -21,6 +21,7 @@
     return '<img class="'+cls+'" alt="" draggable="false" src="'+escape(url)+'">';
   }
   function mark(key) {
+    if(key==='lock') return '<span class="pn-mark pn-lock" aria-hidden="true"></span>';
     if(glyphs[key]) return '<span class="pn-mark pn-symbol" aria-hidden="true">'+glyphs[key]+'</span>';
     if(itemArt[key]) return image(S.art.item(itemArt[key]));
     if(navArt[key]) return image(S.art.icon(navArt[key]));
@@ -65,8 +66,10 @@
       return '<div class="pn-equipment"><div class="pn-inline-title"><h2>星装配置</h2><div class="pn-kit-actions">' + button("一键配装","auto-equip",h.id,"cyan") + button('<span>一键强化</span><small>'+mark("coin")+money(kit.cost)+'</small>',"enhance-all",h.id,"gold",!kit.items.length || s.coins<kit.cost) + '</div></div><div class="pn-equip-grid">' +
         S.D.slots.map((label,i) => {
           const item = s.bag.find(it => it.uid === s.equipment[h.id]?.[i]);
+          const bonus = item && S.Save.gearStats(item);
+          const primary = bonus ? '<span class="pn-gear-stat" title="装备基础加成"><small>'+ (bonus.atk ? '攻击':'生命')+'</small><strong>+'+money(bonus.atk || bonus.hp)+'</strong></span>' : '';
           return '<button class="pn-equip-slot" ' + act("gear-slot", i) + '>' + framedGear(i,item?.rarity) +
-            '<span><small>' + label + '</small><b>' + escape(item?.name || "未装备") + '</b><em>' + (item ? escape(item.rarity) + '　+' + item.level : "选择星装") + '</em></span></button>';
+            '<span><small>' + label + '</small><b>' + escape(item?.name || "未装备") + '</b><em>' + (item ? escape(item.rarity) + '　+' + item.level : "选择星装") + '</em></span>'+primary+'</button>';
         }).join("") + '</div></div>';
     }
     if (P.rosterTab === 2) {
@@ -146,7 +149,7 @@
     const one=P.draws.length===1, ready=P.revealed;
     return '<div class="pn-draw-results' + (ready?' instant':'') + (one?' single':'') + '" role="dialog" aria-modal="true" aria-label="召唤结果">' +
       '<div class="pn-reveal-light"></div><header><h2>召唤结果</h2><div class="pn-reveal-actions"><button '+act("skip")+(ready?' hidden':'')+' class="pn-skip">跳过动画 '+mark("arrow")+'</button>'+
-      (one?'':'<button '+act("draw",10)+(ready?'':' hidden')+' aria-label="再抽十次" class="pn-repeat">再抽十次 '+mark("ticket")+' ×10</button>')+'</div></header>'+
+      (one?'':'<button '+act("draw",10)+(ready?'':' hidden')+' aria-label="再抽十次，消耗十张唤星券" class="pn-repeat pn-button gold">再抽十次 <span class="pn-draw-cost">'+mark("ticket")+'×10</span></button>')+'</div></header>'+
       '<div class="pn-result-grid">' + P.draws.map((r,i)=>{
         const h=hero(r.id), illustrated=['h01','h02','h03'].includes(r.id);
         return '<div class="pn-result-card result-'+r.rarity.toLowerCase()+'" data-hero="'+r.id+'" style="--i:'+i+'"><div class="pn-result-front">'+
@@ -155,7 +158,6 @@
       }).join("")+'</div>'+button("收下星灵","dismiss")+'</div>';
   }
 
-  const trialArt = {tower:"bg_roster", boss:"bg_battle", arena:"bg_roster_alt"};
   const trialIcons = {tower:"castle", boss:"crown", arena:"duel"};
   const chapterNames = ["浮空星港","齿轮云巅"];
   const mapNodes = [[9,60],[29,37],[48,59],[67,28],[89,45]];
@@ -188,8 +190,18 @@
     const details={tower:[s.tower>=30?"星穹高塔已登顶":"挑战第 "+(s.tower+1)+" 层","每层首通可领取星钻与共鸣晶核。"],
       boss:[next?"下一档 "+money(next)+" 伤害":"所有伤害档位已达成","按本场总伤害刷新纪录，首次突破档位可领取奖励。"],
       arena:["当前 "+Math.floor(s.arenaWins/3+1)+" 段","挑战六人镜像队伍，累计胜场升段领取唤星券。"]};
-    return '<div class="pn-trial-selection">'+entries.map((t,i)=>'<button class="pn-trial-card'+(t.kind===tr.kind?' on':'')+'" '+act("trial",t.kind)+' style="--art:url(&quot;'+escape(new URL('assets/scenes/'+trialArt[t.kind]+'.png',document.baseURI).href)+'&quot;)"><i>'+mark(trialIcons[t.kind])+'</i><div><h2>'+t.name+'</h2><span>'+status[t.kind]+'</span></div>'+mark("arrow")+'</button>').join("")+
-      '</div><article class="pn-trial-intel pn-glass"><div class="pn-trial-seal">'+mark(trialIcons[tr.kind])+'</div><p>'+status[tr.kind]+'</p><h2>'+details[tr.kind][0]+'</h2><p>'+details[tr.kind][1]+'</p>'+button("挑战"+tr.name,"start-trial",tr.kind,"crimson",tr.kind==="tower" && s.tower>=30)+'</article>';
+    const rewards = {
+      tower:[s.tower>=30?'首通奖励已领完':'首通奖励', [['gem','星钻'],['core','共鸣晶核']]],
+      boss:next ? ['突破档位奖励',[['gem','星钻'],['core','共鸣晶核']]] : ['挑战奖励',[['coin','星币'],['core','共鸣晶核']]],
+      arena:['胜场奖励',[['ticket','唤星券']]]
+    };
+    const [rewardTitle,items] = rewards[tr.kind];
+    return '<div class="pn-trial-selection">'+entries.map(t=>'<button class="pn-trial-card'+(t.kind===tr.kind?' on':'')+'" '+act("trial",t.kind)+' aria-pressed="'+(t.kind===tr.kind)+'">'+
+      image(S.art.banner(t.kind),'pn-trial-art')+'<i>'+mark(trialIcons[t.kind])+'</i><div><h2>'+t.name+'</h2><span class="pn-trial-status">'+status[t.kind]+'</span></div>'+mark("arrow")+'</button>').join("")+
+      '</div><article class="pn-trial-intel pn-glass"><div class="pn-trial-cover">'+image(S.art.banner(tr.kind),'pn-trial-art')+'<h3>'+tr.name+'</h3></div>'+
+      '<div class="pn-trial-brief"><h2>'+details[tr.kind][0]+'</h2><p>'+details[tr.kind][1]+'</p></div>'+
+      '<div class="pn-trial-rewards"><small>'+rewardTitle+'</small><div>'+items.map(([key,name])=>'<span>'+image(S.art.item(key))+name+'</span>').join('')+'</div></div>'+
+      button("挑战"+tr.name,"start-trial",tr.kind,"crimson",tr.kind==="tower" && s.tower>=30)+'</article>';
   }
   function overlay() {
     switch (P.overlay) {
@@ -313,7 +325,7 @@
   function render(page, options = {}) {
     destroy();
     const s=state();
-    Object.assign(P, {page,hero:options.hero||s.owned[0],view:"poster",rosterTab:0,faction:"",skill:1,formSlot:null,
+    Object.assign(P, {page,hero:options.hero||s.owned[0],view:"poster",rosterTab:options.rosterTab===1?1:0,faction:"",skill:1,formSlot:null,
       pool:"standard",stage:Math.min(10,Math.max(1,options.stage||s.cleared+1)),trial:"tower",trials:!!options.trials,
       overlay:page==="roster" && options.formation?"formation":"",requestedDraw:0});
     P.chapter=S.D.stages[P.stage-1].chapter;

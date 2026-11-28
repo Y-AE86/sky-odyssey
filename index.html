@@ -5,13 +5,22 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0d1120">
   <title>浮空星途 · Sky Odyssey</title>
+  <style>
+    body {margin:0;background:#0d1120;}
+    #boot-loading {position:fixed;inset:0;z-index:300;display:grid;place-content:center;
+      gap:14px;text-align:center;color:#e9d6a6;font:500 15px/1.5 system-ui,sans-serif;
+      letter-spacing:.14em;background:radial-gradient(ellipse at 50% 38%,#272b43,#0d1120 66%);}
+    #boot-loading i {display:block;margin:auto;width:24px;height:24px;border:1px solid #665d53;
+      border-radius:50%;border-top-color:#e9d6a6;animation:boot-spin 1.45s linear infinite;}
+    @keyframes boot-spin {to {transform:rotate(360deg);}}
+    @media (prefers-reduced-motion:reduce) {#boot-loading i {animation:none;}}
+  </style>
   <link rel="icon" type="image/png" href="assets/icons/icon_gacha.png">
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/lobby.css">
-  <link rel="stylesheet" href="css/panels.css">
-  <link rel="stylesheet" href="css/battle.css">
-  <script defer src="lib/pixi.min.js"></script>
+  <link rel="stylesheet" href="css/tokens.css" media="print" data-stage-css onload="this.media='all'" onerror="this.media='all'">
+  <link rel="stylesheet" href="css/layout.css" media="print" data-stage-css onload="this.media='all'" onerror="this.media='all'">
+  <link rel="stylesheet" href="css/lobby.css" media="print" data-stage-css onload="this.media='all'" onerror="this.media='all'">
+  <link rel="stylesheet" href="css/panels.css" media="print" data-stage-css onload="this.media='all'" onerror="this.media='all'">
+  <link rel="stylesheet" href="css/battle.css" media="print" data-stage-css onload="this.media='all'" onerror="this.media='all'">
   <script defer src="js/data.js"></script>
   <script defer src="js/save.js"></script>
   <script defer src="assets/videos/manifest.js"></script>
@@ -22,14 +31,13 @@
   <script defer src="js/audio-effects.js"></script>
   <script defer src="js/audio.js"></script>
   <script defer src="js/battle-engine.js"></script>
-  <script defer src="js/battle-vfx.js"></script>
   <script defer src="js/ui.js"></script>
   <script defer src="js/panels.js"></script>
-  <script defer src="js/battle-pixi.js"></script>
   <script defer src="js/battle-ui.js"></script>
   <script defer src="js/main.js"></script>
 </head>
 <body>
+  <div id="boot-loading" role="status"><i aria-hidden="true"></i><span>星穹载入中</span></div>
   <div id="bleed" aria-hidden="true"></div>
   <main id="stage" aria-label="浮空星途游戏舞台">
     <div id="view"></div>

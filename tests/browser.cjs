@@ -15,17 +15,19 @@ const out=option('out',null),selected=option('case',null);
 const vfxOnly=args.includes('--vfx-only');
 const hudOnly=args.includes('--hud-only');
 const wave6Only=args.includes('--wave6-only');
+const actorUpgrade=args.includes('--actor-upgrade');
 const upgradeBaseline=args.includes('--vfx-upgrade-baseline');
 const effectsUpgrade=upgradeBaseline || args.includes('--vfx-upgrade');
 const {exerciseHud,checkPowerHud}=require('./battle-hud.cjs');
 const {runVfxUpgrade}=require('./vfx-upgrade.cjs');
+const {runActorUpgrade}=require('./actor-upgrade.cjs');
 const chrome=option('chrome',process.env.CHROME_PATH);
 const presets=[
   {name:'desktop',width:1280,height:720,dpr:1,full:true},
   {name:'retina',width:1440,height:900,dpr:2,full:true},
   {name:'mobile',width:844,height:390,dpr:3,mobile:true,full:true},
   {name:'file',width:1280,height:720,dpr:1,file:true,full:true},
-  ...effectsUpgrade && !upgradeBaseline ? [
+  ...(effectsUpgrade && !upgradeBaseline || actorUpgrade) ? [
     {name:'power',width:1280,height:720,dpr:1,full:true},
     {name:'canvas',width:1280,height:720,dpr:1,full:true}
   ] : [],
@@ -353,8 +355,16 @@ async function checkEmbedded(p) {
         return [id,[...digest].map(byte=>byte.toString(16).padStart(2,'0')).join('')];
       }));
     });
-    assert.deepEqual(embedded.map(([id])=>id).sort(),[...playable,...villains].sort());
-    for(const [id,hash] of embedded) assert.equal(hash,sha(fs.readFileSync(path.join(root,artPath(id,'chibi')))));
+    const base=[...playable,...villains];
+    const variants=fs.readdirSync(path.join(root,'assets','chibi')).flatMap(file=>{
+      const match=/^chibi_(h\d\d)_(windup|atk|hurt)\.png$/.exec(file);
+      return match ? [match[1]+'_'+match[2]] : [];
+    });
+    assert.deepEqual(embedded.map(([id])=>id).sort(),[...base,...variants].sort());
+    for(const [id,hash] of embedded){
+      const file=id.includes('_') && !villains.includes(id) ? 'assets/chibi/chibi_'+id+'.png' : artPath(id,'chibi');
+      assert.equal(hash,sha(fs.readFileSync(path.join(root,file))),file);
+    }
     return Object.fromEntries(embedded);
 }
 async function runLobby(p,spec) {
@@ -629,6 +639,7 @@ async function inspectBattle(p,spec) {
 }
 async function recordMotion(p) {
   // Observe the transient cut-ins, actual media playback, and per-hit totals.
+  await p.locator('.battle-page').waitFor();
   await p.evaluate(()=>{
     const root=document.querySelector('.battle-page');
     const log=window.__skyQaMotion={cuts:[],totals:[],segments:[],spots:0,hits:0,drawTimes:[],started:performance.now()};
@@ -1171,19 +1182,29 @@ async function exerciseVfxCutSkip(p,spec) {
   await battle(p,'return').click();await action(p,'home').click();
   return {...trace,heal,frames,settled:true};
 }
-async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,statuses=false}) {
-  const fixture=await p.evaluate(({formation,powerSave})=>{
+async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,statuses=false,encounter='boss'}) {
+  const fixture=await p.evaluate(({formation,powerSave,encounter})=>{
     const save=Sky.Save.fresh();
     save.owned=Sky.D.heroes.map(hero=>hero.id);
     save.formation=formation;
     save.settings.powerSave=powerSave;
+    if(typeof encounter==='number')save.cleared=encounter-1;
     return save;
-  },{formation,powerSave});
+  },{formation,powerSave,encounter});
   await importProgress(p,fixture);
-  await action(p,'trials').click();await panel(p,'trial','boss').click();
+  let enter;
+  if(typeof encounter==='number'){
+    await action(p,'campaign').click();
+    if(encounter>5)await panel(p,'chapter',2).click();
+    await panel(p,'stage',encounter).click();
+    enter=panel(p,'start-route',encounter);
+  }else{
+    await action(p,'trials').click();await panel(p,'trial','boss').click();
+    enter=panel(p,'start-trial','boss');
+  }
   // Leave numeric resolution and target choice to the engine. Give the team
   // enough turns to exercise every cast in isolation without early settlement.
-  await panel(p,'start-trial','boss').evaluate((button,{shield,statuses})=>{
+  await enter.evaluate((button,{shield,statuses})=>{
     const create=Sky.Battle.create;
     try {
       let seed=72;
@@ -1213,7 +1234,7 @@ async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,sta
     } finally {Sky.Battle.create=create;}
   },{shield,statuses});
   await battle(p,'auto').click();
-  await p.waitForFunction(()=>Sky.battlePage.inspect()?.ready);
+  await p.waitForFunction(()=>Sky.battlePage.inspect()?.ready,null,{timeout:45000});
 }
 async function queueVfxCast(p,slot,id,powerSave,natural=false) {
   await p.locator('[data-cast="'+slot+'"]:enabled').click();
@@ -1819,7 +1840,7 @@ async function replacementCheck(browser) {
     const origin='http://127.0.0.1:'+server.address().port;
     const reports=[];
     const chosen=presets.filter(x=>selected ? selected.split(',').includes(x.name) : !x.extra);
-    const replacements=!vfxOnly && !hudOnly && !wave6Only && !effectsUpgrade &&
+    const replacements=!vfxOnly && !hudOnly && !wave6Only && !effectsUpgrade && !actorUpgrade &&
       (!selected || selected.split(',').includes('replacement'));
     assert(chosen.length||replacements,'unknown --case');
     for(const spec of chosen) {
@@ -1827,12 +1848,13 @@ async function replacementCheck(browser) {
         await browser.close();
         browser=await chromium.launch({...config,args:[...config.args,'--disable-webgl']});
       }
-      const result=effectsUpgrade ?
+      const result=actorUpgrade ? await runActorUpgrade(browser,origin,spec,{root,out},
+        {action,panel,battle,geometry,startFullVfxFixture,screenshot,queueVfxCast,checkEmbedded}) : effectsUpgrade ?
         await runVfxUpgrade(browser,origin,spec,{baseline:upgradeBaseline,root,out},
           {action,panel,battle,geometry,startFullVfxFixture,screenshot,queueVfxCast}) :
         await (wave6Only?runWave6Focus:vfxOnly||hudOnly?runVfxFocus:run)(browser,origin,spec);
       reports.push(result);console.log(JSON.stringify(result));
-      if(out)fs.writeFileSync(path.join(out,spec.name+(effectsUpgrade ?
+      if(out)fs.writeFileSync(path.join(out,spec.name+(actorUpgrade?'-actor':effectsUpgrade ?
         upgradeBaseline?'-before':'-after' : wave6Only?'-wave6':hudOnly?'-hud':vfxOnly?'-vfx':'')+'-report.json'),JSON.stringify(result,null,2));
     }
     if(replacements)await replacementCheck(browser);

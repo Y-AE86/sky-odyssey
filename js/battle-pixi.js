@@ -17,6 +17,24 @@
     h10:[1073,1237,.49], h11:[884,1216,.52], enemy_boss_mech:[1282,1237,.54],
     enemy_vanguard:[1192,1152,.47], enemy_caster:[1156,1248,.50], enemy_striker:[1243,1102,.46]
   };
+  // The scythe can extend lower than a boot or higher than the head. Calibrate
+  // each current pose from the boot midpoint, lowest sole and eye line.
+  const standingEyes={h01:.316,h02:.283};
+  const actionStances={
+    h01_windup:[441,591,.492,.972,.430],
+    h01_atk:[548,528,.405,.930,.367],
+    h01_hurt:[517,551,.525,.968,.355],
+    h02_windup:[519,741,.498,.978,.278],
+    h02_atk:[711,735,.496,.978,.287],
+    h02_hurt:[605,733,.521,.978,.286]
+  };
+  const actionStates=['windup','atk','hurt'];
+  const poseWindupMs=90, hurtPoseMs=240, landingMs=265;
+  const sceneLights={
+    battle:{rim:0x8cc8ff,direction:[-.65,-.76],shade:0x101b38,dust:0xa8d3ff},
+    battle_ch2:{rim:0xffcc84,direction:[-.82,-.57],shade:0x312039,dust:0xffd59b},
+    battle_boss:{rim:0xcbadff,direction:[-.48,-.87],shade:0x1c1537,dust:0xd5beff}
+  };
   const clamp = n => Math.max(0, Math.min(1, n));
   const shockwaveMs=260, chromaticMs=100;
   // Filter coordinates describe the captured rectangle in CSS pixels. inputSize
@@ -171,17 +189,77 @@
     class ActorShader extends P.BatchShaderGenerator {
       generateSampleSrc(count) {return super.generateSampleSrc(count).replace(/vTextureCoord/g,'uv');}
     }
+    class ActorGeometry extends P.BatchGeometry {
+      constructor() {
+        super();
+        this.addAttribute('aActorOptics',this._buffer,4,false,P.TYPES.FLOAT);
+      }
+    }
     class ActorBatch extends P.BatchRenderer {
+      constructor(renderer) {
+        super(renderer);
+        this.geometryClass=ActorGeometry;
+        this.vertexSize=10;
+        this.rim=new Float32Array(3);
+      }
       setShaderGenerator() {
-        this.shaderGenerator=new ActorShader(P.BatchRenderer.defaultVertexSrc,`
+        const vertex=P.BatchRenderer.defaultVertexSrc
+          .replace('attribute float aTextureId;','attribute float aTextureId; attribute vec4 aActorOptics; varying vec4 vActorOptics;')
+          .replace('vTextureId = aTextureId;','vTextureId = aTextureId; vActorOptics = aActorOptics;');
+        this.shaderGenerator=new ActorShader(vertex,`
+          precision highp float;
           varying vec2 vTextureCoord; varying vec4 vColor; varying float vTextureId;
+          varying vec4 vActorOptics;
           uniform sampler2D uSamplers[%count%];
+          uniform vec3 uRim;
           vec4 actorPixel(vec2 uv){vec4 color; %forloop% return color;}
           void main(){
-            vec4 base=actorPixel(vTextureCoord);
+            vec2 uv=vTextureCoord;
+            float foot=vActorOptics.y;
+            if(foot>0.0){
+              float height=clamp((foot-uv.y)/foot,0.0,1.0);
+              float sway=smoothstep(0.18,0.97,height);
+              uv.x-=vActorOptics.x*sway;
+              uv.y+=vActorOptics.x*0.19*sway*height;
+              uv=clamp(uv,vec2(0.0),vec2(1.0));
+            }
+            vec4 base=actorPixel(uv);
+            if(foot>0.0 && base.a>.025){
+              // In-silhouette light preserves premultiplied alpha. The one
+              // adjacent sample measures only the key-light-facing edge.
+              vec2 nearUv=clamp(uv+vActorOptics.zw,vec2(0.0),vec2(1.0));
+              float edge=smoothstep(.07,.67,base.a-actorPixel(nearUv).a);
+              float solid=smoothstep(.14,.82,base.a);
+              float contact=smoothstep(foot-.102,foot-.015,uv.y);
+              base.rgb=base.rgb*(1.0-.125*contact);
+              base.rgb=mix(base.rgb,uRim*base.a,edge*solid*.29*(1.0-.79*contact));
+            }
             if(vColor.r >= vColor.a*.02){gl_FragColor=base*vColor;return;}
             gl_FragColor=vec4(mix(base.rgb,vec3(1.,.98,.94)*base.a,.71),base.a)*vColor.a;
           }`);
+      }
+      contextChange() {
+        super.contextChange();
+        this._shader.uniforms.uRim=this.rim;
+      }
+      setRim(rgb) {
+        this.rim.set([(rgb>>16)/255,((rgb>>8)&255)/255,(rgb&255)/255]);
+      }
+      packInterleavedGeometry(sprite,buffer,indices,offset,index) {
+        const {uint32View:colors,float32View:values}=buffer;
+        const start=offset/this.vertexSize, texture=sprite.texture.baseTexture;
+        const tint=P.Color.shared.setValue(sprite._tintRGB)
+          .toPremultiplied(Math.min(sprite.worldAlpha,1),texture.alphaMode>0);
+        const uvs=sprite.uvs, points=sprite.vertexData;
+        const optics=sprite.actorOptics;
+        for(let i=0;i<points.length;i+=2) {
+          values[offset++]=points[i]; values[offset++]=points[i+1];
+          values[offset++]=uvs[i]; values[offset++]=uvs[i+1];
+          colors[offset++]=tint; values[offset++]=texture._batchLocation;
+          values[offset++]=optics[0]; values[offset++]=optics[1];
+          values[offset++]=optics[2]; values[offset++]=optics[3];
+        }
+        for(const corner of sprite.indices)indices[index++]=start+corner;
       }
     }
     P.extensions.add({name:'skyBattleActors',type:P.ExtensionType.RendererPlugin,ref:ActorBatch});
@@ -291,7 +369,7 @@
     }
   }
   class BattleScene {
-    constructor(host, units, powerSave) {
+    constructor(host, units, powerSave, scene=document.getElementById('bleed')?.dataset.scene) {
       this.host = host;
       this.powerSave = powerSave;
       const hasBoss=units.some(unit=>unit.boss);
@@ -306,7 +384,7 @@
         }
         return {...position,key:u.key,slot:u.slot,side:u.side,heroId:u.heroId,sourceFacing,mirror,
           boss:u.boss,magnification:u.boss ? 1.52 : 1,hp:u.hp,maxHp:u.maxHp,shield:u.shield,rage:u.rage,
-          status:{...u.status},sprite:null,dx:0,dy:0};
+          status:{...u.status},sprite:null,dx:0,dy:0,actionLift:0};
       });
       this.byKey = Object.fromEntries(this.nodes.map(n => [n.key,n]));
       this.nodes.sort((a,b) => a.y-b.y);
@@ -317,9 +395,11 @@
       this.basicHitMs=255;
       this.trails=[];
       this.bursts=[];
+      this.landings=[];
       this.focus = null;
       this.effects = [];
       this.textures = new Map();
+      this.actionTextures = new Map();
       this.ratio = window.devicePixelRatio || 1;
       this.canvas = document.createElement('canvas');
       this.canvas.setAttribute('aria-label','星盘战台，左方我队六个阵位，右方敌队六个阵位');
@@ -364,7 +444,12 @@
         this.ctx = fresh.getContext('2d');
         this.shadowInk = this.ink = new Paint(null,this.ctx);
       }
-      if(this.app && !powerSave)this.impulses=new CameraImpulses(this.battleCamera,this.app.renderer);
+      if(this.app && !powerSave){
+        const key=Object.hasOwn(sceneLights,scene) ? scene : 'battle';
+        this.lighting={key,...sceneLights[key],ao:.125};
+        this.app.renderer.plugins.skyBattleActors.setRim(this.lighting.rim);
+        this.impulses=new CameraImpulses(this.battleCamera,this.app.renderer);
+      }
       this.resize();
       this.observer = new ResizeObserver(() => this.resize());
       this.observer.observe(host);
@@ -391,50 +476,79 @@
           ink.ellipse(0,0,129-step*5,22-step*1.75,0xfb3159,.045+step*.011);
         }
       }
-      ink.ellipse(0,0,100,12,0x20172f,.45);
-      ink.ellipse(0,0,66,7.4,0x171123,.47);
+      if(this.lighting){
+        const [x,y]=this.lighting.direction,shade=this.lighting.shade;
+        for(let step=0;step<4;step++){
+          const reach=48-step*7;
+          ink.ellipse(-x*reach,-y*reach*.24,117-step*9,17-step*2,shade,.08+step*.046);
+        }
+        ink.ellipse(0,0,81,9.8,shade,.34);
+        ink.ellipse(0,0,57,6.2,0x0b0b21,.51);
+      }else{
+        ink.ellipse(0,0,100,12,0x20172f,.45);
+        ink.ellipse(0,0,66,7.4,0x171123,.47);
+      }
       if(enemy){
         ink.ellipse(0,0,101,14.2,0x691330,.92,6);
         ink.ellipse(0,0,101,14.2,0xff536e,.97,3.7);
         ink.ellipse(0,0,91,10.9,0xffa3ab,.72,1.6);
       }
     }
+    async actorImage(id,state,url,offline) {
+      const key=state==='idle' ? id : id+'_'+state;
+      const calibration=state==='idle' ? stances[id] : actionStances[key];
+      const raw=await getImage(url);
+      const w=raw.naturalWidth,h=raw.naturalHeight;
+      const matched=calibration && w===calibration[0] && h===calibration[1];
+      const packed=(!calibration || matched) && (await offline)?.[key];
+      const image=packed ? await getImage(packed).catch(()=>raw) : raw;
+      const padded=h>64 && (matched || state!=='idle' && !calibration);
+      const footX=matched ? calibration[2] : state==='idle' ? .5 : stances[id]?.[2] ?? .5;
+      const footY=matched && state!=='idle' ? calibration[3] : padded ? 1-16/h : .985;
+      const eye=matched && state!=='idle' ? calibration[4] : standingEyes[id] ?? .30;
+      const heightFactor=padded ? .972/(1-32/h) : 1;
+      return {id,key,state,image,w,h,footX,footY,eye,heightFactor,direct:location.protocol==='file:' && image===raw};
+    }
     async load() {
-      const heroes = [...new Set(this.nodes.map(n => n.heroId))];
-      const offline = Sky.art.loadOfflineTextures();
+      const heroes=[...new Set(this.nodes.map(n=>n.heroId))];
+      const offline=this.app ? Sky.art.loadOfflineTextures() : null;
       const effectsReady=this.vfx?.preload(heroes);
-      const sources = await Promise.all(heroes.map(async id => {
-        const fileImage=await getImage(Sky.art(id,'chibi'));
-        const stance=stances[id];
-        const original=stance && fileImage.naturalWidth===stance[0] && fileImage.naturalHeight===stance[1];
-        const packed=original && (await offline)?.[id];
-        let embeddedImage;
-        if(packed) {
-          try { embeddedImage=await getImage(packed); }
-          catch { /* A damaged entry can still use the decoded local PNG. */ }
-        }
-        const direct=location.protocol==='file:' && !embeddedImage;
-        return {id,direct,stance:original && stance,img:embeddedImage || fileImage};
+      const catalog=Sky.art.loadPoses();
+      const sources=await Promise.all(heroes.map(async id=>{
+        const idleReady=this.actorImage(id,'idle',Sky.art(id,'chibi'),offline);
+        await catalog;
+        const models=await Promise.all(actionStates.map(state=>{
+          const url=Sky.art.pose(id,state);
+          return url ? this.actorImage(id,state,url,offline).catch(()=>null) : null;
+        }));
+        return [await idleReady,...models.filter(Boolean)];
       }));
       if (this.disposed) return;
-      for(const {id,direct,stance,img} of sources) {
-        let texture;
-        if (this.app && !direct) {
-          const base = new P.BaseTexture(img,{mipmap:P.MIPMAP_MODES.ON, scaleMode:P.SCALE_MODES.LINEAR, anisotropicLevel:8});
-          texture = new P.Texture(base);
-          this.textures.set(id,texture);
+      for(const models of sources) {
+        const idle=models[0],id=idle.id;
+        for(const model of models){
+          if(this.app && !model.direct){
+            const base=new P.BaseTexture(model.image,{mipmap:P.MIPMAP_MODES.ON,scaleMode:P.SCALE_MODES.LINEAR,anisotropicLevel:8});
+            model.texture=new P.Texture(base);
+            (model===idle ? this.textures : this.actionTextures).set(model.key,model.texture);
+            // The first attack shouldn't have to upload a newly switched pose.
+            if(model!==idle)this.app.renderer.texture.bind(base);
+          }
+          if(model!==idle){
+            // Normalize the eye-to-sole body, not the full accessory silhouette.
+            model.heightFactor=idle.heightFactor*(idle.footY-idle.eye)/(model.footY-model.eye);
+          }
         }
-        for(const n of this.nodes.filter(n => n.heroId === id)) {
-          n.image = img;
-          n.footX=stance ? stance[2] : .5;
-          n.footY=stance ? 1-16/img.naturalHeight : .985;
-          // The standing PNGs leave 16px on each edge of the silhouette.
-          n.heightFactor=stance ? .972/(1-32/img.naturalHeight) : 1;
-          if (texture) {
-            n.sprite = new P.Sprite(texture);
-            n.sprite.anchor.set(n.footX,n.footY);
+        const poses=Object.fromEntries(models.map(model=>[model.state,model]));
+        for(const n of this.nodes.filter(n=>n.heroId===id)) {
+          n.poses=poses;
+          n.model=idle;
+          if(idle.texture) {
+            n.sprite=new P.Sprite(idle.texture);
+            n.sprite.anchor.set(idle.footX,idle.footY);
             n.sprite.eventMode = 'none';
             n.sprite.pluginName = 'skyBattleActors';
+            n.sprite.actorOptics=new Float32Array(4);
             // Store the ally and enemy ground geometry once, then move each instance.
             this.shadowShapes ||= {};
             if(!this.shadowShapes[n.side]) {
@@ -444,11 +558,11 @@
             }
             n.shadow=this.shadowShapes[n.side].clone();
             this.shadows.addChild(n.shadow);
-          } else if (this.app && direct) {
+          } else if (this.app && idle.direct) {
             const body = document.createElement('div');
             body.className='battle-file-unit '+n.side;
             const shadow = document.createElement('i');
-            const portrait = img.cloneNode();
+            const portrait = idle.image.cloneNode();
             portrait.alt = '';
             body.append(shadow,portrait);
             this.domLayer.append(body);
@@ -486,6 +600,7 @@
     }
     beginAction(action,clock) {
       this.actionStart=clock; this.trailIndex=0;
+      this.action=action;
       this.openingImpact=true;
       const n=this.byKey[action.actor], target=this.byKey[action.hits[0]?.target];
       if(!target)return;
@@ -503,7 +618,7 @@
       const dir=n.side==='ally'?1:-1, close=melee.has(n.heroId);
       const windup=this.basicWindupMs;
       const pull=Math.sin(clamp(elapsed/windup)*Math.PI*.5)*.013;
-      if(elapsed<windup){n.dx=-dir*pull; n.dy=0; return;}
+      if(elapsed<windup){n.dx=-dir*pull; n.dy=n.actionLift=0; return;}
       const lunge=clamp((elapsed-windup)/135);
       const reach=1-2**(-9*lunge);
       const back=clamp((elapsed-this.basicHitMs)/(430-this.basicHitMs));
@@ -511,9 +626,10 @@
       if(close){
         const step=reach*settle;
         n.dx=((dest.x-n.x)*.82*step)-dir*pull*(1-reach);
-        n.dy=(dest.y-n.y)*.78*step-Math.sin(lunge*Math.PI)*.035;
+        n.actionLift=Math.sin(lunge*Math.PI)*.035;
+        n.dy=(dest.y-n.y)*.78*step-n.actionLift;
         while(n.sprite && !this.powerSave && this.trailIndex<4){
-          const at=windup+8+this.trailIndex*23;
+          const at=Math.max(windup+8,poseWindupMs)+this.trailIndex*23;
           if(elapsed<at)break;
           this.trailIndex++;
           if(elapsed-at<180)this.afterimage(n,dest,at);
@@ -521,14 +637,17 @@
       }else{
         const recoil=clamp((elapsed-windup)/120);
         n.dx=dir*(.009*Math.sin(recoil*Math.PI*2)*(1-recoil)-pull*(1-recoil));
-        n.dy=-.003*Math.sin(recoil*Math.PI);
+        n.actionLift=.003*Math.sin(recoil*Math.PI);
+        n.dy=-n.actionLift;
       }
     }
     afterimage(n,dest,at) {
-      const ghost=new P.Sprite(n.sprite.texture), t=(at-this.basicWindupMs)/135, reach=1-2**(-9*t);
+      const model=n.poses.atk?.texture ? n.poses.atk : n.poses.idle;
+      const ghost=new P.Sprite(model.texture), t=(at-this.basicWindupMs)/135, reach=1-2**(-9*t);
+      const scale=this.h*.204*n.magnification*n.depth*model.heightFactor/model.h;
       ghost.eventMode='none';
-      ghost.anchor.copyFrom(n.sprite.anchor);
-      ghost.scale.copyFrom(n.sprite.scale);
+      ghost.anchor.set(model.footX,model.footY);
+      ghost.scale.set(n.mirror ? -scale : scale,scale);
       ghost.blendMode=P.BLEND_MODES.ADD;
       ghost.tint=palette[Sky.D.hero(n.heroId).element];
       const dir=n.side==='ally'?1:-1;
@@ -543,9 +662,11 @@
         this.camera.frame(null,this.feedbackClock);
       }
       this.focus=null;
+      this.action=null;
       this.ultimatePlan=null;
       if(clearEffects){
         this.effects.length=0;
+        this.landings.length=0;
         this.bursts.length=0; this.lastImpact=null; this.hitstopRemaining=0;
         this.camera.reset(); this.previousFocus=null;
         this.rim.style.opacity=0; this.rimStart=null;
@@ -557,7 +678,10 @@
         this.impulses?.destroy();
         this.impulses=null;
       }
-      for(const n of this.nodes){n.dx=n.dy=0;if(clearEffects)n.reaction=null;}
+      for(const n of this.nodes){
+        n.dx=n.dy=n.actionLift=0;
+        if(clearEffects)n.reaction=n.shadowFlight=n.shadowReturn=n.landing=null;
+      }
     }
     hit(actor,hit,element,ultimate,clock,effectClock,index,due,meta={}) {
       const n = this.byKey[hit.target];
@@ -779,25 +903,80 @@
         }
       }
     }
+    drawLandings() {
+      const time=this.feedbackClock,h=this.h,w=this.w;
+      this.landings=this.landings.filter(landing=>time-landing.start<landingMs);
+      for(const landing of this.landings){
+        const t=clamp((time-landing.start)/landingMs),fade=(1-t)**2;
+        const x=landing.x*w,y=landing.y*h;
+        const r=h*(.026+.043*(1-(1-t)**2))*landing.scale;
+        this.groundInk.ellipse(x,y,r,r*.24,this.lighting.dust,.35*fade,Math.max(.6,h*.0016));
+        for(let i=0;i<7;i++){
+          const a=i*2.4+.64,reach=r*(.70+i%3*.17);
+          this.groundInk.ellipse(x+Math.cos(a)*reach,y+Math.sin(a)*reach*.24-h*.018*t,
+            h*.0024,h*.0016,this.lighting.dust,.42*fade);
+        }
+      }
+    }
+    actorModel(n,clock,hurtAge) {
+      const action=this.action?.actor===n.key ? this.action : null;
+      const state=hurtAge<hurtPoseMs ? 'hurt' : action?.kind==='basic' ?
+        (clock-this.actionStart<poseWindupMs ? 'windup' : 'atk') : action?.kind==='ultimate' ? 'atk' : 'idle';
+      const model=n.poses[state];
+      // A missing or damaged pose must never hide its standing sprite.
+      return model && (!n.sprite || model.texture) ? model : n.poses.idle;
+    }
+    shadowPose(n,ground,lift) {
+      const h=this.h,time=this.feedbackClock;
+      if(!this.lighting)return {x:ground.x,y:(n.y+n.dy*.60)*h-1,scale:1,alpha:1};
+      const threshold=Math.max(.7,.0015*h);
+      if(lift>threshold){
+        n.shadowFlight ||= n.lastGround || ground;
+        n.shadowReturn=null;
+      }else if(n.shadowFlight){
+        n.shadowReturn={...n.shadowFlight,start:time};
+        n.shadowFlight=null;
+        n.landing={x:ground.x/this.w,y:ground.y/h,start:time,scale:n.depth*n.magnification};
+        this.landings.push(n.landing);
+      }
+      let x=ground.x,y=ground.y;
+      if(n.shadowFlight){
+        ({x,y}=n.shadowFlight);
+      }else if(n.shadowReturn){
+        const p=1-(1-clamp((time-n.shadowReturn.start)/82))**2;
+        x=n.shadowReturn.x+(x-n.shadowReturn.x)*p;
+        y=n.shadowReturn.y+(y-n.shadowReturn.y)*p;
+        if(p===1)n.shadowReturn=null;
+      }
+      n.lastGround=ground;
+      const height=clamp(lift/(h*.043));
+      return {x,y:y-1,scale:1-.29*height,alpha:1-.44*height};
+    }
     actorPose(n,clock) {
       const age=n.reaction?this.feedbackClock-n.reaction.start:Infinity;
       const poseAge=n.reaction?clock-n.reaction.motionStart:Infinity;
       if(n.hp<=0 && poseAge>=190)return null;
+      const model=this.actorModel(n,clock,age);
       const w=this.w,h=this.h,t=clamp(poseAge/190);
       const push=(1-t)**2*Math.cos(t*Math.PI*1.55);
       const recoil=push*w*(this.powerSave?.004:.018);
       const rx=n.reaction?.dir.x ?? 0,ry=n.reaction?.dir.y ?? 0;
-      const x=(n.x+n.dx)*w+rx*recoil,y=(n.y+n.dy)*h+ry*recoil;
-      const stretch=this.powerSave?0:push,tilt=rx*.12*stretch;
-      const breath=this.powerSave?1:1+.007*Math.sin(clock/540+n.slot*1.8);
-      const size=h*.204*n.magnification*n.depth*breath*n.heightFactor;
-      const width=size*n.image.naturalWidth/n.image.naturalHeight;
-      const sign=n.mirror ? -1 : 1,sx=sign*(1-.18*stretch),sy=1+.15*stretch;
+      const hop=this.lighting ? Math.sin(t*Math.PI)*(1-t)*.025 : 0;
+      const lift=(n.actionLift+hop)*h;
+      const ground={x:(n.x+n.dx)*w+rx*recoil,y:(n.y+n.dy+n.actionLift)*h+ry*recoil};
+      const x=ground.x,y=ground.y-lift;
+      const tilt=this.powerSave?0:rx*.085*push;
+      const size=h*.204*n.magnification*n.depth*model.heightFactor;
+      const width=size*model.w/model.h;
+      const sign=n.mirror ? -1 : 1,sx=sign,sy=1;
       const horizontal=width*Math.abs(sx)*Math.cos(tilt);
-      const anchor=sign<0?1-n.footX:n.footX;
+      const anchor=sign<0?1-model.footX:model.footX;
       const slant=-Math.sin(tilt)*size*sy;
-      const upper=-n.footY*slant,lower=(1-n.footY)*slant;
-      return {x,y,size,width,sx,sy,tilt,white:age<50,red:age>=50 && age<115,
+      const upper=-model.footY*slant,lower=(1-model.footY)*slant;
+      const shadow=this.shadowPose(n,ground,lift);
+      const visualHeight=size*(model.footY-model.eye);
+      return {x,y,body:{x,y},ground,lift,shadow,model,visualHeight,size,width,sx,sy,tilt,
+        white:age<50,red:age>=50 && age<115,
         left:x-horizontal*anchor+Math.min(upper,lower),right:x+horizontal*(1-anchor)+Math.max(upper,lower)};
     }
     render(time,effectClock=0) {
@@ -825,10 +1004,11 @@
         this.rim.style.opacity=String(.52*(1-t));
         if(t===1)this.rimStart=null;
       }
-      if(this.bursts.length || this.drewBursts){this.groundRings?.clear();this.sparks?.clear();}
+      if(this.bursts.length || this.landings.length || this.drewBursts){this.groundRings?.clear();this.sparks?.clear();}
       this.bursts=this.bursts.filter(b=>effectClock-b.start<270);
-      this.drewBursts=this.bursts.length>0;
+      this.drewBursts=this.bursts.length>0 || this.landings.length>0;
       this.drawBursts(effectClock,true);
+      if(this.landings.length)this.drawLandings();
       for(let i=this.trails.length-1;i>=0;i--){
         const trail=this.trails[i],age=effectClock-trail.start;
         if(age>=180){trail.sprite.destroy();this.trails.splice(i,1);}
@@ -840,38 +1020,57 @@
         if(n.flag) n.flag.visible=visible;
         if(n.dom) n.dom.body.hidden=!visible;
         if(!visible) continue;
-        const {x,y,size,width,sx,sy,tilt,white,red}=n.pose;
+        const {x,y,size,width,sx,sy,tilt,white,red,shadow:groundShadow,model}=n.pose;
+        const {footX,footY,image}=model;
         const lit=this.focus || this.previousFocus;
         const alpha=lit && !lit.has(n.key) ? 1-.65*(this.powerSave?Number(!!this.focus):cam.focus) : 1;
-        const shadowWidth=size*.30*(1-Math.min(.30,Math.abs(n.dx)));
-        const shadowAlpha=n.side==='enemy' ? Math.max(.68,alpha) : alpha;
+        const shadowSize=h*.204*n.magnification*n.depth*n.poses.idle.heightFactor;
+        const shadowWidth=shadowSize*.30*groundShadow.scale*(this.lighting?1:1-Math.min(.30,Math.abs(n.dx)));
+        const shadowHeight=shadowSize*.050*groundShadow.scale;
+        const shadowAlpha=(n.side==='enemy' ? Math.max(.68,alpha) : alpha)*groundShadow.alpha;
         if(n.shadow) {
-          n.shadow.position.set((n.x+n.dx)*w,(n.y+n.dy*.60)*h-1);
-          n.shadow.scale.set(shadowWidth/100,size*.050/12);
+          n.shadow.position.set(groundShadow.x,groundShadow.y);
+          n.shadow.scale.set(shadowWidth/100,shadowHeight/12);
           n.shadow.alpha=shadowAlpha;
         } else if (!n.dom) {
-          c.save();c.translate(x,(n.y+n.dy*.60)*h-1);c.scale(shadowWidth/100,size*.050/12);
+          c.save();c.translate(groundShadow.x,groundShadow.y);c.scale(shadowWidth/100,shadowHeight/12);
           c.globalAlpha=shadowAlpha;this.footMark(this.shadowInk,n.side==='enemy');c.restore();
         }
         if(n.dom) {
           const {body,shadow,portrait}=n.dom;
+          if(n.model!==model)portrait.src=image.src;
           body.style.cssText='left:'+x+'px;top:'+y+'px;z-index:'+Math.round(n.y*100);
-          portrait.style.cssText='width:'+width+'px;height:'+size+'px;left:'+(-width*n.footX)+'px;top:'+(-size*n.footY)+
-            'px;transform-origin:'+n.footX*100+'% '+n.footY*100+'%;transform:rotate('+tilt+'rad) scale('+sx+','+sy+
+          portrait.style.cssText='width:'+width+'px;height:'+size+'px;left:'+(-width*footX)+'px;top:'+(-size*footY)+
+            'px;transform-origin:'+footX*100+'% '+footY*100+'%;transform:rotate('+tilt+'rad) scale('+sx+','+sy+
             ');filter:'+(white?'brightness(2.4)':red?'sepia(1) saturate(4) brightness(.65)':'brightness('+alpha+')');
-          shadow.style.cssText='width:'+shadowWidth*2+'px;height:'+size*.10+'px;opacity:'+shadowAlpha+';top:'+(-n.dy*.40*h)+'px';
+          shadow.style.cssText='width:'+shadowWidth*2+'px;height:'+shadowHeight*2+'px;opacity:'+shadowAlpha+
+            ';left:'+(groundShadow.x-x)+'px;top:'+(groundShadow.y-y)+'px';
         } else if(n.sprite) {
+          if(n.model!==model){
+            n.sprite.texture=model.texture;
+            n.sprite.anchor.set(footX,footY);
+          }
           n.sprite.position.set(x,y);
-          n.sprite.scale.set(sx*width/n.image.naturalWidth,sy*size/n.image.naturalHeight);
+          n.sprite.scale.set(sx*width/model.w,sy*size/model.h);
           n.sprite.rotation=tilt;
           n.sprite.tint=white?0x00ffff:red?0xa7384c:Math.round(alpha*255)*0x010101;
+          if(this.lighting){
+            const [sunX,sunY]=this.lighting.direction;
+            const phase=this.feedbackClock/585+n.slot*1.8+n.x*5;
+            const wind=model.state==='idle' ? Math.sin(phase)*.004+Math.sin(phase*.43)*.0015 : 0;
+            n.sprite.actorOptics[0]=wind;
+            n.sprite.actorOptics[1]=footY;
+            n.sprite.actorOptics[2]=sunX*sx*.010;
+            n.sprite.actorOptics[3]=sunY*.008;
+          }
         } else {
           c.save(); c.translate(x,y);c.rotate(tilt); c.scale(sx,sy);
           if(white || red || alpha<1)c.filter=white?'brightness(2.4)':red?'sepia(1) saturate(4) brightness(.65)':'brightness('+alpha+')';
-          c.drawImage(n.image,-width*n.footX,-size*n.footY,width,size); c.restore();
+          c.drawImage(image,-width*footX,-size*footY,width,size); c.restore();
         }
+        n.model=model;
         // Each flag and gauge is vector geometry at the canvas' actual backing density.
-        n.pinX=x; n.pinY=y-size*sy-h*.010;
+        n.pinX=x; n.pinY=y-size*sy*footY-h*.010;
         if(n.flag) {
           n.flag.position.set(n.pinX,n.pinY); n.flag.alpha=alpha;
           if(n.flagHP!==n.hp || n.flagShield!==n.shield || n.flagRage!==n.rage || n.flagW!==w || n.flagH!==h) {
@@ -895,18 +1094,24 @@
       const vfx=this.vfx?.inspect() || {ready:[],active:[],last:null,artReady:[],projectiles:[],statuses:[],embers:[]};
       vfx.procedural=[...new Set(this.effects.filter(e=>e.ultimate).map(e=>this.byKey[e.actor].heroId))];
       return {renderer:this.app?'pixi-webgl':'canvas2d',resolution:this.ratio, canvas:[this.canvas.width,this.canvas.height],
+        lighting:this.lighting || null,
         camera:{zoom:this.camera.zoom,x:this.camera.x,y:this.camera.y,kick:!!this.camera.kick,focus:this.camera.focus,
           hitstopRemaining:this.hitstopRemaining,filters:this.impulses?.inspect() || {active:[],shockwave:null,chromatic:null}},
         impact:this.lastImpact||null,
         layers:this.app?['groundFxLayer','unitLayer','overFxLayer']:[],
         stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,heroId:n.heroId,x:n.x,y:n.y,mirror:n.mirror,
           sourceFacing:n.sourceFacing,depth:n.depth,boss:n.boss,magnification:n.magnification,
-          artwork:'original',source:n.dom?'native-image':this.app?'pixi-texture':'canvas-image'})),textures:[...this.textures].map(([heroId,t])=>({heroId,
+          artwork:'original',source:n.dom?'native-image':this.app?'pixi-texture':'canvas-image',
+          pose:n.model?.state,poseTexture:n.model?.key,footAnchor:n.model?[n.model.footX,n.model.footY]:null,
+          visualHeight:n.pose?.visualHeight,body:n.pose?.body,ground:n.pose?.ground,lift:n.pose?.lift,
+          shadow:n.pose?.shadow,landing:!!n.pose && !!n.landing && this.feedbackClock-n.landing.start<landingMs})),
+        actionTextures:[...this.actionTextures.keys()],textures:[...this.textures].map(([heroId,t])=>({heroId,
           width:t.baseTexture.realWidth,height:t.baseTexture.realHeight,mipmap:t.baseTexture.mipmap,scaleMode:t.baseTexture.scaleMode})),ready:!!this.ready,
         vfx,ultimateVfx:vfx};
     }
     destroy() {
       this.disposed=true;
+      this.landings.length=0;
       this.rim.remove();
       this.observer.disconnect();
       if(this.app) {
@@ -916,6 +1121,8 @@
         this.app.destroy(true,{children:true,texture:false,baseTexture:false});
         for(const shape of Object.values(this.shadowShapes||{}))shape.destroy();
         for(const t of this.textures.values()) t.destroy(true);
+        for(const t of this.actionTextures.values()) t.destroy(true);
+        this.actionTextures.clear();
       }
       this.host.replaceChildren();
     }

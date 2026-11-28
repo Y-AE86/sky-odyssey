@@ -1,0 +1,384 @@
+{
+  "name": "retina",
+  "stage": {
+    "x": 0,
+    "y": 45,
+    "width": 1440,
+    "height": 810,
+    "dpr": 2,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1440,
+    "vh": 900
+  },
+  "startup": {
+    "staticStatus": false,
+    "visibleUiWhilePosterPending": false,
+    "asyncImages": 22,
+    "beforeGesture": {
+      "pixi": 0,
+      "bgm": 0,
+      "videoRequests": 1
+    },
+    "posterToPrimaryMs": 1034,
+    "sources": [
+      {
+        "ms": 1199.5999999996275,
+        "name": "lobby_cg_h01.mp4",
+        "preload": "auto",
+        "peerTime": null
+      },
+      {
+        "ms": 2084.699999999255,
+        "name": "lobby_cg_h01.mp4",
+        "preload": "metadata",
+        "peerTime": 0.804793
+      }
+    ],
+    "unlockedAfterClick": true,
+    "rendererLoadingScreen": false
+  },
+  "renderer": "pixi-webgl",
+  "resolution": 2,
+  "canvas": [
+    2880,
+    1620
+  ],
+  "lighting": {
+    "altar": {
+      "key": "battle_boss",
+      "rim": 13348351,
+      "direction": [
+        -0.48,
+        -0.87
+      ],
+      "shade": 1840439,
+      "dust": 14008063,
+      "ao": 0.125
+    }
+  },
+  "actualUnits": [
+    "h10",
+    "enemy_caster",
+    "enemy_vanguard",
+    "h02",
+    "h05",
+    "enemy_striker",
+    "h01",
+    "enemy_boss_mech",
+    "h06",
+    "h04"
+  ],
+  "actionTextures": [
+    "h02_windup",
+    "h02_atk",
+    "h02_hurt",
+    "h01_windup",
+    "h01_atk",
+    "h01_hurt"
+  ],
+  "poseSamples": {
+    "h01": {
+      "idle": {
+        "key": "a1",
+        "heroId": "h01",
+        "x": 0.324,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "idle",
+        "poseTexture": "h01",
+        "footAnchor": [
+          0.54,
+          0.9851988899167438
+        ],
+        "visualHeight": 106.33056018771705,
+        "body": {
+          "x": 466.56,
+          "y": 556.47
+        },
+        "ground": {
+          "x": 466.56,
+          "y": 556.47
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 466.56,
+          "y": 555.47,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      },
+      "windup": {
+        "key": "a1",
+        "heroId": "h01",
+        "x": 0.324,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "windup",
+        "poseTexture": "h01_windup",
+        "footAnchor": [
+          0.492,
+          0.972
+        ],
+        "visualHeight": 106.33056018771705,
+        "body": {
+          "x": 466.56,
+          "y": 556.47
+        },
+        "ground": {
+          "x": 466.56,
+          "y": 556.47
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 466.56,
+          "y": 555.47,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      },
+      "atk": {
+        "key": "a1",
+        "heroId": "h01",
+        "x": 0.324,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "atk",
+        "poseTexture": "h01_atk",
+        "footAnchor": [
+          0.405,
+          0.93
+        ],
+        "visualHeight": 106.33056018771705,
+        "body": {
+          "x": 754.5483826375003,
+          "y": 540.0742782696376
+        },
+        "ground": {
+          "x": 754.5483826375003,
+          "y": 556.47
+        },
+        "lift": 16.395721730362418,
+        "shadow": {
+          "x": 447.84014434277884,
+          "y": 555.47,
+          "scale": 0.8634866694859288,
+          "alpha": 0.7928763261165815
+        },
+        "landing": false
+      },
+      "hurt": {
+        "key": "a1",
+        "heroId": "h01",
+        "x": 0.324,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "hurt",
+        "poseTexture": "h01_hurt",
+        "footAnchor": [
+          0.525,
+          0.968
+        ],
+        "visualHeight": 106.33056018771707,
+        "body": {
+          "x": 440.6586548246873,
+          "y": 557.453218240934
+        },
+        "ground": {
+          "x": 440.6586548246873,
+          "y": 557.453218240934
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 440.6586548246873,
+          "y": 556.453218240934,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      }
+    },
+    "h02": {
+      "idle": {
+        "key": "a0",
+        "heroId": "h02",
+        "x": 0.386,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "idle",
+        "poseTexture": "h02",
+        "footAnchor": [
+          0.49,
+          0.9865884325230512
+        ],
+        "visualHeight": 102.18591499579536,
+        "body": {
+          "x": 555.84,
+          "y": 441.45000000000005
+        },
+        "ground": {
+          "x": 555.84,
+          "y": 441.45000000000005
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 555.84,
+          "y": 440.45000000000005,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      },
+      "windup": {
+        "key": "a0",
+        "heroId": "h02",
+        "x": 0.386,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "windup",
+        "poseTexture": "h02_windup",
+        "footAnchor": [
+          0.498,
+          0.978
+        ],
+        "visualHeight": 102.18591499579536,
+        "body": {
+          "x": 555.84,
+          "y": 441.45000000000005
+        },
+        "ground": {
+          "x": 555.84,
+          "y": 441.45000000000005
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 555.84,
+          "y": 440.45000000000005,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      },
+      "atk": {
+        "key": "a0",
+        "heroId": "h02",
+        "x": 0.386,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "atk",
+        "poseTexture": "h02_atk",
+        "footAnchor": [
+          0.496,
+          0.978
+        ],
+        "visualHeight": 102.18591499579536,
+        "body": {
+          "x": 551.1973779367074,
+          "y": 439.891277395287
+        },
+        "ground": {
+          "x": 551.1973779367074,
+          "y": 441.45000000000005
+        },
+        "lift": 1.5587226047130713,
+        "shadow": {
+          "x": 537.12,
+          "y": 440.45000000000005,
+          "scale": 0.9870218330356937,
+          "alpha": 0.9803089880541559
+        },
+        "landing": false
+      },
+      "hurt": {
+        "key": "a0",
+        "heroId": "h02",
+        "x": 0.386,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "hurt",
+        "poseTexture": "h02_hurt",
+        "footAnchor": [
+          0.521,
+          0.978
+        ],
+        "visualHeight": 102.18591499579537,
+        "body": {
+          "x": 529.9482869120139,
+          "y": 442.6606169375208
+        },
+        "ground": {
+          "x": 529.9482869120139,
+          "y": 442.6606169375208
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 529.9482869120139,
+          "y": 441.6606169375208,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      }
+    }
+  },
+  "castsObserved": [],
+  "cleanup": {
+    "disposed": true,
+    "canvasRemoved": true
+  },
+  "emberTail": null,
+  "embeddedSha256": null,
+  "pixiRequests": 1,
+  "consoleErrorsAndResourceFailures": 0
+}

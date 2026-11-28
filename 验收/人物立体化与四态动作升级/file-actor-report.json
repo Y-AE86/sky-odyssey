@@ -1,0 +1,406 @@
+{
+  "name": "file",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "startup": {
+    "staticStatus": false,
+    "visibleUiWhilePosterPending": false,
+    "asyncImages": 22,
+    "beforeGesture": {
+      "pixi": 0,
+      "bgm": 0,
+      "videoRequests": 3
+    },
+    "posterToPrimaryMs": 1026,
+    "sources": [
+      {
+        "ms": 1143.0999999996275,
+        "name": "lobby_cg_h01.mp4",
+        "preload": "auto",
+        "peerTime": null
+      },
+      {
+        "ms": 2031.4000000003725,
+        "name": "lobby_cg_h01.mp4",
+        "preload": "metadata",
+        "peerTime": 0.810158
+      }
+    ],
+    "unlockedAfterClick": true,
+    "rendererLoadingScreen": false
+  },
+  "renderer": "pixi-webgl",
+  "resolution": 1,
+  "canvas": [
+    1280,
+    720
+  ],
+  "lighting": {
+    "altar": {
+      "key": "battle_boss",
+      "rim": 13348351,
+      "direction": [
+        -0.48,
+        -0.87
+      ],
+      "shade": 1840439,
+      "dust": 14008063,
+      "ao": 0.125
+    }
+  },
+  "actualUnits": [
+    "h10",
+    "enemy_caster",
+    "enemy_vanguard",
+    "h02",
+    "h05",
+    "enemy_striker",
+    "h01",
+    "enemy_boss_mech",
+    "h06",
+    "h04"
+  ],
+  "actionTextures": [
+    "h02_windup",
+    "h02_atk",
+    "h02_hurt",
+    "h01_windup",
+    "h01_atk",
+    "h01_hurt"
+  ],
+  "poseSamples": {
+    "h01": {
+      "idle": {
+        "key": "a1",
+        "heroId": "h01",
+        "x": 0.324,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "idle",
+        "poseTexture": "h01",
+        "footAnchor": [
+          0.54,
+          0.9851988899167438
+        ],
+        "visualHeight": 94.51605350019294,
+        "body": {
+          "x": 414.72,
+          "y": 494.64000000000004
+        },
+        "ground": {
+          "x": 414.72,
+          "y": 494.64000000000004
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 414.72,
+          "y": 493.64000000000004,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      },
+      "windup": {
+        "key": "a1",
+        "heroId": "h01",
+        "x": 0.324,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "windup",
+        "poseTexture": "h01_windup",
+        "footAnchor": [
+          0.492,
+          0.972
+        ],
+        "visualHeight": 94.51605350019294,
+        "body": {
+          "x": 414.72,
+          "y": 494.64000000000004
+        },
+        "ground": {
+          "x": 414.72,
+          "y": 494.64000000000004
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 414.72,
+          "y": 493.64000000000004,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      },
+      "atk": {
+        "key": "a1",
+        "heroId": "h01",
+        "x": 0.324,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "atk",
+        "poseTexture": "h01_atk",
+        "footAnchor": [
+          0.405,
+          0.93
+        ],
+        "visualHeight": 94.51605350019294,
+        "body": {
+          "x": 574.3854694832877,
+          "y": 487.0202787530889
+        },
+        "ground": {
+          "x": 574.3854694832877,
+          "y": 494.64000000000004
+        },
+        "lift": 7.6197212469111,
+        "shadow": {
+          "x": 398.66117409273585,
+          "y": 493.64000000000004,
+          "scale": 0.9286266420670471,
+          "alpha": 0.8917093879637957
+        },
+        "landing": false
+      },
+      "hurt": {
+        "key": "a1",
+        "heroId": "h01",
+        "x": 0.324,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "hurt",
+        "poseTexture": "h01_hurt",
+        "footAnchor": [
+          0.525,
+          0.968
+        ],
+        "visualHeight": 94.51605350019295,
+        "body": {
+          "x": 391.6965820663887,
+          "y": 495.5139717697192
+        },
+        "ground": {
+          "x": 391.6965820663887,
+          "y": 495.5139717697192
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 391.6965820663887,
+          "y": 494.5139717697192,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      }
+    },
+    "h02": {
+      "idle": {
+        "key": "a0",
+        "heroId": "h02",
+        "x": 0.386,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "idle",
+        "poseTexture": "h02",
+        "footAnchor": [
+          0.49,
+          0.9865884325230512
+        ],
+        "visualHeight": 90.83192444070698,
+        "body": {
+          "x": 494.08000000000004,
+          "y": 392.40000000000003
+        },
+        "ground": {
+          "x": 494.08000000000004,
+          "y": 392.40000000000003
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 494.08000000000004,
+          "y": 391.40000000000003,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      },
+      "windup": {
+        "key": "a0",
+        "heroId": "h02",
+        "x": 0.386,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "windup",
+        "poseTexture": "h02_windup",
+        "footAnchor": [
+          0.498,
+          0.978
+        ],
+        "visualHeight": 90.831924440707,
+        "body": {
+          "x": 494.08000000000004,
+          "y": 392.40000000000003
+        },
+        "ground": {
+          "x": 494.08000000000004,
+          "y": 392.40000000000003
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 494.08000000000004,
+          "y": 391.40000000000003,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      },
+      "atk": {
+        "key": "a0",
+        "heroId": "h02",
+        "x": 0.386,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "atk",
+        "poseTexture": "h02_atk",
+        "footAnchor": [
+          0.496,
+          0.978
+        ],
+        "visualHeight": 90.831924440707,
+        "body": {
+          "x": 489.95322483262885,
+          "y": 391.0144687958106
+        },
+        "ground": {
+          "x": 489.95322483262885,
+          "y": 392.40000000000003
+        },
+        "lift": 1.3855312041893966,
+        "shadow": {
+          "x": 477.44003207620403,
+          "y": 391.40000000000003,
+          "scale": 0.9870218330356937,
+          "alpha": 0.9803089880541559
+        },
+        "landing": false
+      },
+      "hurt": {
+        "key": "a0",
+        "heroId": "h02",
+        "x": 0.386,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "right",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture",
+        "pose": "hurt",
+        "poseTexture": "h02_hurt",
+        "footAnchor": [
+          0.521,
+          0.978
+        ],
+        "visualHeight": 90.831924440707,
+        "body": {
+          "x": 471.0651439217902,
+          "y": 393.4761039444629
+        },
+        "ground": {
+          "x": 471.0651439217902,
+          "y": 393.4761039444629
+        },
+        "lift": 0,
+        "shadow": {
+          "x": 471.0651439217902,
+          "y": 392.4761039444629,
+          "scale": 1,
+          "alpha": 1
+        },
+        "landing": false
+      }
+    }
+  },
+  "castsObserved": [],
+  "cleanup": {
+    "disposed": true,
+    "canvasRemoved": true
+  },
+  "emberTail": null,
+  "embeddedSha256": {
+    "h01": "2d755db7e15ada571e96c59fdd5548ca843c605ec7f496825f19dbbe76f6ac77",
+    "h02": "f9d8b28cdb7ffd0b98d4001804cce6b368948661e3644f02116a34b4dadc2e14",
+    "h03": "df7bf54115a2ea1e242022800de855cb1af89b4275276f2b9803b8f330cc2459",
+    "h04": "7872ef0b0593bddc7587c44d8f7a6fbd2b55cce6bfeb4d974e31e464c0f51667",
+    "h05": "20f56bb1f8671f36edd6cec8ae6e2c734c5381bcd9bbccc84618a0d20860cc05",
+    "h06": "71523194b036e413e9ed63ee93413c2b92c3a8fd2a61f06b9eb4ce7a0daf1cb7",
+    "h07": "3287b5c592f983599ae0834ac897aa9db9ae3a18a628fb118639bd7bdafa0660",
+    "h08": "6889c0e98adfb7161d482ca63e5d55f796593baf060d9be7598a8cb1c8229e48",
+    "h09": "e64e31a4e7b192ef142d15ec8ef485a4897c0153d07d372e5c8dc01f50cb1228",
+    "h10": "e16f8705ad3fbc031ce987a3e984042a1e0f5555e8acefd182146ffc0bdffa9f",
+    "h11": "8cbbebe9b746d868695c46cee4317fed6a56fa52695f8d46cf5f446049a6a71b",
+    "enemy_boss_mech": "be7c45baeca93a0391e76c4caacbacac767c8cafaf6db198aa3dfcb7249c32ae",
+    "enemy_vanguard": "291cf1fc15e08e7dffe9f9243023a0ebce5cadd96f459339b5906ecfd341e94c",
+    "enemy_caster": "0d87e65b8945663d2ecd731af8ac73bd99b86888bdd56f496f510503ce8397d7",
+    "enemy_striker": "fc833a376396c0c1e52e0afa70e817fa39a0e82ca199b113680e2c590403427a",
+    "h01_atk": "d1c53a3b2b1f6de5ae1f61473b681c59a36707cb4b35e77c0991beaf0d6b4c87",
+    "h01_hurt": "a32dc298896d1ff23cae4276f7c8eb304720b65d37d3bd808f6e7835bf1834ba",
+    "h01_windup": "077352e7a8eba5b51eb8031ac5e97327379c6e808fd826ca080d484299b914e8",
+    "h02_atk": "cad9fd18320b3f66bb30df14020222ada342913627271f4f2c479a625204859e",
+    "h02_hurt": "1b33c048b5402d77525396ad351142a7cba3771232430f4ae34625ae5ad1285d",
+    "h02_windup": "a218499e2b2c2f6b8e801071d6f12864ea1308851c5499b4648cc1f2a55431ba"
+  },
+  "pixiRequests": 1,
+  "consoleErrorsAndResourceFailures": 0
+}

@@ -475,9 +475,30 @@
     if(key==='again') Sky.ui.go('battle',{...spec});
     if(key==='next') Sky.ui.go('battle',{...spec,id:spec.id+1});
   }
+  let preparing;
   function start(spec) {
     destroy();
     const ui=Sky.ui, battle=Sky.Battle.create(ui.state,spec);
+    if(Sky.BattleScene){enter(battle);return;}
+    const preparation=preparing={};
+    ui.root.innerHTML='<section class="battle-preparing" aria-label="战台准备">'+
+      '<p role="status">正在准备星盘战台</p><button type="button" data-battle-prepare-cancel>返回航线</button></section>';
+    const pane=ui.root.firstElementChild;
+    const back=pane.querySelector('button');
+    if(battle.spec.kind!=='campaign')back.textContent='返回试炼';
+    back.onclick=()=>ui.go('campaign',{trials:battle.spec.kind!=='campaign'});
+    Sky.battleRenderer.load().then(()=>{
+      if(preparing!==preparation)return;
+      enter(battle);
+      preparing=null;
+    }).catch(error=>{
+      if(preparing!==preparation)return;
+      pane.querySelector('[role=status]').textContent=error.message;
+      ui.root.replaceChildren(pane);
+    });
+  }
+  function enter(battle) {
+    const ui=Sky.ui;
     ui.root.innerHTML='<section class="battle-page" aria-label="六对六星盘战斗">'+
       '<div class="battle-stage"></div><div class="battle-numbers"></div>'+
       '<header class="battle-head"><div class="battle-round">回合 <strong>01</strong> / 20</div>'+
@@ -488,8 +509,9 @@
       '<div class="battle-bottom">'+battle.units.filter(u=>u.side==='ally').map(card).join('')+'</div></section>';
     const root=ui.root.querySelector('.battle-page');
     const powerSave=ui.state.settings.powerSave;
-    const scene=new Sky.BattleScene(root.querySelector('.battle-stage'),battle.units,powerSave);
-    const s={root,battle,scene,backdrop:document.getElementById('bleed'),powerSave,auto:true,speed:1,queued:new Set(),posters:new Map(),videos:new Map(),phase:'loading',elapsed:0,effectClock:0,hudClock:0,carry:0,labels:[],duration:450,
+    const backdrop=document.getElementById('bleed');
+    const scene=new Sky.BattleScene(root.querySelector('.battle-stage'),battle.units,powerSave,backdrop.dataset.scene);
+    const s={root,battle,scene,backdrop,powerSave,auto:true,speed:1,queued:new Set(),posters:new Map(),videos:new Map(),phase:'loading',elapsed:0,effectClock:0,hudClock:0,carry:0,labels:[],duration:450,
       cards:[...root.querySelectorAll('.battle-card')],autoButton:root.querySelector('[data-battle="auto"]'),speedButton:root.querySelector('[data-battle="speed"]'),
       round:root.querySelector('.battle-round strong'),total:root.querySelector('.battle-total'),
       ribbons:Object.fromEntries([...root.querySelectorAll('.battle-skill')].map(el=>[el.dataset.side,el])),
@@ -517,6 +539,7 @@
     });
   }
   function destroy() {
+    preparing=null;
     if(!current)return;
     releaseVideos(current);
     hideTotal(current);
@@ -525,7 +548,7 @@
     current=null;
   }
   function inspect() {
-    if(!current)return null;
+    if(!current)return preparing ? {ready:false,phase:'loading'} : null;
     const s=current;
     return {...s.scene.inspect(),phase:s.phase,round:s.battle.round,cutins:s.cutins,burstCount:s.burstCount,
       totalUpdates:s.totalUpdates,presentedFrames:s.presentedFrames,renderedMs:s.renderedMs,

@@ -20,7 +20,7 @@
     h11:['今夜由我守最后一班。你尽管带着灯回来。','替我留扇窗。王冠和羽翼都沾了夜露。','城外的钟响了三声。再等一声，我就送你回港。']
   };
   const bleed = document.getElementById('bleed');
-  const image = (url,cls='ico') => '<img class="'+cls+'" alt="" draggable="false" src="'+url+'">';
+  const image = (url,cls='ico') => '<img class="'+cls+'" alt="" draggable="false" decoding="async" src="'+url+'">';
   const codexMeta = (h,status='') => '<small class="codex-meta"><span>'+h.rarity+'</span><span class="codex-faction-label">'+
     image(S.art.faction(h.faction),'codex-faction')+h.faction+'</span>'+(status?'<span>'+status+'</span>':'')+'</small>';
   const icon = key => image(S.art.icon(key));
@@ -119,6 +119,7 @@
     pendingPoster=null;
     for(const layer of lobbyVideos.keys())releaseLobbyVideo(layer);
     bleed.dataset.page=page;
+    delete bleed.dataset.scene;
     bleed.classList.remove('clean');
     bleed.replaceChildren();
     bleed.style.backgroundImage='';
@@ -127,7 +128,9 @@
       bleed.innerHTML='<div class="lobby-art"><div class="lobby-media"><img class="backdrop current" alt="" data-poster="'+id+'" fetchpriority="high" src="'+S.art(id,'poster')+'"></div></div><div class="lobby-shade"></div>';
       syncLobbyVideo();
     } else {
-      bleed.style.backgroundImage='url("'+S.scene(sceneForPage(page,options))+'")';
+      const scene=sceneForPage(page,options);
+      bleed.dataset.scene=scene;
+      bleed.style.backgroundImage='url("'+S.scene(scene)+'")';
     }
   }
   function cinematic(url,matte=false){
@@ -141,7 +144,7 @@
   function lobby(){
     const st=D.stages[Math.min(state.cleared,9)];
     root.innerHTML='<button class="lobby-interact" aria-label="与看板星灵交谈" data-action="line"></button>'+
-      '<header class="lobby-top"><div class="commander"><span class="commander-badge"><img src="'+S.art('h02','avatar')+'" alt=""><i></i></span><div><b>星航指挥官</b><div><span>Lv. '+state.level+'</span>　战力 '+format(V.power(state))+'</div></div></div>'+
+      '<header class="lobby-top"><div class="commander"><span class="commander-badge"><img decoding="async" src="'+S.art('h02','avatar')+'" alt=""><i></i></span><div><b>星航指挥官</b><div><span>Lv. '+state.level+'</span>　战力 '+format(V.power(state))+'</div></div></div>'+
       '<div class="top-resources">'+[['gem',state.diamonds,'星钻'],['coin',state.coins,'星币'],['ticket',state.tickets,'唤星券']].map(([i,n,label])=>'<button title="'+label+'" aria-label="'+label+' '+n+'" data-action="bag">'+item(i)+'<b>'+format(n)+'</b></button>').join('')+'</div>'+
       '<div class="quick-settings">'+audioButton()+'<button data-action="settings" title="画质、音效与存档设置" aria-label="画质、音效与存档设置">'+icon('settings')+'<span>'+(state.settings.powerSave?'省电静态':'极致画质')+'</span></button></div></header>'+
       '<nav class="side-tools" aria-label="主城服务">'+[['quests','quest','任务'],['welfare','reward','福利'],['atlas','codex','图鉴'],['bag','bag','背包']].map(x=>navButton(...x)).join('')+'</nav>'+

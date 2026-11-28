@@ -40,12 +40,10 @@
   const fieldArt = new Set([...Object.keys(effects).filter(id=>id!=='spark').map(id=>'proj_'+id),
     'status_shield','status_freeze','status_curse','status_heal_ring']);
   art.battleArt = key => fieldArt.has(key) ? 'assets/vfx/'+key+'.png' : null;
-  // WebGL cannot upload the pixels of a file: image. Load the original PNG bytes
-  // from classic scripts on demand, keeping the effect atlas separate from chibis.
-  function offlinePack(src,key) {
+  // Classic scripts also work when the player opens index.html through file:.
+  function assetScript(src,key) {
     let pending;
     return () => {
-      if(location.protocol!=='file:') return Promise.resolve(null);
       if(Sky[key]) return Promise.resolve(Sky[key]);
       if(!pending) pending=new Promise(resolve=>{
         const script=document.createElement('script');
@@ -59,6 +57,17 @@
       });
       return pending;
     };
+  }
+  art.loadPoses = assetScript('js/chibi-poses.js','chibiPoses');
+  art.pose = (id,state) => {
+    const key=id+'_'+state;
+    return Sky.chibiPoses?.includes(key) ? 'assets/chibi/chibi_'+key+'.png' : null;
+  };
+  // WebGL cannot upload the pixels of a file: image. Read the byte-for-byte
+  // inline fallback on demand, keeping the effect atlas separate from chibis.
+  function offlinePack(src,key) {
+    const load=assetScript(src,key);
+    return () => location.protocol==='file:' ? load() : Promise.resolve(null);
   }
   art.loadOfflineTextures = offlinePack('js/offline-textures.js','offlineChibi');
   const loadVfx = offlinePack('js/offline-vfx.js','offlineVfx');

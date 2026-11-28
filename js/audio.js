@@ -124,16 +124,16 @@
     refresh();
   }
   function unlock(event) {
-    if(!event.isTrusted || document.hidden)return;
-    // Touch pointerdown can precede transient activation. The later pointerup
-    // covers touch while keeping mouse and keyboard available on the first input.
+    if(!event.isTrusted || document.hidden || (event.type==='pointerdown' && event.pointerType==='touch'))return;
+    // Pointerup and click cover WebKit's touch activation, so assigning the media
+    // source and calling play still happen in a trusted input stack.
     if(navigator.userActivation && !navigator.userActivation.hasBeenActive)return;
     if(!unlocked && Sky.ui?.state?.settings)configure(Sky.ui.state.settings);
     unlocked=true;
     effects.unlock();
     updateMusic();
   }
-  for(const type of ['pointerdown','pointerup','keydown'])document.addEventListener(type,unlock,{capture:true,passive:true});
+  for(const type of ['pointerdown','pointerup','click','keydown'])document.addEventListener(type,unlock,{capture:true,passive:true});
   document.addEventListener('visibilitychange',()=>{
     effects.configure({enabled:!document.hidden && voiceVolume()>0,volume:voiceVolume()});
     if(unlocked && !document.hidden)effects.unlock();

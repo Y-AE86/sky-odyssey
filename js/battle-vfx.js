@@ -478,11 +478,11 @@
         for(const {light,x,y,spread,delay,size,phase} of particles){
           if(age<delay)continue;
           const t=(age-delay)/1000, travel=1-Math.exp(-3.5*t);
-          light.position.set(h*x*spread*(.036+.14*travel),
-            h*(y*spread*(.026+.089*travel)-.038*t+.016*t*t));
-          const scale=h*size/(720*24);
+          light.position.set(h*x*spread*(.039+.16*travel),
+            h*(y*spread*(.029+.102*travel)-.038*t+.016*t*t));
+          const scale=h*size*1.35/(720*24);
           light.scale.set(scale*(1-.34*tail)*(1-.22*Math.abs(y)),scale*(1-.37*tail));
-          light.alpha=envelope*smooth(0,.065,t)*(.70+.26*Math.sin(17*t+phase));
+          light.alpha=envelope*smooth(0,.065,t)*Math.min(1,.945+.35*Math.sin(17*t+phase));
           light.visible=true;
           visible++;
         }

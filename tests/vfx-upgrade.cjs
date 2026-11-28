@@ -125,6 +125,7 @@ async function runVfxUpgrade(browser,origin,spec,options,helpers){
     }
     await p.goto(spec.file?pathToFileURL(path.join(root,'index.html')).href:origin);
     await p.waitForFunction(()=>Sky.ui?.state);
+    await p.evaluate(()=>Sky.battleRenderer?.load());
     await p.evaluate(installProbe);
     await p.evaluate(baseline=>effectUpgrade.baseline=baseline,baseline);
     const stage=await geometry(p,spec);

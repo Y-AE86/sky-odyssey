@@ -1,0 +1,134 @@
+{
+  "pack": {
+    "h01": {
+      "file": "assets/chibi/chibi_c07.png",
+      "width": 1079,
+      "height": 1081,
+      "sha256": "2d755db7e15ada571e96c59fdd5548ca843c605ec7f496825f19dbbe76f6ac77"
+    },
+    "h02": {
+      "file": "assets/chibi/chibi_protag.png",
+      "width": 1028,
+      "height": 1193,
+      "sha256": "f9d8b28cdb7ffd0b98d4001804cce6b368948661e3644f02116a34b4dadc2e14"
+    },
+    "h03": {
+      "file": "assets/chibi/chibi_c15.png",
+      "width": 946,
+      "height": 1198,
+      "sha256": "df7bf54115a2ea1e242022800de855cb1af89b4275276f2b9803b8f330cc2459"
+    },
+    "h04": {
+      "file": "assets/chibi/chibi_h04.png",
+      "width": 1033,
+      "height": 1239,
+      "sha256": "7872ef0b0593bddc7587c44d8f7a6fbd2b55cce6bfeb4d974e31e464c0f51667"
+    },
+    "h05": {
+      "file": "assets/chibi/chibi_h05.png",
+      "width": 1240,
+      "height": 1239,
+      "sha256": "20f56bb1f8671f36edd6cec8ae6e2c734c5381bcd9bbccc84618a0d20860cc05"
+    },
+    "h06": {
+      "file": "assets/chibi/chibi_h06.png",
+      "width": 1125,
+      "height": 1239,
+      "sha256": "71523194b036e413e9ed63ee93413c2b92c3a8fd2a61f06b9eb4ce7a0daf1cb7"
+    },
+    "h07": {
+      "file": "assets/chibi/chibi_h07.png",
+      "width": 1016,
+      "height": 1194,
+      "sha256": "3287b5c592f983599ae0834ac897aa9db9ae3a18a628fb118639bd7bdafa0660"
+    },
+    "h08": {
+      "file": "assets/chibi/chibi_h08.png",
+      "width": 1013,
+      "height": 1272,
+      "sha256": "6889c0e98adfb7161d482ca63e5d55f796593baf060d9be7598a8cb1c8229e48"
+    },
+    "h09": {
+      "file": "assets/chibi/chibi_h09.png",
+      "width": 994,
+      "height": 1243,
+      "sha256": "e64e31a4e7b192ef142d15ec8ef485a4897c0153d07d372e5c8dc01f50cb1228"
+    },
+    "h10": {
+      "file": "assets/chibi/chibi_h10.png",
+      "width": 1073,
+      "height": 1237,
+      "sha256": "e16f8705ad3fbc031ce987a3e984042a1e0f5555e8acefd182146ffc0bdffa9f"
+    },
+    "h11": {
+      "file": "assets/chibi/chibi_h11.png",
+      "width": 884,
+      "height": 1216,
+      "sha256": "8cbbebe9b746d868695c46cee4317fed6a56fa52695f8d46cf5f446049a6a71b"
+    },
+    "enemy_boss_mech": {
+      "file": "assets/chibi/enemy_boss_mech.png",
+      "width": 1282,
+      "height": 1237,
+      "sha256": "be7c45baeca93a0391e76c4caacbacac767c8cafaf6db198aa3dfcb7249c32ae"
+    },
+    "enemy_vanguard": {
+      "file": "assets/chibi/enemy_vanguard.png",
+      "width": 1192,
+      "height": 1152,
+      "sha256": "291cf1fc15e08e7dffe9f9243023a0ebce5cadd96f459339b5906ecfd341e94c"
+    },
+    "enemy_caster": {
+      "file": "assets/chibi/enemy_caster.png",
+      "width": 1156,
+      "height": 1248,
+      "sha256": "0d87e65b8945663d2ecd731af8ac73bd99b86888bdd56f496f510503ce8397d7"
+    },
+    "enemy_striker": {
+      "file": "assets/chibi/enemy_striker.png",
+      "width": 1243,
+      "height": 1102,
+      "sha256": "fc833a376396c0c1e52e0afa70e817fa39a0e82ca199b113680e2c590403427a"
+    },
+    "h01_atk": {
+      "file": "assets/chibi/chibi_h01_atk.png",
+      "width": 548,
+      "height": 528,
+      "sha256": "d1c53a3b2b1f6de5ae1f61473b681c59a36707cb4b35e77c0991beaf0d6b4c87"
+    },
+    "h01_hurt": {
+      "file": "assets/chibi/chibi_h01_hurt.png",
+      "width": 517,
+      "height": 551,
+      "sha256": "a32dc298896d1ff23cae4276f7c8eb304720b65d37d3bd808f6e7835bf1834ba"
+    },
+    "h01_windup": {
+      "file": "assets/chibi/chibi_h01_windup.png",
+      "width": 441,
+      "height": 591,
+      "sha256": "077352e7a8eba5b51eb8031ac5e97327379c6e808fd826ca080d484299b914e8"
+    },
+    "h02_atk": {
+      "file": "assets/chibi/chibi_h02_atk.png",
+      "width": 711,
+      "height": 735,
+      "sha256": "cad9fd18320b3f66bb30df14020222ada342913627271f4f2c479a625204859e"
+    },
+    "h02_hurt": {
+      "file": "assets/chibi/chibi_h02_hurt.png",
+      "width": 605,
+      "height": 733,
+      "sha256": "1b33c048b5402d77525396ad351142a7cba3771232430f4ae34625ae5ad1285d"
+    },
+    "h02_windup": {
+      "file": "assets/chibi/chibi_h02_windup.png",
+      "width": 519,
+      "height": 741,
+      "sha256": "a218499e2b2c2f6b8e801071d6f12864ea1308851c5499b4648cc1f2a55431ba"
+    }
+  },
+  "fixture": {
+    "automaticallyDiscovered": "assets/chibi/chibi_h03_hurt.png",
+    "entries": 22
+  }
+}

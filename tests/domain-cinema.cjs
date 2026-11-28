@@ -189,22 +189,11 @@ function measureTrace(trace,id,spec){
   assert.equal(source.source,'domain_'+id+'.png');
   assert.equal(source.sizing,'cover');
   if(spec.mobile)assert(viewportEqual(source.bounds,spec.width,spec.height),'domain must fill the mobile wings');
-  assert(hit && cracked.length,id+' pulse present at actual finisher');
-  const first=cracked[0],last=cracked.at(-1);
-  const off=frames.find(frame=>frame.time>last.time && !frame.fx?.visible);
-  assert.equal(first.fx.startedAt,hit.time);
-  assert.equal(first.time,hit.time);
-  assert.equal(first.fx.duration,70);
-  assert.equal(first.fx.source,spec.file?'embedded':'png');
-  assert.equal(first.fx.blendMode,1);
-  assert.deepEqual(first.fx.epicenter,[.635,.5]);
-  assert(first.filters.includes('chromatic') && first.filters.includes('shockwave'));
-  assert(last.time-first.time<80);
-  assert(off && off.time-first.time>=64 && off.time-first.time<=180);
+  assert(hit && !cracked.length,id+' screen crack pulse disabled');
   assert(frames.some(frame=>frame.active.some(effect=>effect.hero===id && effect.cinemaScale>=1.2 &&
     effect.cinemaScale<=1.35 && (effect.role==='group'||effect.finisher))));
-  return {duration:hold,fade,source,pulseDuration:first.fx.duration,
-    presentedMs:off.time-first.time,activeFrames:cracked.length,impact:first.fx,
+  return {duration:hold,fade,source,pulseDuration:0,
+    presentedMs:0,activeFrames:0,impact:null,
     shatter:false,
     cutinCount:frames.filter(frame=>frame.cut?.hero===id).length};
 }
@@ -287,7 +276,6 @@ async function runDomainCinema(browser,origin,spec,{root,out},helpers){
       assert.deepEqual(newRequests(),[],'fallback mode requests no heavy cinema art');
       await settle();
     }else{
-      await p.waitForFunction(()=>Sky.battlePage.inspect().vfx.artReady.includes('vfx_impact_crack'));
       const readyDomains=new Set(requests.filter(url=>domainRequest.test(url)).map(url=>url.split('/').at(-1)));
       assert.deepEqual([...readyDomains].sort(),formation.map(id=>'domain_'+id+'.png').sort());
       for(const id of (spec.name==='desktop'?['h01','h02','h08']:['h01'])){
@@ -310,17 +298,7 @@ async function runDomainCinema(browser,origin,spec,{root,out},helpers){
       if(out){
         await start();
         await p.evaluate(installSceneProbe);
-        await p.waitForFunction(()=>Sky.battlePage.inspect().vfx.artReady.includes('vfx_impact_crack'));
-        await cast('h01');
-        const {cut}=await readCut(p,'h01');
-        await call({kind:'impact'});
-        await cut.locator('.battle-cut-skip').click();
-        const frame=await capture('cinema-impact');
-        assert(frame.fx.visible && frame.hud.flags && frame.layering?.beforeFlags);
-        await call({kind:'domain',hero:'h01'});
-        await capture(partLabel('h01'));
-        await noLayers();
-        for(const id of ['h02','h08']){
+        for(const id of ['h01','h02','h08']){
           await call({kind:'domain',hero:id});
           await cast(id);
           const {cut}=await readCut(p,id);
@@ -328,16 +306,6 @@ async function runDomainCinema(browser,origin,spec,{root,out},helpers){
           await capture(partLabel(id));
           await noLayers();
         }
-        await settle();
-      }
-      if(spec.name==='desktop'){
-        await start({encounter:'arena',enemyRage:true});
-        await p.evaluate(installSceneProbe);
-        await call({kind:'impact',mirror:true});
-        const sample=await capture('cinema-impact-enemy');
-        assert.deepEqual(sample.fx.epicenter,[.365,.5]);
-        assert.equal(sample.fx.duration,70);
-        assert.equal(sample.domain,null,'enemy impact keeps the board background');
         await settle();
       }
     }

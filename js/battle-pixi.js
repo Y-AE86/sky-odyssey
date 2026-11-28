@@ -715,7 +715,6 @@
       const entries=plan?.byHit.get(index);
       const attacker=this.byKey[actor];
       const screenHit=ultimate && damage && n.side!==attacker.side && index===this.impactHit;
-      if(screenHit)this.vfx?.showScreenImpact(attacker.side,clock);
       if(this.impulses && ultimate && (damage ? n.side!==attacker.side : n.side===attacker.side)) {
         if(this.openingImpact || finisher || screenHit) {
           const group=entries?.find(entry=>entry.info.role==='group');

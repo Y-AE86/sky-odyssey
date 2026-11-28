@@ -130,7 +130,6 @@
       }
       for(const key of new Set([...statuses,...heroes.map(id=>'proj_'+(variants[id]?.projectile || id))]))
         if(Sky.art.battleArt(key))pending.push(this.load(key,null));
-      if(this.screenLayer)pending.push(this.load(crackKey,null));
       return Promise.all(pending);
     }
     async load(key,layout){
@@ -254,9 +253,8 @@
         if(entry.info.role!=='spark')this.last=entry.info;
       }
     }
-    showScreenImpact(side,time){
-      const art=this.artTextures.get(crackKey);
-      if(!art || !this.screenLayer)return;
+    showScreenImpact(){
+      return;
       if(!this.screenSprites){
         const shade=new P.Sprite(P.Texture.WHITE);
         shade.tint=0x07080b;

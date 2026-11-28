@@ -1,0 +1,54 @@
+{
+  "result": {
+    "hits": [
+      {
+        "index": 0,
+        "due": 260,
+        "amount": 190,
+        "time": 2778.3,
+        "video": true,
+        "tiles": 0
+      },
+      {
+        "index": 1,
+        "due": 1080,
+        "amount": 177,
+        "time": 3561.6,
+        "video": false,
+        "tiles": 1
+      },
+      {
+        "index": 2,
+        "due": 1920,
+        "amount": 180,
+        "time": 4445,
+        "video": false,
+        "tiles": 1
+      }
+    ],
+    "frames": [],
+    "before": {
+      "t": 3099.1,
+      "time": 0.620318,
+      "meshVisible": true,
+      "paused": false
+    },
+    "finished": {
+      "ready": true,
+      "phase": "motion"
+    },
+    "released": {
+      "visible": false,
+      "children": 0,
+      "t": 3111.6
+    }
+  },
+  "settlement": {
+    "decoders": 0,
+    "phase": "result"
+  },
+  "errors": [],
+  "launchArgs": [
+    "--mute-audio"
+  ]
+}

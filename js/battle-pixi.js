@@ -446,8 +446,8 @@
           this.screenFxLayer.eventMode='none';
           this.screenFxLayer.visible=false;
           this.app.stage.addChild(this.screenFxLayer);
-          this.vfx=new Sky.BattleVfx(this.overFxLayer,this.app.renderer,this.byKey,this.groundFxLayer,this.screenFxLayer);
         }
+        this.vfx=new Sky.BattleVfx(this.overFxLayer,this.app.renderer,this.byKey,this.groundFxLayer,this.screenFxLayer,host);
         this.app.stage.addChild(this.flags);
         this.app.ticker.maxFPS = powerSave ? 30 : 60;
         this.ink = new Paint(this.overlay,null);
@@ -456,6 +456,7 @@
         this.canvas.replaceWith(fresh); this.canvas = fresh;
         this.ctx = fresh.getContext('2d');
         this.shadowInk = this.ink = new Paint(null,this.ctx);
+        if(P)this.vfx=new Sky.BattleVfx(new P.Container(),null,this.byKey,new P.Container());
       }
       if(this.app && !powerSave){
         const key=Object.hasOwn(sceneLights,scene) ? scene : 'battle';
@@ -467,7 +468,7 @@
       this.observer = new ResizeObserver(() => this.resize());
       this.observer.observe(host);
     }
-    get hasCinema() {return !!this.vfx && !this.disposed;}
+    get hasCinema() {return !!this.screenFxLayer && !this.disposed;}
     resize() {
       this.w = this.host.clientWidth;
       this.h = this.host.clientHeight;
@@ -596,9 +597,12 @@
       this.render(performance.now(),0);
       await effectsReady;
     }
-    planUltimate(action,clock) {
-      this.ultimatePlan=this.vfx?.plan(action,clock);
+    planUltimate(action,clock,speed) {
+      this.ultimatePlan=this.vfx?.plan(action,clock,speed);
       return this.ultimatePlan;
+    }
+    videoElapsed(now,speed,elapsed,clock) {
+      return this.vfx?.videoElapsed(now,speed,elapsed,clock) ?? null;
     }
     state(units) {
       for(const u of units) Object.assign(this.byKey[u.key],{hp:u.hp,shield:u.shield,rage:u.rage,status:{...u.status}});
@@ -681,8 +685,8 @@
       this.focus=null;
       this.action=null;
       this.ultimatePlan=null;
+      this.vfx?.stopVideoFx();
       if(clearEffects){
-        this.vfx?.stopVideoFx();
         this.effects.length=0;
         this.landings.length=0;
         this.bursts.length=0; this.lastImpact=null; this.hitstopRemaining=0;
@@ -713,16 +717,18 @@
       }
       const damage=hit.kind==='damage', plan=ultimate ? this.ultimatePlan : null;
       const finisher=ultimate && !!meta.finisher;
+      if(plan?.videoVfx)this.vfx.markVideoHit(index);
       const entries=plan?.byHit.get(index);
       const attacker=this.byKey[actor];
       const screenHit=ultimate && damage && n.side!==attacker.side && index===this.impactHit;
+      const videoBeat=!!plan?.videoVfx && plan.targets.has(index);
       if(this.impulses && ultimate && (damage ? n.side!==attacker.side : n.side===attacker.side)) {
-        if(this.openingImpact || finisher || screenHit) {
+        if(this.openingImpact || finisher || screenHit || videoBeat) {
           const group=entries?.find(entry=>entry.info.role==='group');
           this.impulses.shockwave(clock,group ? group.info.targets.map(key=>this.byKey[key]) : [n],
             !damage && hit.kind==='heal');
         }
-        if(damage && (hit.crit || finisher || screenHit || (this.openingImpact && execution.has(attacker.heroId))))
+        if(damage && (hit.crit || finisher || screenHit || videoBeat || (this.openingImpact && execution.has(attacker.heroId))))
           this.impulses.chromatic(clock,n);
         this.openingImpact=false;
       }
@@ -732,7 +738,7 @@
         const dx=(n.x-source.x)*this.w,dy=(n.y-source.y)*this.h,dist=Math.hypot(dx,dy)||1;
         const dir={x:dx/dist,y:dy/dist};
         const heavy=hit.crit || finisher;
-        const hold=this.powerSave?0:heavy?72:!ultimate?43:0;
+        const hold=this.powerSave?0:heavy?72:!ultimate || videoBeat?43:0;
         this.hitstopRemaining=Math.max(this.hitstopRemaining,hold);
         n.reaction={dir,start:this.feedbackClock,motionStart:effectClock};
         const sparks=this.powerSave?0:heavy?14:ultimate?9+Math.round(4*progression):8;
@@ -998,6 +1004,21 @@
         white:age<50,red:age>=50 && age<115,
         left:x-horizontal*anchor+Math.min(upper,lower),right:x+horizontal*(1-anchor)+Math.max(upper,lower)};
     }
+    drawCanvasAtlases(support) {
+      const c=this.ctx;
+      if(!this.vfx?.active.size)return;
+      for(const {sprite,support:behind} of this.vfx.active){
+        if(behind!==support || !sprite.visible || !sprite.alpha)continue;
+        const {frame,orig,trim,baseTexture}=sprite.texture;
+        const image=baseTexture.resource.source;
+        c.save();
+        c.translate(sprite.x,sprite.y); c.rotate(sprite.rotation); c.scale(sprite.scale.x,sprite.scale.y);
+        c.globalCompositeOperation='lighter'; c.globalAlpha=sprite.alpha;
+        c.drawImage(image,frame.x,frame.y,frame.width,frame.height,
+          (trim?.x ?? 0)-orig.width*sprite.anchor.x,(trim?.y ?? 0)-orig.height*sprite.anchor.y,frame.width,frame.height);
+        c.restore();
+      }
+    }
     render(time,effectClock=0,speed=1) {
       if (!this.ready || this.disposed || !this.w) return;
       if (window.devicePixelRatio !== this.ratio) this.resize();
@@ -1028,6 +1049,10 @@
       this.drewBursts=this.bursts.length>0 || this.landings.length>0;
       this.drawBursts(effectClock,true);
       if(this.landings.length)this.drawLandings();
+      if(!this.app){
+        this.vfx?.draw(effectClock,time,w,h,speed);
+        this.drawCanvasAtlases(true);
+      }
       for(let i=this.trails.length-1;i>=0;i--){
         const trail=this.trails[i],age=effectClock-trail.start;
         if(age>=180){trail.sprite.destroy();this.trails.splice(i,1);}
@@ -1096,7 +1121,7 @@
             n.flag.clear(); this.flagGeometry(n.flagInk,n,0,0,1);
             n.flagHP=n.hp; n.flagShield=n.shield; n.flagRage=n.rage; n.flagW=w; n.flagH=h;
           }
-        } else this.flagGeometry(this.ink,n,n.pinX,n.pinY,alpha);
+        } else n.flagAlpha=alpha;
       }
       this.drawBursts(effectClock,false);
       this.effects=this.effects.filter(e=>time-e.start<e.duration);
@@ -1104,11 +1129,13 @@
       for(const e of this.effects) this.effect(this.ink,e,time);
       if(this.app){
         this.vfx?.draw(effectClock,time,w,h,speed);
-        const grade=this.vfx?.drawScreenImpact(time,w,h) ?? 0;
-        this.impulses?.draw(time,w,h,this.ratio,cam,grade);
+        this.impulses?.draw(time,w,h,this.ratio,cam);
         this.app.render();
-        this.vfx?.presented(time);
+      }else{
+        this.drawCanvasAtlases(false);
+        for(const n of this.nodes)if(n.pose)this.flagGeometry(this.ink,n,n.pinX,n.pinY,n.flagAlpha);
       }
+      this.vfx?.presented(time);
     }
     inspect() {
       const vfx=this.vfx?.inspect() || {ready:[],active:[],last:null,artReady:[],projectiles:[],statuses:[],embers:[]};
@@ -1118,7 +1145,7 @@
         camera:{zoom:this.camera.zoom,x:this.camera.x,y:this.camera.y,kick:!!this.camera.kick,focus:this.camera.focus,
           hitstopRemaining:this.hitstopRemaining,filters:this.impulses?.inspect() || {active:[],shockwave:null,chromatic:null}},
         impact:this.lastImpact||null,
-        cinema:{supported:this.hasCinema,impact:this.vfx?.screenImpact||null},
+        cinema:{supported:this.hasCinema,impact:null},
         layers:this.app?['groundFxLayer','unitLayer','overFxLayer']:[],
         stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,heroId:n.heroId,x:n.x,y:n.y,mirror:n.mirror,
           sourceFacing:n.sourceFacing,depth:n.depth,boss:n.boss,magnification:n.magnification,
@@ -1135,10 +1162,10 @@
       this.landings.length=0;
       this.rim.remove();
       this.observer.disconnect();
+      this.vfx?.destroy();
       if(this.app) {
         this.impulses?.destroy();
         this.impulses=null;
-        this.vfx?.destroy();
         this.app.destroy(true,{children:true,texture:false,baseTexture:false});
         for(const shape of Object.values(this.shadowShapes||{}))shape.destroy();
         for(const t of this.textures.values()) t.destroy(true);

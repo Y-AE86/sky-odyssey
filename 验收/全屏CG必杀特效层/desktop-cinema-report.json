@@ -1,0 +1,942 @@
+{
+  "name": "desktop",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "rate": 1,
+  "renderer": "pixi-webgl",
+  "resolution": 1,
+  "lobbyNewRequests": 0,
+  "requestedDomains": [
+    "domain_h01.png",
+    "domain_h02.png",
+    "domain_h04.png",
+    "domain_h05.png",
+    "domain_h06.png",
+    "domain_h08.png",
+    "domain_h10.png"
+  ],
+  "requestedClips": [
+    "vfx_h01.mp4",
+    "vfx_h08.mp4"
+  ],
+  "crackRequests": 0,
+  "weapons": {
+    "h01": {
+      "file": "weapon_h01.png",
+      "size": [
+        521,
+        521
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "忘川墨镰",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h02": {
+      "file": "weapon_h02.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "霜华星杖",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h03": {
+      "file": "weapon_h03.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "潮生玉笛",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h04": {
+      "file": "weapon_h04.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "白昼圣盾",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h05": {
+      "file": "weapon_h05.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "双子铳星",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h06": {
+      "file": "weapon_h06.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "赤月棘刃",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h07": {
+      "file": "weapon_h07.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "星渊浑天星杖",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h08": {
+      "file": "weapon_h08.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "苍雷弧光太刀",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h09": {
+      "file": "weapon_h09.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "离火焚天凤枪",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h10": {
+      "file": "weapon_h10.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "月潮琉璃剑",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h11": {
+      "file": "weapon_h11.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        270.203125,
+        270.203125
+      ],
+      "fit": "contain",
+      "center": [
+        0,
+        0
+      ],
+      "title": "暗冕鸦羽棘镰",
+      "bonus": "生命 +6%\n攻击 +6%"
+    }
+  },
+  "rally": {
+    "h01": {
+      "cut": {
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "stage": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h01.mp4",
+          "duration": 3.041995,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:62510/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "none"
+          }
+        ]
+      },
+      "domain": {
+        "duration": 2916.7999999999993,
+        "fade": 312.5,
+        "source": {
+          "id": "h01",
+          "phase": "active",
+          "size": [
+            1672,
+            941
+          ],
+          "source": "domain_h01.png",
+          "bounds": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "opacity": 0,
+          "sizing": "cover",
+          "zoom": 1
+        },
+        "cutinCount": 179
+      },
+      "video": {
+        "rate": 1,
+        "wall": 2879,
+        "aligned": [
+          {
+            "index": 0,
+            "due": 260,
+            "presented": 292,
+            "offset": 32,
+            "amount": 163,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 1,
+            "due": 1080,
+            "presented": 1083,
+            "offset": 3,
+            "amount": 174,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 2,
+            "due": 1920,
+            "presented": 1958,
+            "offset": 38,
+            "amount": 160,
+            "target": "e0",
+            "finisher": true
+          }
+        ],
+        "firstAlpha": 0.5312194372019688,
+        "lastAlpha": 0.052511433226918536,
+        "framesUploaded": 64,
+        "lastMedia": 2.791667
+      }
+    },
+    "h08": {
+      "cut": {
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "stage": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h08.mp4",
+          "duration": 5.041667,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:62510/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "none"
+          }
+        ]
+      },
+      "domain": {
+        "duration": 2896,
+        "fade": 316.6999999999989,
+        "source": {
+          "id": "h08",
+          "phase": "active",
+          "size": [
+            1672,
+            941
+          ],
+          "source": "domain_h08.png",
+          "bounds": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "opacity": 0.038174,
+          "sizing": "cover",
+          "zoom": 1.00011
+        },
+        "cutinCount": 30
+      },
+      "video": {
+        "rate": 1,
+        "wall": 2863,
+        "aligned": [
+          {
+            "index": 0,
+            "due": 200,
+            "presented": 208,
+            "offset": 8,
+            "amount": 139,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 1,
+            "due": 1020,
+            "presented": 1042,
+            "offset": 22,
+            "amount": 137,
+            "target": "e1",
+            "finisher": false
+          },
+          {
+            "index": 2,
+            "due": 1860,
+            "presented": 1875,
+            "offset": 15,
+            "amount": 139,
+            "target": "e2",
+            "finisher": true
+          }
+        ],
+        "firstAlpha": 0.5312194372019688,
+        "lastAlpha": 0.052511433226918536,
+        "framesUploaded": 68,
+        "lastMedia": 2.833333
+      }
+    },
+    "stalled": {
+      "pausedAt": 0.53417,
+      "hits": [
+        {
+          "due": 260,
+          "video": true,
+          "amount": 163
+        },
+        {
+          "due": 1080,
+          "video": false,
+          "amount": 174
+        },
+        {
+          "due": 1920,
+          "video": false,
+          "amount": 160
+        }
+      ]
+    },
+    "skipWhileActive": true
+  },
+  "shots": {
+    "cg-h01-dragon": {
+      "time": 16875.8,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h01",
+        "mirror": false,
+        "currentTime": 1.026323,
+        "presentedMediaTime": 1.041667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 25,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.02501
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "163",
+        "cards": 6
+      },
+      "filters": [],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "step": 3,
+        "colors": {
+          "purple": 53908,
+          "red": 213,
+          "cyan": 252,
+          "gold": 228
+        },
+        "sampled": {
+          "black": 9737,
+          "changed": 74041,
+          "edge": 480
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h01-plum": {
+      "time": 18042.5,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h01",
+        "mirror": false,
+        "currentTime": 1.971396,
+        "presentedMediaTime": 1.958333,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 47,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.04117
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "497",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "step": 3,
+        "colors": {
+          "purple": 77914,
+          "red": 5762,
+          "cyan": 533,
+          "gold": 335
+        },
+        "sampled": {
+          "black": 4232,
+          "changed": 88097,
+          "edge": 480
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h08-crystals": {
+      "time": 21392.6,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h08",
+        "mirror": false,
+        "currentTime": 1.027356,
+        "presentedMediaTime": 1.041667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 25,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h08",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h08.png",
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.02493
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "276",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "step": 3,
+        "colors": {
+          "purple": 1026,
+          "red": 6346,
+          "cyan": 18683,
+          "gold": 6073
+        },
+        "sampled": {
+          "black": 24887,
+          "changed": 59042,
+          "edge": 480
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h08-sword": {
+      "time": 22475.9,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h08",
+        "mirror": false,
+        "currentTime": 1.92236,
+        "presentedMediaTime": 1.916667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 46,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h08",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h08.png",
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.0404
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "415",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "step": 3,
+        "colors": {
+          "purple": 407,
+          "red": 606,
+          "cyan": 44516,
+          "gold": 1040
+        },
+        "sampled": {
+          "black": 0,
+          "changed": 98592,
+          "edge": 480
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h02-atlas-fallback": {
+      "time": 24871.9,
+      "supported": true,
+      "fx": null,
+      "media": null,
+      "domain": {
+        "id": "h02",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h02.png",
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.00527
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [
+        {
+          "hero": "h02",
+          "role": "group",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1.32,
+          "finisher": false,
+          "target": null,
+          "impactAt": 24871.9
+        },
+        {
+          "hero": "h02",
+          "role": "target",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": 24871.9
+        },
+        {
+          "hero": "h02",
+          "role": "target",
+          "frame": 1,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e1",
+          "impactAt": null
+        },
+        {
+          "hero": "h02",
+          "role": "target",
+          "frame": 0,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e2",
+          "impactAt": null
+        }
+      ],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "176",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      }
+    },
+    "cg-h08-not-ready-fallback": {
+      "time": 25842.7,
+      "supported": true,
+      "fx": null,
+      "media": null,
+      "domain": {
+        "id": "h08",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h08.png",
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.00527
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [
+        {
+          "hero": "h08",
+          "role": "group",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1.32,
+          "finisher": false,
+          "target": null,
+          "impactAt": 25842.7
+        },
+        {
+          "hero": "h08",
+          "role": "target",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": 25842.7
+        },
+        {
+          "hero": "h08",
+          "role": "target",
+          "frame": 2,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e1",
+          "impactAt": null
+        },
+        {
+          "hero": "h08",
+          "role": "target",
+          "frame": 1,
+          "source": "png",
+          "cinemaScale": 1.28,
+          "finisher": true,
+          "target": "e2",
+          "impactAt": null
+        }
+      ],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "137",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      }
+    },
+    "cg-h08-enemy-mirror": {
+      "time": 41422,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h08",
+        "mirror": true,
+        "currentTime": 1.024426,
+        "presentedMediaTime": 1.041667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 25,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": null,
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "355",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "step": 3,
+        "colors": {
+          "purple": 984,
+          "red": 6466,
+          "cyan": 16527,
+          "gold": 6462
+        },
+        "sampled": {
+          "black": 24820,
+          "changed": 59737,
+          "edge": 480
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 0
+        }
+      }
+    }
+  },
+  "embedded": null,
+  "errors": []
+}

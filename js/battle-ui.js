@@ -139,44 +139,7 @@
     }
     return s.posters.get(id);
   }
-  const mirrorTime=220, domainIn=180, domainHold=1450, domainOut=320;
-  const mirrors=[
-    ['0 0,40% 0,63.5% 50%,0 29%','-11%','-15%','-5deg'],
-    ['40% 0,75% 0,63.5% 50%','1%','-19%','4deg'],
-    ['75% 0,100% 0,100% 34%,63.5% 50%','12%','-13%','6deg'],
-    ['100% 34%,100% 100%,63.5% 50%','19%','3%','-6deg'],
-    ['100% 100%,66% 100%,63.5% 50%','9%','17%','6deg'],
-    ['66% 100%,27% 100%,63.5% 50%','-3%','17%','-4deg'],
-    ['27% 100%,0 100%,0 64%,63.5% 50%','-15%','9%','7deg'],
-    ['0 64%,0 29%,63.5% 50%','-17%','3%','-4deg']
-  ];
-  function clearShatter(s) {
-    clearTimeout(s.mirrorTimer);
-    s.shatter?.remove();
-    s.shatter=null;
-  }
-  function shatter(s,direction,src) {
-    clearShatter(s);
-    const ms=direction==='enter'?mirrorTime:Math.max(92,mirrorTime/s.speed);
-    const imageUrl=path=>'url("'+new URL(path,document.baseURI).href+'")';
-    const layer=s.shatter=document.createElement('div');
-    layer.className='battle-shatter';
-    layer.dataset.direction=direction;
-    layer.setAttribute('aria-hidden','true');
-    layer.style.setProperty('--mirror-time',ms+'ms');
-    layer.style.setProperty('--mirror-art',imageUrl(src));
-    layer.style.setProperty('--impact-crack',imageUrl(Sky.art.impactCrack));
-    for(const [shape,x,y,angle] of mirrors) {
-      const pane=document.createElement('i');
-      pane.style.cssText='--pane:polygon('+shape+');--pane-x:'+x+';--pane-y:'+y+';--pane-angle:'+angle;
-      layer.append(pane);
-    }
-    const cracks=document.createElement('span');
-    cracks.className='battle-shatter-crack';
-    layer.append(cracks);
-    s.root.append(layer);
-    s.mirrorTimer=setTimeout(()=>clearShatter(s),ms+30);
-  }
+  const domainIn=180, domainHold=1450, domainOut=320;
   function prepareDomains(s) {
     if(!s.scene.hasCinema)return;
     for(const {heroId} of s.battle.units.filter(unit=>unit.side==='ally')){
@@ -210,18 +173,15 @@
       s.backdrop.append(layer);
     });
   }
-  function endDomain(s) {
+  function endDomain(s,videoVfx) {
     const domain=s.domain;
     if(!domain || domain.timer)return;
-    const hold=Math.max(400,domainHold-(performance.now()-domain.start));
+    const hold=videoVfx ? 0 : Math.max(400,domainHold-(performance.now()-domain.start));
     domain.timer=setTimeout(()=>{
       domain.exiting=true;
       if(domain.layer)domain.layer.dataset.phase='fading';
       domain.timer=setTimeout(()=>clearDomain(s),domainOut);
     },hold);
-  }
-  function beginCutin(s) {
-    showCutin(s);
   }
   function showCutin(s) {
     const image=posterImage(s,s.hero.id);
@@ -310,9 +270,7 @@
     Sky.ui.cinematic(null);
   }
   function releaseVideos(s){
-    clearTimeout(s.cutinEntryTimer);
     clearCutin(s);
-    clearShatter(s);
     clearDomain(s);
     for(const {ultimate,lobby} of s.videos.values()){
       ultimate?.release();
@@ -356,7 +314,7 @@
     s.attackCue=false;
     const action=s.action, ultimate=action.kind==='ultimate',hits=action.hits;
     s.duration=action.kind==='stun'?230:ultimate?610+Math.max(0,hits.length-1)*108:430;
-    s.impactPlan=ultimate ? s.scene.planUltimate(action,s.effectClock) : null;
+    s.impactPlan=ultimate ? s.scene.planUltimate(action,s.effectClock,s.speed) : null;
     s.scene.beginAction(action,s.effectClock);
     announceSkill(s,action);
     if(ultimate) {
@@ -397,7 +355,7 @@
     s.scene.byKey[unit.key].rage=unit.rage;
     s.round.textContent=String(action.round).padStart(2,'0');
     if(action.kind==='ultimate')Sky.sound('ult_start');
-    if(action.kind==='ultimate' && unit.side==='ally') beginCutin(s);
+    if(action.kind==='ultimate' && unit.side==='ally') showCutin(s);
     else startImpact(s);
     refreshUI(s);
   }
@@ -406,7 +364,14 @@
     s.hudClock+=scaled;
     const available=s.scene.advanceClock(scaled);
     let elapsed=available;
-    if(available>0){
+    // Decoded video frames drive the three CG cue points. Hitstop still freezes
+    // the actor poses without letting their clock pull the clip out of sync.
+    const mediaTime=s.phase==='motion' && s.impactPlan?.videoVfx
+      ? s.scene.videoElapsed(now,s.speed,s.elapsed,s.effectClock) : null;
+    if(mediaTime!==null){
+      elapsed=Math.max(0,mediaTime-s.elapsed);
+      s.carry=0;
+    }else if(available>0){
       elapsed+=s.carry; s.carry=0;
     }
     const a=s.action, ultimate=a?.kind==='ultimate';
@@ -418,9 +383,10 @@
     const reached=Number.isFinite(due) && elapsed+s.elapsed>=due-.000001;
     if(reached) {
       const toHit=Math.max(0,due-s.elapsed);
-      s.carry+=Math.max(0,elapsed-toHit); elapsed=toHit;
+      if(mediaTime===null)s.carry+=Math.max(0,elapsed-toHit);
+      elapsed=toHit;
     }
-    s.effectClock+=elapsed;
+    s.effectClock+=mediaTime===null?elapsed:available;
     if(s.phase==='cutin')return;
     s.elapsed=reached?due:s.elapsed+elapsed;
     if(s.phase==='ready') {
@@ -465,7 +431,7 @@
       s.phase='ready'; s.duration=ultimate?185:75; s.elapsed=0;
       if(ultimate){
         if(s.hitsShown)hideTotal(s,true);
-        if(s.scene.byKey[a.actor].side==='ally')endDomain(s);
+        if(s.scene.byKey[a.actor].side==='ally')endDomain(s,s.impactPlan?.videoVfx);
       }
       sync(s);
     }

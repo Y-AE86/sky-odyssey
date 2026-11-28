@@ -1,0 +1,170 @@
+{
+  "baseline": "78045c9",
+  "protocol": "HTTP 127.0.0.1",
+  "launchArgs": [
+    "--mute-audio"
+  ],
+  "experiment": "Serve baseline from Git with a single video fragment precision declaration changed to highp in the HTTP response.",
+  "baselineResults": [
+    {
+      "hero": "h01",
+      "media": {
+        "src": "assets/videos/vfx_h01.mp4",
+        "error": null,
+        "readyState": 4,
+        "width": 1280
+      },
+      "sessionStarted": true,
+      "detached": true,
+      "from": 0,
+      "to": 2.858304,
+      "beginningTextureDirtyId": 1,
+      "lastTextureDirtyId": 235,
+      "sampledCanvasPixels": [
+        {
+          "point": 1.05,
+          "currentTime": 1.031198,
+          "rgb": 34368854,
+          "al": 38607992,
+          "purple": 3814,
+          "cyan": 165,
+          "red": 4263
+        },
+        {
+          "point": 1.9,
+          "currentTime": 1.876732,
+          "rgb": 34604782,
+          "al": 39166841,
+          "purple": 4487,
+          "cyan": 1622,
+          "red": 5675
+        }
+      ],
+      "diagnostics": [
+        "PixiJS Error: Could not initialize shader.",
+        "PixiJS Warning: gl.getProgramInfoLog() Precisions of uniform 'inputSize' differ between VERTEX and FRAGMENT shaders.\n",
+        "WebGL: INVALID_OPERATION: useProgram: program not valid",
+        "PIXI Geometry attribute 'aVertexPosition' size cannot be determined (likely the bound shader does not have the attribute)"
+      ],
+      "messages": 170
+    },
+    {
+      "hero": "h08",
+      "media": {
+        "src": "assets/videos/vfx_h08.mp4",
+        "error": null,
+        "readyState": 4,
+        "width": 1280
+      },
+      "sessionStarted": true,
+      "detached": true,
+      "from": 0,
+      "to": 2.860877,
+      "beginningTextureDirtyId": 1,
+      "lastTextureDirtyId": 244,
+      "sampledCanvasPixels": [
+        {
+          "point": 1.05,
+          "currentTime": 1.026868,
+          "rgb": 36343678,
+          "al": 37571939,
+          "purple": 7534,
+          "cyan": 966,
+          "red": 9070
+        },
+        {
+          "point": 1.9,
+          "currentTime": 1.87753,
+          "rgb": 38050490,
+          "al": 37955087,
+          "purple": 8925,
+          "cyan": 812,
+          "red": 8121
+        }
+      ],
+      "diagnostics": [
+        "PixiJS Error: Could not initialize shader.",
+        "PixiJS Warning: gl.getProgramInfoLog() Precisions of uniform 'inputSize' differ between VERTEX and FRAGMENT shaders.\n",
+        "WebGL: INVALID_OPERATION: useProgram: program not valid",
+        "PIXI Geometry attribute 'aVertexPosition' size cannot be determined (likely the bound shader does not have the attribute)"
+      ],
+      "messages": 177
+    }
+  ],
+  "precisionOnlyResults": [
+    {
+      "hero": "h01",
+      "media": {
+        "src": "assets/videos/vfx_h01.mp4",
+        "error": null,
+        "readyState": 4,
+        "width": 1280
+      },
+      "sessionStarted": true,
+      "detached": true,
+      "from": 0,
+      "to": 2.84886,
+      "beginningTextureDirtyId": 1,
+      "lastTextureDirtyId": 229,
+      "sampledCanvasPixels": [
+        {
+          "point": 1.05,
+          "currentTime": 1.033336,
+          "rgb": 213875836,
+          "al": 104771955,
+          "purple": 386368,
+          "cyan": 235,
+          "red": 1137
+        },
+        {
+          "point": 1.9,
+          "currentTime": 1.880999,
+          "rgb": 301635425,
+          "al": 122697346,
+          "purple": 374778,
+          "cyan": 234,
+          "red": 7167
+        }
+      ],
+      "diagnostics": [],
+      "messages": 0
+    },
+    {
+      "hero": "h08",
+      "media": {
+        "src": "assets/videos/vfx_h08.mp4",
+        "error": null,
+        "readyState": 4,
+        "width": 1280
+      },
+      "sessionStarted": true,
+      "detached": true,
+      "from": 0,
+      "to": 2.933028,
+      "beginningTextureDirtyId": 1,
+      "lastTextureDirtyId": 249,
+      "sampledCanvasPixels": [
+        {
+          "point": 1.05,
+          "currentTime": 1.033162,
+          "rgb": 212459983,
+          "al": 97713713,
+          "purple": 5685,
+          "cyan": 30642,
+          "red": 14162
+        },
+        {
+          "point": 1.9,
+          "currentTime": 1.883155,
+          "rgb": 374566770,
+          "al": 155699456,
+          "purple": 103,
+          "cyan": 160421,
+          "red": 480
+        }
+      ],
+      "diagnostics": [],
+      "messages": 0
+    }
+  ]
+}

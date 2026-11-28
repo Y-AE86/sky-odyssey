@@ -1,0 +1,502 @@
+{
+  "name": "retina",
+  "stage": {
+    "x": 0,
+    "y": 45,
+    "width": 1440,
+    "height": 810,
+    "dpr": 2,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1440,
+    "vh": 900
+  },
+  "rate": 1,
+  "renderer": "pixi-webgl",
+  "resolution": 2,
+  "lobbyNewRequests": 0,
+  "requestedDomains": [
+    "domain_h01.png",
+    "domain_h02.png",
+    "domain_h04.png",
+    "domain_h06.png",
+    "domain_h08.png",
+    "domain_h10.png"
+  ],
+  "requestedClips": [
+    "vfx_h01.mp4",
+    "vfx_h08.mp4"
+  ],
+  "crackRequests": 0,
+  "weapons": null,
+  "rally": {
+    "h01": {
+      "cut": {
+        "bounds": [
+          0,
+          45,
+          1440,
+          810
+        ],
+        "stage": [
+          0,
+          45,
+          1440,
+          810
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h01.mp4",
+          "duration": 3.041995,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:53278/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "none"
+          }
+        ]
+      },
+      "domain": {
+        "duration": 2900.1,
+        "fade": 316.6999999999998,
+        "source": {
+          "id": "h01",
+          "phase": "active",
+          "size": [
+            1672,
+            941
+          ],
+          "source": "domain_h01.png",
+          "bounds": [
+            0,
+            45,
+            1440,
+            810
+          ],
+          "opacity": 0,
+          "sizing": "cover",
+          "zoom": 1
+        },
+        "cutinCount": 4
+      },
+      "video": {
+        "rate": 1,
+        "wall": 2867,
+        "aligned": [
+          {
+            "index": 0,
+            "due": 260,
+            "presented": 292,
+            "offset": 32,
+            "amount": 163,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 1,
+            "due": 1080,
+            "presented": 1083,
+            "offset": 3,
+            "amount": 174,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 2,
+            "due": 1920,
+            "presented": 1958,
+            "offset": 38,
+            "amount": 160,
+            "target": "e0",
+            "finisher": true
+          }
+        ],
+        "firstAlpha": 0.5312194372019688,
+        "lastAlpha": 0.052511433226918536,
+        "framesUploaded": 65,
+        "lastMedia": 2.791667
+      }
+    },
+    "h08": {
+      "cut": {
+        "bounds": [
+          0,
+          45,
+          1440,
+          810
+        ],
+        "stage": [
+          0,
+          45,
+          1440,
+          810
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h08.mp4",
+          "duration": 5.041667,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:53278/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "none"
+          }
+        ]
+      },
+      "domain": {
+        "duration": 2916.6000000000004,
+        "fade": 316.6999999999989,
+        "source": {
+          "id": "h08",
+          "phase": "active",
+          "size": [
+            1672,
+            941
+          ],
+          "source": "domain_h08.png",
+          "bounds": [
+            0,
+            45,
+            1440,
+            810
+          ],
+          "opacity": 0,
+          "sizing": "cover",
+          "zoom": 1
+        },
+        "cutinCount": 27
+      },
+      "video": {
+        "rate": 1,
+        "wall": 2883,
+        "aligned": [
+          {
+            "index": 0,
+            "due": 200,
+            "presented": 208,
+            "offset": 8,
+            "amount": 139,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 1,
+            "due": 1020,
+            "presented": 1042,
+            "offset": 22,
+            "amount": 137,
+            "target": "e1",
+            "finisher": false
+          },
+          {
+            "index": 2,
+            "due": 1860,
+            "presented": 1875,
+            "offset": 15,
+            "amount": 139,
+            "target": "e2",
+            "finisher": true
+          }
+        ],
+        "firstAlpha": 0.5312194372019688,
+        "lastAlpha": 0.052511433226918536,
+        "framesUploaded": 67,
+        "lastMedia": 2.791667
+      }
+    }
+  },
+  "shots": {
+    "cg-h01-dragon": {
+      "time": 12146.4,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h01",
+        "mirror": false,
+        "currentTime": 1.018566,
+        "presentedMediaTime": 1.041667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 25,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          45,
+          1440,
+          810
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.02485
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "163",
+        "cards": 6
+      },
+      "filters": [],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 2880,
+        "height": 1620,
+        "step": 5,
+        "colors": {
+          "purple": 98225,
+          "red": 402,
+          "cyan": 484,
+          "gold": 443
+        },
+        "sampled": {
+          "black": 17756,
+          "changed": 134890,
+          "edge": 648
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h01-plum": {
+      "time": 15779.8,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h01",
+        "mirror": false,
+        "currentTime": 1.989181,
+        "presentedMediaTime": 1.958333,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 47,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          45,
+          1440,
+          810
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.04157
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "497",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 2880,
+        "height": 1620,
+        "step": 5,
+        "colors": {
+          "purple": 141686,
+          "red": 10905,
+          "cyan": 1082,
+          "gold": 741
+        },
+        "sampled": {
+          "black": 7694,
+          "changed": 160705,
+          "edge": 648
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h08-crystals": {
+      "time": 19846.6,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h08",
+        "mirror": false,
+        "currentTime": 1.0309,
+        "presentedMediaTime": 1.041667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 25,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h08",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h08.png",
+        "bounds": [
+          0,
+          45,
+          1440,
+          810
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.02502
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "276",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 2880,
+        "height": 1620,
+        "step": 5,
+        "colors": {
+          "purple": 1900,
+          "red": 11576,
+          "cyan": 33643,
+          "gold": 11151
+        },
+        "sampled": {
+          "black": 45329,
+          "changed": 107708,
+          "edge": 648
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h08-sword": {
+      "time": 21829.9,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h08",
+        "mirror": false,
+        "currentTime": 1.928088,
+        "presentedMediaTime": 1.916667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 46,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h08",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h08.png",
+        "bounds": [
+          0,
+          45,
+          1440,
+          810
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.04058
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "415",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 2880,
+        "height": 1620,
+        "step": 5,
+        "colors": {
+          "purple": 734,
+          "red": 1075,
+          "cyan": 82349,
+          "gold": 1956
+        },
+        "sampled": {
+          "black": 0,
+          "changed": 180008,
+          "edge": 648
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    }
+  },
+  "embedded": null,
+  "errors": []
+}

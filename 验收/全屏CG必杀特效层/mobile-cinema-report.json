@@ -1,0 +1,502 @@
+{
+  "name": "mobile",
+  "stage": {
+    "x": 79.828125,
+    "y": 0,
+    "width": 693.328125,
+    "height": 389.984375,
+    "dpr": 3,
+    "transform": "none",
+    "safeLeft": 44,
+    "safeRight": 35,
+    "vw": 844,
+    "vh": 390
+  },
+  "rate": 1,
+  "renderer": "pixi-webgl",
+  "resolution": 3,
+  "lobbyNewRequests": 0,
+  "requestedDomains": [
+    "domain_h01.png",
+    "domain_h02.png",
+    "domain_h04.png",
+    "domain_h06.png",
+    "domain_h08.png",
+    "domain_h10.png"
+  ],
+  "requestedClips": [
+    "vfx_h01.mp4",
+    "vfx_h08.mp4"
+  ],
+  "crackRequests": 0,
+  "weapons": null,
+  "rally": {
+    "h01": {
+      "cut": {
+        "bounds": [
+          79.828125,
+          0,
+          693.328125,
+          389.984375
+        ],
+        "stage": [
+          79.828125,
+          0,
+          693.328125,
+          389.984375
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h01.mp4",
+          "duration": 3.041995,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:53278/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "linear-gradient(to right, rgb(0, 0, 0) 79.8281px, rgba(0, 0, 0, 0) 79.8281px, rgba(0, 0, 0, 0) calc(100% - 70.8438px), rgb(0, 0, 0) calc(100% - 70.8438px))"
+          }
+        ]
+      },
+      "domain": {
+        "duration": 2916.6000000000004,
+        "fade": 316.6999999999998,
+        "source": {
+          "id": "h01",
+          "phase": "active",
+          "size": [
+            1672,
+            941
+          ],
+          "source": "domain_h01.png",
+          "bounds": [
+            0,
+            0,
+            844,
+            390
+          ],
+          "opacity": 0,
+          "sizing": "cover",
+          "zoom": 1
+        },
+        "cutinCount": 13
+      },
+      "video": {
+        "rate": 1,
+        "wall": 2883,
+        "aligned": [
+          {
+            "index": 0,
+            "due": 260,
+            "presented": 292,
+            "offset": 32,
+            "amount": 163,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 1,
+            "due": 1080,
+            "presented": 1083,
+            "offset": 3,
+            "amount": 174,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 2,
+            "due": 1920,
+            "presented": 1958,
+            "offset": 38,
+            "amount": 160,
+            "target": "e0",
+            "finisher": true
+          }
+        ],
+        "firstAlpha": 0.5312194372019688,
+        "lastAlpha": 0.052511433226918536,
+        "framesUploaded": 67,
+        "lastMedia": 2.791667
+      }
+    },
+    "h08": {
+      "cut": {
+        "bounds": [
+          79.828125,
+          0,
+          693.328125,
+          389.984375
+        ],
+        "stage": [
+          79.828125,
+          0,
+          693.328125,
+          389.984375
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h08.mp4",
+          "duration": 5.041667,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:53278/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "linear-gradient(to right, rgb(0, 0, 0) 79.8281px, rgba(0, 0, 0, 0) 79.8281px, rgba(0, 0, 0, 0) calc(100% - 70.8438px), rgb(0, 0, 0) calc(100% - 70.8438px))"
+          }
+        ]
+      },
+      "domain": {
+        "duration": 2900.1000000000004,
+        "fade": 316.59999999999854,
+        "source": {
+          "id": "h08",
+          "phase": "active",
+          "size": [
+            1672,
+            941
+          ],
+          "source": "domain_h08.png",
+          "bounds": [
+            0,
+            0,
+            844,
+            390
+          ],
+          "opacity": 0.0760528,
+          "sizing": "cover",
+          "zoom": 1.00023
+        },
+        "cutinCount": 28
+      },
+      "video": {
+        "rate": 1,
+        "wall": 2867,
+        "aligned": [
+          {
+            "index": 0,
+            "due": 200,
+            "presented": 208,
+            "offset": 8,
+            "amount": 139,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 1,
+            "due": 1020,
+            "presented": 1042,
+            "offset": 22,
+            "amount": 137,
+            "target": "e1",
+            "finisher": false
+          },
+          {
+            "index": 2,
+            "due": 1860,
+            "presented": 1875,
+            "offset": 15,
+            "amount": 139,
+            "target": "e2",
+            "finisher": true
+          }
+        ],
+        "firstAlpha": 0.5312194372019688,
+        "lastAlpha": 0.052511433226918536,
+        "framesUploaded": 67,
+        "lastMedia": 2.791667
+      }
+    }
+  },
+  "shots": {
+    "cg-h01-dragon": {
+      "time": 12046.5,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h01",
+        "mirror": false,
+        "currentTime": 1.017459,
+        "presentedMediaTime": 1.041667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 25,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.02484
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "163",
+        "cards": 6
+      },
+      "filters": [],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 2079,
+        "height": 1170,
+        "step": 4,
+        "colors": {
+          "purple": 80113,
+          "red": 325,
+          "cyan": 381,
+          "gold": 353
+        },
+        "sampled": {
+          "black": 14675,
+          "changed": 110015,
+          "edge": 586
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h01-plum": {
+      "time": 13713.2,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h01",
+        "mirror": false,
+        "currentTime": 1.941923,
+        "presentedMediaTime": 1.958333,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 47,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.04093
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "497",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 2079,
+        "height": 1170,
+        "step": 4,
+        "colors": {
+          "purple": 115487,
+          "red": 8998,
+          "cyan": 950,
+          "gold": 637
+        },
+        "sampled": {
+          "black": 6334,
+          "changed": 131090,
+          "edge": 586
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h08-crystals": {
+      "time": 17579.9,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h08",
+        "mirror": false,
+        "currentTime": 1.067532,
+        "presentedMediaTime": 1.041667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 25,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h08",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h08.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.02586
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "276",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 2079,
+        "height": 1170,
+        "step": 4,
+        "colors": {
+          "purple": 1846,
+          "red": 9497,
+          "cyan": 27209,
+          "gold": 9266
+        },
+        "sampled": {
+          "black": 37034,
+          "changed": 87981,
+          "edge": 586
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    },
+    "cg-h08-sword": {
+      "time": 19130,
+      "supported": true,
+      "fx": null,
+      "media": {
+        "heroId": "h08",
+        "mirror": false,
+        "currentTime": 1.923747,
+        "presentedMediaTime": 1.916667,
+        "firstPresentedTime": 0.041667,
+        "framesUploaded": 46,
+        "alpha": 1,
+        "playing": true,
+        "playbackRate": 1
+      },
+      "domain": {
+        "id": "h08",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h08.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.04052
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "415",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      },
+      "pixels": {
+        "width": 2079,
+        "height": 1170,
+        "step": 4,
+        "colors": {
+          "purple": 619,
+          "red": 894,
+          "cyan": 67127,
+          "gold": 1595
+        },
+        "sampled": {
+          "black": 0,
+          "changed": 146857,
+          "edge": 586
+        },
+        "maxDelta": {
+          "black": 0,
+          "edge": 1
+        }
+      }
+    }
+  },
+  "embedded": null,
+  "errors": []
+}

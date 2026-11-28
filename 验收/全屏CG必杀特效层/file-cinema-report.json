@@ -1,0 +1,166 @@
+{
+  "name": "file",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "rate": 1,
+  "renderer": "pixi-webgl",
+  "resolution": 1,
+  "fallback": true,
+  "lobbyNewRequests": 0,
+  "requestedDomains": [
+    "domain_h01.png",
+    "domain_h02.png",
+    "domain_h04.png",
+    "domain_h06.png",
+    "domain_h08.png",
+    "domain_h10.png"
+  ],
+  "requestedClips": [],
+  "crackRequests": 0,
+  "weapons": null,
+  "rally": {
+    "h01": {
+      "fallback": true,
+      "hits": [
+        {
+          "actor": "a0",
+          "hero": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 163,
+          "time": 3185.2,
+          "clock": 401.50000009536734,
+          "due": 216,
+          "index": 0,
+          "media": null,
+          "finisher": false
+        },
+        {
+          "actor": "a0",
+          "hero": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 174,
+          "time": 3539.3,
+          "clock": 509.50000009536734,
+          "due": 324,
+          "index": 1,
+          "media": null,
+          "finisher": false
+        },
+        {
+          "actor": "a0",
+          "hero": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 160,
+          "time": 3722.8,
+          "clock": 617.5000000953673,
+          "due": 432,
+          "index": 2,
+          "media": null,
+          "finisher": true
+        }
+      ]
+    }
+  },
+  "shots": {
+    "cinema-fallback": {
+      "time": 3185.2,
+      "supported": true,
+      "fx": null,
+      "media": null,
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.00695
+      },
+      "shatter": false,
+      "cut": null,
+      "active": [
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 3,
+          "source": "embedded",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": 3185.2
+        },
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 1,
+          "source": "embedded",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": null
+        },
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 0,
+          "source": "embedded",
+          "cinemaScale": 1.28,
+          "finisher": true,
+          "target": "e0",
+          "impactAt": null
+        }
+      ],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "163",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "procedural": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      }
+    }
+  },
+  "embedded": {
+    "proj_h01": "05086ce39622e3873dba7f4a8155a9ef0ee9eff096100dd8c541317cecb6ead6",
+    "proj_h02": "cfc84b32c65931b7dfd78050d75a14367cccc724421dfa130ea5a211be8c61c8",
+    "proj_h03": "7b15e74ea8a45d8edc0283569383355aa1a49c0581defe1d2d4609adf01d06c3",
+    "proj_h04": "9eed3f0772a7000e9a4c88576d00605e8c4d5d971ba0fa3fcdd7688cdb4c636f",
+    "proj_h05": "fd9c2d19e890d02b29ff98a14ea17333c1eaf8340a61efc2f08f0f3a5df940c1",
+    "proj_h06": "3085f317e9246316ba22e7911146cf8d107d57c63d0174e8c228fab7e9bbe5ac",
+    "status_curse": "f8d9df5f69f8f7753ceea65e0bb49968bf1fe9f543f7604950e91735a4ec1d22",
+    "status_freeze": "2d16b95ce57bf21b6b357041f1b1fbcb7edaab59d6db94f4d5488979800e9e82",
+    "status_heal_ring": "8dfe84aceecc367ecd7b378fb2a9950eafad59635cb8b319a221b8bdc9e40f67",
+    "status_shield": "b5ca4915226ab556ec3fd325e18ff9859d883fee3e9c99bfe914194a7921ab5f",
+    "vfx_impact_crack": "8e441d53a7e57873d0ac3c7a489d496d7456b8b108c05088dd52c17fe8af2522"
+  },
+  "errors": []
+}

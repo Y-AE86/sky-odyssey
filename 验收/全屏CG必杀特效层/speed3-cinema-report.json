@@ -1,0 +1,216 @@
+{
+  "name": "speed3",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "rate": 3,
+  "renderer": "pixi-webgl",
+  "resolution": 1,
+  "lobbyNewRequests": 0,
+  "requestedDomains": [
+    "domain_h01.png",
+    "domain_h02.png",
+    "domain_h04.png",
+    "domain_h06.png",
+    "domain_h08.png",
+    "domain_h10.png"
+  ],
+  "requestedClips": [
+    "vfx_h01.mp4",
+    "vfx_h08.mp4"
+  ],
+  "crackRequests": 0,
+  "weapons": null,
+  "rally": {
+    "h01": {
+      "cut": {
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "stage": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h01.mp4",
+          "duration": 3.041995,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:53278/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "none"
+          }
+        ]
+      },
+      "domain": {
+        "duration": 1033.4,
+        "fade": 316.6999999999998,
+        "source": {
+          "id": "h01",
+          "phase": "active",
+          "size": [
+            1672,
+            941
+          ],
+          "source": "domain_h01.png",
+          "bounds": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "opacity": 0,
+          "sizing": "cover",
+          "zoom": 1
+        },
+        "cutinCount": 5
+      },
+      "video": {
+        "rate": 3,
+        "wall": 1000,
+        "aligned": [
+          {
+            "index": 0,
+            "due": 260,
+            "presented": 292,
+            "offset": 32,
+            "amount": 163,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 1,
+            "due": 1080,
+            "presented": 1083,
+            "offset": 3,
+            "amount": 174,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 2,
+            "due": 1920,
+            "presented": 1958,
+            "offset": 38,
+            "amount": 160,
+            "target": "e0",
+            "finisher": true
+          }
+        ],
+        "firstAlpha": 0.5312194372019688,
+        "lastAlpha": 0.052511433226918536,
+        "framesUploaded": 57,
+        "lastMedia": 2.833333
+      }
+    },
+    "h08": {
+      "cut": {
+        "bounds": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "stage": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h08.mp4",
+          "duration": 5.041667,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:53278/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "none"
+          }
+        ]
+      },
+      "domain": {
+        "duration": 1016.5999999999999,
+        "fade": 441.6999999999998,
+        "source": {
+          "id": "h08",
+          "phase": "active",
+          "size": [
+            1672,
+            941
+          ],
+          "source": "domain_h08.png",
+          "bounds": [
+            0,
+            0,
+            1280,
+            720
+          ],
+          "opacity": 0.0394345,
+          "sizing": "cover",
+          "zoom": 1.00012
+        },
+        "cutinCount": 8
+      },
+      "video": {
+        "rate": 3,
+        "wall": 983,
+        "aligned": [
+          {
+            "index": 0,
+            "due": 200,
+            "presented": 250,
+            "offset": 50,
+            "amount": 140,
+            "target": "e0",
+            "finisher": false
+          },
+          {
+            "index": 1,
+            "due": 1020,
+            "presented": 1083,
+            "offset": 63,
+            "amount": 136,
+            "target": "e1",
+            "finisher": false
+          },
+          {
+            "index": 2,
+            "due": 1860,
+            "presented": 1875,
+            "offset": 15,
+            "amount": 143,
+            "target": "e2",
+            "finisher": true
+          }
+        ],
+        "firstAlpha": 0.5312381546563945,
+        "lastAlpha": 0.052511433226918536,
+        "framesUploaded": 55,
+        "lastMedia": 2.833333
+      }
+    }
+  },
+  "shots": {},
+  "embedded": null,
+  "errors": []
+}

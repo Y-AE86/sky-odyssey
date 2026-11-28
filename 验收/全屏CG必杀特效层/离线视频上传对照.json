@@ -1,0 +1,12 @@
+{
+  "protocol": "file:",
+  "videoTime": 0.37465,
+  "size": [
+    1280,
+    720
+  ],
+  "uploadError": {
+    "name": "SecurityError",
+    "message": "Failed to execute 'texImage2D' on 'WebGLRenderingContext': The video element contains cross-origin data, and may not be loaded."
+  }
+}

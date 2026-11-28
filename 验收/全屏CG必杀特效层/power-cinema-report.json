@@ -1,0 +1,124 @@
+{
+  "name": "power",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "rate": 1,
+  "renderer": "pixi-webgl",
+  "resolution": 1,
+  "fallback": true,
+  "lobbyNewRequests": 0,
+  "requestedDomains": [],
+  "requestedClips": [],
+  "crackRequests": 0,
+  "weapons": null,
+  "rally": {
+    "h01": {
+      "fallback": true,
+      "hits": [
+        {
+          "actor": "a0",
+          "hero": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 163,
+          "time": 2238.7,
+          "clock": 316.1000000715255,
+          "due": 216,
+          "index": 0,
+          "media": null,
+          "finisher": false
+        },
+        {
+          "actor": "a0",
+          "hero": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 174,
+          "time": 2572.1,
+          "clock": 424.1000000715255,
+          "due": 324,
+          "index": 1,
+          "media": null,
+          "finisher": false
+        },
+        {
+          "actor": "a0",
+          "hero": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 160,
+          "time": 2672,
+          "clock": 532.1000000715255,
+          "due": 432,
+          "index": 2,
+          "media": null,
+          "finisher": true
+        }
+      ]
+    }
+  },
+  "shots": {
+    "cinema-fallback": {
+      "time": 2238.7,
+      "supported": false,
+      "fx": null,
+      "media": null,
+      "domain": null,
+      "shatter": false,
+      "cut": null,
+      "active": [
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": 2238.7
+        },
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 1,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": null
+        },
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 0,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": true,
+          "target": "e0",
+          "impactAt": null
+        }
+      ],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "163",
+        "cards": 6
+      },
+      "filters": [],
+      "procedural": [],
+      "layering": null
+    }
+  },
+  "embedded": null,
+  "errors": []
+}

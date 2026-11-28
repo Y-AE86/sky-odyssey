@@ -33,6 +33,10 @@ const presets=[
     {name:'power',width:1280,height:720,dpr:1,full:true},
     {name:'canvas',width:1280,height:720,dpr:1,full:true}
   ] : [],
+  ...(domainCinema ? [
+    {name:'speed2',width:1280,height:720,dpr:1,speed:2,extra:true},
+    {name:'speed3',width:1280,height:720,dpr:1,speed:3,extra:true}
+  ] : []),
   {name:'1080p',width:1920,height:1080,dpr:1,full:true,extra:true},
   {name:'qhd',width:2560,height:1440,dpr:1,full:true,extra:true},
   {name:'4k',width:3840,height:2160,dpr:1,full:true,extra:true}
@@ -943,7 +947,9 @@ async function runCampaign(p,spec) {
       const combo=await p.locator('.battle-float.combo-hit').evaluateAll(labels=>labels.map(el=>{
         const box=el.getBoundingClientRect();return {left:box.left,right:box.right};
       }).sort((a,b)=>a.left-b.left));
-      assert(combo.length>=2 && combo.every((box,i)=>i===0 || box.left>=combo[i-1].right),'multi-hit labels must be distinct');
+      const cgActive=!!(await status(p)).vfx.activeVideo;
+      assert(combo.length>=(cgActive?1:2) && combo.every((box,i)=>i===0 || box.left>=combo[i-1].right),
+        'overlapping multi-hit labels must be distinct');
     assert(await p.locator('.battle-hits').innerText().then(t=>/[23]\s*HITS?/i.test(t)),'multi-hit counter');
     await screenshot(p,spec,'impact');await battle(p,'speed').click();await battle(p,'speed').click();
   }
@@ -1257,6 +1263,13 @@ async function queueVfxCast(p,slot,id,powerSave,natural=false) {
   else await cut.locator('.battle-cut-skip').click();
   return media;
 }
+
+// The historic atlas diagnostics explicitly exercise the unconfigured CG path.
+// Native CG scheduling is covered by the separate domain-cinema suite.
+async function startAtlasFixture(p,options){
+  await p.evaluate(()=>{Sky.vfxVideoIds=[];});
+  return startFullVfxFixture(p,options);
+}
 async function settleVfxFixture(p) {
   await p.evaluate(()=>window.__skyVfxProbeRestore());
   await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
@@ -1442,6 +1455,7 @@ async function runVfxFocus(browser,origin,spec) {
       }
       await p.goto(spec.file?pathToFileURL(path.join(root,'index.html')).href:origin+'/index.html');
       await p.waitForFunction(()=>window.Sky?.ui?.state);
+      await p.evaluate(()=>{Sky.vfxVideoIds=[];});
       const artRequests=()=>requested.filter(url=>url.includes('/assets/vfx/') || /\/offline-(vfx|battle-art)\.js$/.test(url));
       assert.deepEqual(artRequests(),[],'no atlas requests from the lobby');
       if(powerSave){
@@ -1474,7 +1488,8 @@ async function runVfxFocus(browser,origin,spec) {
         }
         else {
           const files=artRequests().map(url=>new URL(url).pathname.slice(1));
-          assert.deepEqual([...new Set(files)].sort(),[...Object.values(vfxPaths),...Object.values(battleArtPaths)].sort());
+          assert.deepEqual([...new Set(files)].sort(),[...Object.values(vfxPaths),...Object.values(battleArtPaths)
+            .filter(file=>!file.endsWith('/vfx_impact_crack.png'))].sort());
         }
         outcome.offlinePackRequests=packs.length;
       }
@@ -1762,6 +1777,7 @@ async function runWave6Focus(browser,origin,spec) {
     }
     await p.goto(spec.file?pathToFileURL(path.join(root,'index.html')).href:origin+'/index.html');
     await p.waitForFunction(()=>window.Sky?.ui?.state);
+    await p.evaluate(()=>{Sky.vfxVideoIds=[];});
     const stage=await geometry(p,spec),images=await artwork(p,spec);
     const lobby=await wave6Lobby(p,spec,requests);
     const combat=await wave6Combat(p,spec);
@@ -1855,9 +1871,9 @@ async function replacementCheck(browser) {
         {action,panel,battle,geometry,startFullVfxFixture,screenshot,importProgress,
           verifyBattleArt:p=>verifyVfxPack(p,'offlineBattleArt',battleArtPaths)}) : actorUpgrade ?
         await runActorUpgrade(browser,origin,spec,{root,out},
-        {action,panel,battle,geometry,startFullVfxFixture,screenshot,queueVfxCast,checkEmbedded}) : effectsUpgrade ?
+        {action,panel,battle,geometry,startFullVfxFixture:startAtlasFixture,screenshot,queueVfxCast,checkEmbedded}) : effectsUpgrade ?
         await runVfxUpgrade(browser,origin,spec,{baseline:upgradeBaseline,root,out},
-          {action,panel,battle,geometry,startFullVfxFixture,screenshot,queueVfxCast}) :
+          {action,panel,battle,geometry,startFullVfxFixture:startAtlasFixture,screenshot,queueVfxCast}) :
         await (wave6Only?runWave6Focus:vfxOnly||hudOnly?runVfxFocus:run)(browser,origin,spec);
       reports.push(result);console.log(JSON.stringify(result));
       if(out)fs.writeFileSync(path.join(out,spec.name+(domainCinema?'-cinema':actorUpgrade?'-actor':effectsUpgrade ?

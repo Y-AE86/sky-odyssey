@@ -1,0 +1,2379 @@
+{
+  "baseline": "78045c9",
+  "tracked": 592,
+  "byType": {
+    "png": 555,
+    "mp3": 4,
+    "mp4": 33
+  },
+  "digests": [
+    {
+      "path": "assets/audio/bgm_battle.mp3",
+      "sha256": "502d7aaf3dd40898c611cd4073a95ceedd1845873c1781655da24ace95f6b396"
+    },
+    {
+      "path": "assets/audio/bgm_lobby.mp3",
+      "sha256": "fdb0a514d8048e82bd1706ea078dec527fb4a1d06d4db957cfbbbaef0b4b6086"
+    },
+    {
+      "path": "assets/avatars/avatar_c07.png",
+      "sha256": "7ce7c63301c510f93f2bddae5d5de1531e51e114c53eb8787b14dc078787acbb"
+    },
+    {
+      "path": "assets/avatars/avatar_c15.png",
+      "sha256": "023330ba4ccaf2c49e32d4d17ff62ef732c2d2faf1f4e9010302777afbdfa683"
+    },
+    {
+      "path": "assets/avatars/avatar_h04.png",
+      "sha256": "f691c3fa742617026d26d2323fb521ee400bbd60e7c4779e30b33a7ba2a72003"
+    },
+    {
+      "path": "assets/avatars/avatar_h05.png",
+      "sha256": "446ea07db3186bc4939a329a1c9a73fbbfd67ff72416c15804102ccc94ea5029"
+    },
+    {
+      "path": "assets/avatars/avatar_h06.png",
+      "sha256": "4335d061061ffbf663790004149d3698518e8781e9f53279927076fc6d9fc861"
+    },
+    {
+      "path": "assets/avatars/avatar_h07.png",
+      "sha256": "1f2778e598e009860cafe3c88eb7c2d21167d9c37f0c6b03338c2511fde8af67"
+    },
+    {
+      "path": "assets/avatars/avatar_h08.png",
+      "sha256": "69dadfc41fc45dc54b961eb2b7e41586f36234dc4dab6d7193c0bf014f5e26c7"
+    },
+    {
+      "path": "assets/avatars/avatar_h09.png",
+      "sha256": "8a9a3b956951e0ce27ec561f3a4ec752fb15c385a48199987e53d9de3ee134c6"
+    },
+    {
+      "path": "assets/avatars/avatar_h10.png",
+      "sha256": "229294fa116e02aed88fdb50e8ec81149f6a4f2ddd349f066379ac5bb76b6469"
+    },
+    {
+      "path": "assets/avatars/avatar_h11.png",
+      "sha256": "61d06a39d2e7f72e3a6aae62e9e451c4a7440929e6c84b570e7ac474dc952c14"
+    },
+    {
+      "path": "assets/avatars/avatar_protag.png",
+      "sha256": "e646fd4d637fea9d82bbe5ab39ac8a75f88d45130441817b93dfd477f7788036"
+    },
+    {
+      "path": "assets/badges/badge_resonance.png",
+      "sha256": "f0d089e6c93988f1e57a8516f98b4b7974bf0733e1abee4e8720cbc198b227e9"
+    },
+    {
+      "path": "assets/badges/faction_donghuang.png",
+      "sha256": "50cbcf7f66e2d03467274dc9d8948eca8ca2614631cc6440f43a04567a83f8b1"
+    },
+    {
+      "path": "assets/badges/faction_jiqiao.png",
+      "sha256": "95f0986015cac88d6278733b31f7149fea40555aaefd09e30820bdb3de952e9b"
+    },
+    {
+      "path": "assets/badges/faction_miying.png",
+      "sha256": "39d4020dad2d76d8d62eafe335245abfbb04653e7927648b0b66a462c0d19c96"
+    },
+    {
+      "path": "assets/badges/faction_shenghui.png",
+      "sha256": "61046e3db48585de3d3c1a2206692b8246fc9542fbca964db4b4c73e96d66c2c"
+    },
+    {
+      "path": "assets/badges/skill_awaken.png",
+      "sha256": "f6e7ef34d316e8dd1ccd5beebb2b979a1d8cebf802dbb92abd8617268e8ccaf4"
+    },
+    {
+      "path": "assets/badges/skill_basic.png",
+      "sha256": "f4691d25d2375e19652c2c25686f8882964d0b1eecf4035faad4ae437e6c7470"
+    },
+    {
+      "path": "assets/badges/skill_passive.png",
+      "sha256": "3f01eee8fb54de47697e1750a5ba1b056f7ec00e5f9efa5711de4469daec8294"
+    },
+    {
+      "path": "assets/badges/skill_ult.png",
+      "sha256": "0fb49205778724ce6876b4f5f620325710c3650215acf57563cb3e31265dd6d5"
+    },
+    {
+      "path": "assets/banners/banner_arena.png",
+      "sha256": "ea9908972d9037e132f81a970af64db0f8b3b56f09324bd1230c0ef0889743a0"
+    },
+    {
+      "path": "assets/banners/banner_boss.png",
+      "sha256": "c12abe8f58ca30563c5abf90c95ac70e20c86f9030e40b27c6254b9229abb713"
+    },
+    {
+      "path": "assets/banners/banner_tower.png",
+      "sha256": "18415e42a235f53476b2d9a3e3e479f11cc7dbb70f58d84f3591f913228289cf"
+    },
+    {
+      "path": "assets/banners/tile_campaign.png",
+      "sha256": "32a9a293fe8684ed6ce2b19681690b5b43259e6240610ef04ddda20de2612ed9"
+    },
+    {
+      "path": "assets/banners/tile_event.png",
+      "sha256": "66a8a54db274d980c45b0e47e34d7f6c4b38486def299e52ba950313d5291ccb"
+    },
+    {
+      "path": "assets/banners/tile_idle_box.png",
+      "sha256": "5578bc5fbf3dc351a9b7f168931185f51cec700c6fc5337a29d9db7697a7fcef"
+    },
+    {
+      "path": "assets/banners/tile_shop.png",
+      "sha256": "4ff43eb40aff15a655cf784af8ef1c29ca35a7b556d272d1a20a4b723bffd83d"
+    },
+    {
+      "path": "assets/chibi/chibi_c07.png",
+      "sha256": "2d755db7e15ada571e96c59fdd5548ca843c605ec7f496825f19dbbe76f6ac77"
+    },
+    {
+      "path": "assets/chibi/chibi_c15.png",
+      "sha256": "df7bf54115a2ea1e242022800de855cb1af89b4275276f2b9803b8f330cc2459"
+    },
+    {
+      "path": "assets/chibi/chibi_h01_atk.png",
+      "sha256": "d1c53a3b2b1f6de5ae1f61473b681c59a36707cb4b35e77c0991beaf0d6b4c87"
+    },
+    {
+      "path": "assets/chibi/chibi_h01_hurt.png",
+      "sha256": "a32dc298896d1ff23cae4276f7c8eb304720b65d37d3bd808f6e7835bf1834ba"
+    },
+    {
+      "path": "assets/chibi/chibi_h01_windup.png",
+      "sha256": "077352e7a8eba5b51eb8031ac5e97327379c6e808fd826ca080d484299b914e8"
+    },
+    {
+      "path": "assets/chibi/chibi_h02_atk.png",
+      "sha256": "cad9fd18320b3f66bb30df14020222ada342913627271f4f2c479a625204859e"
+    },
+    {
+      "path": "assets/chibi/chibi_h02_hurt.png",
+      "sha256": "1b33c048b5402d77525396ad351142a7cba3771232430f4ae34625ae5ad1285d"
+    },
+    {
+      "path": "assets/chibi/chibi_h02_windup.png",
+      "sha256": "a218499e2b2c2f6b8e801071d6f12864ea1308851c5499b4648cc1f2a55431ba"
+    },
+    {
+      "path": "assets/chibi/chibi_h04.png",
+      "sha256": "7872ef0b0593bddc7587c44d8f7a6fbd2b55cce6bfeb4d974e31e464c0f51667"
+    },
+    {
+      "path": "assets/chibi/chibi_h05.png",
+      "sha256": "20f56bb1f8671f36edd6cec8ae6e2c734c5381bcd9bbccc84618a0d20860cc05"
+    },
+    {
+      "path": "assets/chibi/chibi_h06.png",
+      "sha256": "71523194b036e413e9ed63ee93413c2b92c3a8fd2a61f06b9eb4ce7a0daf1cb7"
+    },
+    {
+      "path": "assets/chibi/chibi_h07.png",
+      "sha256": "3287b5c592f983599ae0834ac897aa9db9ae3a18a628fb118639bd7bdafa0660"
+    },
+    {
+      "path": "assets/chibi/chibi_h08.png",
+      "sha256": "6889c0e98adfb7161d482ca63e5d55f796593baf060d9be7598a8cb1c8229e48"
+    },
+    {
+      "path": "assets/chibi/chibi_h09.png",
+      "sha256": "e64e31a4e7b192ef142d15ec8ef485a4897c0153d07d372e5c8dc01f50cb1228"
+    },
+    {
+      "path": "assets/chibi/chibi_h10.png",
+      "sha256": "e16f8705ad3fbc031ce987a3e984042a1e0f5555e8acefd182146ffc0bdffa9f"
+    },
+    {
+      "path": "assets/chibi/chibi_h11.png",
+      "sha256": "8cbbebe9b746d868695c46cee4317fed6a56fa52695f8d46cf5f446049a6a71b"
+    },
+    {
+      "path": "assets/chibi/chibi_protag.png",
+      "sha256": "f9d8b28cdb7ffd0b98d4001804cce6b368948661e3644f02116a34b4dadc2e14"
+    },
+    {
+      "path": "assets/chibi/enemy_boss_mech.png",
+      "sha256": "be7c45baeca93a0391e76c4caacbacac767c8cafaf6db198aa3dfcb7249c32ae"
+    },
+    {
+      "path": "assets/chibi/enemy_caster.png",
+      "sha256": "0d87e65b8945663d2ecd731af8ac73bd99b86888bdd56f496f510503ce8397d7"
+    },
+    {
+      "path": "assets/chibi/enemy_striker.png",
+      "sha256": "fc833a376396c0c1e52e0afa70e817fa39a0e82ca199b113680e2c590403427a"
+    },
+    {
+      "path": "assets/chibi/enemy_vanguard.png",
+      "sha256": "291cf1fc15e08e7dffe9f9243023a0ebce5cadd96f459339b5906ecfd341e94c"
+    },
+    {
+      "path": "assets/domains/domain_h01.png",
+      "sha256": "595ab86dffb4fdef9b26035601d506b8057819790b5ec10c4cfde034d59d7d07"
+    },
+    {
+      "path": "assets/domains/domain_h02.png",
+      "sha256": "235e08a665f6e419a089b1c698a2e35ee9bc7867522240c18f01d70f7266cbd2"
+    },
+    {
+      "path": "assets/domains/domain_h03.png",
+      "sha256": "4c2f5e5bb428caacc23cdcedb626dd2a1b7f28fa48c2335e72a8352cd527de14"
+    },
+    {
+      "path": "assets/domains/domain_h04.png",
+      "sha256": "12f4fd0a7e18ff41c82a040b9abd8221184c7c9c3d68f06e3650c8cfbfdf84f7"
+    },
+    {
+      "path": "assets/domains/domain_h05.png",
+      "sha256": "fa930bc09f1e2490cc5a06013f21ab6ce85443ef2f7d086a84c9b2902300d8b2"
+    },
+    {
+      "path": "assets/domains/domain_h06.png",
+      "sha256": "d29414bf0f7bec0554a98956ddc7ef6e27fdecfb6d7c86ae4fc514d0c81eb4a3"
+    },
+    {
+      "path": "assets/domains/domain_h07.png",
+      "sha256": "ccb0e9a18905c63b2d59ef16df5956d9793375828bc55c3cfcd986bbbe8bcff0"
+    },
+    {
+      "path": "assets/domains/domain_h08.png",
+      "sha256": "2a4208c8d96d1f4abbe9a1b904cc0a229defd4821e6d25132a8b6ecb89f85399"
+    },
+    {
+      "path": "assets/domains/domain_h09.png",
+      "sha256": "db0e1617123e970a0da9e0fe564527f6ad340f049432847e585785351148dc2a"
+    },
+    {
+      "path": "assets/domains/domain_h10.png",
+      "sha256": "36422b99fe6422fea3da66722b98ad93517c72e0c53dd009bebf79805cf2233a"
+    },
+    {
+      "path": "assets/domains/domain_h11.png",
+      "sha256": "8c489838bbab59b560901db2c407a4f33908f48799ca7e29521d93330cd0922b"
+    },
+    {
+      "path": "assets/icons/icon_bag.png",
+      "sha256": "af53e1786a6c2c47c950022d225de0061920ce87b4c49d05fb32eb6c9c84b3fd"
+    },
+    {
+      "path": "assets/icons/icon_codex.png",
+      "sha256": "3d7a18cdb0ded755eda5527adb613847e8ef15a9b0233d8d7846528a5bc9afe6"
+    },
+    {
+      "path": "assets/icons/icon_formation.png",
+      "sha256": "940e60ffee317bb6892779a7e0dd9fd63d35d75147aada79e0237de930c8fb64"
+    },
+    {
+      "path": "assets/icons/icon_gacha.png",
+      "sha256": "6cd145adb5fb3ece5edfc926bfc98490d44f8af78215f24ee04571c2b2d71eec"
+    },
+    {
+      "path": "assets/icons/icon_quest.png",
+      "sha256": "e424599a7cd924c20c179a3c60c46da331fae1b70143bd69818291d589e7b544"
+    },
+    {
+      "path": "assets/icons/icon_reward.png",
+      "sha256": "518acb9d406e0ee191adb60e8e3853079879bc1d806d53a65a6232dabe87a3d4"
+    },
+    {
+      "path": "assets/icons/icon_roster.png",
+      "sha256": "8e2b46da53c75a9a65291f4b4a0d3de01f9fe8989dea25435efd6090ed5e56a4"
+    },
+    {
+      "path": "assets/icons/icon_settings.png",
+      "sha256": "d792e435288eaf63a4b589d0e1a2c93ba574afd017ae0a5929c5688c7c3ec195"
+    },
+    {
+      "path": "assets/icons/icon_shop.png",
+      "sha256": "ef528be7e42bce45d7bab6fd9ed7e08d8e5adbc50eeed2aaa2ba1f9541939e36"
+    },
+    {
+      "path": "assets/items/gear_accessory_sr.png",
+      "sha256": "f776b222b84c00059826a668f22892fbe3137276cc09f1ec593691ab5c0307a1"
+    },
+    {
+      "path": "assets/items/gear_accessory_ur.png",
+      "sha256": "f5c292815c20bce4aef12bb8636b583d5513f07ad9d57f60a90fce0fc859bf56"
+    },
+    {
+      "path": "assets/items/gear_armor_sr.png",
+      "sha256": "51b0cd5a4b92d044c37d8462edc22e2d5dabfdfd6c3b826b0821a1c5289e5c8b"
+    },
+    {
+      "path": "assets/items/gear_armor_ur.png",
+      "sha256": "b0da2d29975158aa4fa823c6f92c4001404617b5db6a08458cd47cc1b717363c"
+    },
+    {
+      "path": "assets/items/gear_relic_sr.png",
+      "sha256": "ae736cfc070e750797e0f8807f3aac7a26ae3d3a487d5f7806ee5dbbcbe7f490"
+    },
+    {
+      "path": "assets/items/gear_relic_ur.png",
+      "sha256": "d2100e327c0c75f207435050f3919efa73a64093fa17ca9d542261abaab092c8"
+    },
+    {
+      "path": "assets/items/gear_weapon_sr.png",
+      "sha256": "184737a9a6f13ee4f162ccc5e243b5b7db79abdf651ec7916fb3a5218d75bd40"
+    },
+    {
+      "path": "assets/items/gear_weapon_ur.png",
+      "sha256": "31f56306ac33110eca21030d45b20482aa844c64fa98cea13a7b28095333bd42"
+    },
+    {
+      "path": "assets/items/item_chest.png",
+      "sha256": "a4bb90d058bda567970667f621aa4f80ca04936427ec2ef38a76e12aa45e0dba"
+    },
+    {
+      "path": "assets/items/item_coin.png",
+      "sha256": "715f579ed85443d19feb4681cff1409d19751bd92c4c8ebe8256b0bf3e0ac2fd"
+    },
+    {
+      "path": "assets/items/item_core.png",
+      "sha256": "050e339cd3d3c080416d0a5bf0693bb1c67c08630302954b2affe223b54a522c"
+    },
+    {
+      "path": "assets/items/item_dew.png",
+      "sha256": "443ad5938040ee22887ac39ad703cb80d1636b0dcbb57eab399b229de9924567"
+    },
+    {
+      "path": "assets/items/item_dust.png",
+      "sha256": "43deef68b50473a70a7b0106ff56cb9317e2435c533270e16585c618823d9f26"
+    },
+    {
+      "path": "assets/items/item_gem.png",
+      "sha256": "c559601bcbdfd6df3f36265be02c264f2c8c653b17e62bbd26fa7ad7a79ee9eb"
+    },
+    {
+      "path": "assets/items/item_shard.png",
+      "sha256": "8da9bb6bb04c3e7973d9a4385d34586dbfded92df47b5652da83b00caf3cf197"
+    },
+    {
+      "path": "assets/items/item_stamina.png",
+      "sha256": "75d42ddc17e189befd809cedb68f709b8228578713883e0d9a8461a72aa0cedd"
+    },
+    {
+      "path": "assets/items/item_ticket.png",
+      "sha256": "37f398175c038bca28b5d3145e723e12354499148cd3673e63924695dd901909"
+    },
+    {
+      "path": "assets/posters/lobby_cg_c07.png",
+      "sha256": "1f2125127650c2ae571d8e3eedd6c12bc7daa6d2786fa14dd3f56b50ab63a0b7"
+    },
+    {
+      "path": "assets/posters/lobby_cg_c15.png",
+      "sha256": "bcb6272a2413dd1d8b1f793e10a8ebb6ce3663931c71d2f1e1a59c112cfee182"
+    },
+    {
+      "path": "assets/posters/lobby_cg_h04.png",
+      "sha256": "35f08303bb28ebe4b4c47a23321f2faaf66cbec3491cefdad303da1094c0d45a"
+    },
+    {
+      "path": "assets/posters/lobby_cg_h05.png",
+      "sha256": "72900d61ac3b662edce2fa1d9464aeaafe12180216fcb8231dc3418c18d714a2"
+    },
+    {
+      "path": "assets/posters/lobby_cg_h06.png",
+      "sha256": "b7d7296a4a6ea1a54282a74254f7d591821b9a9b4da12d1cd8ae3e764ff05cf7"
+    },
+    {
+      "path": "assets/posters/lobby_cg_h07.png",
+      "sha256": "de19d8e4b0f8fe7c90fa0049366147337ff4ac73e3fe56c7c09f7c8c83435d42"
+    },
+    {
+      "path": "assets/posters/lobby_cg_h08.png",
+      "sha256": "d65aa5edb39bad01dec2769bea7a6bba176870d7cf97f5dec6857cc2664486b1"
+    },
+    {
+      "path": "assets/posters/lobby_cg_h09.png",
+      "sha256": "099599ded5be3b29f7e11083a93171216d44cae34da9c430a8bd33748500ab2c"
+    },
+    {
+      "path": "assets/posters/lobby_cg_h10.png",
+      "sha256": "c3ed6f77876354051890325a011f7cfd85a9c7b25ab79296ae179127f321da4b"
+    },
+    {
+      "path": "assets/posters/lobby_cg_h11.png",
+      "sha256": "c45a845ad4a9d616d9a630940d77a250e6c184b34896dc5649c67df1ef9066f7"
+    },
+    {
+      "path": "assets/posters/lobby_cg_protag.png",
+      "sha256": "ee76bb9db8e317cdbd4699025966281bd2a35dd3114a8407993037f229577bc9"
+    },
+    {
+      "path": "assets/scenes/bg_battle.png",
+      "sha256": "fffecb985fc17cd4245fbbf21359bb3c6812e2aceaf192095d3e76e25448fc13"
+    },
+    {
+      "path": "assets/scenes/bg_battle_boss.png",
+      "sha256": "af4982a423e6308e9c664d132bfb750d8f00fb0bd20702b9814daa8574042777"
+    },
+    {
+      "path": "assets/scenes/bg_battle_ch2.png",
+      "sha256": "87be4482fb7c53cc4a592b9d82715bb1aa0ac62561951dc7296181e256fe17f2"
+    },
+    {
+      "path": "assets/scenes/bg_gacha.png",
+      "sha256": "05452da0057c592547c177f868e7dad361526ac3bb3f627c32033252fa73d77c"
+    },
+    {
+      "path": "assets/scenes/bg_roster.png",
+      "sha256": "b90c97b178865d5b77b382bd8af2de310f14fed861e9bba55f92b83d2d479129"
+    },
+    {
+      "path": "assets/scenes/bg_roster_alt.png",
+      "sha256": "72a639a7226df0fef4cf8a7a3b831fc9cb0f76e5a0a0b1fffdfe39e7decdee46"
+    },
+    {
+      "path": "assets/scenes/bg_worldmap.png",
+      "sha256": "a2145aef43ebd0bfeb5feee5d887723ea5240411724473100d6b6bb5b9f4fa77"
+    },
+    {
+      "path": "assets/ui/emblem_defeat.png",
+      "sha256": "8bd7a62322458291450aa9bcd43618f689b2a88407c8332ca3cb3a13f0ddcacd"
+    },
+    {
+      "path": "assets/ui/emblem_mvp.png",
+      "sha256": "ef51ff52dbab97992d02d48b2a309760d814f1b21c6c08efc52f6e41db1d18ce"
+    },
+    {
+      "path": "assets/ui/emblem_star.png",
+      "sha256": "e70b14a9257ec3d0225d20cc86947a95b7603382ed903c13c099f7052d8fa301"
+    },
+    {
+      "path": "assets/ui/emblem_victory.png",
+      "sha256": "4f1ffafca275ba4ceaccdb0b253930cfecbf69ead9e1a4993a867e1460d8c0c7"
+    },
+    {
+      "path": "assets/ui/frame_r.png",
+      "sha256": "49dfe33791979700ee30378d89534b74f7c91f968baa09a05247163b20ac0551"
+    },
+    {
+      "path": "assets/ui/frame_sr.png",
+      "sha256": "d1581d488d2312ecacf1eb5f2af7cd3581a15e4e81527abb30f46d6f4eb9eb7f"
+    },
+    {
+      "path": "assets/ui/frame_ssr.png",
+      "sha256": "b65006993843b943e2de90df56152142dd27ed2e008b11ef0bae8fd5bd2b961b"
+    },
+    {
+      "path": "assets/ui/frame_ur.png",
+      "sha256": "329a5d93e6cee79efba72cd4eb9b7838bb05a651cd9740f9b5bbbf6cda0358c5"
+    },
+    {
+      "path": "assets/ui/ui_badge_circle.png",
+      "sha256": "79cc8be04b344a0676650225a5c969508154bde542a1d4c23b56758444bdb9d6"
+    },
+    {
+      "path": "assets/ui/ui_bar_cyan.png",
+      "sha256": "6a6a1e2f7f8302d304a0aab2dfb21d3615464f90d3b261a955684c79ee339613"
+    },
+    {
+      "path": "assets/ui/ui_bar_gold.png",
+      "sha256": "ac8565f334cb1f08234bc0086b8964c144bc15c477bda019e6af9e85bfa1e70f"
+    },
+    {
+      "path": "assets/ui/ui_btn_crimson.png",
+      "sha256": "b6e1bc56d7ec55c1d0c2e1f440d46068d302cc2c02f209bd5404de26bbd4f776"
+    },
+    {
+      "path": "assets/ui/ui_btn_cyan.png",
+      "sha256": "2491ed9bd6e7007ce150e668efe0acb32581fcf044ce499f61c728a3d8b9a318"
+    },
+    {
+      "path": "assets/ui/ui_btn_dark.png",
+      "sha256": "06e78ddbaee6711b21834e6ce7371ebc35195127a25b75fc4ddfbb8c574001f2"
+    },
+    {
+      "path": "assets/ui/ui_btn_gold.png",
+      "sha256": "d43d2d6ec298c4a97ab9937d4db2ccae340f1202ebd17d740fa00d9788c543b0"
+    },
+    {
+      "path": "assets/ui/ui_tab_active.png",
+      "sha256": "1215dccd3d4e9a23dfa2158433175f7bf8ae05ad7ecca826721aef8213a581c5"
+    },
+    {
+      "path": "assets/ui/ui_tab_idle.png",
+      "sha256": "ea5536a7c170fce52332469ad4d9e86e8daaf84277a76cdde3058d30d518601d"
+    },
+    {
+      "path": "assets/vfx/proj_h01.png",
+      "sha256": "05086ce39622e3873dba7f4a8155a9ef0ee9eff096100dd8c541317cecb6ead6"
+    },
+    {
+      "path": "assets/vfx/proj_h02.png",
+      "sha256": "cfc84b32c65931b7dfd78050d75a14367cccc724421dfa130ea5a211be8c61c8"
+    },
+    {
+      "path": "assets/vfx/proj_h03.png",
+      "sha256": "7b15e74ea8a45d8edc0283569383355aa1a49c0581defe1d2d4609adf01d06c3"
+    },
+    {
+      "path": "assets/vfx/proj_h04.png",
+      "sha256": "9eed3f0772a7000e9a4c88576d00605e8c4d5d971ba0fa3fcdd7688cdb4c636f"
+    },
+    {
+      "path": "assets/vfx/proj_h05.png",
+      "sha256": "fd9c2d19e890d02b29ff98a14ea17333c1eaf8340a61efc2f08f0f3a5df940c1"
+    },
+    {
+      "path": "assets/vfx/proj_h06.png",
+      "sha256": "3085f317e9246316ba22e7911146cf8d107d57c63d0174e8c228fab7e9bbe5ac"
+    },
+    {
+      "path": "assets/vfx/status_curse.png",
+      "sha256": "f8d9df5f69f8f7753ceea65e0bb49968bf1fe9f543f7604950e91735a4ec1d22"
+    },
+    {
+      "path": "assets/vfx/status_freeze.png",
+      "sha256": "2d16b95ce57bf21b6b357041f1b1fbcb7edaab59d6db94f4d5488979800e9e82"
+    },
+    {
+      "path": "assets/vfx/status_heal_ring.png",
+      "sha256": "8dfe84aceecc367ecd7b378fb2a9950eafad59635cb8b319a221b8bdc9e40f67"
+    },
+    {
+      "path": "assets/vfx/status_shield.png",
+      "sha256": "b5ca4915226ab556ec3fd325e18ff9859d883fee3e9c99bfe914194a7921ab5f"
+    },
+    {
+      "path": "assets/vfx/vfx_hit_spark.png",
+      "sha256": "ac2ce9d40bf74a7b8e78323328fc41a51849343630147481507ff72ac8a2c1eb"
+    },
+    {
+      "path": "assets/vfx/vfx_impact_crack.png",
+      "sha256": "8e441d53a7e57873d0ac3c7a489d496d7456b8b108c05088dd52c17fe8af2522"
+    },
+    {
+      "path": "assets/vfx/vfx_ult_h01.png",
+      "sha256": "1c4ce483ddde4ef95dc78cf8cf87c0d9823e3a0a1f081a5ebeb31340dc6467af"
+    },
+    {
+      "path": "assets/vfx/vfx_ult_h02.png",
+      "sha256": "5ace7906aa0dfe9f1b62be374c0e9a5fc1b9a66ec31fece83b5d0d377b745b61"
+    },
+    {
+      "path": "assets/vfx/vfx_ult_h03.png",
+      "sha256": "bc16cb26998c3c33cc1b0776ece7a45a5b650d9eedadd2e89d58ec013868426f"
+    },
+    {
+      "path": "assets/vfx/vfx_ult_h04.png",
+      "sha256": "c8179a1e9cb7f59f554ddb4f9054b219d2811cba97e092e2b9e9b9fca5634140"
+    },
+    {
+      "path": "assets/vfx/vfx_ult_h05.png",
+      "sha256": "ffcd87c9e7157ab4fde5a3b361144fd45841c286e2b6f170cbfb77bac55d324f"
+    },
+    {
+      "path": "assets/vfx/vfx_ult_h06.png",
+      "sha256": "4a5bcacf285e9db7b19e88352de5734d0447df445c427b6e9944d42035b7491f"
+    },
+    {
+      "path": "assets/videos/lobby_cg_h01.mp4",
+      "sha256": "cc71052048ca2ca9903b80b47fd2466a400d2f3ccffe4288786d6700f90937d7"
+    },
+    {
+      "path": "assets/videos/lobby_cg_h02.mp4",
+      "sha256": "09e35b6ed3ebe870474655403648f72ad02eaf916e2aafa970c1d39d560e6313"
+    },
+    {
+      "path": "assets/videos/lobby_cg_h03.mp4",
+      "sha256": "bfcc3d2d4265e61ebacdc009459e93d141be524fe2416e812c5c056798d330e1"
+    },
+    {
+      "path": "assets/videos/lobby_cg_h04.mp4",
+      "sha256": "65b7fb99df45509adafdb2daf3ab66ef2bac5f6fdc2263ed0fa74846fd297b67"
+    },
+    {
+      "path": "assets/videos/lobby_cg_h05.mp4",
+      "sha256": "10f35663edfbd7a380a34e341f525136e55731148afa483c2defea099d44bec9"
+    },
+    {
+      "path": "assets/videos/lobby_cg_h06.mp4",
+      "sha256": "a93d2ed59c558cc7d18fde5ea9c6abc6601d0d5e93a43b83a5daa3ddd24776c7"
+    },
+    {
+      "path": "assets/videos/lobby_cg_h08.mp4",
+      "sha256": "de8f1697e9b2d666b2c291bdbea60fa56b1967c013bbdf30e0d620156b79b5e8"
+    },
+    {
+      "path": "assets/videos/ult_h01.mp4",
+      "sha256": "c21ad9862519b4d5334c16638eccb832dbea428457dbdfc955fdc69356b7a1a6"
+    },
+    {
+      "path": "assets/videos/ult_h02.mp4",
+      "sha256": "24e6dfbc31e2a3c24f4463b34a905ec34c4ad71c58d18aa9304110de1462f090"
+    },
+    {
+      "path": "assets/videos/ult_h03.mp4",
+      "sha256": "8ce693bbde0e2b8c3e9df1b4babb80f1cb2a7bc17ab1b66caceebb6dfc3970b0"
+    },
+    {
+      "path": "assets/videos/ult_h04.mp4",
+      "sha256": "e85d9ec84b19ecc1879373c2d10eae13e14a2b46b9814a37549290baa9c52204"
+    },
+    {
+      "path": "assets/videos/ult_h05.mp4",
+      "sha256": "3655748acdae0e94f87ac2189eac77f610576739c3e090554c70c59af251a82e"
+    },
+    {
+      "path": "assets/videos/ult_h06.mp4",
+      "sha256": "6e944f73ad1753e0da72b925bf9f1c58c59b5be63669055e448c2b7e227c735c"
+    },
+    {
+      "path": "assets/videos/ult_h08.mp4",
+      "sha256": "df59f0a7e39ee04108287df26a527f0f1b9a923e8c53f8710bdba45dae09186c"
+    },
+    {
+      "path": "assets/videos/vfx_h01.mp4",
+      "sha256": "3f84a8806705018dfd59d886743d0c0e9afac4a9f8cb75a11c77c94df1a2b07d"
+    },
+    {
+      "path": "assets/videos/vfx_h08.mp4",
+      "sha256": "39bb7787a064cbd184fcb271a6d019761dfe9df4d1c98f83c85b686dac67b23e"
+    },
+    {
+      "path": "assets/weapons/weapon_grimoire_reserve.png",
+      "sha256": "0f5ea41be56c09836ab493e9394473f4eed57994b3ecfb7eba2779ea6af8be55"
+    },
+    {
+      "path": "assets/weapons/weapon_h01.png",
+      "sha256": "43ce47a39b87b109bcf758411a3cbbaf16bed3dfe337963c8f0ff10d8e87a8aa"
+    },
+    {
+      "path": "assets/weapons/weapon_h02.png",
+      "sha256": "13afb67106aae8707753b6948f852e86c7c80525e3230c8a80a5d2a418b34160"
+    },
+    {
+      "path": "assets/weapons/weapon_h03.png",
+      "sha256": "5a8bad332bf84889e1f706f5596145a6921c1df7f851260528e11cee564cd0d7"
+    },
+    {
+      "path": "assets/weapons/weapon_h04.png",
+      "sha256": "d24d3e16c833293251a09e3507662bdc1cde97172d3d2e28b4e9d1933bac7db4"
+    },
+    {
+      "path": "assets/weapons/weapon_h05.png",
+      "sha256": "77972d7c053b939d8fec9df99344a137bce66ae54037e1c2d25139ef2ffbe806"
+    },
+    {
+      "path": "assets/weapons/weapon_h06.png",
+      "sha256": "dea3425a65b14b1f12fff14d6bc0c05ee24d77bbb47b05f7ab7ef8d7122b90e3"
+    },
+    {
+      "path": "assets/weapons/weapon_h07.png",
+      "sha256": "9652629cd671b179f90883d82ba8551efbf1e893c4fdb18b9c2c73c8c35e7e36"
+    },
+    {
+      "path": "assets/weapons/weapon_h08.png",
+      "sha256": "78df2eae8673a881d36e5b3c5c258c3d84b14070f4448605da2e4d2aee2af1e7"
+    },
+    {
+      "path": "assets/weapons/weapon_h09.png",
+      "sha256": "7c249f14cbdf85510f033bc6e7bd0a8734856ba7f6e016f5f339608634163513"
+    },
+    {
+      "path": "assets/weapons/weapon_h10.png",
+      "sha256": "81c665d436066ad835ccdf9465ffda7e2dd938e43658270bbcb6389a79ef9acd"
+    },
+    {
+      "path": "assets/weapons/weapon_h11.png",
+      "sha256": "ae291145d1afbf4b64e1bbfee10a90ad73aa07f8b58dc423f2ec39089b201d04"
+    },
+    {
+      "path": "raw_art/_archive/备选_试炼横幅_天城首领_旧版.png",
+      "sha256": "fabbd22b4009031e1ee6f9c6485fbd24a31fbf0315a1318153ada669833459a5"
+    },
+    {
+      "path": "raw_art/_archive/备选_试炼横幅_星环演武_旧版.png",
+      "sha256": "1c06645801bb0c61bf6d7324752fac6300412f82c1374731f3fb9f3016dc0939"
+    },
+    {
+      "path": "raw_art/_archive/旧版_weapon_h07.png",
+      "sha256": "4eab98c9f4efca40cb17a3bc0bc5ed682fe274c296e45418f0ff415aa002329b"
+    },
+    {
+      "path": "raw_art/_archive/旧版_weapon_h08.png",
+      "sha256": "b81e891edae4bc5a31159a1df2ac206c0981b90ce5f0c8a2b97b135972f7ecdc"
+    },
+    {
+      "path": "raw_art/_archive/旧版剪影_avatar_h07.png",
+      "sha256": "1d6d5636746070a58b202cda1ce7153cb1e8962b2fbc7066c87ddc5c9ed21203"
+    },
+    {
+      "path": "raw_art/_archive/旧版剪影_avatar_h08.png",
+      "sha256": "eddb770145092a5c47cb54443d92163b47dc7e5f255ea8b03cece458091a7db6"
+    },
+    {
+      "path": "raw_art/_archive/旧版剪影_chibi_h07.png",
+      "sha256": "2fe8e6c2a228cc8932b1a02ef77d563dddc0618eb038ea3ea29338b35f37fdc6"
+    },
+    {
+      "path": "raw_art/_archive/旧版剪影_chibi_h08.png",
+      "sha256": "2fe8e6c2a228cc8932b1a02ef77d563dddc0618eb038ea3ea29338b35f37fdc6"
+    },
+    {
+      "path": "raw_art/_archive/旧版剪影_lobby_cg_h07.png",
+      "sha256": "22621c8a1df8350541a39c5930637cb742b963d53c8cb2746b69d8b3fb7a922c"
+    },
+    {
+      "path": "raw_art/_archive/旧版剪影_lobby_cg_h08.png",
+      "sha256": "b358672a44d5058ffa598d5c0bca1108b2c1ccc8e0d3d4d9e41fb0ea4ccd20e8"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_头像_艾莉娅.png",
+      "sha256": "787343d1e61c065087cf638dae766ca84d1c78526694b0d4dd1f91f7817afda3"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_头像_莉莉丝.png",
+      "sha256": "d627a5eef3c88c9066c42f64d40621290710edb9ee432c5c7c1d9a32ae1f0f58"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_头像_薇尔.png",
+      "sha256": "0af7893fb6d3608e049749d5a3745c3424c3e6371da530915e803b625798e49b"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_战斗Q版_艾莉娅.png",
+      "sha256": "cae5f5a189b45c73d219b45828c9677318d826c83b29e83ad8393b2d141b22e9"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_战斗Q版_莉莉丝.png",
+      "sha256": "8d5e96959ccc2edd85bca48411234e0d93ea72df3ad45a8feb46acb66950c461"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_战斗Q版_薇尔.png",
+      "sha256": "130805e8f5273cebbab29a55e441296dd5ce49719f8e376976ef052f2e87de77"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_看板海报_艾莉娅.png",
+      "sha256": "66656ff9552120582ae7c07472a8673904093cc6755831ffaa039f0c8e73d7fa"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_看板海报_莉莉丝.png",
+      "sha256": "23ed133e83a26edee3462287b424f000ac7fe8c4ba75f01294f722a0f9422b9b"
+    },
+    {
+      "path": "raw_art/_archive/旧版厚涂_看板海报_薇尔.png",
+      "sha256": "b60b9927d2913da044badc48235676986b28a2be7d5f25fccf4610d0e1b76a64"
+    },
+    {
+      "path": "raw_art/_archive/淘汰小尺寸_星装8件套_旧版.png",
+      "sha256": "21220bd56f0c7ac37ef960ff83abc2b62d2fd0a3444a2fbe5fb87a7cce392811"
+    },
+    {
+      "path": "raw_art/audio/01_主城BGM_星穹幻想.mp3",
+      "sha256": "fdb0a514d8048e82bd1706ea078dec527fb4a1d06d4db957cfbbbaef0b4b6086"
+    },
+    {
+      "path": "raw_art/audio/02_战斗BGM_EpicBattle_Deity.mp3",
+      "sha256": "502d7aaf3dd40898c611cd4073a95ceedd1845873c1781655da24ace95f6b396"
+    },
+    {
+      "path": "raw_art/avatars/01_幽冥墨姬_头像_1x1.png",
+      "sha256": "7ce7c63301c510f93f2bddae5d5de1531e51e114c53eb8787b14dc078787acbb"
+    },
+    {
+      "path": "raw_art/avatars/02_冰灵霜华_头像_1x1.png",
+      "sha256": "e646fd4d637fea9d82bbe5ab39ac8a75f88d45130441817b93dfd477f7788036"
+    },
+    {
+      "path": "raw_art/avatars/03_凌波玉笛_头像_1x1.png",
+      "sha256": "023330ba4ccaf2c49e32d4d17ff62ef732c2d2faf1f4e9010302777afbdfa683"
+    },
+    {
+      "path": "raw_art/avatars/04_艾莉娅圣翼_头像_1x1.png",
+      "sha256": "f691c3fa742617026d26d2323fb521ee400bbd60e7c4779e30b33a7ba2a72003"
+    },
+    {
+      "path": "raw_art/avatars/05_薇尔星轨_头像_1x1.png",
+      "sha256": "446ea07db3186bc4939a329a1c9a73fbbfd67ff72416c15804102ccc94ea5029"
+    },
+    {
+      "path": "raw_art/avatars/06_莉莉丝绯月_头像_1x1.png",
+      "sha256": "4335d061061ffbf663790004149d3698518e8781e9f53279927076fc6d9fc861"
+    },
+    {
+      "path": "raw_art/avatars/07_望舒星渊_头像_1x1.png",
+      "sha256": "1f2778e598e009860cafe3c88eb7c2d21167d9c37f0c6b03338c2511fde8af67"
+    },
+    {
+      "path": "raw_art/avatars/08_苍雷希露_头像_1x1.png",
+      "sha256": "69dadfc41fc45dc54b961eb2b7e41586f36234dc4dab6d7193c0bf014f5e26c7"
+    },
+    {
+      "path": "raw_art/avatars/09_离火凰姬_头像_1x1.png",
+      "sha256": "8a9a3b956951e0ce27ec561f3a4ec752fb15c385a48199987e53d9de3ee134c6"
+    },
+    {
+      "path": "raw_art/avatars/10_汐月瑶光_头像_1x1.png",
+      "sha256": "229294fa116e02aed88fdb50e8ec81149f6a4f2ddd349f066379ac5bb76b6469"
+    },
+    {
+      "path": "raw_art/avatars/11_赛琳娜暗冕_头像_1x1.png",
+      "sha256": "61d06a39d2e7f72e3a6aae62e9e451c4a7440929e6c84b570e7ac474dc952c14"
+    },
+    {
+      "path": "raw_art/banners/07_主城磁贴_限时活动七日启航_16x9.png",
+      "sha256": "66a8a54db274d980c45b0e47e34d7f6c4b38486def299e52ba950313d5291ccb"
+    },
+    {
+      "path": "raw_art/banners/主城磁贴_星匣宝箱.png",
+      "sha256": "5578bc5fbf3dc351a9b7f168931185f51cec700c6fc5337a29d9db7697a7fcef"
+    },
+    {
+      "path": "raw_art/banners/主城磁贴_星港商铺.png",
+      "sha256": "4ff43eb40aff15a655cf784af8ef1c29ca35a7b556d272d1a20a4b723bffd83d"
+    },
+    {
+      "path": "raw_art/banners/主城磁贴_航线飞艇.png",
+      "sha256": "32a9a293fe8684ed6ce2b19681690b5b43259e6240610ef04ddda20de2612ed9"
+    },
+    {
+      "path": "raw_art/banners/试炼横幅_天城首领.png",
+      "sha256": "c12abe8f58ca30563c5abf90c95ac70e20c86f9030e40b27c6254b9229abb713"
+    },
+    {
+      "path": "raw_art/banners/试炼横幅_星环演武.png",
+      "sha256": "ea9908972d9037e132f81a970af64db0f8b3b56f09324bd1230c0ef0889743a0"
+    },
+    {
+      "path": "raw_art/banners/试炼横幅_星穹高塔.png",
+      "sha256": "18415e42a235f53476b2d9a3e3e479f11cc7dbb70f58d84f3591f913228289cf"
+    },
+    {
+      "path": "raw_art/chibi/01_幽冥墨姬_战斗三动作原图.png",
+      "sha256": "d48c67bd95f158831f6725774df6a685de729568a9c24408d58cc9674e8a25d2"
+    },
+    {
+      "path": "raw_art/chibi/02_冰灵霜华_战斗三动作原图.png",
+      "sha256": "3d109e2b899dce3c92c04039aac14f40b10fa0ae65d48187835333ac928d076f"
+    },
+    {
+      "path": "raw_art/chibi/04_艾莉娅圣翼_战斗Q版_1x1.png",
+      "sha256": "4aa37f36495c94b4574f8fc88dcd47dc71b5e6298dc9685ece0ba5194fe45b52"
+    },
+    {
+      "path": "raw_art/chibi/05_薇尔星轨_战斗Q版_1x1.png",
+      "sha256": "659276518298934f3a313b38ca7819501fbc957de551e807d7da04f9b56239fb"
+    },
+    {
+      "path": "raw_art/chibi/06_莉莉丝绯月_战斗Q版_1x1.png",
+      "sha256": "9400d41569cba398dac57c9eb16245ac1193bfa672797986a2253c682519f61d"
+    },
+    {
+      "path": "raw_art/chibi/07_望舒星渊_战斗Q版_1x1.png",
+      "sha256": "b3d2aeb708bd6803a3b3a2ce844cb7e06cd4a79e7bd490ad3d934b4255231360"
+    },
+    {
+      "path": "raw_art/chibi/08_苍雷希露_战斗Q版_1x1.png",
+      "sha256": "ecdd28ecad8cab22cda5ed2a4a08ab80f8c8e18c33609bfdb1d52db0d8bc2594"
+    },
+    {
+      "path": "raw_art/chibi/09_离火凰姬_战斗Q版_1x1.png",
+      "sha256": "68a8747fac20a42fa5d7081d99b726f58e2d5dbafd3d3352572e98f39ce1fa2d"
+    },
+    {
+      "path": "raw_art/chibi/10_汐月瑶光_战斗Q版_1x1.png",
+      "sha256": "a0056d5fa82dc40c8f01744b27026fbe9b7ffc2efe7ad0503454c135cbd15d90"
+    },
+    {
+      "path": "raw_art/chibi/11_赛琳娜暗冕_战斗Q版_1x1.png",
+      "sha256": "3a3bff7834847c37d68be0db0ce0d8eb939b4f4622ccf532cd2aec67d34ec6db"
+    },
+    {
+      "path": "raw_art/domains/01_幽冥墨姬_忘川墨莲冥域.png",
+      "sha256": "595ab86dffb4fdef9b26035601d506b8057819790b5ec10c4cfde034d59d7d07"
+    },
+    {
+      "path": "raw_art/domains/02_冰灵霜华_极夜冰穹星环.png",
+      "sha256": "235e08a665f6e419a089b1c698a2e35ee9bc7867522240c18f01d70f7266cbd2"
+    },
+    {
+      "path": "raw_art/domains/03_凌波玉笛_子夜月镜莲湖.png",
+      "sha256": "4c2f5e5bb428caacc23cdcedb626dd2a1b7f28fa48c2335e72a8352cd527de14"
+    },
+    {
+      "path": "raw_art/domains/04_艾莉娅_暗夜圣殿鎏金裂云.png",
+      "sha256": "12f4fd0a7e18ff41c82a040b9abd8221184c7c9c3d68f06e3650c8cfbfdf84f7"
+    },
+    {
+      "path": "raw_art/domains/05_薇尔_深空星轨齿轮矩阵.png",
+      "sha256": "fa930bc09f1e2490cc5a06013f21ab6ce85443ef2f7d086a84c9b2902300d8b2"
+    },
+    {
+      "path": "raw_art/domains/06_莉莉丝_猩红血月哥特玫瑰夜.png",
+      "sha256": "d29414bf0f7bec0554a98956ddc7ef6e27fdecfb6d7c86ae4fc514d0c81eb4a3"
+    },
+    {
+      "path": "raw_art/domains/07_望舒_紫渊银河黄道星幕.png",
+      "sha256": "ccb0e9a18905c63b2d59ef16df5956d9793375828bc55c3cfcd986bbbe8bcff0"
+    },
+    {
+      "path": "raw_art/domains/08_苍雷希露_墨黑苍穹高压雷狱.png",
+      "sha256": "2a4208c8d96d1f4abbe9a1b904cc0a229defd4821e6d25132a8b6ecb89f85399"
+    },
+    {
+      "path": "raw_art/domains/09_离火凰姬_焦黑凤凰日蚀离火.png",
+      "sha256": "db0e1617123e970a0da9e0fe564527f6ad340f049432847e585785351148dc2a"
+    },
+    {
+      "path": "raw_art/domains/10_汐月瑶光_月潮归息星海.png",
+      "sha256": "36422b99fe6422fea3da66722b98ad93517c72e0c53dd009bebf79805cf2233a"
+    },
+    {
+      "path": "raw_art/domains/11_赛琳娜_荆棘王冠黑鸦裂空.png",
+      "sha256": "8c489838bbab59b560901db2c407a4f33908f48799ca7e29521d93330cd0922b"
+    },
+    {
+      "path": "raw_art/enemies/01_天城首领_浮空机神BOSS_1x1.png",
+      "sha256": "75a6a5a26e0b2dc6118bd6fcdf69023f7df3035064c636f57c8acdfa7e79ce54"
+    },
+    {
+      "path": "raw_art/enemies/02_敌方前排_星骸重盾卫_1x1.png",
+      "sha256": "225cd8613a8c9cd7a1ba40b32ada0899f28c01c7c92406f031d4e03b0354097c"
+    },
+    {
+      "path": "raw_art/enemies/03_敌方后排_虚空星术士_1x1.png",
+      "sha256": "c452d6c7dacb3858031c5227c14d744df56194f7643ef162237aad0629762673"
+    },
+    {
+      "path": "raw_art/enemies/04_敌方猎手_齿轮浮游猎手_1x1.png",
+      "sha256": "fb714ad8280d27db4cf0e88ae4d8bf51080adad36cecae79cb237d9c8a00eaf9"
+    },
+    {
+      "path": "raw_art/posters/01_幽冥墨姬_主城海报_16x9.png",
+      "sha256": "1f2125127650c2ae571d8e3eedd6c12bc7daa6d2786fa14dd3f56b50ab63a0b7"
+    },
+    {
+      "path": "raw_art/posters/02_冰灵霜华_主城海报_16x9.png",
+      "sha256": "ee76bb9db8e317cdbd4699025966281bd2a35dd3114a8407993037f229577bc9"
+    },
+    {
+      "path": "raw_art/posters/03_凌波玉笛_主城海报_16x9.png",
+      "sha256": "bcb6272a2413dd1d8b1f793e10a8ebb6ce3663931c71d2f1e1a59c112cfee182"
+    },
+    {
+      "path": "raw_art/posters/04_艾莉娅圣翼_主城海报_16x9.png",
+      "sha256": "35f08303bb28ebe4b4c47a23321f2faaf66cbec3491cefdad303da1094c0d45a"
+    },
+    {
+      "path": "raw_art/posters/05_薇尔星轨_主城海报_16x9.png",
+      "sha256": "72900d61ac3b662edce2fa1d9464aeaafe12180216fcb8231dc3418c18d714a2"
+    },
+    {
+      "path": "raw_art/posters/06_莉莉丝绯月_主城海报_16x9.png",
+      "sha256": "b7d7296a4a6ea1a54282a74254f7d591821b9a9b4da12d1cd8ae3e764ff05cf7"
+    },
+    {
+      "path": "raw_art/posters/07_望舒星渊_主城海报_16x9.png",
+      "sha256": "de19d8e4b0f8fe7c90fa0049366147337ff4ac73e3fe56c7c09f7c8c83435d42"
+    },
+    {
+      "path": "raw_art/posters/08_苍雷希露_主城海报_16x9.png",
+      "sha256": "d65aa5edb39bad01dec2769bea7a6bba176870d7cf97f5dec6857cc2664486b1"
+    },
+    {
+      "path": "raw_art/posters/09_离火凰姬_主城海报_16x9.png",
+      "sha256": "099599ded5be3b29f7e11083a93171216d44cae34da9c430a8bd33748500ab2c"
+    },
+    {
+      "path": "raw_art/posters/10_汐月瑶光_主城海报_16x9.png",
+      "sha256": "c3ed6f77876354051890325a011f7cfd85a9c7b25ab79296ae179127f321da4b"
+    },
+    {
+      "path": "raw_art/posters/11_赛琳娜暗冕_主城海报_16x9.png",
+      "sha256": "c45a845ad4a9d616d9a630940d77a250e6c184b34896dc5649c67df1ef9066f7"
+    },
+    {
+      "path": "raw_art/scenes/05_航线浮空群岛大地图_16x9.png",
+      "sha256": "a2145aef43ebd0bfeb5feee5d887723ea5240411724473100d6b6bb5b9f4fa77"
+    },
+    {
+      "path": "raw_art/scenes/06_第2章齿轮云巅战台_16x9.png",
+      "sha256": "87be4482fb7c53cc4a592b9d82715bb1aa0ac62561951dc7296181e256fe17f2"
+    },
+    {
+      "path": "raw_art/scenes/07_天城首领星穹祭坛战台_16x9.png",
+      "sha256": "af4982a423e6308e9c664d132bfb750d8f00fb0bd20702b9814daa8574042777"
+    },
+    {
+      "path": "raw_art/scenes/bg_battle_6v6浮空战台.png",
+      "sha256": "fffecb985fc17cd4245fbbf21359bb3c6812e2aceaf192095d3e76e25448fc13"
+    },
+    {
+      "path": "raw_art/scenes/bg_gacha_星穹召唤星门.png",
+      "sha256": "05452da0057c592547c177f868e7dad361526ac3bb3f627c32033252fa73d77c"
+    },
+    {
+      "path": "raw_art/scenes/bg_roster_alt_星穹圣殿备用.png",
+      "sha256": "72a639a7226df0fef4cf8a7a3b831fc9cb0f76e5a0a0b1fffdfe39e7decdee46"
+    },
+    {
+      "path": "raw_art/scenes/bg_roster_星灵养成舞台.png",
+      "sha256": "b90c97b178865d5b77b382bd8af2de310f14fed861e9bba55f92b83d2d479129"
+    },
+    {
+      "path": "raw_art/ui_sheets/sheet_01_基础按钮与进度条_原版.png",
+      "sha256": "402781b7be67fa5b686c806b7a5cc5ccddc925d576b9537b6f8565c777db8558"
+    },
+    {
+      "path": "raw_art/ui_sheets/sheet_02_四档品质框_R_SR_SSR_UR.png",
+      "sha256": "53b54533c7b1493a67003486c6fea3f276b757f52e42c8c387407aebaafd0f70"
+    },
+    {
+      "path": "raw_art/ui_sheets/sheet_03_核心货币与道具_9件套.png",
+      "sha256": "1eb9f69e8ab4778f9b67e828d9fb18df153f6952d98d2705f87048eed7c68fa8"
+    },
+    {
+      "path": "raw_art/ui_sheets/sheet_04_主城鎏金功能图标_9件套.png",
+      "sha256": "1234aaff2b7604e5e50c3442fbb0dccf3e44cacc58ea89e18b2c130a195745b4"
+    },
+    {
+      "path": "raw_art/ui_sheets/sheet_05_胜负徽章与洁净按钮页签_9件套.png",
+      "sha256": "7b6f9d9633a21780ca2f0dc4a6aa9857631d8d9c9fd68f3a7990cd49fd20bcd1"
+    },
+    {
+      "path": "raw_art/ui_sheets/sheet_06_四大星装_8件套_高清版.png",
+      "sha256": "2836d7d8503e6f9cccf37a338dca21f2872f18209dbfbaca6acab0ed98ca3328"
+    },
+    {
+      "path": "raw_art/ui_sheets/合图_4阵营与5技能共鸣纹章_纯黑底_3x3.png",
+      "sha256": "f393e0013af82c727c92d57478c9900b57f7fd43d0ff196adeff7096887707a6"
+    },
+    {
+      "path": "raw_art/vfx/00_通用普攻受击火花_3x3纯黑.png",
+      "sha256": "ac2ce9d40bf74a7b8e78323328fc41a51849343630147481507ff72ac8a2c1eb"
+    },
+    {
+      "path": "raw_art/vfx/01_幽冥墨姬_大招特效_3x3纯黑.png",
+      "sha256": "1c4ce483ddde4ef95dc78cf8cf87c0d9823e3a0a1f081a5ebeb31340dc6467af"
+    },
+    {
+      "path": "raw_art/vfx/02_冰灵霜华_大招特效_3x3纯黑.png",
+      "sha256": "5ace7906aa0dfe9f1b62be374c0e9a5fc1b9a66ec31fece83b5d0d377b745b61"
+    },
+    {
+      "path": "raw_art/vfx/03_凌波玉笛_大招特效_3x3纯黑.png",
+      "sha256": "bc16cb26998c3c33cc1b0776ece7a45a5b650d9eedadd2e89d58ec013868426f"
+    },
+    {
+      "path": "raw_art/vfx/04_艾莉娅圣翼_大招特效_3x3纯黑.png",
+      "sha256": "c8179a1e9cb7f59f554ddb4f9054b219d2811cba97e092e2b9e9b9fca5634140"
+    },
+    {
+      "path": "raw_art/vfx/05_薇尔星轨_大招特效_3x3纯黑.png",
+      "sha256": "ffcd87c9e7157ab4fde5a3b361144fd45841c286e2b6f170cbfb77bac55d324f"
+    },
+    {
+      "path": "raw_art/vfx/06_莉莉丝绯月_大招特效_3x3纯黑.png",
+      "sha256": "4a5bcacf285e9db7b19e88352de5734d0447df445c427b6e9944d42035b7491f"
+    },
+    {
+      "path": "raw_art/vfx/vfx_impact_crack_全屏黑白碎屏冲击裂纹.png",
+      "sha256": "8e441d53a7e57873d0ac3c7a489d496d7456b8b108c05088dd52c17fe8af2522"
+    },
+    {
+      "path": "raw_art/vfx/合图_4大护盾冰封与脚底法阵_纯黑底_2x2.png",
+      "sha256": "12ff87e083b17a5250da27b0246619bce8f6fd4ca58ef33770ab34abdc1a8a4f"
+    },
+    {
+      "path": "raw_art/vfx/合图_6系普攻飞行弹道_纯黑底_2x3.png",
+      "sha256": "9622519dd8b4beda48ac35863f3bbbfd6c22623b4fbe38018f5f89a91da8d5d0"
+    },
+    {
+      "path": "raw_art/videos/01_幽冥墨姬_动态看板_5s.mp4",
+      "sha256": "cc71052048ca2ca9903b80b47fd2466a400d2f3ccffe4288786d6700f90937d7"
+    },
+    {
+      "path": "raw_art/videos/01_幽冥墨姬_大招有声_3s.mp4",
+      "sha256": "c21ad9862519b4d5334c16638eccb832dbea428457dbdfc955fdc69356b7a1a6"
+    },
+    {
+      "path": "raw_art/videos/01_幽冥墨姬_战台全屏黑龙特效_3s.mp4",
+      "sha256": "3f84a8806705018dfd59d886743d0c0e9afac4a9f8cb75a11c77c94df1a2b07d"
+    },
+    {
+      "path": "raw_art/videos/02_冰灵霜华_动态看板_5s.mp4",
+      "sha256": "09e35b6ed3ebe870474655403648f72ad02eaf916e2aafa970c1d39d560e6313"
+    },
+    {
+      "path": "raw_art/videos/02_冰灵霜华_大招有声_3s.mp4",
+      "sha256": "24e6dfbc31e2a3c24f4463b34a905ec34c4ad71c58d18aa9304110de1462f090"
+    },
+    {
+      "path": "raw_art/videos/03_凌波玉笛_动态看板_5s.mp4",
+      "sha256": "bfcc3d2d4265e61ebacdc009459e93d141be524fe2416e812c5c056798d330e1"
+    },
+    {
+      "path": "raw_art/videos/03_凌波玉笛_大招有声_3s.mp4",
+      "sha256": "8ce693bbde0e2b8c3e9df1b4babb80f1cb2a7bc17ab1b66caceebb6dfc3970b0"
+    },
+    {
+      "path": "raw_art/videos/04_艾莉娅圣翼_动态看板_5s.mp4",
+      "sha256": "65b7fb99df45509adafdb2daf3ab66ef2bac5f6fdc2263ed0fa74846fd297b67"
+    },
+    {
+      "path": "raw_art/videos/04_艾莉娅圣翼_大招有声_3s.mp4",
+      "sha256": "e85d9ec84b19ecc1879373c2d10eae13e14a2b46b9814a37549290baa9c52204"
+    },
+    {
+      "path": "raw_art/videos/05_薇尔星轨_动态看板_5s.mp4",
+      "sha256": "10f35663edfbd7a380a34e341f525136e55731148afa483c2defea099d44bec9"
+    },
+    {
+      "path": "raw_art/videos/05_薇尔星轨_大招有声_3s.mp4",
+      "sha256": "3655748acdae0e94f87ac2189eac77f610576739c3e090554c70c59af251a82e"
+    },
+    {
+      "path": "raw_art/videos/06_莉莉丝绯月_动态看板_5s.mp4",
+      "sha256": "a93d2ed59c558cc7d18fde5ea9c6abc6601d0d5e93a43b83a5daa3ddd24776c7"
+    },
+    {
+      "path": "raw_art/videos/06_莉莉丝绯月_大招有声_3s.mp4",
+      "sha256": "6e944f73ad1753e0da72b925bf9f1c58c59b5be63669055e448c2b7e227c735c"
+    },
+    {
+      "path": "raw_art/videos/08_苍雷希露_动态看板_1080p_5s.mp4",
+      "sha256": "de8f1697e9b2d666b2c291bdbea60fa56b1967c013bbdf30e0d620156b79b5e8"
+    },
+    {
+      "path": "raw_art/videos/08_苍雷希露_大招有声_5s.mp4",
+      "sha256": "df59f0a7e39ee04108287df26a527f0f1b9a923e8c53f8710bdba45dae09186c"
+    },
+    {
+      "path": "raw_art/videos/08_苍雷希露_战台全屏万雷特效_3s.mp4",
+      "sha256": "39bb7787a064cbd184fcb271a6d019761dfe9df4d1c98f83c85b686dac67b23e"
+    },
+    {
+      "path": "raw_art/videos/_archive/旧版叹气_05_薇尔星轨_动态看板_5s.mp4",
+      "sha256": "482b8f574a7342d40ecaa73e025a61b9117da9fa802e704f1325297a5a5a2621"
+    },
+    {
+      "path": "raw_art/weapons/合图_6把本命专武_纯黑底.png",
+      "sha256": "904e0ccc36ec6519d6ff752c1c8746641f51ca46ed862f5f008ac6ad9f63fd38"
+    },
+    {
+      "path": "raw_art/weapons/新五女神专武合图_2x3_h07至h11与星典.png",
+      "sha256": "fea3b37c9b7ef333ed4adad112a5d859249054162fe4e701e1c67c5e236d1070"
+    },
+    {
+      "path": "参考图/1_主角冰灵女修_Q版小人.png",
+      "sha256": "f9d8b28cdb7ffd0b98d4001804cce6b368948661e3644f02116a34b4dadc2e14"
+    },
+    {
+      "path": "参考图/1_主角冰灵女修_原画立绘.png",
+      "sha256": "347ce46c6d22390dd717b0f160083bc0a6c115e49ae1451bb7fcd25221f62b26"
+    },
+    {
+      "path": "参考图/2_幽冥墨姬_Q版小人.png",
+      "sha256": "2d755db7e15ada571e96c59fdd5548ca843c605ec7f496825f19dbbe76f6ac77"
+    },
+    {
+      "path": "参考图/2_幽冥墨姬_原画立绘.png",
+      "sha256": "c3e922cda34cee02985f26df3e2b9971a14490d88c18b7dde5b1eafbf86d482c"
+    },
+    {
+      "path": "参考图/3_凌波玉笛_Q版小人.png",
+      "sha256": "df7bf54115a2ea1e242022800de855cb1af89b4275276f2b9803b8f330cc2459"
+    },
+    {
+      "path": "验收/1080p-formation.png",
+      "sha256": "9638cb74f80eef26ea05c4cc2d67a91bb879e923464e8f6989abbfd27d8f987b"
+    },
+    {
+      "path": "验收/1080p-lobby.png",
+      "sha256": "be679e0e3710301ffa9454890da7325657b57a33c43b125768a6b5c2c177467f"
+    },
+    {
+      "path": "验收/1080p-result.png",
+      "sha256": "237fd5c8c7a32b960b6cbb83b9a7ff5a870655eaf4dc0a45777cd22c8dd95152"
+    },
+    {
+      "path": "验收/1080p-summon.png",
+      "sha256": "2fc9844196cb8faeb3280e4e4010f67eaa44c5a48d5972ebe26ec857a3ea4e33"
+    },
+    {
+      "path": "验收/4k-formation.png",
+      "sha256": "ec8b5d78d51278f60bf9f4f443ba6ba8d33b2a41c85bddf474887eee3c8a3f67"
+    },
+    {
+      "path": "验收/4k-lobby.png",
+      "sha256": "b00b5cf5f079da8e1a2cc334fdb1f090bcb69dfe8ede6d4b89e9334e3b186a83"
+    },
+    {
+      "path": "验收/4k-result.png",
+      "sha256": "a58d2ab1dfc8c7a553ac8446b0de8509d415c8ffebb097eed4f5711c2493850d"
+    },
+    {
+      "path": "验收/4k-summon.png",
+      "sha256": "e954234ab93a637c7b1289ab67a634bd377d81ac0ba93718d41fc4a8787c6368"
+    },
+    {
+      "path": "验收/desktop-bag-gear.png",
+      "sha256": "9d2358f334942fc09cb8c0b1061bef72841a7e7972d85af0526595fb61c10ea8"
+    },
+    {
+      "path": "验收/desktop-bag-items.png",
+      "sha256": "6762938c833d3f9901d7f96b5faadcfc12d2b147c3580edb39e5207613148a33"
+    },
+    {
+      "path": "验收/desktop-battle-leads.png",
+      "sha256": "c50b6e1f2a44f0c00d3a1bbd2b13828a90ceb6fc8c7be2f2e9e965336a7a7ab0"
+    },
+    {
+      "path": "验收/desktop-battle.png",
+      "sha256": "85398fe05b81d53da8a4c5cb116609bc1cbf0aa2d7756f709d10ae9798782d72"
+    },
+    {
+      "path": "验收/desktop-campaign.png",
+      "sha256": "c5eac975d214a5f2de11f7e8aa275b12f4130e3a3e53ba3e2b57a45a754c0c02"
+    },
+    {
+      "path": "验收/desktop-cutin-h06.png",
+      "sha256": "e325570f6ebb2c4c2436fd674e5abee6b18150be1a15f2469fe4a1afd42f0e9a"
+    },
+    {
+      "path": "验收/desktop-cutin.png",
+      "sha256": "b1cbd1d98f84de11968bb18916696bda07d0d2ed4660696cbbedd13b74de2ce6"
+    },
+    {
+      "path": "验收/desktop-defeat.png",
+      "sha256": "bcdf8f00bebae09358757d8d9652ff27c9dd1e87f38e030074254622e5764c84"
+    },
+    {
+      "path": "验收/desktop-formation.png",
+      "sha256": "35e5da39cc832e8948b1ca011c3945f4df2e906525ee0361c1e8a1823baef60f"
+    },
+    {
+      "path": "验收/desktop-gacha.png",
+      "sha256": "aa237725fdd4c2567d9be24110a1f226418fa738a46512154c02897d8c6dc11f"
+    },
+    {
+      "path": "验收/desktop-gear-ur.png",
+      "sha256": "1195adca6c8d88ea91d60e4e90397c01c75dc4aa62f09e1a08acf9ba5163b9b7"
+    },
+    {
+      "path": "验收/desktop-gear.png",
+      "sha256": "fd09cc6d76682e3a41785dcc271d3cdbf52a95219643dc6c8deaae6ba5ccf762"
+    },
+    {
+      "path": "验收/desktop-impact.png",
+      "sha256": "74f0fe9e2ebc1d3e758b6638ec9a9e8a2586ed508a3ceb38f04716bd01f54dcf"
+    },
+    {
+      "path": "验收/desktop-lobby-h04.png",
+      "sha256": "adc0b591868b3acd2709c7988b80403d6ea935d3ea35b67c58032030f68adae4"
+    },
+    {
+      "path": "验收/desktop-lobby-h05.png",
+      "sha256": "45f8392209ff7d5a16ae48f011796fbdc6d6fd55397073c9f6f2b47f39408e1d"
+    },
+    {
+      "path": "验收/desktop-lobby-h06.png",
+      "sha256": "0dee20ad6c9eca0b27af32db2ec111376c0d2f70ad6739c6e0ab0437733ba129"
+    },
+    {
+      "path": "验收/desktop-lobby.png",
+      "sha256": "59d03d7b2f798bc99e8052a7a7192bc60487bf87f98f17b5e899e4d628142b16"
+    },
+    {
+      "path": "验收/desktop-result.png",
+      "sha256": "751d2592a606db6fd6b00b9717c2dba25f98a8cbe9c440228396353a520a7ee3"
+    },
+    {
+      "path": "验收/desktop-roster.png",
+      "sha256": "9885be957bb1322582908583ae5238411f8b96b1534cc3bda8d9c9f628071745"
+    },
+    {
+      "path": "验收/desktop-summon-illustrated.png",
+      "sha256": "5d38b8a693a325ffe1c1bb366185ce459aae2e02c11d43caba7307d158a19a63"
+    },
+    {
+      "path": "验收/desktop-summon.png",
+      "sha256": "d5c67a6ed86a9240d9355690e68b67af5d43a0844586d76658b2b2117ed1c2d3"
+    },
+    {
+      "path": "验收/desktop-trials-arena.png",
+      "sha256": "9db1f6bd14e6e04f7a2ed0acedbf165e1649488d8bfaec0b458f203c0253b2ca"
+    },
+    {
+      "path": "验收/desktop-trials-boss.png",
+      "sha256": "db5fcadda43004a8e7d79b88a9a2d5f532fdde3b5698f52d045be84b8440269a"
+    },
+    {
+      "path": "验收/desktop-trials.png",
+      "sha256": "80bf66b1a63a802b5c6db9b6e2c3aa595d1099bd3d375c83fb778f1123fe5d34"
+    },
+    {
+      "path": "验收/desktop-weapon-h01.png",
+      "sha256": "6f64eb9f19aaffb3f004ab19d81bbf47e5eab7c9e6fefb0d964b7e90b2dd4dce"
+    },
+    {
+      "path": "验收/desktop-weapon-h04.png",
+      "sha256": "993b58d74815136bec1b06b96c233f527e8c1b08e5babfeed3f6c88608843e15"
+    },
+    {
+      "path": "验收/desktop-weapon-h05.png",
+      "sha256": "112a25ae699a7d4cb8ed34f85ae53abe069a028a13234ecb84caf234f3ab53cc"
+    },
+    {
+      "path": "验收/desktop-weapon-h06.png",
+      "sha256": "e21104a579f2236c1abaa619e74fa7df1527a209e2ddd5dd75592da64502d9f6"
+    },
+    {
+      "path": "验收/file-battle-leads.png",
+      "sha256": "342e4cc13040c79e13a18ce7f7ad34ded9e9ac9ed5e26c7f93a24c1213215077"
+    },
+    {
+      "path": "验收/file-cutin-h04.png",
+      "sha256": "844c1de601d2499df19db097166c8e9fb88a274f5607996167abc12ca483fa7f"
+    },
+    {
+      "path": "验收/file-cutin-h05.png",
+      "sha256": "0ac240da190e778d399067fc93697c2c2f53c9bf6ad50eb60e939141fd51b92e"
+    },
+    {
+      "path": "验收/file-formation.png",
+      "sha256": "03528f2ed1697401bb352d58882efd630f77d0cb7be3181a98fd38c6430c670a"
+    },
+    {
+      "path": "验收/file-lobby.png",
+      "sha256": "7f48be6e5c295ac96bd9acf71f77716638a032f21f039ecae6ba18d5cb4d6cb8"
+    },
+    {
+      "path": "验收/file-result.png",
+      "sha256": "4b8bd1d71c9749e0456c86cf301f7e769e06c02150c3518b5202ddb0e489e7aa"
+    },
+    {
+      "path": "验收/file-summon.png",
+      "sha256": "aa3cc3617e318d337f6b8c261a7e54f0cdb4006183b5bc72fd24066a03d34315"
+    },
+    {
+      "path": "验收/mobile-battle.png",
+      "sha256": "bb9336029e69705d17f2bdf0807a9588d2baf89e0a8b4e812587cfaa6ed7f1ea"
+    },
+    {
+      "path": "验收/mobile-campaign.png",
+      "sha256": "4f0b6bd78809bac6d8faaf88b4f90fa7f529b4ab05ada4ed70654be581408469"
+    },
+    {
+      "path": "验收/mobile-formation.png",
+      "sha256": "bcdbf1c9e1d47e36a32029ecf392cd05e920f3aaa567f31221f2ed606d32b6f4"
+    },
+    {
+      "path": "验收/mobile-gacha.png",
+      "sha256": "d864b7b9fffd64671c499c2121d32bd7f65f8b44b31690daf0d24b7189495db6"
+    },
+    {
+      "path": "验收/mobile-lobby-h05.png",
+      "sha256": "d3a2eafd37d8e841dbe1c35ca7f111aa4917389ced3597f9b5744631699497c5"
+    },
+    {
+      "path": "验收/mobile-lobby.png",
+      "sha256": "2552b7d2605bf3ac4ca82f5c37ca996be10a6553f0c87251639de15e2c279f87"
+    },
+    {
+      "path": "验收/mobile-result.png",
+      "sha256": "27e50fc7043dd375abcca8a3279695cad6009e1aa0f0ce86cbe57e28678c226b"
+    },
+    {
+      "path": "验收/mobile-roster.png",
+      "sha256": "4e816b953ee55e368f8d773b9a14fbb432d74927efd606b10efc238e369bad21"
+    },
+    {
+      "path": "验收/mobile-summon-illustrated.png",
+      "sha256": "419f1a55301b748e0893c69b06554ff242f5dc2b062bf093771f0c26fb98427e"
+    },
+    {
+      "path": "验收/mobile-summon.png",
+      "sha256": "56026aa3ea3f8f61809eac0e86c84deba8ee286374bc15824dcf29a779111b67"
+    },
+    {
+      "path": "验收/mobile-trials.png",
+      "sha256": "fe6e6576a11ec7ce745046ba1e4f97f43e974221d4c1e725cc0b7037d4d47006"
+    },
+    {
+      "path": "验收/mobile-weapon-h04.png",
+      "sha256": "91c87ef84974275b510f71473c97fc9af0513f7fb4a1d0028dc1f5257e772378"
+    },
+    {
+      "path": "验收/qhd-formation.png",
+      "sha256": "37a86cd394aaf34ecaa3effe3c24c8afc6b325566f660dd5caebdc3feb7218ad"
+    },
+    {
+      "path": "验收/qhd-lobby.png",
+      "sha256": "ceb7a931768daece0c604ba589a3c5066aa95bf4880e9f5b52a0d2e6b1980dbe"
+    },
+    {
+      "path": "验收/qhd-result.png",
+      "sha256": "a3ba4d6294b03e55e8864dcf1c6cc62be634113289b54a63915bc80f8ac62f95"
+    },
+    {
+      "path": "验收/qhd-summon.png",
+      "sha256": "60048582a62f505a78427537044ed21a491ac0ce68fc870eb2a54b19e01027e7"
+    },
+    {
+      "path": "验收/retina-formation.png",
+      "sha256": "83bed434bc7daa5892c65dc1a210ef8c89bf46e19676ef02854a0c2a82fb908b"
+    },
+    {
+      "path": "验收/retina-lobby.png",
+      "sha256": "c0ae378313d29cf8eb023e4054770ed7ccfcc9100e058ef80480c7aef77f9b96"
+    },
+    {
+      "path": "验收/retina-result.png",
+      "sha256": "298f155cd8839609b91e9416b105fa48a80cba264f6159ca80a84de8605e99f1"
+    },
+    {
+      "path": "验收/retina-summon.png",
+      "sha256": "d75dfaa574562b5f54ff6a7756cbc4612a477f72252337cdfc0ba955a44e2107"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/canvas-cinema-fallback.png",
+      "sha256": "311e8411f7849e6b2963ed8ec9efa2d61120bc1b49817f1695dd2cd80df81aa6"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-domain-h01.png",
+      "sha256": "370f6034566c7d5839219a027a363fe336de5c8f7e788dba2017ec8ab124404b"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-domain-h02.png",
+      "sha256": "85caa8cfdd5015be18483fc04677ca12da637dca6e140c32fac68d32b6fa985b"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-domain-h08.png",
+      "sha256": "396800e66294cd1ef4b48d0cfe5dc13c52d76e0e9493e42597cbe569c8dc344c"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-impact-enemy.png",
+      "sha256": "eaabb94f5588466878359ea8f7a30fb5351974dc0471c9a0300d7acc73a8d652"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-impact.png",
+      "sha256": "216b82c6db66caea759fb2bac9c67b366816846a3f8082da4b44ab5c70655e92"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-shatter-enter.png",
+      "sha256": "564b9eca6e23acb5e33228cf8ae3bb8b018cf0d688444a0d477fbde2e979fcd0"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-shatter-exit.png",
+      "sha256": "ad45698946a8f6e962ab06b5f99a4433ca245e8be0ba41c2b7f9d7ef5418bfbb"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-weapon-h07.png",
+      "sha256": "61f8f80c5f4bec28d94f76f97095ab745414f7cbce925726fd8ff53401b5f705"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-weapon-h08.png",
+      "sha256": "2c96c7162fd4b8600e787a1265dcbe5e6d99d1924a3d1664c6f9b8e2a4b06518"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-weapon-h09.png",
+      "sha256": "25663ca1befff96971771762b12fa64b4a2d4dd80908867d795308e338f6a5b5"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-weapon-h10.png",
+      "sha256": "262f7ce3043080bf091903c17e3ad5c22f2a272e7a69857eedaff47dcf3b13bf"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/desktop-cinema-weapon-h11.png",
+      "sha256": "c8e860d60266442720dc257ab93fcf0d0057a3a81be82348869f1ca36b7415c3"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/file-cinema-domain-h08.png",
+      "sha256": "6d6d2653978a67dfe418f3883b835c7e7afe5fd3859aaf8f58a935e93f9b69da"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/file-cinema-impact.png",
+      "sha256": "15e83592bd25d0092ed51b5316a0a8c3524cca981c9fbc1d3dc2dc326806327e"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/file-cinema-weapon-h11.png",
+      "sha256": "36ccb969e710488b4571d68a62613b9e8488a13b6d6663430e521d3a4320ad1d"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/file-mobile-cinema-domain-h11.png",
+      "sha256": "0ccac949e148f4569e171eb1f1137b524c0131d14d08632657b549aa628b2d59"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/mobile-cinema-cutin-h01.png",
+      "sha256": "5745dab78888fa6f31772b113f7ead636a0b5995b6b81869ad767ef2992ec529"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/mobile-cinema-domain-h02.png",
+      "sha256": "d9c7557d360f5c57c9f4500cd851a5efc2a43c2c8f53a7e09dab871e85a6676b"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/mobile-cinema-impact.png",
+      "sha256": "75a0c84e0e6e427cbd1f50a3063124346862f8352eecaac38c109e94795afae3"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/mobile-cinema-weapon-h08.png",
+      "sha256": "6116e4fa4700a88b9fcfd6a3bdd3cef0b434094aa3266e2afd65ba1aad715229"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/power-cinema-fallback.png",
+      "sha256": "adb6b4a1995d84f91cf7fa1ec8039048938be3d26ba455130c80063feb4c539c"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/retina-cinema-domain-h08.png",
+      "sha256": "75606b0ba34c64bcb9f105101271042f987bde60c67924bf0b10bcc053c4e7e6"
+    },
+    {
+      "path": "验收/专属领域与碎屏大招升级/retina-cinema-impact.png",
+      "sha256": "6aa76f8ace4951bb6ee1fda5d3c02316f997aef6ccbfe59287ca26101977839f"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-boot-loading.png",
+      "sha256": "104d0947caed3b420c002cf40e10768fd3a3e6641a073651a5141d46a4e26b51"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-ember-tail.png",
+      "sha256": "07fa4bcd72bed91d897e3542a917b0816a3fca635ea95b44368dd79dc514f9c2"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-h01-atk.png",
+      "sha256": "c263b2d2baff3026143d1563acddce05c5261ce19fa31788a4510e0de5f85519"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-h01-hurt.png",
+      "sha256": "bbbfad57c43494379de0eb26b3edc172bb51305fc3904eaa377c4615dbaea32c"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-h01-idle.png",
+      "sha256": "bce9c520eabeaf916fa63cb23de11a8b72c5f47e5410db19238804e83e4c02f6"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-h01-windup.png",
+      "sha256": "690f4731901e7254ae2c61118031c200002c49d5434c95f4b93c980bd7c08364"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-h02-atk.png",
+      "sha256": "42e9fe96c445f6817e31323eb4ce6b2bcdcfaa0d482d553d1db07d7038091930"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-h02-hurt.png",
+      "sha256": "8a6c58280b4b6cc172202e9f1854f89c1dfc4d332e0897620f64b2313424b450"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-h02-idle.png",
+      "sha256": "cd084fcb5c36ca5b53c9763fa065a5b913cdd6b1a02780397a966b894685b0ad"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-h02-windup.png",
+      "sha256": "a7058c3f04428cf42d5746eabea54b75b690b8171a6961d9da388c2d811524a3"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-landing.png",
+      "sha256": "609fdbf9147cad9023c2042a389f6a3358557e2fb8f71a338ce9577379441088"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-light-altar.png",
+      "sha256": "5f6b9728be21dfb7df9f18bf6d3e8349f14e848c74c880646692c16a2d091233"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-light-cloud.png",
+      "sha256": "732b3ea601f5998ec23481406f9993344708a03e9c3a80760b9318eaa56f0bf2"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-light-port.png",
+      "sha256": "fc79aec6f571c499942e7f7b2c2d96f304017f8cafcce64af9d620a7962d0187"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-lobby-still.png",
+      "sha256": "d97a029ee08b0c722317a1429c5887f4a835a31736a7cdb6f6d0e22bcecf255b"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/desktop-actor-shadow-air.png",
+      "sha256": "e5eb5cf56704426bc77e7d3628af228d7358e326d9fa1cdacf8abffeddef5388"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/mobile-actor-light-altar.png",
+      "sha256": "a965f67627e4ae989faa3ed8b0cd60fdb8b3362fca6257483a6483e193761120"
+    },
+    {
+      "path": "验收/人物立体化与四态动作升级/mobile-actor-roster.png",
+      "sha256": "aa65be99559e892a8c7a63f67b0f28e9dd16a7d39f7b49e3c1f71ba22c3ccb2b"
+    },
+    {
+      "path": "验收/动态视频接入/desktop-h03-lobby-fallback.png",
+      "sha256": "05da18d418b2313a2b46907a5b76679d875e21709e9ffa0de2b8672e4b2660bb"
+    },
+    {
+      "path": "验收/动态视频接入/desktop-lobby-video.png",
+      "sha256": "6799af1498f2f03a7e2695149ae582f9c8d9378ec5e4a3a5dfba582013547d5a"
+    },
+    {
+      "path": "验收/动态视频接入/desktop-normal-victory.png",
+      "sha256": "34fdb5c8be1a5aec8914d5af718e04d3701567d74cdf42d0ddfb124f7b331f90"
+    },
+    {
+      "path": "验收/动态视频接入/desktop-ultimate-h01.png",
+      "sha256": "74a88d0270df474dd10a36157008633a80130999efa6e632c89b417ff551586a"
+    },
+    {
+      "path": "验收/动态视频接入/file-normal-victory.png",
+      "sha256": "a3fc905f4d64e8d0af4699ee613877ca885728adbc3e7e3e5c7c0b6e6685fafc"
+    },
+    {
+      "path": "验收/动态视频接入/file-ultimate-h06.png",
+      "sha256": "49cfd38febcf73f3161c1a4e940d66c3d58e2e7cbe1617a8a3a5bd23a1418258"
+    },
+    {
+      "path": "验收/动态视频接入/mobile-normal-victory.png",
+      "sha256": "9e838bdf8fcc4977bc5c8fa35732cbcf6c78e2a9bceb72b4d95e4e94c0011c1b"
+    },
+    {
+      "path": "验收/动态视频接入/mobile-ultimate-h04.png",
+      "sha256": "9d5dca628075b69190505efcb005d1de37ba9948d84b0aa509c65710dc45eeb2"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-cutin-h06.png",
+      "sha256": "ecf8934a64bed3e5b6172ec153b922f2feb125b8409e2981ab8b778ee4115da0"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-full-vfx-h02.png",
+      "sha256": "710bf671b57e762b864e5f7d401f6c4b9444f28848209c4516e599d40182b05b"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-full-vfx-h05.png",
+      "sha256": "ac3053af57b0c0aef036388c3be0ea0d4d6f0b682b56f4f3af5c7c5c691d1032"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-full-vfx-h06.png",
+      "sha256": "91889dda3895a7b1c800d4ef18d0e9a95ab31ffc63415d5edcb81b7241190c8e"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-full-vfx-spark.png",
+      "sha256": "7a7689af1b9cff64156314057b7c9c4ad5d713ba6612f9e7baf8c2a04794eb78"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-hud-basic-flight.png",
+      "sha256": "4f41691c5536502623b02205244650a221dc9d3268604793d497ab26c8013b29"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-hud-combo-finish.png",
+      "sha256": "c7a673cc8fbcce466522a46101de6d536642889d979560d94777e1ba5313ad6a"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-hud-heal-ring.png",
+      "sha256": "6e57ff5447e2c62527a76c01e75f72f757f77eaf7fa742c07aa183d705f875d5"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-hud-hud-ready.png",
+      "sha256": "3fb3201bdbda747bb55552f5a260396ee13a85c19ebf8e504592831782b33fef"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-hud-shield.png",
+      "sha256": "cd9ec2b3f0790037703247241dd22477b0ba9179015f7baa5605b351b1432afa"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/desktop-result.png",
+      "sha256": "101995b63534c9f65661eb61929e4164e11fcb1b4b6113dbea3c6a27b0d50d44"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/file-hud-basic-flight.png",
+      "sha256": "4cf4a95da08401a88c97cd3a4decf98490b22d9d7f76b18ae6f98eab5d911fbf"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/file-hud-combo-finish.png",
+      "sha256": "582e0f440079aa48d590592eeae0ee0a00ff38434fbd16c0b34e64532dd38827"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/file-hud-heal-ring.png",
+      "sha256": "b67c198375957d4a64154ba20ad0049e2ca40e452fe0481cef06804669f105e6"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/file-hud-hud-ready.png",
+      "sha256": "1a232accc8a98e77a1281414798139db3b42dce8d9d554dab81bf07660f0c833"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/file-result.png",
+      "sha256": "1b207f3855de0e7e411fcd2ccb9da84eaf9196d8ee61e37a48e4d7651551c4cf"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/mobile-hud-basic-flight.png",
+      "sha256": "77bfddd2b4aa16a4ff6f34574eb0e42a82cd77f7996f97ef2f785b142d521ca3"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/mobile-hud-combo-finish.png",
+      "sha256": "2009dc9721111925eadfac2ae0c11f23718e465f068142651093aa8021095239"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/mobile-hud-heal-ring.png",
+      "sha256": "63d7d63540ee293cbea282ee06a90fbead269a68219e33c744fae55c0dec991f"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/mobile-hud-hud-ready.png",
+      "sha256": "d35bf1698abb415f4c1eae0d9e92bce5e1c19466b0ba5c49a17f3400059c027d"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/mobile-hud-shield.png",
+      "sha256": "b461054a6d0ebde61734a5891b5c34688bacaf59e8cc5858066bdbb2d82cf062"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/mobile-result.png",
+      "sha256": "890d4eb8426219719fc69f83ae51fda1b6d9e240335911808b229c0984cec785"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/retina-hud-combo-finish.png",
+      "sha256": "74ef7763e907d4b5b9a3153432b2d0f5d474c84ce04cd7df3afb95a56374856c"
+    },
+    {
+      "path": "验收/战斗HUD与打击感/retina-hud-hud-ready.png",
+      "sha256": "795f581a636cefaac456edf14af79e77c21cbc3b3ab0115cd2df02819f8f9d0c"
+    },
+    {
+      "path": "验收/战斗视觉微调/desktop-hud-combo-finish.png",
+      "sha256": "782481c548f9827a3cfc11af3f95a0c15316d1c1dd580f27cd3e5547c6434dd0"
+    },
+    {
+      "path": "验收/战斗视觉微调/desktop-hud-heal-ring.png",
+      "sha256": "b7423635fe3f6135a647d1e97f55cf79aa1d2f54ef1e4a10bd991678a8f3b559"
+    },
+    {
+      "path": "验收/战斗视觉微调/desktop-hud-hud-ready.png",
+      "sha256": "67d23b2a0313185895648d9d9eb9c202e51a3e81bac05fe4b0acb5eb716bcf75"
+    },
+    {
+      "path": "验收/战斗视觉微调/desktop-hud-right-edge.png",
+      "sha256": "8702e5294f6e1179620bbc8f1c0247c249d14d4752004c35f7acf7450d63e3fd"
+    },
+    {
+      "path": "验收/战斗视觉微调/desktop-hud-shield.png",
+      "sha256": "7fa82c6e25a05139c9c565b52030e95b348417c723047977c7b3bc5fc5990481"
+    },
+    {
+      "path": "验收/战斗视觉微调/file-hud-combo-finish.png",
+      "sha256": "c98f6cafffd8321d3672e934aad15313b49e22e8d72a226e0de92c944fad54ad"
+    },
+    {
+      "path": "验收/战斗视觉微调/file-hud-heal-ring.png",
+      "sha256": "d03891764fa236feabd59e2aab6938ff3f6463bec20f897bdc24a4f939e791af"
+    },
+    {
+      "path": "验收/战斗视觉微调/file-hud-hud-ready.png",
+      "sha256": "5c6c43f5f471adaca41b4db8e361de49238bd0a54fd3372dce0fb7620b95c810"
+    },
+    {
+      "path": "验收/战斗视觉微调/file-hud-right-edge.png",
+      "sha256": "c45e1167a998c65a06bbaf25fddf5ddcaec9f49e62dfa20d20d512fdb2100c25"
+    },
+    {
+      "path": "验收/战斗视觉微调/file-hud-shield.png",
+      "sha256": "94aa304a1c1ced040ad1dc295569187ca11005e0e3f62c3705a990d59ad8a87c"
+    },
+    {
+      "path": "验收/战斗视觉微调/mobile-hud-heal-ring.png",
+      "sha256": "5a1b9e01fa0581d30d99ce4291653d5cdf465fbbb95382694937a770fcb31308"
+    },
+    {
+      "path": "验收/战斗视觉微调/mobile-hud-hud-ready.png",
+      "sha256": "ad8e9623ef1c53edc5110dc50f0554ff2432f50c506bb78cb01bceda5cb247c0"
+    },
+    {
+      "path": "验收/战斗视觉微调/mobile-hud-right-edge.png",
+      "sha256": "40b2b126ec7e3940452934f257e4a48f68764d1cb07294e890fd055b9d5f598f"
+    },
+    {
+      "path": "验收/战斗视觉微调/retina-hud-combo-finish.png",
+      "sha256": "3ed938ebad26351959b3bbd79c3d7351f77e2c8c6d57c7683e293dbed2cf3372"
+    },
+    {
+      "path": "验收/战斗视觉微调/retina-hud-right-edge.png",
+      "sha256": "ec78a34d199a4e50c67c96ad0f9de78729acd08bb7a87b076d50e8570cb98ab4"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/canvas-after-fallback.png",
+      "sha256": "b1a88a6ceab400378b1f350058e0fb234f1e382507bfe7f7058e43cce33bb556"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-after-boss-flash.png",
+      "sha256": "f83c4ee1ee3637bc8b5e49f2cb440b9afcb651f38661dfcefd866ab29362c662"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-after-ember-tail.png",
+      "sha256": "09ea1e0502be2ac9c5499f758f3806c7226721058dac94a3efda757004e33458"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-after-h10-heal-total.png",
+      "sha256": "569737c9e907d251ca475c5fadb1180714e74acdf36087abb04cc949d2d24dfb"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-after-shockwave-split-same-frame-unfiltered.png",
+      "sha256": "f2b06bd1c03ed7399f45b8ffeeb72d34941ee3b1000afb6fcdb11b463f31c2e7"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-after-shockwave-split.png",
+      "sha256": "a77917ef9a14bacae95a73e97dad85aa633a690c346999d64cda1963e7f1a39b"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-before-boss-flash.png",
+      "sha256": "cb1e779d91ea6e779bb7bae1cb7be10737baa5d46670a36b738c0b3bc13a0ace"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-before-ember-tail.png",
+      "sha256": "a99a29c62bf124b0a8756dec60bbee99edb615be294179978682bf91ef24c4ba"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-before-h10-heal-total.png",
+      "sha256": "7d52b4e5e2bcacaf31db03a1b4f0f22d396e3c9a016587898c50ef0551000cf6"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/desktop-before-shockwave-split.png",
+      "sha256": "c90e15df8329ee111e1a9f79e04e13333913abb065145695c37f67ae76ac8bff"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/file-after-shockwave-split.png",
+      "sha256": "65f74b30d8ddb3ae895c81f9b6061602ec2b4f59967e3e8a03c831cd0e379bc4"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/mobile-after-mobile-roster-art.png",
+      "sha256": "882c7120da4fa77b60567fd39ba7b340c624b0ab020380fd23b33b9a83c5d946"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/mobile-after-shockwave-split.png",
+      "sha256": "752e9d1543e1167337f45fc0377bcb29def4e54dea6179a5a911537f0c70a283"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/mobile-before-mobile-roster-art.png",
+      "sha256": "9ffb3555662c3a52bac28a19e1dcbd8de5fadc6e39a8c40e3f69d7902a3ff422"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/mobile-before-shockwave-split.png",
+      "sha256": "95b32b1dc5ba6c56acd6f1f58139793e20484bf6a5b0331d9e06773d66618de3"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/power-after-fallback.png",
+      "sha256": "723bbc2654b85f2fe6fde94ca073a07efdc0bbbd7e2d909ee9dd47bc427edd17"
+    },
+    {
+      "path": "验收/特效丝滑与着色器升级/retina-after-shockwave-split.png",
+      "sha256": "268838770ab7acdd660447139c5778a7150572e6026af5058626a6aa656ed38e"
+    },
+    {
+      "path": "验收/第3波统一重制/4k-battle-leads.png",
+      "sha256": "b3034829c3f7ac519794540ccb9f36f02cb182dcf6286e96f3494e18c9045acc"
+    },
+    {
+      "path": "验收/第3波统一重制/avatar-round-and-square-fixture.png",
+      "sha256": "5c1a9c2d9516fd140059ede6f0e356981f9631f35dad0dda8b891b964d41514a"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-battle-leads.png",
+      "sha256": "b7a834b1d3a2580d8e512c79c2d3f7d1f41cf8ad54880dc887f99c5f2ad7ea16"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-cutin-h06.png",
+      "sha256": "78d6ad553a7569158b763f46276f795d26efc82b330aa30b5075938497104ef8"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-formation-leads.png",
+      "sha256": "b212a7632c8378a29a5bd2bf6eb21f600875dc348434d25aaf8f066e89905627"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-lobby-h04.png",
+      "sha256": "83c414e4228f749c137f0d5ebd658de7c595594bc2b5834cce1906ac712e20f4"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-lobby-h05.png",
+      "sha256": "ae3f3c70b67e66f06d204f06b3c0c74881827b39aa2885d66f00ce9af4af8cbd"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-lobby-h06.png",
+      "sha256": "73abbac936f5d1951e087a56b9dd4bbf33a1e0bef9952359039eec45eaa633e1"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-result.png",
+      "sha256": "e4d6205d7fad69a26b0f858ac2cf974f77b25d07a6ec354aa6f1be8b7bca893d"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-roster-chibi-h04.png",
+      "sha256": "6d9f5afb910a31102d1b49c93beeda56d53b2b29dfac89ebf4b27308195f1174"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-roster-chibi-h05.png",
+      "sha256": "d0114f1ce45a060f432b5c364d7fa0c9a4f8ded8088d4033232d71591a7ec5e2"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-roster-chibi-h06.png",
+      "sha256": "184fcd355554a538f16a824b23e3207ac8dc6f37d73c5e4d06f2ee1a473e12a0"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-roster-poster-h04.png",
+      "sha256": "09c7cd7225ebb3724f6b3ae1d8c2f34a349edb91b30c57bf38358c912351ebb9"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-roster-poster-h05.png",
+      "sha256": "b02d6fbf5db611071ef1e3597e282b93d81e7ff4d0225818f637b5d44983cf21"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-roster-poster-h06.png",
+      "sha256": "6f049cf915460e61a3a21077ee22f9d8930c50d49c0d75b6c8e1a22813b9c0fd"
+    },
+    {
+      "path": "验收/第3波统一重制/desktop-summon-illustrated.png",
+      "sha256": "8c431573947ad7831cead44c65a4dc92810e6ad27448ad571cdf16950428beeb"
+    },
+    {
+      "path": "验收/第3波统一重制/file-battle-leads.png",
+      "sha256": "2b84f55d32fc67781108b7c7893f856252cc90f2c9f208cd344db81c0cdee1d6"
+    },
+    {
+      "path": "验收/第3波统一重制/file-cutin-h06.png",
+      "sha256": "9c66a18df20d6d83dd78e2e809d0fc42845277be436a38e34b878aae56f01d09"
+    },
+    {
+      "path": "验收/第3波统一重制/mobile-battle-leads.png",
+      "sha256": "67b92499b2be363d68e9b8e911f309ad516e26ddf02e2850b12e0e9aed637e7c"
+    },
+    {
+      "path": "验收/第3波统一重制/mobile-formation-leads.png",
+      "sha256": "ea4a617e8d6bf1e43fffc94c6ef193ebe218e01d1a218d2fba291ee3ee762918"
+    },
+    {
+      "path": "验收/第3波统一重制/mobile-lobby-h05.png",
+      "sha256": "1933ba11104d1ba8c7190fda1b614e21080d1ff7dcb83627443f3e8ba978a6dc"
+    },
+    {
+      "path": "验收/第3波统一重制/mobile-result.png",
+      "sha256": "08d66c4ec7c833a2fdcca587f48bba7eddf84cf07140616af6a6097f7afae9d5"
+    },
+    {
+      "path": "验收/第3波统一重制/mobile-roster-chibi-h05.png",
+      "sha256": "052b31317443b7995fbe77735880d0258ae3e2b2122366144827d562d8e05515"
+    },
+    {
+      "path": "验收/第3波统一重制/mobile-summon-illustrated.png",
+      "sha256": "e658b874d79f1aabe023f23e37539c1ac999d6602781bc435454320233035790"
+    },
+    {
+      "path": "验收/第3波统一重制/retina-battle-leads.png",
+      "sha256": "80082e100cffb978b74d8c3a2e9fb3668b94b9076c59bbb137c178806d13693f"
+    },
+    {
+      "path": "验收/第3波统一重制/retina-lobby-h06.png",
+      "sha256": "9ca3df5b8dfaea1ecd7b61d1bef3ee285c1c752d712694b8438d2ea96b996060"
+    },
+    {
+      "path": "验收/第3波统一重制/retina-roster-chibi-h05.png",
+      "sha256": "7b50177ee3bf4b4b61329cceb8a34e36edaff81eb87b4462d1eb410b292e2d89"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-battle.png",
+      "sha256": "8ae8a02d21b65c18bfc5bb8efe91f301ff1742a960dfb163fdf697d34b2861c4"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-formation.png",
+      "sha256": "9b0478555d30dcdc424635c26cd3cd1339692cd92e84b33d64eb5933b08ace6c"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-lobby.png",
+      "sha256": "9802bca130d8169594cfab5479f02ae332e65201724849f4a0c59e8cefdc6282"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-roster.png",
+      "sha256": "d1c2e156409cda5480972894110526aae8172bef2c8f2ebf2800fb9e4e25103c"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-wave4-battle-boss.png",
+      "sha256": "25efc2d7deb8bced68b77be041d6b91ec92d67ce947f022773cc8783969da910"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-wave4-battle-ch2.png",
+      "sha256": "48c3a91ff086d046ac5abf58a0011b91975743e4f0e4fb385bcf3203832279af"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-wave4-codex.png",
+      "sha256": "d96cd48e2de6f2fffd17aff7686a3293d86a924840aad2a2110260a56faaf627"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-wave4-skills.png",
+      "sha256": "c91b72657faa92ede9f585469319054b5c6e7e6cb4bb658e62121ce770df2a4f"
+    },
+    {
+      "path": "验收/第4波大作氛围/desktop-wave4-worldmap.png",
+      "sha256": "8f47443020e8e587c179668e70156386cb31207d1c2bc914242bd9ab4e6f8d56"
+    },
+    {
+      "path": "验收/第4波大作氛围/file-battle.png",
+      "sha256": "973d6151675b33b5c2194170e8cfd2937c2a7e5bf26c4c33f5d0fb8771a5ad48"
+    },
+    {
+      "path": "验收/第4波大作氛围/file-formation.png",
+      "sha256": "f1af8688b759d8500a250ec28da4ebab5f92aceffdff416ddb61e301144066b0"
+    },
+    {
+      "path": "验收/第4波大作氛围/file-lobby.png",
+      "sha256": "b3c6ad56b74619121c681db0fcca9f0582ab90c1300a06db1efc59c05b6100fa"
+    },
+    {
+      "path": "验收/第4波大作氛围/file-wave4-battle-boss.png",
+      "sha256": "02e35e2005e388041ce0dca1c09b1ce1837d7edf31a563e3e148a13f8f6e00d3"
+    },
+    {
+      "path": "验收/第4波大作氛围/file-wave4-battle-ch2.png",
+      "sha256": "e061b1d1f6f4ca842d4bf70f2f8db158009a2d664b000c17d6b63412b4d436a8"
+    },
+    {
+      "path": "验收/第4波大作氛围/file-wave4-codex.png",
+      "sha256": "37620edb56bdb6de71ea47e666628557abd623cbc7721cb7c273e5cdfa689ea8"
+    },
+    {
+      "path": "验收/第4波大作氛围/file-wave4-skills.png",
+      "sha256": "9b2569117688d4356b859a2d969849863380accb622b039b23ccf41b209f29c1"
+    },
+    {
+      "path": "验收/第4波大作氛围/file-wave4-worldmap.png",
+      "sha256": "8f47443020e8e587c179668e70156386cb31207d1c2bc914242bd9ab4e6f8d56"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-battle.png",
+      "sha256": "4975a316c963dd1a37e43371c051f921c77c60a003276c42549c4090dbfeefed"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-formation.png",
+      "sha256": "5ed57efe4534be778faf932841a61d14650ce93183277400c632597dce9511c3"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-lobby.png",
+      "sha256": "92c374472f2ae093dc5f0142a4a7cc917b2726260fd699d505bc998b6597e9e4"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-roster.png",
+      "sha256": "202d4061dd804df5966a33aebde0fb04bde150dc93a67596b6f4e692e1a14d43"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-wave4-battle-boss.png",
+      "sha256": "e1952f2675890c2a3aea944c09375284b8f03a7a06ff97304ccdda94d2efa3fb"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-wave4-battle-ch2.png",
+      "sha256": "7a067fe7344a0e1e20a7fabc7a5c4c830af63a5ed737dd183e30ab1d3e8dc824"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-wave4-codex.png",
+      "sha256": "1c40c0e8881873162ac7ab9090de87a5ac24bed714b20c10a454898b24e0ce4b"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-wave4-skills.png",
+      "sha256": "3922093ff4a034e9a34a0ccc9d0151e74af74c2454b4319499eaa18d34120b6e"
+    },
+    {
+      "path": "验收/第4波大作氛围/mobile-wave4-worldmap.png",
+      "sha256": "65994b59b92a75cb9232612377221efbea1ea0f32bf9e6667d12c93d01f29af9"
+    },
+    {
+      "path": "验收/第4波大作氛围/retina-wave4-worldmap.png",
+      "sha256": "07444f12ab8a6465a4e1954c13e35b31b23368c03361bcdf4da20f9d78545915"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/desktop-full-vfx-h01.png",
+      "sha256": "05dc8a2940146390a3c1d1c22a27418b57e7db37c245e6c285e77f51003272fd"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/desktop-full-vfx-h02.png",
+      "sha256": "cd54c28184c8889c0c485065a07beaadc4c8260bff00405a49de13504a3bf9af"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/desktop-full-vfx-h03.png",
+      "sha256": "c89d994be1a4f3c79ae8310fcf6533317632c34802a407010ea247aa7329b63f"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/desktop-full-vfx-h04.png",
+      "sha256": "fb89a79c552f647ed6f94cf441f862641275f67770b199d48aa3614905552546"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/desktop-full-vfx-h05.png",
+      "sha256": "4e484f6183306ff5efb2ec687880881fb0721aa6ec9bc43874d22314427e1678"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/desktop-full-vfx-h06.png",
+      "sha256": "1cdcc02815a1ff4abe8dd0ba50a86ae3f9efd528dcb8b4df72428e9d4084d729"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/desktop-full-vfx-spark.png",
+      "sha256": "139bc9a7c2ff5fcba49852ebc52718728cdb101fdde50fae4d6e8955a99af155"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/desktop-wave5-impact-h06.png",
+      "sha256": "983beca57e637d6ee21de04aa959a6ec804b0b7d5d070bd344b86507bb36daeb"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/file-full-vfx-h01.png",
+      "sha256": "b9689ed315cc95ed0c3110d6f73d2575876bc00ee567f7ebbd83c7b4dac3dd4b"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/file-full-vfx-h02.png",
+      "sha256": "54ad9a476cd89d3d9f2373db2a0182a4b1a2839dd7d58b012be4f3cca54e8c6c"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/file-full-vfx-h03.png",
+      "sha256": "ece06c81dd14c230a67b2d2d2eed8e80f676fe1470a69ecbc586e2352d293296"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/file-full-vfx-h04.png",
+      "sha256": "21bfeabee83a53d1334c90ec64b8fb73bee1e6116025cd90ee4420157dd54249"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/file-full-vfx-h05.png",
+      "sha256": "c6ba929644efca27887a718fccb7e385236debce0f2c33d077a30d9d254e4003"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/file-full-vfx-h06.png",
+      "sha256": "7363491a5a300d5f35e0371910e313edcea88b8817fa8145676bdbb22e2eba25"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/file-full-vfx-spark.png",
+      "sha256": "5837dcff7a64faef7ef8653fd6d7050e5ab6c02b0bb268e7bc2424d6d41660dd"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/file-wave5-impact-h06.png",
+      "sha256": "06c3e9481ba0e30f0377068048ea331ebdd302fad63dffd7e1e49479057f28d6"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/mobile-full-vfx-h01.png",
+      "sha256": "2c640f55ec3101f00e8ba08a0e3054d978eb5e3754fb26644c7d8135b35a0fe5"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/mobile-full-vfx-h02.png",
+      "sha256": "75b7c1a5c5623504a9f357ab3cea7a0b6883bcb763c01aefd3208f7c53e84acd"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/mobile-full-vfx-h03.png",
+      "sha256": "29472babd0a16e6fe95551dcd78f86db26e2c1f0c8d9e2f1d507e9d13acae71b"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/mobile-full-vfx-h04.png",
+      "sha256": "5ae34de86b30cdb7228d844eb7ea8ae6d2065279cf0d05259aa997dc25b0c6b8"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/mobile-full-vfx-h05.png",
+      "sha256": "d5e8f7e8275139cbdf074b573103fb7df9bb5f343cb274b096058e880b9e4f96"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/mobile-full-vfx-h06.png",
+      "sha256": "776750382a7e81dca009e3f5cca327b573ccd4bade246238211ef37f922089ee"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/mobile-full-vfx-spark.png",
+      "sha256": "a06071baa77c1255b87c7d9cd895cb90a7fc1b60ee98c18055b3848b857a758d"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/mobile-wave5-impact-h06.png",
+      "sha256": "eb774f5694fe6f952d8faaef844a8ef87614198b9c6defc8c1bac8106a5a41c7"
+    },
+    {
+      "path": "验收/第5波全套手绘特效/retina-wave5-impact-h06.png",
+      "sha256": "235bb6933caf6dce287398126f293d1c4e0b49f70c91037252de45929b38e4a7"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/desktop-cutin-h06.png",
+      "sha256": "362975bf0feed1e025d95f8aa1127dab70dae1d34d4e72373de785d21940e132"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/desktop-wave5-impact-h06.png",
+      "sha256": "a46d74848173cae472f468ef0cf20ac34cd34231ffeb667f6a8341bfeae56c84"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/desktop-wave5-skip-impact-h06.png",
+      "sha256": "5fe0363bd79c41f8ccfb7bf43000217fb69d10ee6e37dc75ddcdddc32b2161a9"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/file-chapter1-h06-impact.png",
+      "sha256": "8b316edebd242d8f1a91628e121938eba26751880a3b3e2888c649533595e7f1"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/file-cutin-h06.png",
+      "sha256": "ecf8934a64bed3e5b6172ec153b922f2feb125b8409e2981ab8b778ee4115da0"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/file-wave5-impact-h06.png",
+      "sha256": "f3c25c326a77b434d25cbf19d56cbb34e24258cf359e1e7db5a88ababb64c0f6"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/file-wave5-skip-impact-h06.png",
+      "sha256": "8710d038feda2447700cb2e03444f9005cfac07fc97199042ffd0b1ea6a7f67b"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/mobile-wave5-impact-h06.png",
+      "sha256": "e632e6b3a0b1a56469ab1c081d27f68ef4ba11bef4b68cbbbfd6fff77dce3237"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/mobile-wave5-skip-impact-h06.png",
+      "sha256": "79c9e7ad1bcdf6b3e05020ea30c3b295c22a5cff6b7b6bc1d16e9d9e0b00d779"
+    },
+    {
+      "path": "验收/第5波猩红月蚀/retina-wave5-impact-h06.png",
+      "sha256": "2631c14f26bf23e50012a3d2e5fdf84a7ec802c0f331d3ef36b951862e5c0daa"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-boss.png",
+      "sha256": "3a37ce17a88207f7255451a581ce6b665ca946718b703ae84ffb8bcf74ac3d36"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-campaign-10-boss.png",
+      "sha256": "7b96a4b954b8773873fc91f76c9e457bf36e90689bdcc1fd90a71ab67a666e71"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-campaign-5-boss.png",
+      "sha256": "f446261686d9294147e78af122748347180d8e6a26f9ec154070bd344f38f100"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-codex.png",
+      "sha256": "3c6cbc34e72aede0854ce35d136aa0b545687ba158eda9f622188217c51aa507"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-h07-impact.png",
+      "sha256": "55afeac53932592bd10988671f0d4a35f4c766e39cec8672726c1ac15dcb5b20"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-h08-impact.png",
+      "sha256": "b626907ecc4b09d8fa5c4b9b27fc2a5e6b10549f7fcb751992a0feee1208d49a"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-h08-ult.png",
+      "sha256": "bc2f10373379a8a330077526803843dd85fc1320d471df05f0d8e99d766ca619"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-h09-impact.png",
+      "sha256": "49bad5a03e44f1e43fc10d44b98752cb33fedf43417fdb154c66b102b4868fec"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-h10-impact.png",
+      "sha256": "65c8ada04e4b5f3532f4821375e4e53fc210b63764c0ae88a739214200c5d4a3"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-h11-impact.png",
+      "sha256": "13b99caa06a5ef67f820276ba5561835b0fbe8961deef65a925f5e75915ba01e"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-lobby-h07.png",
+      "sha256": "90deb4d37639516685bc035b7835c8ec33e18f5c99ba5615bab42ca6c49e3e3f"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-lobby-h08.png",
+      "sha256": "ccfa6cd086627bfe3690b563d7ddbca97950726c317749206ab2369065812292"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-lobby-h09.png",
+      "sha256": "546d0a6fcfdfc8727afa7866da83f24dd2295a8dff683a4aeaa39437459b1f64"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-lobby-h10.png",
+      "sha256": "1752f560db2992633d77c49556aef20520c668483f08e1566dfee5ffaebbd6e0"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-lobby-h11.png",
+      "sha256": "d0837c5003ec867b7fa98a525cc73e399ca2e976743bab4e2d9ad77f7cf9f366"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-roster.png",
+      "sha256": "b054a5e39ad3f5ae9ee785e8bdd14fdb509f365c263d8a39e28cdd69775f0605"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-route-enemies.png",
+      "sha256": "e9f6567aaef32c74a9a9fe8392e96451a1037e4640cf0265d4e710a4e60aec36"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/desktop-wave6-tower-5-boss.png",
+      "sha256": "fe833ba81e53e1e44566ed96c667f74c7cdeb7a5738db87a0f034d3ad4d8bb75"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/file-wave6-boss.png",
+      "sha256": "cffa013f2e469ab19a357e7b30e397ff0e44d3517d0e89d6159135efa877c69e"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/file-wave6-codex.png",
+      "sha256": "a1f734709804de0fe71e5a0843cd9593b0fe59fc8d3a46f034c61caca4b45e93"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/file-wave6-h08-impact.png",
+      "sha256": "5480e964e58e3efe7746fb6a18a76ca160ce32b4dc28b571a9065fad0025eaf0"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/file-wave6-h08-ult.png",
+      "sha256": "bedd0f27bdad2df67d3691648d4680dfcfcbfbcd2fd2ebf79795675fc20ba999"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/file-wave6-lobby-h08.png",
+      "sha256": "c654486c3d6d3b2e310119a4df1ca4d5e9e14cb19c3de8b8d4af2b4805fbe8a5"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/file-wave6-route-enemies.png",
+      "sha256": "63d98ce9edae9dee15cbca826336359c0d6864f516f5c932851d3a9bc12c1003"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/mobile-wave6-boss.png",
+      "sha256": "0a42bdce32ebc2db6d8f742f5589f11197f36b5ea98d271b02ff53910764c42a"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/mobile-wave6-codex.png",
+      "sha256": "7c7cf011ea30687e138b072692005d80a8c004c06bdebd1a5694016b7eb25e88"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/mobile-wave6-h08-impact.png",
+      "sha256": "6f7030a89dac1e6eda42e9c908b7b3534e158320b46f5809eb525d8abcbb65e0"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/mobile-wave6-h08-ult.png",
+      "sha256": "1438ebc57e69466fd669b40aad76284e90ca6ebd4af9c09c663a4861b588ba2a"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/mobile-wave6-lobby-h08.png",
+      "sha256": "ba893ce4972c79b06152cc1ebe5a0924e157fb431f8fc4ba19d3f93e583c81fa"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/mobile-wave6-roster.png",
+      "sha256": "85abc73d523ccb0bbb89d4b2ee2c80320f652a0f11d16acc44f1f17d7f07b4ed"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/mobile-wave6-route-enemies.png",
+      "sha256": "dc2d35e9e7185164e664bfb120c2068fcef0b63dd61b0fe18be1b29cfdee81f2"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/retina-wave6-boss.png",
+      "sha256": "dd7df242558ba3d6220ab88bf4ce9f98ed612588e41c2473eea3f3d3c73917db"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/retina-wave6-codex.png",
+      "sha256": "ffe35bb6e253718720392948703a72ab40c71b238c655261d3704769cd2bab5b"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/retina-wave6-h08-impact.png",
+      "sha256": "344e02486f5de48f6fe6e4a14c9dba73202081189205befb85878e5a9e65639f"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/retina-wave6-h08-ult.png",
+      "sha256": "6c6298734c1597727baddba40d35ff62416f4f85ee4f3b06f796ecb516e16cda"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/retina-wave6-lobby-h08.png",
+      "sha256": "2f48a302209129fc0f7ef14870134d2b45626ee9e81de494dedcf7da775f308b"
+    },
+    {
+      "path": "验收/第6波11星灵与专属BOSS/retina-wave6-route-enemies.png",
+      "sha256": "25100ed0ef714538f2008025d536524d44ec2934696b01e5e6749b8eacbbc414"
+    },
+    {
+      "path": "验收/音频系统接入/file-battle-control.png",
+      "sha256": "e37af84476d5f45f206af5379b4379e93ff1f531e032ab0f9996cc82032f7cd9"
+    },
+    {
+      "path": "验收/音频系统接入/file-settings.png",
+      "sha256": "cbea55ebd4ea2afb271faabba58f286bb0b000965066ddd42f05459424f064d7"
+    },
+    {
+      "path": "验收/音频系统接入/http-battle-control.png",
+      "sha256": "59852f585dfd694039a838431dc12a22b8d5340043b8fb6a30b6225d93ec10f0"
+    },
+    {
+      "path": "验收/音频系统接入/http-settings.png",
+      "sha256": "5e42afc5184cc58f180af3bf59cfa5eca6db891c5c1ebddf1f4c43712e22cc6e"
+    },
+    {
+      "path": "验收/音频系统接入/settings-audio-mobile.png",
+      "sha256": "bd585155aba60647efdf2b658b4d4a3a5bf26ad2eba3b408d9eadc4bb652685e"
+    }
+  ]
+}

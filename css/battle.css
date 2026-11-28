@@ -33,6 +33,10 @@ body:has(.battle-page.spotlight) #bleed:has(.battle-domain[data-phase="active"])
 @keyframes domain-retreat {from{opacity:1}to{opacity:0}}
 @keyframes domain-drift {from{transform:scale(1)}to{transform:scale(1.05)}}
 .battle-stage {overflow:hidden; isolation:isolate; z-index:0;}
+.battle-vfx-decoder {
+  position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
+  opacity:.001; pointer-events:none; z-index:-1;
+}
 .battle-dom-units {z-index:0;}
 .battle-stage canvas {position:absolute; left:0; top:0; width:100%; height:100%; display:block; z-index:1;}
 .battle-file-unit {position:absolute; width:0; height:0; pointer-events:none;}
@@ -205,42 +209,6 @@ body:has(.battle-page.spotlight) #bleed:has(.battle-domain[data-phase="active"])
   position:absolute; inset:0; z-index:5; overflow:hidden; pointer-events:none;
 }
 .battle-cut-content {position:absolute;inset:0;animation:battle-cut-in .85s both;}
-.battle-cutin.cine-glass .battle-cut-content {animation:none;}
-.battle-shatter {
-  position:absolute; inset:0; z-index:6; overflow:hidden; pointer-events:none; isolation:isolate;
-  animation:mirror-close var(--mirror-time) linear both;
-}
-.battle-shatter[data-direction="exit"] {animation-name:mirror-open;}
-.battle-shatter>i {
-  position:absolute; inset:0; clip-path:var(--pane); transform-origin:63.5% 50%;
-  background:linear-gradient(116deg,#8397b2 12%,#f8fbff 40%,#7c8aa1 49%,#fff9e8 70%,#566688 95%);
-  animation:pane-close var(--mirror-time) cubic-bezier(.14,.78,.38,1) both;
-}
-.battle-shatter>i::before {
-  content:""; position:absolute; inset:0; clip-path:var(--pane); transform:scale(.985);
-  transform-origin:63.5% 50%;
-  background-image:linear-gradient(115deg,#070b1a9e 5%,#2c437485 44%,#8da7cd2e 47%,#111a36a6 75%),var(--mirror-art);
-  background-position:center; background-size:cover;
-}
-.battle-shatter[data-direction="exit"]>i {animation-name:pane-open; animation-timing-function:cubic-bezier(.22,.68,.48,1);}
-.battle-shatter-crack {
-  position:absolute; inset:0; mix-blend-mode:screen;
-  background:var(--impact-crack) center/100% 100% no-repeat;
-  animation:mirror-fracture var(--mirror-time) ease-out both;
-}
-.battle-shatter[data-direction="exit"] .battle-shatter-crack {animation-name:mirror-fracture-out;}
-@keyframes pane-close {
-  from{transform:translate(var(--pane-x),var(--pane-y)) rotate(var(--pane-angle)) scale(1.06)}
-  84%,to{transform:none}
-}
-@keyframes pane-open {
-  from{transform:none}
-  to{transform:translate(var(--pane-x),var(--pane-y)) rotate(var(--pane-angle)) scale(1.11)}
-}
-@keyframes mirror-close {from{opacity:0}39%,84%{opacity:.98}to{opacity:0}}
-@keyframes mirror-open {from{opacity:.98}38%{opacity:.76}to{opacity:0}}
-@keyframes mirror-fracture {from{opacity:0}72%,85%{opacity:.37}to{opacity:.29}}
-@keyframes mirror-fracture-out {from{opacity:.48}to{opacity:0}}
 .battle-cutin.has-poster .battle-cut-content {background:#0c0b20;}
 .battle-cut-image {
   position:absolute;inset:2.4% -.3% -2.4%;background:var(--cut-image) center top/cover no-repeat;

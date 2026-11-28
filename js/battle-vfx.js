@@ -4,28 +4,36 @@
   const cells=3, cell=418, size=cells*cell;
   const supportOpacity=.65;
   const emberTailMs=500;
-  const impactFrameMs=70;
-  const crackKey='vfx_impact_crack';
+  const videoDefaults={duration:2850,beats:[260,1080,1920]};
   const vfxVideoSpecs={
-    h01:{duration:2850,beats:[260,1080,1920],fadeIn:80,fadeOut:420},
-    h08:{duration:2850,beats:[200,1020,1860],fadeIn:80,fadeOut:420}
+    h01:{...videoDefaults,earlyFinish:true},
+    h08:{...videoDefaults,beats:[200,1020,1860]}
   };
+  const videoKeyVertex=`
+    attribute vec2 aVertexPosition, aTextureCoord;
+    uniform mat3 translationMatrix, projectionMatrix;
+    varying mediump vec2 vUV;
+    void main() {
+      vec3 position = projectionMatrix * translationMatrix * vec3(aVertexPosition, 1.0);
+      gl_Position = vec4(position.xy, 0.0, 1.0);
+      vUV = aTextureCoord;
+    }`;
   const videoKeyFragment=`
     precision mediump float;
-    varying vec2 vTextureCoord;
-    uniform sampler2D uSampler;
-    uniform vec4 inputSize, outputFrame;
-    uniform float uAlpha, uFeather;
+    varying mediump vec2 vUV;
+    uniform sampler2D uFrame;
+    uniform vec2 uCrop;
+    uniform float uAlpha, uMirror;
     void main() {
-      vec4 c = texture2D(uSampler, vTextureCoord);
-      float peak = max(c.r, max(c.g, c.b));
-      float mask = smoothstep(0.032, 0.16, peak);
-      float nx = clamp((vTextureCoord.x * inputSize.x) / max(1.0, outputFrame.z), 0.0, 1.0);
-      float edge = smoothstep(0.0, uFeather, nx) * smoothstep(1.0, 1.0 - uFeather, nx);
-      float a = clamp((peak - 0.032) / 0.968, 0.0, 1.0) * mask;
-      vec3 rgb = max(c.rgb - vec3(0.024), 0.0) * 1.12 * mask;
-      float fade = edge * uAlpha;
-      gl_FragColor = vec4(rgb * fade, a * fade);
+      vec2 uv = 0.5 + (vUV - 0.5) * uCrop;
+      uv.x = mix(uv.x, 1.0 - uv.x, uMirror);
+      vec3 sampleColor = texture2D(uFrame, uv).rgb;
+      float peak = max(sampleColor.r, max(sampleColor.g, sampleColor.b));
+      float key = smoothstep(0.035, 0.10, peak);
+      float edge = smoothstep(0.0, 0.04, vUV.x) * smoothstep(0.0, 0.04, 1.0 - vUV.x);
+      vec3 light = clamp((sampleColor - 0.028) * 1.09, 0.0, 1.0);
+      float coverage = max(light.r, max(light.g, light.b));
+      gl_FragColor = vec4(light, coverage) * (key * edge * uAlpha);
     }`;
   const emberColors={ink:0xc18aff,ice:0x8fefff,water:0x69ebcd,light:0xffdf87,
     gear:0xffae61,blood:0xff698f,thunder:0x75bfff,fire:0xff8449};
@@ -125,10 +133,11 @@
   }
 
   class BattleVfx {
-    constructor(layer,renderer,nodes,groundLayer,screenLayer){
+    constructor(layer,renderer,nodes,groundLayer,screenLayer,host){
       this.layer=layer;
       this.groundLayer=groundLayer || layer;
       this.screenLayer=screenLayer;
+      this.host=host;
       this.renderer=renderer;
       this.nodes=nodes;
       this.units=Object.values(nodes);
@@ -139,23 +148,27 @@
       this.flights=new Set();
       this.statuses=new Map();
       this.last=null;
-      this.screenImpact=null;
       this.vfxVideos=new Map();
       this.activeVideo=null;
-      this.videoSprite=null;
-      this.videoFilter=null;
       this.rotationSeed=Math.floor(performance.now()*1000)>>>0;
     }
     preloadVideoFx(id){
-      if(!this.screenLayer || location.protocol==='file:' || this.vfxVideos.has(id))return;
+      // Chromium gives file: video an opaque origin for WebGL. Use the
+      // embedded nine-cell atlas there, without starting a doomed upload.
+      if(!this.screenLayer || !this.host || location.protocol==='file:' || this.vfxVideos.has(id))return;
       const src=Sky.art.vfxVideo?.(id);
       if(!src)return;
       const video=document.createElement('video');
       video.defaultMuted=video.muted=video.playsInline=true;
       video.preload='auto';
-      video.crossOrigin='anonymous';
-      const entry={id,src,video,failed:false,base:null,texture:null};
+      video.className='battle-vfx-decoder';
+      video.setAttribute('aria-hidden','true');
+      video.disablePictureInPicture=true;
+      const entry={id,video,failed:false};
       video.addEventListener('error',()=>{entry.failed=true;});
+      // Keep a real layout box behind the Pixi canvas. Leaving the decoder
+      // detached or display:none can starve video presentation callbacks.
+      this.host.append(video);
       video.src=src;
       video.load();
       this.vfxVideos.set(id,entry);
@@ -167,8 +180,9 @@
         const layout=Sky.art.battleVfx(key);
         if(layout)pending.push(this.load(key,layout));
       }
-      for(const key of new Set([...statuses,...heroes.map(id=>'proj_'+(variants[id]?.projectile || id))]))
-        if(Sky.art.battleArt(key))pending.push(this.load(key,null));
+      if(this.screenLayer)
+        for(const key of new Set([...statuses,...heroes.map(id=>'proj_'+(variants[id]?.projectile || id))]))
+          if(Sky.art.battleArt(key))pending.push(this.load(key,null));
       for(const id of new Set(heroes))this.preloadVideoFx(id);
       return Promise.all(pending);
     }
@@ -182,7 +196,7 @@
         const {canvas,bounds}=await lightCanvas(url,!!layout);
         if(this.disposed)return;
         base=new P.BaseTexture(canvas,{mipmap:P.MIPMAP_MODES.OFF,scaleMode:P.SCALE_MODES.LINEAR});
-        this.renderer.texture.bind(base);
+        this.renderer?.texture.bind(base);
         const source=offline?'embedded':'png';
         if(!layout){
           const texture=new P.Texture(base);
@@ -239,13 +253,13 @@
       layer.addChild(sprite,next);
       return entry;
     }
-    plan(action,clock){
+    plan(action,clock,speed=1){
       const actor=this.nodes[action.actor],variant=variants[actor.heroId];
       const donor=this.atlases.get(variant?.atlas || actor.heroId);
       if(!donor)return null;
       const atlas=variant ? {...donor,key:actor.heroId,artKey:donor.key,tint:variant.tint,
         layout:{...donor.layout,...variant.layout}} : donor;
-      const {kind,mode,impactFrame,frameMs,stagger,scale,groupScale,alpha=1,groupAlpha=.86,impactHold=0}=atlas.layout;
+      const {kind,impactFrame,frameMs,stagger}=atlas.layout;
       const targets=new Map();
       action.hits.forEach((hit,index)=>{
         const target=this.nodes[hit.target];
@@ -254,22 +268,21 @@
       });
       if(!targets.size)return null;
       const firstHit=targets.keys().next().value;
-      const lastIndex=[...targets.keys()].at(-1);
       const videoEntry=this.vfxVideos.get(actor.heroId);
-      const spec=vfxVideoSpecs[actor.heroId];
-      if(videoEntry && spec && !videoEntry.failed && videoEntry.video.readyState>=3 && videoEntry.video.videoWidth>0){
+      const spec=vfxVideoSpecs[actor.heroId] || videoDefaults;
+      if(videoEntry && !videoEntry.failed && videoEntry.video.readyState>=2 && !videoEntry.video.seeking){
         const hitIndices=[...targets.keys()];
         const beats=spec.beats;
         const hitTimeMap=new Map();
-        if(hitIndices.length===1){
+        if(spec.earlyFinish && hitIndices.length<=beats.length){
+          hitIndices.forEach((index,i)=>hitTimeMap.set(index,beats[i]));
+        }else if(hitIndices.length===1){
           hitTimeMap.set(hitIndices[0],beats[beats.length-1]);
-        }else if(hitIndices.length===beats.length){
-          hitIndices.forEach((idx,i)=>hitTimeMap.set(idx,beats[i]));
         }else{
-          const first=beats[0],last=beats[beats.length-1];
-          hitIndices.forEach((idx,i)=>{
-            const t=i/(hitIndices.length-1);
-            hitTimeMap.set(idx,Math.round(first+(last-first)*t));
+          hitIndices.forEach((index,i)=>{
+            const t=i*(beats.length-1)/(hitIndices.length-1);
+            const before=Math.floor(t), after=Math.ceil(t);
+            hitTimeMap.set(index,Math.round(beats[before]+(beats[after]-beats[before])*(t-before)));
           });
         }
         let prevHit=beats[0];
@@ -277,8 +290,17 @@
           if(hitTimeMap.has(index)){prevHit=hitTimeMap.get(index);return prevHit;}
           return prevHit+(hit.kind==='heal'?108:36);
         });
-        this.playVideoFx(videoEntry,actor.side==='enemy',clock,spec);
-        return {due,duration:spec.duration,firstHit,byHit:new Map(),targets,videoVfx:actor.heroId};
+        const plan={due,duration:spec.duration,firstHit,byHit:new Map(),targets,videoVfx:actor.heroId};
+        const live=this.playVideoFx(videoEntry,actor.side==='enemy',clock,spec,speed);
+        if(live){
+          live.fallback=(time,elapsed)=>{
+            const remaining=new Map([...targets].filter(([index])=>!live.completed.has(index)));
+            // Keep every assigned beat. Only its presentation changes after a
+            // failed or stalled upload.
+            this.planAtlas(action,time-elapsed,atlas,{...plan,targets:remaining},time);
+          };
+          return plan;
+        }
       }
       const windup=impactFrame*frameMs;
       let attackNumber=0,lastHit=windup;
@@ -286,92 +308,147 @@
         if(targets.has(index))lastHit=windup+attackNumber++*stagger;
         return targets.has(index) ? lastHit : lastHit+(hit.kind==='heal'?108:36);
       });
-      let duration=due.at(-1)+245;
-      const byHit=new Map();
+      return this.planAtlas(action,clock,atlas,{due,duration:due.at(-1)+245,firstHit,byHit:new Map(),targets});
+    }
+    planAtlas(action,clock,atlas,plan,minClock=-Infinity){
+      const {mode,impactFrame,frameMs,scale,groupScale,alpha=1,groupAlpha=.86,impactHold=0}=atlas.layout;
+      const {due,byHit,targets}=plan;
+      const firstHit=targets.keys().next().value;
+      const lastIndex=[...targets.keys()].at(-1);
+      const windup=impactFrame*frameMs;
       const add=(index,role,target,keys,magnification,alpha)=>{
         const finisher=index===lastIndex && role!=='group';
         const entry=this.create(atlas,{actor:action.actor,target,targets:keys,role,hitIndex:index,finisher,
-          due:due[index],start:clock+due[index]-windup,scale:magnification,alpha});
+          due:due[index],start:Math.max(minClock,clock+due[index]-windup),scale:magnification,alpha});
         // Start one shower during the final flare, then carry it past the whole cast.
-        entry.emberPending=finisher;
+        entry.emberPending=finisher && !!this.screenLayer;
         if(!byHit.has(index))byHit.set(index,[]);
         byHit.get(index).push(entry);
-        duration=Math.max(duration,due[index]+(atlas.frames.length-impactFrame)*frameMs+impactHold);
+        plan.duration=Math.max(plan.duration,due[index]+(atlas.frames.length-impactFrame)*frameMs+impactHold);
       };
       if(mode==='single'){
         for(const [index,target] of targets)add(index,mode,target,null,scale,index===lastIndex?alpha:alpha*.75);
       }
       else{
-        if(mode==='group')add(firstHit,'group',null,[...new Set(targets.values())],groupScale,groupAlpha);
+        if(mode==='group' && firstHit!==undefined)
+          add(firstHit,'group',null,[...new Set(targets.values())],groupScale,groupAlpha);
         for(const [index,target] of targets)add(index,mode==='projectile'?'projectile':'target',target,null,scale,alpha);
       }
-      return {due,duration,firstHit,byHit,targets};
+      return plan;
     }
-    playVideoFx(entry,mirror,clock,spec){
+    playVideoFx(entry,mirror,clock,spec,speed){
       this.stopVideoFx();
       const {video}=entry;
+      if(!video.videoWidth || !video.videoHeight || video.currentTime>.04)return null;
+      let resource,texture,geometry,shader,mesh;
       try{
-        if(!entry.texture){
-          const resource=new P.VideoResource(video,{autoPlay:false,autoLoad:true,updateFPS:0});
-          entry.base=new P.BaseTexture(resource,{mipmap:P.MIPMAP_MODES.OFF,scaleMode:P.SCALE_MODES.LINEAR});
-          if(video.videoWidth && video.videoHeight)entry.base.setRealSize(video.videoWidth,video.videoHeight);
-          entry.texture=new P.Texture(entry.base);
+        // The generic image resource uploads HTMLVideoElement directly
+        // without relying on Pixi's shared video ticker or readiness events.
+        resource=new P.BaseImageResource(video);
+        const base=new P.BaseTexture(resource,{mipmap:P.MIPMAP_MODES.OFF,scaleMode:P.SCALE_MODES.LINEAR});
+        texture=new P.Texture(base);
+        this.renderer.texture.bind(base);
+        geometry=new P.Geometry()
+          .addAttribute('aVertexPosition',[0,0,1,0,1,1,0,1],2)
+          .addAttribute('aTextureCoord',[0,0,1,0,1,1,0,1],2)
+          .addIndex([0,1,2,0,2,3]);
+        shader=P.Shader.from(videoKeyVertex,videoKeyFragment,{
+          uFrame:texture,uCrop:new Float32Array([1,1]),uAlpha:0,uMirror:mirror?1:0
+        });
+        mesh=new P.Mesh(geometry,shader);
+        mesh.eventMode='none';
+        mesh.visible=false;
+        this.screenLayer.addChild(mesh);
+        const session={entry,video,mirror,spec,heroId:entry.id,resource,texture,geometry,shader,mesh,
+          clock,start:performance.now(),lastFrameAt:null,mediaTime:0,firstMediaTime:null,pendingTime:null,
+          framesUploaded:0,alpha:0,completed:new Set(),failed:false};
+        this.activeVideo=session;
+        if(video.requestVideoFrameCallback){
+          const present=(now,frame)=>{
+            if(this.activeVideo!==session)return;
+            session.pendingTime=frame.mediaTime;
+            session.callback=video.requestVideoFrameCallback(present);
+          };
+          session.callback=video.requestVideoFrameCallback(present);
         }
-        if(!this.videoFilter){
-          this.videoFilter=new P.Filter(undefined,videoKeyFragment,{uAlpha:1,uFeather:.04});
-        }
-        if(!this.videoSprite){
-          this.videoSprite=new P.Sprite(entry.texture);
-          this.videoSprite.anchor.set(.5);
-          this.videoSprite.eventMode='none';
-          this.videoSprite.filters=[this.videoFilter];
-          this.screenLayer.addChild(this.videoSprite);
-        }else{
-          this.videoSprite.texture=entry.texture;
-          this.videoSprite.visible=true;
-        }
-        video.muted=true;
-        video.currentTime=0;
-        video.play().catch(()=>{this.stopVideoFx();});
-        this.activeVideo={entry,video,mirror,start:clock,spec,heroId:entry.id};
-        this.screenLayer.visible=true;
+        video.playbackRate=speed;
+        video.play().catch(()=>{session.failed=true;});
+        return session;
       }catch{
         entry.failed=true;
-        this.stopVideoFx();
+        if(this.activeVideo?.entry===entry)this.stopVideoFx();
+        else{
+          mesh?.destroy();
+          shader?.destroy();
+          geometry?.destroy();
+          texture?.destroy(true);
+          resource?.destroy();
+        }
+        return null;
       }
+    }
+    markVideoHit(index){
+      this.activeVideo?.completed.add(index);
     }
     stopVideoFx(){
-      if(this.activeVideo){
-        try{this.activeVideo.video.pause();this.activeVideo.video.currentTime=0;}catch{}
-        this.activeVideo=null;
-      }
-      if(this.videoSprite)this.videoSprite.visible=false;
-      if(this.screenLayer && !this.screenImpact?.visible)this.screenLayer.visible=false;
+      const session=this.activeVideo;
+      if(!session)return;
+      this.activeVideo=null;
+      const {video,callback,mesh,geometry,shader,texture,resource}=session;
+      if(callback!==undefined)video.cancelVideoFrameCallback(callback);
+      video.pause();
+      if(!video.error && video.currentTime>0)video.currentTime=0;
+      mesh.destroy();
+      geometry.destroy();
+      shader.destroy();
+      texture.destroy(true);
+      resource.destroy();
+      this.screenLayer.visible=false;
     }
-    drawVideoFx(clock,w,h,speed=1){
+    videoElapsed(now,speed,elapsed=0,clock=this.activeVideo?.clock){
       const active=this.activeVideo;
-      if(!active || !this.videoSprite || !this.videoFilter)return;
-      const {entry,video,mirror,start,spec}=active;
-      const age=Math.max(0,clock-start);
-      if(age>=spec.duration || video.ended || entry.failed){
+      if(!active)return null;
+      const {entry,video,texture,spec}=active;
+      if(video.playbackRate!==speed)video.playbackRate=speed;
+      const frame=video.requestVideoFrameCallback ? active.pendingTime : video.currentTime;
+      if(frame!==null && video.readyState>=2 && (!active.framesUploaded || frame>active.mediaTime)){
+        try{
+          if(this.renderer.gl.isContextLost())throw new Error('video texture context lost');
+          texture.update();
+          this.renderer.texture.bind(texture.baseTexture);
+          active.mediaTime=frame;
+          active.firstMediaTime ??= frame;
+          active.lastFrameAt=now;
+          active.framesUploaded++;
+        }catch{
+          active.failed=entry.failed=true;
+        }
+      }
+      const played=video.currentTime*1000;
+      const visual=active.mediaTime*1000;
+      if(active.framesUploaded && visual>=spec.duration-85 && played>=spec.duration)return spec.duration;
+      const stalled=now-(active.lastFrameAt ?? active.start)>(active.framesUploaded?450:620);
+      if(entry.failed || active.failed || stalled || video.ended){
         this.stopVideoFx();
-        return;
+        active.fallback?.(clock,elapsed);
+        return null;
       }
-      const targetRate=bound(speed,.5,4);
-      if(Math.abs(video.playbackRate-targetRate)>.01)video.playbackRate=targetRate;
-      if(video.readyState>=2){
-        try{entry.base?.update();}catch{entry.failed=true;this.stopVideoFx();return;}
-      }
-      const vw=video.videoWidth || 1280, vh=video.videoHeight || 720;
-      const cover=Math.max(w/vw,h/vh);
-      this.videoSprite.position.set(w/2,h/2);
-      this.videoSprite.scale.set((mirror?-1:1)*cover,cover);
-      this.videoSprite.filterArea=new P.Rectangle(0,0,w,h);
-      const alpha=smooth(0,spec.fadeIn,age)*(1-smooth(spec.duration-spec.fadeOut,spec.duration,age));
-      this.videoFilter.uniforms.uAlpha=alpha;
-      this.videoFilter.uniforms.uFeather=.038;
-      this.videoSprite.visible=alpha>.005;
-      this.screenLayer.visible=this.videoSprite.visible;
+      return visual;
+    }
+    drawVideoFx(w,h){
+      const active=this.activeVideo;
+      if(!active || !active.framesUploaded)return;
+      const {mesh,shader,video,mediaTime,spec}=active;
+      const aspect=w*video.videoHeight/(h*video.videoWidth);
+      shader.uniforms.uCrop[0]=Math.min(1,aspect);
+      shader.uniforms.uCrop[1]=Math.min(1,1/aspect);
+      mesh.scale.set(w,h);
+      const age=mediaTime*1000;
+      // A cold decoder can first present after media time zero. Start the
+      // entrance from that real frame but keep the exit anchored to the clip.
+      const fadeInAge=(mediaTime-active.firstMediaTime)*1000;
+      active.alpha=shader.uniforms.uAlpha=smooth(0,80,fadeInAge)*(1-smooth(spec.duration-420,spec.duration,age));
+      this.screenLayer.visible=mesh.visible=active.alpha>.002;
     }
     impact(entries,clock,time){
       for(const entry of entries || []){
@@ -383,44 +460,6 @@
         entry.info.impactAt=time;
         if(entry.info.role!=='spark')this.last=entry.info;
       }
-    }
-    showScreenImpact(){
-      return;
-      if(!this.screenSprites){
-        const shade=new P.Sprite(P.Texture.WHITE);
-        shade.tint=0x07080b;
-        const crack=lightSprite(art.texture);
-        const flash=new P.Sprite(P.Texture.WHITE);
-        flash.blendMode=P.BLEND_MODES.ADD;
-        this.screenLayer.addChild(shade,crack,flash);
-        this.screenSprites={shade,crack,flash};
-      }
-      const mirror=side==='enemy';
-      this.screenImpact={startedAt:time,duration:impactFrameMs,endedAt:null,visible:true,frame:0,mirror,
-        epicenter:[mirror?.365:.635,.5],source:art.source,blendMode:this.screenSprites.crack.blendMode,alpha:0};
-      this.screenLayer.visible=true;
-    }
-    drawScreenImpact(time,w,h){
-      const impact=this.screenImpact;
-      if(!impact?.visible)return 0;
-      const age=time-impact.startedAt;
-      if(age>=impact.duration){
-        impact.visible=false;
-        impact.endedAt=time;
-        this.screenLayer.visible=false;
-        return 0;
-      }
-      const {shade,crack,flash}=this.screenSprites;
-      const envelope=1-smooth(.34,1,age/impact.duration);
-      shade.width=flash.width=w;
-      shade.height=flash.height=h;
-      shade.alpha=.5*envelope;
-      crack.position.set(w/2,h/2);
-      crack.scale.set((impact.mirror?-1:1)*w/crack.texture.width,h/crack.texture.height);
-      crack.alpha=impact.alpha=.95*envelope;
-      flash.alpha=.09*(1-smooth(0,19,age));
-      impact.frame++;
-      return .91*envelope;
     }
     spark(actor,target,index,due,clock,time){
       this.landBasic(actor,target);
@@ -668,11 +707,13 @@
       burst.view.destroy({children:true,texture:false,baseTexture:false});
       this.embers.delete(burst);
     }
-    draw(clock,time,w,h,speed=1){
+    draw(clock,time,w,h){
       if(this.disposed)return;
-      this.drawStates(clock,w,h);
-      this.drawFlights(clock,w,h);
-      this.drawVideoFx(clock,w,h,speed);
+      if(this.screenLayer){
+        this.drawStates(clock,w,h);
+        this.drawFlights(clock,w,h);
+        this.drawVideoFx(w,h);
+      }
       for(const entry of this.active){
         if(clock<entry.start)continue;
         const {atlas,frames,sprite,next,info,impactClock}=entry;
@@ -690,7 +731,7 @@
         const last=frame===atlas.frames.length-1;
         // Never crossfade an unreached impact into the preceding cell. After the hit
         // the authored hold leaves sub at zero until the original frame clock resumes.
-        const canBlend=!last && (impactClock!==null || frame+1<impactFrame);
+        const canBlend=!!this.screenLayer && !last && (impactClock!==null || frame+1<impactFrame);
         const blend=canBlend ? smooth(.36,1,sub) : 0;
         const alpha=entry.alpha*fade*(last ? 1-smooth(.04,1,sub) : 1);
         info.sub=sub; info.blend=blend; info.nextFrame=canBlend ? frame+1 : null;
@@ -725,16 +766,6 @@
     }
     clear(){
       this.stopVideoFx();
-      if(this.videoSprite){
-        this.videoSprite.destroy();
-        this.videoSprite=null;
-      }
-      if(this.screenSprites){
-        for(const sprite of Object.values(this.screenSprites))sprite.destroy();
-        this.screenLayer.visible=false;
-        this.screenSprites=null;
-      }
-      this.screenImpact=null;
       for(const entry of this.active)this.remove(entry);
       for(const burst of this.embers)this.removeEmbers(burst);
       this.emberTexture?.destroy(true);
@@ -744,9 +775,13 @@
     }
     inspect(){
       const ready=this.ultimateKeys?.filter(id=>this.atlases.has(variants[id]?.atlas || id)) || [];
+      const live=this.activeVideo;
+      const activeVideo=live ? {heroId:live.heroId,mirror:live.mirror,currentTime:live.video.currentTime,
+        presentedMediaTime:live.mediaTime,firstPresentedTime:live.firstMediaTime,framesUploaded:live.framesUploaded,alpha:live.alpha,
+        playing:!live.video.paused,playbackRate:live.video.playbackRate} : null;
       return {ready,active:[...this.active].map(entry=>entry.info),last:this.last,
         vfxVideos:[...this.vfxVideos.values()].filter(v=>!v.failed && v.video.readyState>=2).map(v=>v.id),
-        activeVideo:this.activeVideo ? {heroId:this.activeVideo.heroId,mirror:this.activeVideo.mirror} : null,
+        activeVideo,
         embers:[...this.embers].map(({key,actor,count,visible,tint,startedAt,atlasEndedAt,remainingMs})=>
           ({key,actor,count,visible,tint,startedAt,atlasEndedAt,remainingMs})),
         artReady:[...this.artTextures.keys()],
@@ -760,12 +795,12 @@
     destroy(){
       this.disposed=true;
       this.clear();
-      this.videoFilter?.destroy();
-      this.videoFilter=null;
       for(const entry of this.vfxVideos.values()){
-        try{entry.video.pause();entry.video.removeAttribute('src');entry.video.load();}catch{}
-        entry.texture?.destroy();
-        entry.base?.destroy();
+        const {video}=entry;
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+        video.remove();
       }
       this.vfxVideos.clear();
       for(const {base,frames,renderFrames=frames} of this.atlases.values()){

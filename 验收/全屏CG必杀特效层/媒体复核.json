@@ -1,0 +1,21 @@
+{
+  "baseline": "78045c9",
+  "branch": "dev/sky-odyssey",
+  "total": 592,
+  "byType": {
+    "png": 555,
+    "mp3": 4,
+    "mp4": 33
+  },
+  "allEqual": true,
+  "vfxVideos": [
+    {
+      "path": "assets/videos/vfx_h01.mp4",
+      "sha256": "3f84a8806705018dfd59d886743d0c0e9afac4a9f8cb75a11c77c94df1a2b07d"
+    },
+    {
+      "path": "assets/videos/vfx_h08.mp4",
+      "sha256": "39bb7787a064cbd184fcb271a6d019761dfe9df4d1c98f83c85b686dac67b23e"
+    }
+  ]
+}

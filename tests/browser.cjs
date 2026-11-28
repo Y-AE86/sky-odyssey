@@ -1190,7 +1190,7 @@ async function exerciseVfxCutSkip(p,spec) {
   await battle(p,'return').click();await action(p,'home').click();
   return {...trace,heal,frames,settled:true};
 }
-async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,statuses=false,encounter='boss',enemyRage=false}) {
+async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,statuses=false,encounter='boss',enemyRage=false,unitOverrides={}}) {
   const fixture=await p.evaluate(({formation,powerSave,encounter})=>{
     const save=Sky.Save.fresh();
     save.owned=Sky.D.heroes.map(hero=>hero.id);
@@ -1212,7 +1212,7 @@ async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,sta
   }
   // Leave numeric resolution and target choice to the engine. Give the team
   // enough turns to exercise every cast in isolation without early settlement.
-  await enter.evaluate((button,{shield,statuses,enemyRage})=>{
+  await enter.evaluate((button,{shield,statuses,enemyRage,unitOverrides})=>{
     const create=Sky.Battle.create;
     try {
       let seed=72;
@@ -1237,11 +1237,12 @@ async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,sta
           fight.units.find(unit=>unit.key==='a5').status.freeze=3;
           fight.units.find(unit=>unit.key==='a5').status.breakArmor=2;
         }
+        for(const unit of fight.units)Object.assign(unit,unitOverrides[unit.key]);
         return fight;
       };
       button.click();
     } finally {Sky.Battle.create=create;}
-  },{shield,statuses,enemyRage});
+  },{shield,statuses,enemyRage,unitOverrides});
   await battle(p,'auto').click();
   await p.waitForFunction(()=>Sky.battlePage.inspect()?.ready,null,{timeout:45000});
 }
@@ -1851,7 +1852,7 @@ async function replacementCheck(browser) {
 (async()=>{
   if(out)fs.mkdirSync(out,{recursive:true});
   const server=await serve();
-  let browser;
+  let browser,webglDisabled=false;
   try {
     const config={headless:true,args:['--mute-audio']};
     if(chrome)config.executablePath=chrome;
@@ -1863,9 +1864,11 @@ async function replacementCheck(browser) {
       (!selected || selected.split(',').includes('replacement'));
     assert(chosen.length||replacements,'unknown --case');
     for(const spec of chosen) {
-      if(spec.name==='canvas'){
+      const disableWebgl=spec.name==='canvas';
+      if(disableWebgl!==webglDisabled){
         await browser.close();
-        browser=await chromium.launch({...config,args:[...config.args,'--disable-webgl']});
+        browser=await chromium.launch(disableWebgl ? {...config,args:[...config.args,'--disable-webgl']} : config);
+        webglDisabled=disableWebgl;
       }
       const result=domainCinema ? await runDomainCinema(browser,origin,spec,{root,out},
         {action,panel,battle,geometry,startFullVfxFixture,screenshot,importProgress,

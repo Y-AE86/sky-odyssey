@@ -71,26 +71,35 @@
     for(const u of s.battle.units) s.rage[u.key]=u.rage;
     refreshUI(s);
   }
-  function popup(s,n,hit) {
+  function popup(s,n,hit,presentation) {
     const number=document.createElement('span');
     const resisted=hit.kind==='damage' && !hit.amount, critical=hit.crit && !resisted;
+    const part=presentation?.count && !presentation.collapsed ? presentation : null;
     number.className='battle-float '+hit.kind+(resisted?' resist':'')+(critical?' critical':'')+
       (hit.periodic?' periodic':'');
     number.dataset.target=n.key;
-    if(critical || hit.periodic) {
+    if(part){
+      number.classList.add('cg-hit');
+      number.classList.toggle('cg-final',part.targetFinisher);
+      number.dataset.hitIndex=part.index;
+      number.dataset.hitPart=part.part;
+    }
+    if(critical || hit.periodic || part?.targetFinisher) {
       const prefix=document.createElement('small');
-      prefix.textContent=hit.periodic?'灼烧':'暴击'; number.append(prefix);
+      prefix.textContent=hit.periodic?'灼烧':critical?'暴击':'终结'; number.append(prefix);
     }
     const value=document.createElement('b');
     value.textContent=resisted?'抵挡':amountPrefix[hit.kind]+pretty(hit.amount);
     value.dataset.value=value.textContent;
     number.append(value);
     const group=s.action.hits.filter(other=>other.target===hit.target);
-    const index=group.indexOf(hit);
-    if(group.length>1)number.classList.add('combo-hit');
+    const index=group.indexOf(presentation?.collapsed?s.action.hits[presentation.index]:hit);
+    if(group.length>1 || part?.parts>1)number.classList.add('combo-hit');
     s.numbers.append(number);
-    s.labels.push({node:number,key:n.key,start:s.hudClock,fan:index-(group.length-1)/2,
-      group:group.length,wide:group.some(other=>other.crit),width:number.offsetWidth,height:number.offsetHeight});
+    const fan=part ? [0,-1,1,-.58,.58][part.part%5] : index-(group.length-1)/2;
+    const life=part ? (part.targetFinisher?640:416)+(s.speed-1)*60 : 770;
+    s.labels.push({node:number,key:n.key,start:s.hudClock,fan,life,dense:!!part,
+      group:part?3:group.length,wide:part?!!critical:group.some(other=>other.crit),width:number.offsetWidth,height:number.offsetHeight});
   }
   function placeNumbers(s) {
     if(!s.labels.length)return;
@@ -104,16 +113,17 @@
     obstacles.sort((a,b)=>b.top-a.top);
     for(const label of s.labels) {
       const age=s.hudClock-label.start;
-      if(age>=770){label.node.remove();continue;}
+      if(age>=label.life){label.node.remove();continue;}
       const anchor=flags.get(label.key);
-      const t=age/770;
-      const zoom=age<85?.4+1.15*(1-(1-age/85)**2):1+.55*(Math.max(0,1-(age-85)/155))**2;
+      const t=age/label.life;
+      const rise=label.dense?53:85, peak=label.dense?1.24:1.55;
+      const zoom=age<rise?.4+(peak-.4)*(1-(1-age/rise)**2):1+(peak-1)*(Math.max(0,1-(age-rise)/155))**2;
       const half=label.width*zoom/2, height=label.height*zoom;
-      const pitch=w*(label.wide?.126:.079);
+      const pitch=w*(label.dense?.057:label.wide?.126:.079);
       const margin=Math.min(w*.46,w*.025+pitch*label.group/2);
       const center=Math.max(margin,Math.min(w-margin,anchor.x));
       const x=Math.max(half+2,Math.min(w-half-2,center+label.fan*pitch*(1+.10*t)));
-      let y=anchor.y-h*(.025+.014*Math.abs(label.fan)+t*.063);
+      let y=anchor.y-h*(.025+.014*Math.abs(label.fan)+t*(label.dense?.091:.063));
       // Lift over the current camera-projected gauges and preceding labels.
       // Earlier labels stay readable when a second target shares the same lane.
       for(const box of obstacles) {
@@ -287,7 +297,7 @@
     ],{delay:600,duration:220,fill:'forwards',easing:'ease-out'});
     s.totalFade.onfinish=()=>{s.total.hidden=true;};
   }
-  function countImpact(s,hit,finisher) {
+  function countImpact(s,hit,finisher,multihit) {
     if(!s.hitsShown) {
       hideTotal(s);
       s.total.dataset.kind=s.countKind;
@@ -305,9 +315,83 @@
       const first=s.hitsShown===1;
       const pulse=first?[{scale:'1.35'},{scale:'1'}]:
         [{scale:'1'},{scale:finisher?'1.32':'1.18',offset:.32},{scale:'1'}];
-      value.animate(pulse,{duration:220,easing:'cubic-bezier(.2,.8,.25,1)'});
+      value.animate(pulse,{duration:multihit && !finisher?120:220,easing:'cubic-bezier(.2,.8,.25,1)'});
     }
     s.totalUpdates++;
+  }
+  function showHit(s,hit,index,due,now,meta,count) {
+    const a=s.action,n=s.scene.byKey[hit.target];
+    s.scene.hit(a.actor,hit,hit.periodic?'fire':s.hero.element,a.kind==='ultimate',now,s.effectClock,index,due,meta);
+    popup(s,n,hit,meta.presentation);
+    if(hit.rage!==undefined)s.rage[hit.target]=hit.rage;
+    if(hit.kind==='damage' && n.side==='ally' && !s.powerSave) {
+      const button=s.cards[n.slot];
+      button.classList.add('taking-hit');
+      const badge=button.querySelector('.battle-badge');
+      button.hitFlash?.cancel();
+      button.hitFlash=badge.animate([
+        {translate:'0',filter:'drop-shadow(0 0 4px #ff3e52)'},
+        {translate:'3% 0',offset:.22},{translate:'-3% 0',offset:.5},{translate:'0',filter:'none'}
+      ],{duration:meta.presentation?.emphasis==='light'?110:180});
+      button.hitFlash.onfinish=()=>button.classList.remove('taking-hit');
+    }
+    if(count)countImpact(s,hit,meta.finisher,!!meta.presentation);
+    if(hit.kind==='damage')Sky.sound(hit.amount===0?'shield':hit.crit?'crit':'hit');
+    else if(hit.amount>0)Sky.sound(hit.kind);
+    refreshUI(s);
+  }
+  function flushPresentation(s,now,visible) {
+    const playback=s.presentation;
+    if(!playback || !s.impactPlan?.presentation)return;
+    // The engine completed this action before playback. Reconcile only its visual state.
+    const {committed,amounts}=playback;
+    for(const [index,original] of s.action.hits.entries()){
+      if(committed.has(index))continue;
+      committed.add(index);
+      if(!visible){
+        s.scene.applyHitState(original);
+        continue;
+      }
+      const amount=original.amount-(amounts.get(index) || 0);
+      const hit=amount===original.amount?original:{...original,amount};
+      const count=amount>0 && s.primaryHits.includes(index) && !original.periodic;
+      const finisher=count && index===s.primaryHits.at(-1);
+      const presentation={index,commit:true,collapsed:true,emphasis:'settle'};
+      showHit(s,hit,index,s.elapsed,now,{finisher,presentation},count);
+    }
+  }
+  function finishImpact(s) {
+    const ultimate=s.action.kind==='ultimate';
+    s.scene.resetMotion(); s.root.classList.remove('spotlight');
+    s.phase='ready'; s.duration=ultimate?185:75; s.elapsed=0;
+    if(ultimate){
+      if(s.hitsShown)hideTotal(s,true);
+      if(s.scene.byKey[s.action.actor].side==='ally')endDomain(s,s.impactPlan?.videoVfx);
+    }
+    s.presentation=null;
+    sync(s);
+  }
+  function advancePresentation(s,mediaTime,available,now) {
+    const {events,interrupted}=s.impactPlan.presentation,playback=s.presentation;
+    s.effectClock+=available;
+    if(interrupted){
+      if(!playback.collapsed){
+        flushPresentation(s,now,true);
+        playback.collapsed=true;
+        s.duration=s.elapsed+460;
+      }
+      s.elapsed+=available;
+    }else if(mediaTime!==null){
+      s.elapsed=Math.max(s.elapsed,mediaTime);
+      while(playback.cursor<events.length && events[playback.cursor].due<=s.elapsed+.000001){
+        const event=events[playback.cursor++];
+        const {hit,index,due,commit,count,finisher}=event;
+        if(count)playback.amounts.set(index,(playback.amounts.get(index) || 0)+hit.amount);
+        if(commit)playback.committed.add(index);
+        showHit(s,hit,index,due,now,{finisher,beat:event.part+1,beats:event.parts,presentation:event},count);
+      }
+    }
+    if(s.elapsed>=s.duration)finishImpact(s);
   }
   function startImpact(s) {
     s.phase='motion'; s.elapsed=0; s.hitIndex=0; s.sum=0; s.hitsShown=0;
@@ -315,6 +399,7 @@
     const action=s.action, ultimate=action.kind==='ultimate',hits=action.hits;
     s.duration=action.kind==='stun'?230:ultimate?610+Math.max(0,hits.length-1)*108:430;
     s.impactPlan=ultimate ? s.scene.planUltimate(action,s.effectClock,s.speed) : null;
+    s.presentation=s.impactPlan?.presentation ? {cursor:0,amounts:new Map(),committed:new Set()} : null;
     s.scene.beginAction(action,s.effectClock);
     announceSkill(s,action);
     if(ultimate) {
@@ -364,10 +449,16 @@
     s.hudClock+=scaled;
     const available=s.scene.advanceClock(scaled);
     let elapsed=available;
-    // Decoded video frames drive the three CG cue points. Hitstop still freezes
-    // the actor poses without letting their clock pull the clip out of sync.
+    // Decoded frames drive the CG cue sheet. Hitstop freezes the actor poses on
+    // the separate stage clock without letting the clip slip past its cues.
     const mediaTime=s.phase==='motion' && s.impactPlan?.videoVfx
       ? s.scene.videoElapsed(now,s.speed,s.elapsed,s.effectClock) : null;
+    if(s.phase==='motion' && s.presentation){
+      s.carry=0;
+      if(s.impactPlan.presentation){advancePresentation(s,mediaTime,available,now);return;}
+      s.presentation=null;
+      s.duration=s.impactPlan.duration;
+    }
     if(mediaTime!==null){
       elapsed=Math.max(0,mediaTime-s.elapsed);
       s.carry=0;
@@ -407,34 +498,10 @@
       const beats=ultimate?Math.min(4,s.primaryHits.length):1;
       const beat=primary<0?0:Math.round(primary*(beats-1)/Math.max(1,s.primaryHits.length-1))+1;
       const finisher=ultimate && primary>=0 && primary===s.primaryHits.length-1;
-      s.scene.hit(a.actor,hit,hit.periodic?'fire':s.hero.element,ultimate,now,s.effectClock,s.hitIndex,due,{finisher,beat,beats});
-      popup(s,s.scene.byKey[hit.target],hit);
-      if(hit.rage!==undefined)s.rage[hit.target]=hit.rage;
-      if(hit.kind==='damage' && s.scene.byKey[hit.target].side==='ally' && !s.powerSave) {
-        const button=s.cards[s.scene.byKey[hit.target].slot];
-        button.classList.add('taking-hit');
-        const badge=button.querySelector('.battle-badge');
-        button.hitFlash?.cancel();
-        button.hitFlash=badge.animate([
-          {translate:'0',filter:'drop-shadow(0 0 4px #ff3e52)'},
-          {translate:'3% 0',offset:.22},{translate:'-3% 0',offset:.5},{translate:'0',filter:'none'}
-        ],{duration:180});
-        button.hitFlash.onfinish=()=>button.classList.remove('taking-hit');
-      }
-      if(primary>=0)countImpact(s,hit,finisher);
-      if(hit.kind==='damage')Sky.sound(hit.amount===0?'shield':hit.crit?'crit':'hit');
-      else if(hit.amount>0)Sky.sound(hit.kind);
-      s.hitIndex++; refreshUI(s);
+      showHit(s,hit,s.hitIndex,due,now,{finisher,beat,beats},primary>=0);
+      s.hitIndex++;
     }
-    if(progress===1) {
-      s.scene.resetMotion(); s.root.classList.remove('spotlight');
-      s.phase='ready'; s.duration=ultimate?185:75; s.elapsed=0;
-      if(ultimate){
-        if(s.hitsShown)hideTotal(s,true);
-        if(s.scene.byKey[a.actor].side==='ally')endDomain(s,s.impactPlan?.videoVfx);
-      }
-      sync(s);
-    }
+    if(progress===1)finishImpact(s);
   }
   function loop(s,now) {
     if(current!==s || s.phase==='result') return;
@@ -460,6 +527,7 @@
   }
   function finish(s) {
     if(s.phase==='result') return;
+    flushPresentation(s,performance.now(),false);
     s.phase='result';
     cancelAnimationFrame(s.frame);
     Sky.Battle.finish(s.battle);

@@ -6,8 +6,13 @@
   const emberTailMs=500;
   const videoDefaults={duration:2850,beats:[260,1080,1920]};
   const vfxVideoSpecs={
-    h01:{...videoDefaults,earlyFinish:true},
-    h08:{...videoDefaults,beats:[200,1020,1860]}
+    h01:{...videoDefaults,earlyFinish:true,presentation:{
+      cues:[240,370,880,1020,1160,1300,1760,1900,2060], weights:[7,8,9,10,11,11,12,14,18],
+      stagger:0, accent:1020
+    }},
+    h08:{...videoDefaults,beats:[200,1020,1860],presentation:{
+      cues:[200,540,960,1180,1560,1880], weights:[11,12,14,15,16,32], stagger:35
+    }}
   };
   const videoKeyVertex=`
     attribute vec2 aVertexPosition, aTextureCoord;
@@ -43,6 +48,42 @@
     const t=bound((value-start)/(end-start),0,1);
     return t*t*(3-2*t);
   };
+  function integerParts(amount,slots) {
+    const weight=slots.reduce((sum,slot)=>sum+slot.weight,0);
+    const rest=amount-slots.length;
+    const shares=slots.map((slot,index)=>{
+      const numerator=rest*slot.weight;
+      return {index,amount:1+Math.floor(numerator/weight),remainder:numerator%weight};
+    });
+    const leftover=amount-shares.reduce((sum,share)=>sum+share.amount,0);
+    const order=[...shares].sort((a,b)=>b.remainder-a.remainder || b.index-a.index);
+    for(let i=0;i<leftover;i++)order[i].amount++;
+    return shares.map(share=>share.amount);
+  }
+
+  function divideCues(positive,cues) {
+    const total=positive.reduce((sum,{hit})=>sum+hit.amount,0);
+    const count=Math.min(total,cues.length);
+    // A low-HP target still reaches the last visual beat, with no zero-valued popups.
+    const slots=Array.from({length:count},(_,i)=>cues[count===1 ? cues.length-1 :
+      Math.round(i*(cues.length-1)/(count-1))]);
+    const prefix=[0];
+    for(const slot of slots)prefix.push(prefix.at(-1)+slot.weight);
+    let used=0,damage=0;
+    return positive.map(({hit},index)=>{
+      damage+=hit.amount;
+      const left=positive.length-index-1;
+      let best=Math.max(used+1,count-(total-damage)), mismatch=Infinity;
+      const ideal=prefix.at(-1)*damage/total;
+      for(let end=best;end<=Math.min(count-left,used+hit.amount);end++){
+        const difference=Math.abs(prefix[end]-ideal);
+        if(difference<mismatch){best=end;mismatch=difference;}
+      }
+      const part=slots.slice(used,best);
+      used=best;
+      return part;
+    });
+  }
   const statuses=['status_shield','status_freeze','status_curse','status_heal_ring'];
   // Reuse the original sheets and apply a sprite tint at draw time. Both
   // entrances share the same donor textures and individual hit timing.
@@ -253,6 +294,85 @@
       layer.addChild(sprite,next);
       return entry;
     }
+    presentationPlan(action,targets,legacyDue){
+      const heroId=this.nodes[action.actor].heroId;
+      const design=vfxVideoSpecs[heroId]?.presentation;
+      if(!design)return null;
+      const groups=new Map(), events=[], commits=new Map(), starts=new Map();
+      for(const [index,target] of targets){
+        if(!groups.has(target))groups.set(target,{order:groups.size,positive:[]});
+        const hit=action.hits[index];
+        if(hit.amount>0)groups.get(target).positive.push({index,hit});
+      }
+      for(const {order,positive} of groups.values()){
+        if(!positive.length)continue;
+        const offset=order*design.stagger;
+        const cues=design.cues.map((base,i)=>({base,due:base+offset,weight:design.weights[i]}));
+        const divided=divideCues(positive,cues);
+        const pieces=[];
+        positive.forEach(({index,hit},i)=>{
+          const slots=divided[i], amounts=integerParts(hit.amount,slots);
+          const {shield,rage,status,...visible}=hit;
+          let remaining=hit.amount;
+          starts.set(index,slots[0].due);
+          slots.forEach((slot,j)=>{
+            const amount=amounts[j];
+            const commit=j===slots.length-1;
+            remaining-=amount;
+            const display=commit ? {...hit,amount,crit:false} :
+              {...visible,amount,hp:hit.hp+remaining,crit:false};
+            pieces.push({due:slot.due,hit:display,index,commit,count:true,
+              emphasis:slot.base===design.accent?'accent':'light'});
+            if(commit)commits.set(index,slot.due);
+          });
+        });
+        // Preserve the number of actual criticals, placing their presentation marks
+        // on the target's closing beats without changing the real hit snapshots.
+        const criticals=positive.filter(({hit})=>hit.crit).length;
+        if(criticals)for(const event of pieces.slice(-criticals))event.hit.crit=true;
+        pieces.forEach((event,part)=>{
+          event.part=part;
+          event.parts=pieces.length;
+          event.targetFinisher=part===pieces.length-1;
+        });
+        events.push(...pieces);
+      }
+      const lastForTarget=new Map();
+      action.hits.forEach((hit,index)=>{
+        if(commits.has(index)){
+          lastForTarget.set(hit.target,commits.get(index));
+          return;
+        }
+        const previous=lastForTarget.get(hit.target);
+        const group=groups.get(hit.target);
+        let due;
+        if(targets.has(index)){
+          if(design.stagger)due=design.cues.at(-1)+group.order*design.stagger;
+          else{
+            const following=group.positive.find(entry=>entry.index>index);
+            const next=following ? starts.get(following.index) : null;
+            if(next!==null)due=Math.min(next,previous===undefined?Math.max(0,next-60):previous+24);
+            else due=previous===undefined?legacyDue[index]:previous+24;
+          }
+        }else{
+          const predecessor=commits.get(index-1);
+          due=predecessor===undefined?legacyDue[index]:predecessor+(hit.kind==='heal'?108:24);
+        }
+        // In particular, two reflected hits update the same caster. Their HP
+        // snapshots must stay in engine order, even if a target was fully shielded.
+        due=Math.max(due,previous ?? 0);
+        commits.set(index,due);
+        lastForTarget.set(hit.target,due);
+        events.push({due,hit,index,commit:true,count:false,emphasis:'light'});
+      });
+      events.sort((a,b)=>a.due-b.due || a.index-b.index);
+      const finisher=events.findLast(event=>event.count);
+      if(finisher){
+        finisher.finisher=true;
+        finisher.emphasis='final';
+      }
+      return {events,interrupted:false};
+    }
     plan(action,clock,speed=1){
       const actor=this.nodes[action.actor],variant=variants[actor.heroId];
       const donor=this.atlases.get(variant?.atlas || actor.heroId);
@@ -263,11 +383,17 @@
       const targets=new Map();
       action.hits.forEach((hit,index)=>{
         const target=this.nodes[hit.target];
-        if(target && hit.kind===kind && (kind==='damage' ? target.side!==actor.side : target.side===actor.side))
+        if(target && !hit.periodic && hit.kind===kind && (kind==='damage' ? target.side!==actor.side : target.side===actor.side))
           targets.set(index,hit.target);
       });
       if(!targets.size)return null;
       const firstHit=targets.keys().next().value;
+      const windup=impactFrame*frameMs;
+      let attackNumber=0,lastHit=windup;
+      const atlasDue=action.hits.map((hit,index)=>{
+        if(targets.has(index))lastHit=windup+attackNumber++*stagger;
+        return targets.has(index) ? lastHit : lastHit+(hit.kind==='heal'?108:36);
+      });
       const videoEntry=this.vfxVideos.get(actor.heroId);
       const spec=vfxVideoSpecs[actor.heroId] || videoDefaults;
       if(videoEntry && !videoEntry.failed && videoEntry.video.readyState>=2 && !videoEntry.video.seeking){
@@ -293,22 +419,29 @@
         const plan={due,duration:spec.duration,firstHit,byHit:new Map(),targets,videoVfx:actor.heroId};
         const live=this.playVideoFx(videoEntry,actor.side==='enemy',clock,spec,speed);
         if(live){
+          plan.presentation=this.presentationPlan(action,targets,due);
           live.fallback=(time,elapsed)=>{
+            if(plan.presentation && !live.framesUploaded){
+              plan.videoVfx=null;
+              plan.presentation=null;
+              plan.due=atlasDue;
+              plan.duration=atlasDue.at(-1)+245;
+              this.planAtlas(action,time-elapsed,atlas,plan);
+              return;
+            }
             const remaining=new Map([...targets].filter(([index])=>!live.completed.has(index)));
-            // Keep every assigned beat. Only its presentation changes after a
-            // failed or stalled upload.
+            if(plan.presentation){
+              plan.presentation.interrupted=true;
+              // The UI reconciles original snapshots in one frame. Give only
+              // the uncommitted original hit indices a matching atlas peak.
+              plan.due=due.map((value,index)=>live.completed.has(index)?value:elapsed);
+            }
             this.planAtlas(action,time-elapsed,atlas,{...plan,targets:remaining},time);
           };
           return plan;
         }
       }
-      const windup=impactFrame*frameMs;
-      let attackNumber=0,lastHit=windup;
-      const due=action.hits.map((hit,index)=>{
-        if(targets.has(index))lastHit=windup+attackNumber++*stagger;
-        return targets.has(index) ? lastHit : lastHit+(hit.kind==='heal'?108:36);
-      });
-      return this.planAtlas(action,clock,atlas,{due,duration:due.at(-1)+245,firstHit,byHit:new Map(),targets});
+      return this.planAtlas(action,clock,atlas,{due:atlasDue,duration:atlasDue.at(-1)+245,firstHit,byHit:new Map(),targets});
     }
     planAtlas(action,clock,atlas,plan,minClock=-Infinity){
       const {mode,impactFrame,frameMs,scale,groupScale,alpha=1,groupAlpha=.86,impactHold=0}=atlas.layout;

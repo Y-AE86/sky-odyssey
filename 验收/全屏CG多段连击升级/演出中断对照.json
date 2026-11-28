@@ -1,0 +1,188 @@
+{
+  "flows": [
+    {
+      "id": "h01",
+      "speed": 1,
+      "path": "elapsed clock catchup",
+      "count": 9,
+      "amount": 521
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "elapsed clock catchup",
+      "count": 9,
+      "amount": 521
+    },
+    {
+      "id": "h01",
+      "speed": 3,
+      "path": "elapsed clock catchup",
+      "count": 9,
+      "amount": 521
+    },
+    {
+      "id": "h08",
+      "speed": 1,
+      "path": "elapsed clock catchup",
+      "count": 18,
+      "amount": 693
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "elapsed clock catchup",
+      "count": 18,
+      "amount": 693
+    },
+    {
+      "id": "h08",
+      "speed": 3,
+      "path": "elapsed clock catchup",
+      "count": 18,
+      "amount": 693
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "skip snapshots",
+      "time": 385,
+      "initial": 0,
+      "remaining": 4
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "skip snapshots",
+      "time": 970,
+      "initial": 2,
+      "remaining": 2
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "skip snapshots",
+      "time": 1700,
+      "initial": 2,
+      "remaining": 2
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "skip snapshots",
+      "time": 2110,
+      "initial": 4,
+      "remaining": 0
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "mid-video interrupted",
+      "time": 385,
+      "initial": 0,
+      "remaining": 4
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "mid-video interrupted",
+      "time": 970,
+      "initial": 2,
+      "remaining": 2
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "mid-video interrupted",
+      "time": 1700,
+      "initial": 2,
+      "remaining": 2
+    },
+    {
+      "id": "h01",
+      "speed": 2,
+      "path": "mid-video interrupted",
+      "time": 2110,
+      "initial": 4,
+      "remaining": 0
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "skip snapshots",
+      "time": 385,
+      "initial": 0,
+      "remaining": 5
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "skip snapshots",
+      "time": 970,
+      "initial": 0,
+      "remaining": 5
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "skip snapshots",
+      "time": 1700,
+      "initial": 0,
+      "remaining": 5
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "skip snapshots",
+      "time": 2110,
+      "initial": 5,
+      "remaining": 0
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "mid-video interrupted",
+      "time": 385,
+      "initial": 0,
+      "remaining": 5
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "mid-video interrupted",
+      "time": 970,
+      "initial": 0,
+      "remaining": 5
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "mid-video interrupted",
+      "time": 1700,
+      "initial": 0,
+      "remaining": 5
+    },
+    {
+      "id": "h08",
+      "speed": 2,
+      "path": "mid-video interrupted",
+      "time": 2110,
+      "initial": 5,
+      "remaining": 0
+    },
+    {
+      "id": "h01",
+      "speed": 1,
+      "path": "no decoded frame before fallback",
+      "originalHits": 4
+    }
+  ],
+  "assertions": [
+    "real engine matches final shadow snapshot",
+    "raw battle action unchanged",
+    "original hit commit at most once and never before eligible clip time",
+    "resume catch-up drains all due events in order",
+    "partial interruption flush is idempotent",
+    "raw totals balance"
+  ]
+}

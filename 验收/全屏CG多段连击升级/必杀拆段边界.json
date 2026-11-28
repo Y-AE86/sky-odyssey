@@ -1,0 +1,14 @@
+{
+  "actions": 424,
+  "parts": 2972,
+  "zero": 429,
+  "reflect": 823,
+  "periodic": 146,
+  "earlyKills": 167,
+  "shortTotals": 19,
+  "crits": 134,
+  "side": {
+    "ally": 212,
+    "enemy": 212
+  }
+}

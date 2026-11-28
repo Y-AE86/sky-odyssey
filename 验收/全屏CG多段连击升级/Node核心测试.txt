@@ -1,0 +1,24 @@
+✔ 十一张看板按序循环，旧看板与未招募角色的选择均可存取及导入导出 (7.3457ms)
+✔ 八人旧档保留望舒和希露的原角色编号、星级、星装、碎片与队伍 (1.248ms)
+✔ 整套星装强化一次扣款，余额不足时四件均保持原等级 (0.3528ms)
+✔ 启航七日按本地日历发奖，重开、重复领取和活动结束均保留限制 (0.4327ms)
+✔ independent starters, native weapon resonance, shared team level and equipment (0.6217ms)
+✔ formation swaps, recruits, deploys, replaces and cannot duplicate a unit (0.2791ms)
+✔ offline production cap, fractional production, daily reset and one-time claims (0.378ms)
+✔ JSON round-trip validates origin, imported field ranges, equipment ownership and resource atomicity (1.0353ms)
+✔ every pull grants SSR or UR, with a sixty-pull UR guarantee per pool (0.3368ms)
+✔ both pools include all eleven heroes and match published 2/98 rates and UP distribution (31.4113ms)
+✔ 首个十连跨池仅触发一次，旧档兼容，保底卡、碎片与正常保底同时记账 (0.8692ms)
+✔ 6v6 teams, counter cycle, actual +18% damage and front-row targeting (1.1992ms)
+✔ all eleven ultimates resolve their target patterns, statuses, HP, shields and rage (1.4924ms)
+✔ chapter finales, tower milestones and the boss trial field Astra and five dedicated guards (0.4684ms)
+✔ manual rage is held for player casts, skip and full playback agree, first clear rewards are credited once (2.3799ms)
+✔ ten-stage campaign is beatable through ordinary upgrades, three trials award actual outcomes (3.8232ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 235.6722

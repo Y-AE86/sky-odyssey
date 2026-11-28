@@ -241,7 +241,8 @@
               base.rgb=mix(base.rgb,uRim*base.a,edge*solid*.29*(1.0-.79*contact));
             }
             if(vColor.r >= vColor.a*.02){gl_FragColor=base*vColor;return;}
-            gl_FragColor=vec4(mix(base.rgb,vec3(1.,.98,.94)*base.a,.71),base.a)*vColor.a;
+            float flash=vColor.b < vColor.a*.75 ? .38 : .71;
+            gl_FragColor=vec4(mix(base.rgb,vec3(1.,.98,.94)*base.a,flash),base.a)*vColor.a;
           }`);
       }
       contextChange() {
@@ -349,7 +350,10 @@
       this.move={from:this.focus,to:target,start:time,ms:aim?180:260};
       if(aim)this.aim=aim;
     }
-    strike(dir,power,time) {this.kick={dir,power,start:time};}
+    strike(dir,power,time,coalesce=false) {
+      if(coalesce && this.kick?.start===time && this.kick.power>power)return;
+      this.kick={dir,power,start:time};
+    }
     update(time,w,h,left,right) {
       if(this.move){
         const m=this.move,t=clamp((time-m.start)/m.ms);
@@ -705,31 +709,43 @@
         if(clearEffects)n.reaction=n.shadowFlight=n.shadowReturn=n.landing=null;
       }
     }
-    hit(actor,hit,element,ultimate,clock,effectClock,index,due,meta={}) {
+    applyHitState(hit) {
       const n = this.byKey[hit.target];
-      if (!n) return;
-      n.hp = hit.hp; n.shield = hit.shield;
+      if(!n)return null;
+      n.hp=hit.hp;
+      if(hit.shield!==undefined)n.shield=hit.shield;
       if(hit.rage!==undefined)n.rage=hit.rage;
       if(hit.status)n.status={...hit.status};
+      return n;
+    }
+    hit(actor,hit,element,ultimate,clock,effectClock,index,due,meta={}) {
+      const n=this.applyHitState(hit);
+      if(!n)return;
       if(hit.periodic){
         this.effects.push({actor:hit.source || actor,target:n.key,element:'fire',periodic:true,start:clock,duration:330});
         return;
       }
       const damage=hit.kind==='damage', plan=ultimate ? this.ultimatePlan : null;
       const finisher=ultimate && !!meta.finisher;
-      if(plan?.videoVfx)this.vfx.markVideoHit(index);
+      const presentation=meta.presentation;
+      const split=presentation?.count && !presentation.collapsed;
+      const light=split && presentation.emphasis==='light';
+      const accent=split && presentation.emphasis==='accent';
+      if(plan?.videoVfx && presentation?.commit!==false)this.vfx.markVideoHit(index);
       const entries=plan?.byHit.get(index);
       const attacker=this.byKey[actor];
       const screenHit=ultimate && damage && n.side!==attacker.side && index===this.impactHit;
       const videoBeat=!!plan?.videoVfx && plan.targets.has(index);
       if(this.impulses && ultimate && (damage ? n.side!==attacker.side : n.side===attacker.side)) {
-        if(this.openingImpact || finisher || screenHit || videoBeat) {
+        const shock=split ? accent || finisher : this.openingImpact || finisher || screenHit || videoBeat;
+        const color=split ? shock : hit.crit || finisher || screenHit || videoBeat ||
+          (this.openingImpact && execution.has(attacker.heroId));
+        if(shock) {
           const group=entries?.find(entry=>entry.info.role==='group');
           this.impulses.shockwave(clock,group ? group.info.targets.map(key=>this.byKey[key]) : [n],
             !damage && hit.kind==='heal');
         }
-        if(damage && (hit.crit || finisher || screenHit || videoBeat || (this.openingImpact && execution.has(attacker.heroId))))
-          this.impulses.chromatic(clock,n);
+        if(damage && color)this.impulses.chromatic(clock,n);
         this.openingImpact=false;
       }
       const progression=meta.beats>1?clamp((meta.beat-1)/(meta.beats-1)):0;
@@ -737,17 +753,17 @@
         const source=this.byKey[hit.source || actor];
         const dx=(n.x-source.x)*this.w,dy=(n.y-source.y)*this.h,dist=Math.hypot(dx,dy)||1;
         const dir={x:dx/dist,y:dy/dist};
-        const heavy=hit.crit || finisher;
-        const hold=this.powerSave?0:heavy?72:!ultimate || videoBeat?43:0;
+        const heavy=finisher || (!split && hit.crit);
+        const hold=this.powerSave?0:heavy?72:split?(accent?26:0):!ultimate || videoBeat?43:0;
         this.hitstopRemaining=Math.max(this.hitstopRemaining,hold);
-        n.reaction={dir,start:this.feedbackClock,motionStart:effectClock};
-        const sparks=this.powerSave?0:heavy?14:ultimate?9+Math.round(4*progression):8;
+        n.reaction={dir,start:this.feedbackClock,motionStart:effectClock,light};
+        const sparks=this.powerSave?0:heavy?14:light?4:ultimate?9+Math.round(4*progression):8;
         this.lastImpact={actor,target:n.key,critical:!!hit.crit,finisher,hold,sparks,beat:meta.beat,beats:meta.beats};
         if(!this.powerSave){
-          const power=heavy?.009:ultimate?.0058+.002*progression:.0045;
-          this.camera.strike(dir,power,this.feedbackClock);
+          const power=heavy?.009:light?.0021:ultimate?.0058+.002*progression:.0045;
+          this.camera.strike(dir,power,this.feedbackClock,!!presentation);
           this.bursts.push({start:effectClock,x:n.x+n.dx,y:n.y+n.dy,dir,color:palette[element],count:sparks,heavy});
-          if(heavy || ultimate){
+          if(heavy || (ultimate && !light)){
             this.rimStart=this.feedbackClock;
             this.rim.style.boxShadow='inset 0 0 '+(heavy?3.2:1.9)+'cqw #'+palette[element].toString(16).padStart(6,'0');
           }
@@ -982,15 +998,18 @@
       const poseAge=n.reaction?clock-n.reaction.motionStart:Infinity;
       if(n.hp<=0 && poseAge>=190)return null;
       const model=this.actorModel(n,clock,age);
-      const w=this.w,h=this.h,t=clamp(poseAge/190);
+      const light=n.reaction?.light;
+      const flash=light?27:50;
+      const w=this.w,h=this.h,t=clamp(poseAge/(light && n.hp>0?100:190));
       const push=(1-t)**2*Math.cos(t*Math.PI*1.55);
-      const recoil=push*w*(this.powerSave?.004:.018);
+      const force=light?.42:1;
+      const recoil=push*w*(this.powerSave?.004:.018)*force;
       const rx=n.reaction?.dir.x ?? 0,ry=n.reaction?.dir.y ?? 0;
-      const hop=this.lighting ? Math.sin(t*Math.PI)*(1-t)*.025 : 0;
+      const hop=this.lighting ? Math.sin(t*Math.PI)*(1-t)*.025*force : 0;
       const lift=(n.actionLift+hop)*h;
       const ground={x:(n.x+n.dx)*w+rx*recoil,y:(n.y+n.dy+n.actionLift)*h+ry*recoil};
       const x=ground.x,y=ground.y-lift;
-      const tilt=this.powerSave?0:rx*.085*push;
+      const tilt=this.powerSave?0:rx*.085*push*force;
       const size=h*.204*n.magnification*n.depth*model.heightFactor;
       const width=size*model.w/model.h;
       const sign=n.mirror ? -1 : 1,sx=sign,sy=1;
@@ -1001,7 +1020,7 @@
       const shadow=this.shadowPose(n,ground,lift);
       const visualHeight=size*(model.footY-model.eye);
       return {x,y,body:{x,y},ground,lift,shadow,model,visualHeight,size,width,sx,sy,tilt,
-        white:age<50,red:age>=50 && age<115,
+        white:age<flash,light,red:!light && age>=flash && age<115,
         left:x-horizontal*anchor+Math.min(upper,lower),right:x+horizontal*(1-anchor)+Math.max(upper,lower)};
     }
     drawCanvasAtlases(support) {
@@ -1064,7 +1083,7 @@
         if(n.flag) n.flag.visible=visible;
         if(n.dom) n.dom.body.hidden=!visible;
         if(!visible) continue;
-        const {x,y,size,width,sx,sy,tilt,white,red,shadow:groundShadow,model}=n.pose;
+        const {x,y,size,width,sx,sy,tilt,white,light,red,shadow:groundShadow,model}=n.pose;
         const {footX,footY,image}=model;
         const lit=this.focus || this.previousFocus;
         const alpha=lit && !lit.has(n.key) ? 1-.65*(this.powerSave?Number(!!this.focus):cam.focus) : 1;
@@ -1097,7 +1116,7 @@
           n.sprite.position.set(x,y);
           n.sprite.scale.set(sx*width/model.w,sy*size/model.h);
           n.sprite.rotation=tilt;
-          n.sprite.tint=white?0x00ffff:red?0xa7384c:Math.round(alpha*255)*0x010101;
+          n.sprite.tint=white?(light?0x00ff7f:0x00ffff):red?0xa7384c:Math.round(alpha*255)*0x010101;
           if(this.lighting){
             const [sunX,sunY]=this.lighting.direction;
             const phase=this.feedbackClock/585+n.slot*1.8+n.x*5;

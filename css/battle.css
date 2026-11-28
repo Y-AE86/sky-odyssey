@@ -160,6 +160,10 @@ body:has(.battle-page.spotlight) #bleed:has(.battle-domain[data-phase="active"])
   content:"✦"; position:absolute; right:-.25em; top:-.2em; color:#fff9d8;
   font-size:.43em; -webkit-text-stroke:0; text-shadow:0 0 .4em #ffa945;
 }
+.battle-float.cg-hit:not(.critical):not(.cg-final) {font-size:max(12px,1.73cqw);}
+.battle-float.cg-final {font-size:max(20px,3.14cqw);}
+.battle-float.cg-final:not(.critical) {color:#fff0bd; -webkit-text-stroke-color:#542522;}
+.battle-float.cg-final small {font:italic 900 .46em/1 var(--display); letter-spacing:0;}
 .battle-total {
   pointer-events:none; position:absolute; z-index:2; left:50%; bottom:20.4%; translate:-50% 0; isolation:isolate;
   display:flex; align-items:baseline; gap:.85cqw; white-space:nowrap; color:#ffe7a3;

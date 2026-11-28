@@ -1,0 +1,41 @@
+{
+  "baseline": "7e69822",
+  "games": 200,
+  "actions": 12518,
+  "hits": 18728,
+  "draws": 15436,
+  "manualCasts": 672,
+  "settlings": 200,
+  "scenarios": {
+    "campaign": 50,
+    "tower": 50,
+    "boss": 50,
+    "arena": 50
+  },
+  "playerAppearances": {
+    "h01": 109,
+    "h02": 110,
+    "h03": 109,
+    "h04": 109,
+    "h05": 109,
+    "h06": 109,
+    "h07": 109,
+    "h08": 109,
+    "h09": 109,
+    "h10": 109,
+    "h11": 109
+  },
+  "equal": true,
+  "sha256": {
+    "baseline": {
+      "js/data.js": "ab53e3b62e49208d0f2cded0178309a7aff16f6984cc92c572f754529f1ac112",
+      "js/save.js": "504c048ee1fe21a716f7cbab89c008c47c417d75d0e71984c61ddc01999afeae",
+      "js/battle-engine.js": "2155d909d6050d9cf9a4b44b389815914f4982b2cddfeffa0e50253bb645a168"
+    },
+    "working": {
+      "js/data.js": "ab53e3b62e49208d0f2cded0178309a7aff16f6984cc92c572f754529f1ac112",
+      "js/save.js": "504c048ee1fe21a716f7cbab89c008c47c417d75d0e71984c61ddc01999afeae",
+      "js/battle-engine.js": "2155d909d6050d9cf9a4b44b389815914f4982b2cddfeffa0e50253bb645a168"
+    }
+  }
+}

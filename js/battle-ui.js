@@ -5,7 +5,7 @@
   const shortName=name=>name.split(' · ')[0];
   const pretty=n=>Number(n).toLocaleString('zh-CN');
   const amountPrefix={damage:'−',heal:'+',shield:'盾 +' };
-  const shortCutMs=850, ultimateSeconds=[3,1.9,1.25], ultimateHitDelay=80;
+  const shortCutMs=850, cinematicRates=[1,3/1.9,3/1.25], ultimateHitDelay=80;
   let current;
 
   function control(action,label) {
@@ -74,11 +74,12 @@
   function popup(s,n,hit) {
     const number=document.createElement('span');
     const resisted=hit.kind==='damage' && !hit.amount, critical=hit.crit && !resisted;
-    number.className='battle-float '+hit.kind+(resisted?' resist':'')+(critical?' critical':'');
+    number.className='battle-float '+hit.kind+(resisted?' resist':'')+(critical?' critical':'')+
+      (hit.periodic?' periodic':'');
     number.dataset.target=n.key;
-    if(critical) {
+    if(critical || hit.periodic) {
       const prefix=document.createElement('small');
-      prefix.textContent='暴击'; number.append(prefix);
+      prefix.textContent=hit.periodic?'灼烧':'暴击'; number.append(prefix);
     }
     const value=document.createElement('b');
     value.textContent=resisted?'抵挡':amountPrefix[hit.kind]+pretty(hit.amount);
@@ -189,19 +190,23 @@
 
     // The original poster is visible while playback starts. Bound both the
     // wait for the first decoded frame and the total cinematic time.
-    const speed=s.speed, seconds=ultimateSeconds[speed-1];
+    const rate=cinematicRates[s.speed-1];
     element.dataset.media='ultimate';
     cut.video=media.ultimate;
-    cut.timer=setTimeout(complete,seconds*1000+300);
     cut.startup=setTimeout(useShortCut,550);
     const voice=Sky.audio.voiceVolume();
     cut.video.play(target,{
       audible:voice>0 && navigator.userActivation?.hasBeenActive!==false,
       volume:voice,
-      rate:duration=>speed===1 ? 1 : duration/seconds,
+      rate:()=>rate,
       onFrame:video=>{
+        if(!active())return;
         clearTimeout(cut.startup);
-        if(active())Sky.audio.duck(!video.muted && video.volume>0);
+        Sky.audio.duck(!video.muted && video.volume>0);
+        if(cut.timer===undefined) {
+          const remaining=Number.isFinite(video.duration) ? video.duration-video.currentTime : 3;
+          cut.timer=setTimeout(complete,Math.max(0,remaining)*1000/rate+300);
+        }
       },
       onEnd:complete,
       onError:useShortCut
@@ -317,8 +322,9 @@
       elapsed+=s.carry; s.carry=0;
     }
     const a=s.action, ultimate=a?.kind==='ultimate';
+    const firstHit=a?.kind==='stun'?100:ultimate?ultimateHitDelay:s.scene.basicHitMs;
     const due=s.phase==='motion' && s.hitIndex<a.hits.length ?
-      (s.impactPlan?.due[s.hitIndex] ?? (ultimate?ultimateHitDelay+s.hitIndex*108:s.scene.basicHitMs+s.hitIndex*36)):Infinity;
+      (s.impactPlan?.due[s.hitIndex] ?? firstHit+s.hitIndex*(ultimate?108:36)):Infinity;
     // Present each real contact before spending the rest of a slow frame.
     // Carried motion resumes only after the live feedback ticker releases hitstop.
     const reached=Number.isFinite(due) && elapsed+s.elapsed>=due-.000001;
@@ -347,7 +353,7 @@
       const beats=ultimate?Math.min(4,s.primaryHits.length):1;
       const beat=primary<0?0:Math.round(primary*(beats-1)/Math.max(1,s.primaryHits.length-1))+1;
       const finisher=ultimate && primary>=0 && primary===s.primaryHits.length-1;
-      s.scene.hit(a.actor,hit,s.hero.element,ultimate,now,s.effectClock,s.hitIndex,due,{finisher,beat,beats});
+      s.scene.hit(a.actor,hit,hit.periodic?'fire':s.hero.element,ultimate,now,s.effectClock,s.hitIndex,due,{finisher,beat,beats});
       popup(s,s.scene.byKey[hit.target],hit);
       if(hit.rage!==undefined)s.rage[hit.target]=hit.rage;
       if(hit.kind==='damage' && s.scene.byKey[hit.target].side==='ally' && !s.powerSave) {

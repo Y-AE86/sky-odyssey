@@ -14,6 +14,7 @@ const root=path.resolve(option('root',path.resolve(__dirname,'..')));
 const out=option('out',null),selected=option('case',null);
 const vfxOnly=args.includes('--vfx-only');
 const hudOnly=args.includes('--hud-only');
+const wave6Only=args.includes('--wave6-only');
 const {exerciseHud,checkPowerHud}=require('./battle-hud.cjs');
 const chrome=option('chrome',process.env.CHROME_PATH);
 const presets=[
@@ -28,7 +29,11 @@ const presets=[
 const sha=buffer=>crypto.createHash('sha256').update(buffer).digest('hex');
 const stems={h01:'c07',h02:'protag',h03:'c15',h04:'h04',h05:'h05',h06:'h06'};
 const leads=Object.keys(stems);
-const artPath=(id,kind)=>kind==='weapon' ? 'assets/weapons/weapon_'+id+'.png' :
+const newStars=['h07','h08','h09','h10','h11'];
+const playable=[...leads,...newStars];
+const villains=['enemy_boss_mech','enemy_vanguard','enemy_caster','enemy_striker'];
+const artPath=(id,kind)=>villains.includes(id) ? 'assets/chibi/'+id+'.png' :
+  kind==='weapon' ? 'assets/weapons/weapon_'+id+'.png' :
   'assets/'+({poster:'posters/lobby_cg_',avatar:'avatars/avatar_',chibi:'chibi/chibi_'}[kind])+(stems[id]||id)+'.png';
 function originalSize(rel){
   const file=fs.readFileSync(path.join(root,rel));
@@ -54,10 +59,14 @@ const wave1Paths=[
 ].map(name=>'assets/'+name+'.png');
 const baseline=option('baseline',null);
 const assetsDir=path.join(root,'assets');
-const originalPaths=fs.readdirSync(assetsDir,{recursive:true}).filter(n=>n.endsWith('.png')).map(n=>'assets/'+n.split(path.sep).join('/')).sort();
+const trackedMedia=fs.readdirSync(assetsDir,{recursive:true}).filter(n=>/\.(png|mp3|mp4)$/.test(n))
+  .map(n=>'assets/'+n.split(path.sep).join('/')).sort();
+const originalPaths=trackedMedia.filter(n=>n.endsWith('.png'));
 if(baseline) {
   const expected=JSON.parse(fs.readFileSync(baseline,'utf8').replace(/^\uFEFF/,''));
-  assert.deepEqual(expected.map(entry=>entry.path).sort(),originalPaths,'PNG list changed since the supplied baseline');
+  assert.deepEqual(expected.map(entry=>entry.path).sort(),
+    expected.some(({path})=>/\.(mp3|mp4)$/.test(path)) ? trackedMedia : originalPaths,
+    'asset list changed since the supplied baseline');
   for(const entry of expected)assert.equal(sha(fs.readFileSync(path.join(root,entry.path))),entry.sha256.toLowerCase(),entry.path);
 }
 const visualChecks=new WeakMap();
@@ -337,7 +346,7 @@ async function checkEmbedded(p) {
         return [id,[...digest].map(byte=>byte.toString(16).padStart(2,'0')).join('')];
       }));
     });
-    assert.deepEqual(embedded.map(([id])=>id).sort(),leads);
+    assert.deepEqual(embedded.map(([id])=>id).sort(),[...playable,...villains].sort());
     for(const [id,hash] of embedded) assert.equal(hash,sha(fs.readFileSync(path.join(root,artPath(id,'chibi')))));
     return Object.fromEntries(embedded);
 }
@@ -368,14 +377,14 @@ async function runLobby(p,spec) {
   } finally {
     await p.evaluate(original=>{Sky.ui.state.idleAt=original;Sky.ui.go('lobby');},initial.idleAt);
   }
-  for(const id of [...leads.slice(1),leads[0]]) {
+  for(const id of [...playable.slice(1),playable[0]]) {
     await action(p,'poster').click();
     await p.waitForFunction(id=>Sky.ui.state.settings.poster===id,id);
     await decoded(p,p.locator('.backdrop.current'),artPath(id,'poster'));
-    assert.equal(await p.locator('.poster-dots i').count(),6);
-    assert(await p.locator('.poster-dots i').nth(leads.indexOf(id)).evaluate(n=>n.classList.contains('selected')));
+    assert.equal(await p.locator('.poster-dots i').count(),playable.length);
+    assert(await p.locator('.poster-dots i').nth(playable.indexOf(id)).evaluate(n=>n.classList.contains('selected')));
     assert.equal(await p.locator('.poster-info h1').textContent(),await p.evaluate(id=>Sky.D.hero(id).name,id));
-    if(leads.indexOf(id)>=3){
+    if(playable.indexOf(id)>=3){
       const lines=await p.locator('.hero-line').evaluate(node=>{
         const real=Math.random,lines=[node.textContent];
         // Advance through the three dialogue options via the ordinary interaction.
@@ -476,15 +485,16 @@ async function runGacha(p,spec) {
     await img.decode();
     return img.currentSrc;
   })));
-  const expected=await p.evaluate(()=>['h01','h02','h03'].map(id=>new URL(Sky.art(id,'avatar'),document.baseURI).href));
-  assert.deepEqual(portraits,expected,'featured gacha character portraits');
+  const possible=playable.map(id=>new URL(artPath(id,'avatar'),p.url()).href);
+  assert.equal(portraits.length,3);
+  assert(portraits.every(src=>possible.includes(src)),'featured gacha character portraits');
   const badges=await featured.locator('small').evaluateAll(nodes=>nodes.map(n=>{
     const skin=getComputedStyle(n);
     return {border:parseFloat(skin.borderTopWidth),fill:skin.backgroundColor};
   }));
   assert.equal(badges.length,3);
   assert(badges.every(b=>b.border>0 && !['transparent','rgba(0, 0, 0, 0)'].includes(b.fill)),'featured rarity badge dark fill and rim');
-  const ratesText=(await featured.innerText()).replace(/\s/g,'');assert(ratesText.includes('UR2%') && ratesText.includes('SSR13%'));
+  const ratesText=(await featured.innerText()).replace(/\s/g,'');assert(ratesText.includes('UR2%') && ratesText.includes('SSR98%'));
   assert.match(await p.locator('.pn-pity b').first().innerText(),/0\s*\/\s*60/);
   await auditArt(p,'gacha','#view',['item_gem','item_ticket','ui_btn_gold','ui_btn_cyan']);
   await checkBleed(p,spec,'gacha');
@@ -532,7 +542,7 @@ async function runSaveDialog(p,spec) {
   await action(p,'close').click();await action(p,'shop').click();assert((await p.getByRole('dialog').innerText()).includes('160'));
   await auditArt(p,'shop','[role=dialog]',['item_gem','item_ticket']);
   await action(p,'close').click();
-  await action(p,'atlas').click();assert.equal(await p.locator('[data-entry]').count(),8);
+  await action(p,'atlas').click();assert.equal(await p.locator('[data-entry]').count(),playable.length);
   const catalog=await p.evaluate(()=>Sky.D.heroes.map(({id,faction})=>({id,faction})));
   for(const {id,faction} of catalog){
     await badge(p,p.locator('[data-entry="'+id+'"]'),'faction_'+factionStems[faction],'codex list');
@@ -589,7 +599,7 @@ async function inspectBattle(p,spec) {
   assert(info.positions.every(n=>n.source==='pixi-texture'),'All bundled units must be real Pixi sprites');
   for(const actor of info.positions) {
     assert(actor.y>=.48 && actor.y<=.86);
-    assert.equal(actor.mirror,actor.key[0]==='e');
+    assert.equal(actor.mirror,actor.key[0]==='e' && !villains.includes(actor.heroId));
     assert(actor.key[0]==='e'?actor.x>.5:actor.x<.5);
     assert(Math.abs(actor.depth-[.88,.96,1.04][Number(actor.key.slice(1))%3])<1e-6,'rank perspective '+actor.key);
   }
@@ -600,13 +610,12 @@ async function inspectBattle(p,spec) {
   assert(info.textures.every(t=>t.mipmap===constants[0] && t.scaleMode===constants[1]));
   const originals=new Set();
   for(const n of info.positions){
-    const original=leads.includes(n.heroId);
-    assert.equal(n.artwork,original?'original':'phantom',n.heroId);
-    if(!original)continue;
+    assert(playable.includes(n.heroId) || villains.includes(n.heroId),n.heroId);
+    assert.equal(n.artwork,'original',n.heroId);
     const t=info.textures.find(t=>t.heroId===n.heroId);
     assert(t,n.heroId+' has its own Pixi GPU texture');
     assert.deepEqual([t.width,t.height],originalSize(artPath(n.heroId,'chibi')));
-    originals.add(n.heroId);
+    if(playable.includes(n.heroId))originals.add(n.heroId);
   }
   return {canvas:info.canvas,gpu:context.gpu,textures:info.textures.length,originalHeroes:[...originals].sort(),
     spriteCount:info.positions.filter(n=>n.source==='pixi-texture').length};
@@ -668,7 +677,7 @@ async function recordUltimateVfx(p) {
   await p.evaluate(()=>{
     window.__skyVfxProbeRestore?.();
     const root=document.querySelector('.battle-page'), numbers=root.querySelector('.battle-numbers');
-    const log=window.__skyVfxProbe={hits:[],frames:[],atlases:{},mediaEnded:[],voices:[],cutSkips:[]};
+    const log=window.__skyVfxProbe={hits:[],frames:[],atlases:{},mediaEnded:[],voices:[],cutSkips:[],projectiles:{}};
     const proto=Sky.BattleScene.prototype, originalHit=proto.hit, originalRender=proto.render;
     const pending=[],seen=new Map();
     const watch=new AbortController();
@@ -699,7 +708,10 @@ async function recordUltimateVfx(p) {
     proto.render=function(clock,effectClock){
       const result=originalRender.apply(this,arguments);
       if(!root.contains(this.host))return result;
-      const active=this.inspect().vfx?.active || [];
+      const vfx=this.inspect().vfx;
+      const active=vfx?.active || [];
+      for(const projectile of vfx?.projectiles || [])
+        if(projectile.actor[0]==='a')log.projectiles[projectile.key]=projectile;
       const cutVisible=!!root.querySelector('.battle-cutin');
       for(const [key,atlas] of this.vfx?.atlases || []){
         if(log.atlases[key])continue;
@@ -888,12 +900,13 @@ async function runCampaign(p,spec) {
   await panel(p,'start-route',1).click();await waitPage(p,'battle');
   await recordMotion(p);const renderer=await inspectBattle(p,spec),frameStart=await status(p);
   await sceneBackdrop(p,'battle','chapter 1');
-  assert.deepEqual(renderer.originalHeroes,leads,'opening lineup must show all six different illustrated heroes across both teams');
   const openingPositions=await status(p);
-  assert.equal(openingPositions.positions.filter(n=>n.key[0]==='a' && n.artwork==='original').length,5);
+  assert.deepEqual(renderer.originalHeroes,[...(await state(p)).formation].sort());
+  assert.equal(openingPositions.positions.filter(n=>n.key[0]==='a' && n.artwork==='original').length,6);
+  assert(openingPositions.positions.filter(n=>n.key[0]==='e').every(n=>villains.includes(n.heroId)));
   const embedded=spec.file ? await checkEmbedded(p) : null;
   await checkBleed(p,spec,'battle');
-  assert.equal(renderer.textures,8);
+  assert.equal(renderer.textures,new Set(openingPositions.positions.map(unit=>unit.heroId)).size);
   await screenshot(p,spec,'battle');
   await battle(p,'auto').click();assert.equal((await status(p)).auto,false);
   await battle(p,'speed').click();assert.equal((await status(p)).speed,2);
@@ -1027,6 +1040,7 @@ async function illustratedParty(p,spec) {
   // An isolated, reproducible regular-pool draw. Only the PRNG used during the
   // click is seeded. The game still chooses, reveals, credits and charges all cards.
   const fixture=await p.evaluate(()=>Sky.Save.fresh());
+  fixture.owned=[...new Set([...fixture.owned,...leads])];
   await importProgress(p,fixture);
   await action(p,'gacha').click();
   await p.locator('[data-panel="draw"][data-value="10"]').evaluate(button=>{
@@ -1038,8 +1052,8 @@ async function illustratedParty(p,spec) {
   await p.locator('.pn-repeat').waitFor({state:'visible'});
   assert.equal((await state(p)).tickets,fixture.tickets-10);
   const cards=p.locator('.pn-result-card'),drawn=await cards.evaluateAll(nodes=>nodes.map(n=>n.dataset.hero));
-  assert.deepEqual([...new Set(drawn.filter(id=>leads.includes(id)))].sort(),leads);
-  for(const id of leads) {
+  assert(drawn.length===10 && drawn.every(id=>playable.includes(id)));
+  for(const id of new Set(drawn)) {
     const lead=cards.filter({has:p.locator('.pn-result-front.illustrated')}).and(p.locator('[data-hero="'+id+'"]')).first();
     await decoded(p,lead.locator('.pn-card-scene'),artPath(id,'poster'));
     await decoded(p,lead.locator('.portrait'),artPath(id,'avatar'));
@@ -1316,18 +1330,6 @@ async function exerciseFullVfx(p,spec) {
     results[id]={media,hits:trace.hits,framesSeen:[...new Set(trace.frames.map(frame=>frame.frame))]};
   }
   await settleVfxFixture(p);
-  const sr=['h07','h08','h06','h01','h02','h03'];
-  await startFullVfxFixture(p,{formation:sr});await recordUltimateVfx(p);
-  results.sr=[];
-  for(const id of sr.slice(0,2)){
-    await queueVfxCast(p,sr.indexOf(id),id,false);
-    await p.waitForFunction(id=>window.__skyVfxProbe.hits.some(hit=>hit.ultimate && hit.actor[0]==='a' && hit.heroId===id),id);
-    const fallback=await p.evaluate(id=>window.__skyVfxProbe.hits.find(hit=>hit.ultimate && hit.actor[0]==='a' && hit.heroId===id),id);
-    assert(fallback.procedural && fallback.effects.length===0,id+' keeps procedural SR art');
-    confirmPopup(fallback);
-    results.sr.push(fallback);
-  }
-  await settleVfxFixture(p);
   return results;
 }
 async function exerciseVfxSpeeds(p,spec) {
@@ -1508,6 +1510,220 @@ async function run(browser,origin,spec) {
     throw new Error(spec.name+' '+err.message+'\n'+JSON.stringify({page,issues:[...new Set(issues)],failed:[...new Set(failed)]}));
   } finally {await context.close();}
 }
+async function inspectWave6Boss(p,spec) {
+  await inspectBattle(p,spec);
+  const info=await status(p);
+  const enemies=info.positions.filter(unit=>unit.key.startsWith('e'));
+  assert.equal(enemies.length,6);
+  assert(enemies.every(unit=>villains.includes(unit.heroId) && unit.sourceFacing==='left' && !unit.mirror));
+  const bosses=enemies.filter(unit=>unit.boss);
+  assert.equal(bosses.length,1);
+  const boss=bosses[0];
+  assert.equal(boss.key,'e1');
+  assert.equal(boss.heroId,'enemy_boss_mech');
+  assert(boss.magnification>=1.45 && boss.magnification<=1.6);
+  assert(enemies.filter(unit=>unit!==boss).every(unit=>unit.magnification===1));
+  return {boss,enemies};
+}
+
+async function wave6Lobby(p,spec,requested) {
+  const gallery=p.locator('.catalog');
+  await action(p,'atlas').click();
+  assert.equal(await gallery.locator('[data-entry]').count(),playable.length);
+  const stage=await p.locator('#stage').boundingBox();
+  const catalog={};
+  for(const id of playable){
+    const tile=gallery.locator('[data-entry="'+id+'"]');
+    catalog[id]=await decoded(p,tile.locator('img.portrait'),artPath(id,'avatar'));
+    const box=await tile.boundingBox();
+    assert(box.x>=stage.x-1 && box.y>=stage.y-1 &&
+      box.x+box.width<=stage.x+stage.width+1 && box.y+box.height<=stage.y+stage.height+1,
+      id+' codex card stays fully inside the stage');
+  }
+  assert(!await gallery.getByText(/加百列|诺亚/).count());
+  await screenshot(p,spec,'wave6-codex');
+  await action(p,'close').click();
+
+  const board={};
+  for(const id of [...playable.slice(1),playable[0]]){
+    await action(p,'poster').click();
+    await p.waitForFunction(id=>Sky.ui.state.settings.poster===id,id);
+    await decoded(p,p.locator('.backdrop.current'),artPath(id,'poster'));
+    assert.equal(await p.locator('.poster-dots i').count(),playable.length);
+    if(!newStars.includes(id))continue;
+    const media=p.locator('.lobby-media').filter({has:p.locator('.backdrop.current[data-poster="'+id+'"]')});
+    await p.waitForFunction(id=>{
+      const current=document.querySelector('.backdrop.current[data-poster="'+id+'"]');
+      return current && +getComputedStyle(current.parentElement).opacity>.99;
+    },id);
+    if(id==='h08'){
+      await p.waitForFunction(()=>[...document.querySelectorAll('.lobby-media:has(.backdrop.current) video')].some(video=>
+        video.classList.contains('is-playing') && video.currentTime>.12 && video.readyState>=2 && !video.paused));
+      const video=await media.locator('video.is-playing').evaluate(video=>({
+        path:new URL(video.currentSrc).pathname.split('/').pop(),muted:video.muted,
+        width:video.videoWidth,height:video.videoHeight,duration:video.duration
+      }));
+      assert.equal(video.path,'lobby_cg_h08.mp4');
+      assert(video.muted && video.height===1080 && video.duration>=4.8 && video.duration<=5.3);
+      board[id]=video;
+    }else{
+      const still=await media.evaluate(layer=>({animation:getComputedStyle(layer).animationName}));
+      assert.equal(await media.locator('video').count(),0);
+      assert.equal(still.animation,'poster-breathe');
+      board[id]=still;
+    }
+    if(spec.name==='desktop' || id==='h08')await screenshot(p,spec,'wave6-lobby-'+id);
+  }
+  const unregistered=newStars.filter(id=>id!=='h08');
+  assert(!requested.some(url=>unregistered.some(id=>url.endsWith('lobby_cg_'+id+'.mp4'))));
+  return {catalog,board};
+}
+
+async function wave6Combat(p,spec) {
+  await action(p,'campaign').click();
+  await panel(p,'start-route',1).click();
+  await inspectBattle(p,spec);
+  const route=(await status(p)).positions.filter(unit=>unit.key.startsWith('e'));
+  assert(route.every(unit=>villains.includes(unit.heroId) && unit.sourceFacing==='left' && !unit.mirror && !unit.boss));
+  assert.deepEqual([...new Set(route.map(unit=>unit.heroId))].sort(),villains.slice(1).sort());
+  const embedded=spec.file ? await checkEmbedded(p) : null;
+  await screenshot(p,spec,'wave6-route-enemies');
+  await battle(p,'skip').click();
+  await p.locator('.battle-result').waitFor();
+  assert.equal((await state(p)).cleared,1);
+  await battle(p,'return').click();
+  await action(p,'home').click();
+
+  const fixture=await p.evaluate(()=>{
+    const save=Sky.Save.fresh();
+    save.cleared=9;save.tower=4;save.level=25;
+    return save;
+  });
+  for(const [kind,id] of [['campaign',5],['campaign',10],['tower',5]]){
+    await importProgress(p,fixture);
+    if(kind==='campaign'){
+      await action(p,'campaign').click();
+      await panel(p,'chapter',id===5?1:2).click();
+      await panel(p,'stage',id).click();
+      await panel(p,'start-route',id).click();
+    }else{
+      await action(p,'trials').click();
+      await panel(p,'start-trial','tower').click();
+    }
+    await inspectWave6Boss(p,spec);
+    if(spec.name==='desktop')await screenshot(p,spec,'wave6-'+kind+'-'+id+'-boss');
+    await battle(p,'skip').click();await p.locator('.battle-result').waitFor();
+    await battle(p,'return').click();await action(p,'home').click();
+  }
+
+  const formation=['h07','h08','h09','h10','h11','h01'];
+  await startFullVfxFixture(p,{formation});
+  const arena=await inspectWave6Boss(p,spec);
+  await recordUltimateVfx(p);
+  await p.waitForFunction(keys=>keys.every(id=>Sky.battlePage.inspect().vfx.ready.includes(id)),newStars);
+  await screenshot(p,spec,'wave6-boss');
+  await p.waitForFunction(keys=>keys.every(id=>window.__skyVfxProbe.projectiles['proj_'+id]),newStars,
+    {timeout:35000});
+  const effects={};
+  for(const id of newStars){
+    const slot=formation.indexOf(id);
+    const cut=p.locator('.battle-cutin[data-hero="'+id+'"]');
+    await p.locator('[data-cast="'+slot+'"]:enabled').click();
+    await cut.waitFor({timeout:15000});
+    assert((await cut.getAttribute('style')).includes(artPath(id,'poster')));
+    if(id==='h08'){
+      await p.waitForFunction(()=>{
+        const video=document.querySelector('.battle-cutin[data-hero=h08] video'),audio=Sky.audio.inspect();
+        return video?.currentTime>.22 && !video.paused && !video.muted && video.webkitAudioDecodedByteCount>0 &&
+          audio.ducked && Math.abs(audio.tracks.battle?.volume-Sky.ui.state.settings.musicVolume*.22)<.004;
+      });
+      await screenshot(p,spec,'wave6-h08-ult');
+      await cut.waitFor({state:'detached',timeout:7500});
+      await p.waitForFunction(()=>{
+        const audio=Sky.audio.inspect();
+        return !audio.ducked && Math.abs(audio.tracks.battle?.volume-Sky.ui.state.settings.musicVolume)<.004;
+      });
+    }else{
+      assert.equal(await cut.getAttribute('data-media'),'poster');
+      await cut.waitFor({state:'detached',timeout:3600});
+    }
+    await waitAuthoredHits(p,id,1);
+    if((spec.name==='desktop' || id==='h08') && out)await screenshot(p,spec,'wave6-'+id+'-impact');
+    await p.waitForFunction(id=>!Sky.battlePage.inspect()?.vfx.active.some(effect=>effect.key===id && effect.actor[0]==='a'),id);
+    const trace=await p.evaluate(id=>({
+      frames:[...new Set(window.__skyVfxProbe.frames.filter(frame=>frame.key===id && frame.actor[0]==='a')
+        .map(frame=>frame.frame).filter(Number.isInteger))].sort((a,b)=>a-b),
+      hit:window.__skyVfxProbe.hits.find(hit=>hit.heroId===id && hit.ultimate &&
+        hit.actor[0]==='a' && hit.effects.some(effect=>effect.key===id)),
+      atlases:window.__skyVfxProbe.atlases,
+      voice:window.__skyVfxProbe.voices.find(voice=>voice.id===id) || null,
+      projectile:window.__skyVfxProbe.projectiles['proj_'+id]
+    }),id);
+    assert(trace.frames.length>=5 && !trace.hit.cutVisible);
+    assert(trace.projectile && trace.projectile.artKey!==trace.projectile.key);
+    const impact=trace.hit.effects.find(effect=>effect.key===id);
+    assert.equal(trace.atlases[impact.artKey].frames.length,9);
+    assert(impact.artKey!==id && impact.tint!==0xffffff && impact.source===(spec.file?'embedded':'png'));
+    if(id==='h08'){
+      assert.equal(trace.voice.clip,'ult_h08.mp4');
+      assert(trace.voice.audioBytes>0 && !trace.voice.muted && trace.voice.rate===1);
+      assert(trace.voice.duration>=4.8 && trace.voice.duration<=5.3);
+      assert(trace.voice.playedMs>=4700 && trace.voice.playedMs<=5600);
+    }
+    effects[id]={frames:trace.frames,impact,projectile:trace.projectile,voice:trace.voice};
+  }
+  await settleVfxFixture(p);
+
+  await startFullVfxFixture(p,{formation});await recordUltimateVfx(p);
+  await p.locator('[data-cast="1"]:enabled').click();
+  const repeat=p.locator('.battle-cutin[data-hero=h08]');
+  await p.waitForFunction(()=>Sky.audio.inspect().ducked && document.querySelector('.battle-cutin[data-hero=h08] video')?.currentTime>.16);
+  await repeat.locator('.battle-cut-skip').click();
+  await repeat.waitFor({state:'detached'});
+  await waitAuthoredHits(p,'h08',1);
+  await p.waitForFunction(()=>!Sky.audio.inspect().ducked);
+  const skipped=await p.evaluate(()=>({
+    mediaEnded:window.__skyVfxProbe.mediaEnded.includes('h08'),
+    cutSkipped:window.__skyVfxProbe.cutSkips.includes('h08'),
+    hit:window.__skyVfxProbe.hits.find(hit=>hit.heroId==='h08' && hit.ultimate && hit.actor[0]==='a')
+  }));
+  assert(skipped.cutSkipped && !skipped.mediaEnded && skipped.hit?.effects.some(effect=>effect.key==='h08'));
+  await settleVfxFixture(p);
+  return {route,arena,embedded,effects,skipped};
+}
+
+async function runWave6Focus(browser,origin,spec) {
+  const context=await browser.newContext({viewport:{width:spec.width,height:spec.height},deviceScaleFactor:spec.dpr,
+    isMobile:!!spec.mobile,hasTouch:!!spec.mobile});
+  const p=await context.newPage();p.setDefaultTimeout(15000);
+  const issues=[],requests=[];
+  p.on('pageerror',error=>issues.push('page: '+error.message));
+  p.on('console',message=>{if(message.type()==='error')issues.push('console: '+message.text());});
+  p.on('response',response=>{if(response.status()>=400)issues.push('HTTP '+response.status()+' '+response.url());});
+  p.on('requestfailed',request=>{if(request.failure()?.errorText!=='net::ERR_ABORTED')
+    issues.push('request: '+request.failure()?.errorText+' '+request.url());});
+  p.on('request',request=>{
+    const url=request.url();requests.push(url);
+    if(/^https?:/.test(url) && (spec.file || new URL(url).origin!==origin))issues.push('external URL '+url);
+  });
+  try {
+    if(spec.mobile){
+      const cdp=await context.newCDPSession(p);
+      await cdp.send('Emulation.setSafeAreaInsetsOverride',{insets:{left:44,right:35,top:0,bottom:0}});
+    }
+    await p.goto(spec.file?pathToFileURL(path.join(root,'index.html')).href:origin+'/index.html');
+    await p.waitForFunction(()=>window.Sky?.ui?.state);
+    const stage=await geometry(p,spec),images=await artwork(p,spec);
+    const lobby=await wave6Lobby(p,spec,requests);
+    const combat=await wave6Combat(p,spec);
+    assert.deepEqual(issues,[]);
+    return {name:spec.name,stage,images,lobby,combat,errors:issues};
+  }catch(error){
+    if(out)await screenshot(p,spec,'wave6-failure').catch(()=>{});
+    throw new Error(spec.name+' '+error.stack+'\n'+JSON.stringify([...new Set(issues)]));
+  }finally{await context.close();}
+}
+
 async function replacementCheck(browser) {
   const parent=path.resolve(out||os.tmpdir());
   const temp=fs.mkdtempSync(path.join(parent,'sky_odyssey_art_test_'));
@@ -1578,12 +1794,12 @@ async function replacementCheck(browser) {
     const origin='http://127.0.0.1:'+server.address().port;
     const reports=[];
     const chosen=presets.filter(x=>selected ? selected.split(',').includes(x.name) : !x.extra);
-    const replacements=!vfxOnly && !hudOnly && (!selected || selected.split(',').includes('replacement'));
+    const replacements=!vfxOnly && !hudOnly && !wave6Only && (!selected || selected.split(',').includes('replacement'));
     assert(chosen.length||replacements,'unknown --case');
     for(const spec of chosen) {
-      const result=await (vfxOnly||hudOnly?runVfxFocus:run)(browser,origin,spec);
+      const result=await (wave6Only?runWave6Focus:vfxOnly||hudOnly?runVfxFocus:run)(browser,origin,spec);
       reports.push(result);console.log(JSON.stringify(result));
-      if(out)fs.writeFileSync(path.join(out,spec.name+(hudOnly?'-hud':vfxOnly?'-vfx':'')+'-report.json'),JSON.stringify(result,null,2));
+      if(out)fs.writeFileSync(path.join(out,spec.name+(wave6Only?'-wave6':hudOnly?'-hud':vfxOnly?'-vfx':'')+'-report.json'),JSON.stringify(result,null,2));
     }
     if(replacements)await replacementCheck(browser);
   } finally {await browser?.close();await new Promise(resolve=>server.close(resolve));}

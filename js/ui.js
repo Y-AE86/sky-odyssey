@@ -12,7 +12,12 @@
     h03:['你听，锦鲤跃过水面，恰好落在这一拍。','清泉载月，这一曲只为故人。','这片星海的潮声，我替你记着。'],
     h04:['往我翼下站些。云上的风，比城里凉。','盾上的凹痕？这一处，换回了一整船的人。','晨钟还没响。再坐一会儿吧，今天我守第一班。'],
     h05:['听见那一声咔哒了吗？两把铳的节拍，终于对上了。','别动，你肩上落了颗星砂。正好借我校个准。','航图借我一角。我算出一条近路，能赶上今晚的流星雨。'],
-    h06:['灯借我熄一盏。你看，绯月原来这么亮。','脚步放轻些。听，那只夜莺又肯开口了。','你留的窗我看见了。下回不走屋顶，走正门。']
+    h06:['灯借我熄一盏。你看，绯月原来这么亮。','脚步放轻些。听，那只夜莺又肯开口了。','你留的窗我看见了。下回不走屋顶，走正门。'],
+    h07:['星渊再深，也留着给归航者引路的光。','把心愿说给这片夜空吧。离得最近的那颗星听得见。','这段星轨我已记下。下回迷路，唤我的名字。'],
+    h08:['听，雷云在给我们报风向。再过三息就能启航。','手别碰锋刃。刚引下的电还沿着纹路走呢。','等我收好雷光，就陪你去看一眼晴空。'],
+    h09:['这簇离火烧了一整夜，还够替你暖一杯茶。','天边那抹红是朝霞。若是我的凰焰，你一眼就认得。','起飞时跟紧我。穿过云层，就能看见整片星港。'],
+    h10:['月潮涨上来了。循着剑尖的微光，就找得到渡口。','坐一会儿吧。船上的潮声听久了，心也会慢下来。','今晚的剑只映月色。若你愿意，我教你这一式。'],
+    h11:['今夜由我守最后一班。你尽管带着灯回来。','替我留扇窗。王冠和羽翼都沾了夜露。','城外的钟响了三声。再等一声，我就送你回港。']
   };
   const bleed = document.getElementById('bleed');
   const image = (url,cls='ico') => '<img class="'+cls+'" alt="" draggable="false" src="'+url+'">';
@@ -26,7 +31,7 @@
   const btn = (label,action,color='gold') => '<button class="gem-btn '+color+'" data-action="'+action+'">'+label+'</button>';
   const frame = id => {
     const h=D.hero(id), q=h.rarity.toLowerCase(), path='assets/ui/frame_'+q+'.png';
-    return '<span class="quality '+q+'"><img class="portrait" alt="" src="'+S.art(id,'avatar')+'"><img class="rim" alt="" src="'+path+'"></span>';
+    return '<span class="quality '+q+(h.enemy?' enemy-quality':'')+'"><img class="portrait" alt="" src="'+S.art(id,'avatar')+'"><img class="rim" alt="" src="'+path+'"></span>';
   };
   const bar = (pct,color='gold') => '<span class="meter '+color+(Number(pct)>0?'':' empty')+'"><span class="channel"><i style="width:'+Math.max(0,Math.min(100,Number(pct)||0))+'%"></i></span></span>';
   function toast(msg) {notice.textContent=msg;notice.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>notice.hidden=true,2400);}

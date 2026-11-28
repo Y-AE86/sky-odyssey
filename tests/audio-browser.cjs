@@ -89,12 +89,17 @@ function installAudioProbe(){
     };
     return {time:performance.now(),scene:state.scene,ducked:state.ducked,unlocked:state.unlocked,lobby:nativeTrack('lobby'),battle:nativeTrack('battle')};
   };
-  audioProbe.mark=name=>{audioProbe.marks[name]=performance.now();};
+  function recordVolume(state){
+    audioProbe.curve.push({t:state.time,l:state.lobby?.volume,b:state.battle?.volume,d:!!state.ducked});
+  }
+  audioProbe.mark=name=>{
+    const state=audioProbe.snapshot();
+    audioProbe.marks[name]=state.time;
+    // Include the exact observed boundary even if the next draw arrives later.
+    recordVolume(state);
+  };
   function sample(){
-    if(window.Sky?.audio?.inspect){
-      const state=audioProbe.snapshot();
-      audioProbe.curve.push({t:Math.round(state.time),l:state.lobby?.volume,b:state.battle?.volume,d:!!state.ducked});
-    }
+    if(window.Sky?.audio?.inspect)recordVolume(audioProbe.snapshot());
     requestAnimationFrame(sample);
   }
   requestAnimationFrame(sample);
@@ -267,16 +272,19 @@ function analyzeCurves({curve,marks,gains},base){
   function duck(mode){
     const frames=window(mode+'-start',mode+'-done');
     const start=frames.findIndex(row=>row.d);
-    const end=frames.findIndex((row,i)=>i>start && !row.d);
-    assert(start>=0 && end>=0);
+    const end=frames.findLastIndex(row=>row.d)+1;
+    assert(start>=0 && end<frames.length);
     const low=frames.findIndex((row,i)=>i>=start && row.b/base<.24);
     const recovered=frames.findIndex((row,i)=>i>=end && row.b/base>.98);
     assert(low>start && recovered>end);
+    // The threshold can be crossed any time before the first frame that observes it.
+    const sampleDelay=at=>Math.max(0,frames[at].t-frames[at-1].t-50);
     const down=frames[low].t-frames[start].t, up=frames[recovered].t-frames[end].t;
-    assert(down>=90 && down<=320,'duck ramp should approximate 0.2s: '+down);
-    assert(up>=225 && up<=560,'recovery ramp should approximate 0.4s: '+up);
+    const samplingGap={down:sampleDelay(low),up:sampleDelay(recovered)};
+    assert(down>=90 && down<=320+samplingGap.down,'duck ramp should approximate 0.2s: '+down);
+    assert(up>=225 && up<=560+samplingGap.up,'recovery ramp should approximate 0.4s: '+up);
     approx(Math.min(...frames.map(row=>row.b/base)),.22,.02,'the lowest BGM gain should be 22%');
-    return {downMs:down,upMs:up,minGain:Math.min(...frames.map(row=>row.b/base))};
+    return {downMs:down,upMs:up,samplingGap,minGain:Math.min(...frames.map(row=>row.b/base))};
   }
   const muted=window('muted-start','muted-done');
   assert(muted.length && muted.every(row=>!row.d && Math.abs(row.b-base)<.015),'muted cut never ducks music');
@@ -363,7 +371,7 @@ async function run(browser,url,name){
     assert(!probe.fetches.some(src=>/\.mp3(?:$|\?)/i.test(src || '')),'native music does not fetch/decode MP3 through Web Audio');
     assert(probe.recent.every(sfx=>sfx.pitch>=.95 && sfx.pitch<=1.05));
     assert(new Set(probe.recent.map(sfx=>sfx.pitch)).size>10);
-    fs.writeFileSync(path.join(out,name+'-timeline.json'),JSON.stringify({marks:probe.marks,volume:probe.gains,cues:probe.cues},null,2));
+    fs.writeFileSync(path.join(out,name+'-timeline.json'),JSON.stringify({marks:probe.marks,curve:probe.curve,volume:probe.gains,cues:probe.cues},null,2));
     const curves=analyzeCurves(probe,gain);
     await page.reload();
     await mute.waitFor();

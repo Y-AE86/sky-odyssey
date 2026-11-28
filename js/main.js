@@ -22,5 +22,5 @@
   new ResizeObserver(alignBackdrop).observe(stage);
   window.addEventListener('resize',alignBackdrop);
   window.addEventListener('resize',update);update();
-  window.Sky.art.ready.then(()=>window.Sky.ui.boot());
+  window.Sky.ui.boot();
 })();

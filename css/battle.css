@@ -134,6 +134,8 @@ body:has(.battle-page.spotlight) #bleed[data-page="battle"]::after {opacity:1; t
   filter:drop-shadow(0 .12cqw .10cqw #410f23);
 }
 .battle-float.critical small {font:italic 900 .46em/1 var(--display); letter-spacing:0;}
+.battle-float.periodic {color:#ffb477;-webkit-text-stroke-color:#56252a;}
+.battle-float.periodic small {font:800 .46em/1 var(--display);margin-inline-end:.22em;}
 .battle-float.critical::after {
   content:"✦"; position:absolute; right:-.25em; top:-.2em; color:#fff9d8;
   font-size:.43em; -webkit-text-stroke:0; text-shadow:0 0 .4em #ffa945;

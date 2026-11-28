@@ -85,8 +85,8 @@
 .pn-filters button {display:inline-flex;align-items:center;gap:.28cqw;padding:.15cqw .9cqw;color:var(--p-muted);font-size:1.04cqw;white-space:nowrap}
 .pn-filters .pn-mark {width:1.37cqw;height:1.37cqw}
 .pn-filters button.on {background:#dac38b21;color:#ffdfa7;border-bottom:1px solid var(--p-line)}
-.pn-hero-list {grid-column:1;display:flex;align-items:center;gap:.65cqw;height:100%;min-height:0}
-.pn-hero-list .pn-hero-pick {position:relative;width:7cqw;height:7cqw;display:grid;place-items:center;}
+.pn-hero-list {grid-column:1;display:flex;align-items:center;gap:.65cqw;height:100%;min-width:0;min-height:0;padding-inline:.2cqw}
+.pn-hero-list .pn-hero-pick {position:relative;flex:0 1 7cqw;min-width:0;aspect-ratio:1;display:grid;place-items:center}
 .pn-hero-pick.on::before {content:"";position:absolute;inset:1%;border-radius:50%;background:radial-gradient(ellipse,#ffdf9470,transparent 70%);box-shadow:0 0 .9cqw #e6b25a48}
 .pn-hero-pick.on::after {content:"";position:absolute;bottom:-.22cqw;width:.9cqw;height:.46cqw;clip-path:polygon(50% 0,100% 100%,0 100%);background:#f7d295}
 .pn-hero-pick.on .rim {filter:drop-shadow(0 0 .28cqw #eac4799c)}
@@ -162,7 +162,7 @@
 .pn-bond em {margin-left:auto}
 .pn-bench {display:flex;gap:.5cqw}
 .pn-bench p {font-size:1.04cqw;color:var(--p-muted)}
-.pn-bench button {width:6cqw;padding:0;text-align:center}
+.pn-bench button {flex:0 1 6cqw;min-width:0;padding:0;text-align:center}
 .pn-bench small {display:block}
 .pn-bag-list {overflow:auto;max-height:35cqw}
 .pn-bag-item {display:flex;align-items:center;gap:1cqw;border-bottom:1px solid #7585a34d}
@@ -223,8 +223,7 @@ body:has(.pn-draw-results) #bleed[data-page="gacha"]::after {background:linear-g
 .pn-skip {display:flex;align-items:center;gap:.6cqw;padding:.45cqw 1.1cqw;min-height:2.75cqw}
 .pn-draw-results .pn-repeat {--btn-h:3.95cqw;width:13.2cqw}
 .pn-result-front {height:100%;isolation:isolate;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:.5cqw .3cqw .7cqw;backface-visibility:hidden;background:radial-gradient(ellipse at 50% 48%,color-mix(in srgb,var(--grade) 20%,transparent),transparent 76%)}
-.pn-card-scene {position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:33% center;opacity:.3}
-.pn-card-scene.phantom {object-position:50% 38%;opacity:.38}
+.pn-card-scene {position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--card-focus,22%) center}
 .pn-result-front::before {content:"";position:absolute;z-index:-1;inset:.24cqw;border:1px solid color-mix(in srgb,var(--grade) 45%,transparent);background:linear-gradient(0deg,#111525ee,transparent 62%)}
 .pn-result-front::after {content:"";position:absolute;pointer-events:none;inset:0;background:linear-gradient(110deg,transparent 43%,#ffe9b63d 50%,transparent 57%) 120% 0/320% 100%;animation:pn-luster 5s calc(var(--i)*.17s) linear infinite}
 @keyframes pn-luster {0%,60%{background-position:120% 0}95%,100%{background-position:-25% 0}}
@@ -236,11 +235,11 @@ body:has(.pn-draw-results) #bleed[data-page="gacha"]::after {background:linear-g
 .pn-result-front>em {color:#c4d1e5;font-size:.98cqw;margin-top:.24cqw}
 .pn-result-front>em.is-new {color:#b4f4d9}
 .pn-result-front.illustrated {justify-content:flex-end}
-.pn-result-front.illustrated .pn-card-scene {object-position:var(--card-focus,22%) center;opacity:1}
 .pn-result-card[data-hero="h01"] {--card-focus:15%}
 .pn-result-card[data-hero="h04"] {--card-focus:27%}
 .pn-result-card[data-hero="h05"] {--card-focus:31%}
 .pn-result-card[data-hero="h06"] {--card-focus:28%}
+.pn-result-card[data-hero="h08"] {--card-focus:27%}
 .pn-result-front.illustrated::before {background:linear-gradient(0deg,#0e1426 0%,#141a2be6 18%,#171b2e80 37%,transparent 60%)}
 .pn-result-front.illustrated>.quality {width:44%;max-height:none}
 .pn-result-front.illustrated>small {position:absolute;top:.54cqw;left:.54cqw;margin:0;padding:.12cqw .45cqw;background:#141a2bda;border-bottom:1px solid var(--grade)}
@@ -288,8 +287,7 @@ body:has(#view .pn-map) #bleed[data-page="campaign"]::after {
 .pn-enemies {display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr));justify-items:center;align-items:center;background:linear-gradient(90deg,#4655742e,transparent);flex:1;min-height:0;padding:.25cqw .75cqw;margin:.55cqw 0}
 .pn-enemies>div {width:100%;height:100%;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:center}
 .pn-enemies>div>small {font-size:.87cqw;color:#e8d8b8;line-height:1.15}
-.pn-enemies .quality .portrait[src*="avatar_h"] {filter:brightness(1.42) saturate(1.15)}
-.pn-enemies .quality .portrait {background:#29334d}
+.pn-enemies .enemy-quality .portrait {object-fit:contain;object-position:center;background:radial-gradient(ellipse at 50% 90%,#69334b,#20263b 75%);padding:2%;filter:brightness(1.14)}
 .pn-enemies .quality {width:6.25cqw;height:6.25cqw;min-height:0}
 .pn-reward {justify-content:flex-start;gap:1.2cqw;padding:.6cqw 0;border-top:1px solid #9c8e7255}
 .pn-reward .pn-mark {color:var(--p-gold);width:1.65cqw;height:1.4cqw}

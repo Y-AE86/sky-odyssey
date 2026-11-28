@@ -6,8 +6,8 @@ require('../js/save.js');
 require('../js/battle-engine.js');
 const {D,Save:S,Battle:B}=globalThis.Sky;
 const now=new Date(2026,10,27,14,0,0).getTime();
-test('六张看板按序循环，旧看板与未招募角色的选择均可存取及导入导出',()=>{
-  const expected=['h01','h02','h03','h04','h05','h06'];
+test('十一张看板按序循环，旧看板与未招募角色的选择均可存取及导入导出',()=>{
+  const expected=Array.from({length:11},(_,i)=>'h'+String(i+1).padStart(2,'0'));
   assert.deepEqual(D.illustrated,expected);
   const memory=new Map();
   const previous=Object.getOwnPropertyDescriptor(globalThis,'localStorage');
@@ -17,7 +17,7 @@ test('六张看板按序循环，旧看板与未招募角色的选择均可存�
   try{
     const s=S.fresh();
     assert.equal(s.settings.poster,'h01');
-    assert(!s.owned.includes('h06'));
+    assert(!s.owned.includes('h11'));
     for(const id of expected){
       assert.equal(s.settings.poster,id);
       S.write(s);
@@ -34,17 +34,49 @@ test('六张看板按序循环，旧看板与未招募角色的选择均可存�
       assert.equal(loaded.settings.poster,id);
       assert.deepEqual(loaded.formation,s.formation);
     }
-    for(const invalid of ['h07','h08','h99','',null]){
+    for(const invalid of ['h12','h99','enemy_caster','',null]){
       s.settings.poster=invalid;
       assert.throws(()=>S.write(s));
       assert.throws(()=>S.importJSON(JSON.stringify(s)));
     }
     assert.equal(memory.size,1);
-    assert.equal(S.load().settings.poster,'h06');
+    assert.equal(S.load().settings.poster,'h11');
   }finally{
     if(previous)Object.defineProperty(globalThis,'localStorage',previous);
     else delete globalThis.localStorage;
   }
+});
+test('八人旧档保留望舒和希露的原角色编号、星级、星装、碎片与队伍',()=>{
+  const legacy=S.fresh();
+  legacy.owned.push('h06','h07');
+  S.assign(legacy,0,'h07');
+  S.autoEquip(legacy,'h07');
+  const {h07:wang,h08:xi}=structuredClone(legacy.equipment);
+  legacy.shards.h07=15; legacy.stars.h07=3;
+  legacy.shards.h08=21; legacy.stars.h08=2;
+  legacy.pity.standard={ur:53,ssr:7};
+  for(const id of ['h09','h10','h11']) {
+    delete legacy.stars[id]; delete legacy.shards[id]; delete legacy.equipment[id];
+  }
+  const loaded=S.importJSON(JSON.stringify(legacy));
+  assert.match(D.hero('h07').name,/望舒/u); assert.match(D.hero('h08').name,/希露/u);
+  assert.deepEqual(loaded.formation,legacy.formation);
+  assert.equal(loaded.formation[0],'h07'); assert.equal(loaded.formation[1],'h08');
+  assert.deepEqual([loaded.equipment.h07,loaded.equipment.h08],[wang,xi]);
+  assert.deepEqual([loaded.stars.h07,loaded.shards.h07,loaded.stars.h08,loaded.shards.h08],[3,15,2,21]);
+  assert.deepEqual(loaded.pity.standard,{ur:53,ssr:7});
+  for(const id of ['h09','h10','h11']) {
+    assert.equal(loaded.stars[id],1); assert.equal(loaded.shards[id],0);
+    assert.deepEqual(loaded.equipment[id],[null,null,null,null]);
+    assert(!loaded.owned.includes(id));
+  }
+  const partial=structuredClone(loaded);
+  delete partial.equipment.h11;
+  assert.throws(()=>S.importJSON(JSON.stringify(partial)),/存档/);
+  legacy.owned.push('h11');
+  assert.throws(()=>S.importJSON(JSON.stringify(legacy)),/存档/);
+  loaded.owned.push('h09','h10','h11');
+  assert.equal(S.importJSON(S.exportJSON(loaded)).owned.length,11);
 });
 test('整套星装强化一次扣款，余额不足时四件均保持原等级',()=>{
   const s=S.fresh(now);
@@ -160,32 +192,42 @@ test('JSON round-trip validates origin, imported field ranges, equipment ownersh
   assert.throws(()=>S.draw(s,'up',10)); assert.throws(()=>S.upgrade(s)); assert.throws(()=>S.exchange(s,31));
   assert.equal(JSON.stringify(s),before); S.exchange(s,30); assert.equal(s.tickets,30); assert.equal(s.diamonds,0);
 });
-test('ten-pull and sixty-pull guarantees persist across batches and are independent per pool',()=>{
+test('every pull grants SSR or UR, with a sixty-pull UR guarantee per pool',()=>{
   const s=S.fresh(); s.tickets=120;
-  const sr=S.draw(s,'standard',10,()=>.99);
-  assert.equal(sr.filter(x=>x.rarity==='SR').length,9);
-  assert.equal(sr[9].rarity,'SSR');
+  const ssr=S.draw(s,'standard',10,()=>.99);
+  assert(ssr.every(x=>x.rarity==='SSR'));
   assert.deepEqual(s.pity.up,{ur:0,ssr:0});assert.equal(s.pity.standard.ur,10);
   for(let i=11;i<=59;i++) assert.notEqual(S.draw(s,'standard',1,()=>.99)[0].rarity,'UR');
   const pulled=S.draw(s,'standard',1,()=>.99)[0];
-  assert.equal(pulled.rarity,'UR');assert.equal(pulled.shards,24);
+  assert.equal(pulled.id,'h11'); assert.equal(pulled.shards,0);
   assert.deepEqual(s.pity.standard,{ur:0,ssr:0});
-  const recruits=S.draw(s,'up',10,()=>.24);
+  const recruits=S.draw(s,'up',10,()=>.64);
   assert.equal(recruits[0].id,'h07');assert.equal(recruits[0].isNew,true);
-  assert.equal(recruits[1].shards,6); assert(s.owned.includes('h07'));
+  assert.equal(recruits[1].shards,12); assert(s.owned.includes('h07'));
 });
-test('60,000 independent rolls match published 2/13/85 rates and conditional 75% featured UR',()=>{
-  const s=S.fresh(),rng=seeded(9020),n=60000;
-  s.tickets=n; const ranks={UR:0,SSR:0,SR:0};let featured=0;
-  for(let i=0;i<n;i++) {
-    s.pity.up.ur=0;s.pity.up.ssr=0;
-    const [r]=S.draw(s,'up',1,rng); ranks[r.rarity]++;
-    if(r.id==='h01')featured++;
+test('both pools include all eleven heroes and match published 2/98 rates and UP distribution',()=>{
+  for(const pool of ['standard','up']) {
+    const s=S.fresh(),rng=seeded(9020),n=60000;
+    s.tickets=n;
+    const counts=Object.fromEntries(D.heroes.map(h=>[h.id,0]));
+    let ur=0;
+    for(let i=0;i<n;i++) {
+      s.pity[pool].ur=0;
+      const [r]=S.draw(s,pool,1,rng); counts[r.id]++;
+      assert.equal(r.rarity,D.hero(r.id).rarity);
+      if(r.rarity==='UR')ur++;
+    }
+    assert(Math.abs(ur/n-S.poolRates.ur)<.002);
+    assert(Math.abs((n-ur)/n-S.poolRates.ssr)<.002);
+    assert.equal(s.owned.length,11);
+    for(const hero of D.heroes) {
+      if(hero.rarity==='SSR') assert(Math.abs(counts[hero.id]/(n-ur)-1/7)<.012);
+      else {
+        const probability=pool==='standard' ? .25 : hero.id==='h01' ? .75 : 1/12;
+        assert(Math.abs(counts[hero.id]/ur-probability)<.05);
+      }
+    }
   }
-  assert(Math.abs(ranks.UR/n-.02)<.002);
-  assert(Math.abs(ranks.SSR/n-.13)<.005);
-  assert(Math.abs(ranks.SR/n-.85)<.005);
-  assert(Math.abs(featured/ranks.UR-.75)<.05);
 });
 test('首个十连跨池仅触发一次，旧档兼容，保底卡、碎片与正常保底同时记账',()=>{
   const initial=S.fresh();
@@ -193,7 +235,7 @@ test('首个十连跨池仅触发一次，旧档兼容，保底卡、碎片与�
   const s=S.importJSON(JSON.stringify(initial));
   assert.equal(s.firstTenDone,false);
   const single=S.draw(s,'up',1,()=>.99);
-  assert.equal(single[0].rarity,'SR');
+  assert.equal(single[0].rarity,'SSR');
   assert.equal(s.firstTenDone,false);
   const before=s.shards.h03;
   const first=S.draw(s,'standard',10,()=>.99);
@@ -206,7 +248,7 @@ test('首个十连跨池仅触发一次，旧档兼容，保底卡、碎片与�
   assert(second.every(x=>!['h01','h02','h03'].includes(x.id)));
   const ur=S.fresh();
   ur.pity.standard.ur=50;
-  assert.equal(S.draw(ur,'standard',10,()=>.99).at(-1).rarity,'UR');
+  assert.equal(S.draw(ur,'standard',10,()=>.99).at(-1).id,'h02');
   assert.deepEqual(ur.pity.standard,{ur:0,ssr:0});
   const empty=S.fresh();
   empty.tickets=9;
@@ -226,14 +268,16 @@ test('6v6 teams, counter cycle, actual +18% damage and front-row targeting',()=>
   const x=ult(same).hits[0].amount,y=ult(adv).hits[0].amount;
   assert(Math.abs(y/x-1.18)<.009);
 });
-test('all eight ultimates resolve their target patterns, statuses, HP, shields and rage',()=>{
+test('all eleven ultimates resolve their target patterns, statuses, HP, shields and rage',()=>{
   const ink=freshBattle();
   const hit=ult(ink);assert.equal(hit.hits.length,3);assert.equal(ink.enemies[0].status.curse,2);
   assert(hit.hits.every((h,i,list)=>!i || h.hp<list[i-1].hp));
   assert.equal(B.cast(ink.b,0),null);
   const ice=freshBattle('h02',()=>0);assert.equal(ult(ice).hits.length,6);
   assert(ice.enemies.every(u=>u.status.freeze===1));
-  const frozen=B.step(ice.b,true); assert.equal(frozen.kind,'stun');
+  let frozen;
+  do { frozen=B.step(ice.b,true); } while(!frozen.actor.startsWith('e'));
+  assert.equal(frozen.kind,'stun');
   const water=freshBattle('h03');
   water.allies.forEach(u=>{u.hp-=120;u.status.freeze=1;u.status.curse=1;});
   water.hero.status.freeze=0;
@@ -242,14 +286,66 @@ test('all eight ultimates resolve their target patterns, statuses, HP, shields a
   const shield=freshBattle('h04'); const guard=ult(shield);
   assert.deepEqual(guard.hits.map(h=>h.target),['a0','a1','a2']);
   assert(shield.allies.slice(0,3).every(u=>u.shield>0));
-  const reflected=B.step(shield.b); assert(reflected.hits.some(h=>h.target===reflected.actor));
+  let reflected;
+  do { reflected=B.step(shield.b); } while(!reflected.actor.startsWith('e'));
+  assert(reflected.hits.some(h=>h.target===reflected.actor));
   const shot=freshBattle('h05',()=>0);shot.enemies[0].hp=1;
   assert.equal(ult(shot).hits.length,4);assert.equal(shot.hero.rage,35);
   const blood=freshBattle('h06');blood.enemies[4].hp=20;blood.hero.hp-=100;
   const drain=ult(blood);assert.equal(drain.hits[0].target,'e4');assert.equal(blood.hero.healing,8);
-  const light=freshBattle('h07');assert.deepEqual(ult(light).hits.map(h=>h.target),['e0','e3']);
-  assert(light.allies.every(u=>u.status.encourage===2));
-  const gear=freshBattle('h08');assert.equal(ult(gear).hits.length,3);assert(gear.enemies.slice(0,3).every(u=>u.status.breakArmor===2));
+  const star=freshBattle('h07'); assert.equal(ult(star).hits.length,6);
+  assert(star.allies.every(u=>u.status.encourage===2));
+  assert.deepEqual(star.enemies.filter(u=>u.status.freeze===1).map(u=>u.slot),[0,3]);
+  const thunder=freshBattle('h08');assert.equal(ult(thunder).hits.length,3);
+  assert(thunder.enemies.slice(0,3).every(u=>u.status.breakArmor===2));
+  assert.deepEqual(thunder.enemies.filter(u=>u.status.freeze===1).map(u=>u.slot),[0]);
+  const fire=freshBattle('h09');
+  assert.equal(ult(fire).hits.length,6); assert(fire.enemies.every(u=>u.status.burn===2));
+  const victim=fire.enemies[0];
+  fire.b.order.unshift(victim.key);
+  victim.shield=500; victim.status.freeze=1;
+  const before=victim.hp,damage=fire.hero.damage;
+  const tick=B.step(fire.b);
+  assert.equal(tick.kind,'stun');
+  assert.equal(tick.hits[0].periodic,true);
+  assert.equal(tick.hits[0].source,fire.hero.key);
+  assert.equal(victim.hp,before-tick.hits[0].amount);
+  assert.equal(victim.shield,500);
+  assert.equal(fire.hero.damage,damage+tick.hits[0].amount);
+  assert.equal(victim.status.burn,1);
+  fire.b.cursor=0; B.step(fire.b); assert.equal(victim.status.burn,0);
+  const tide=freshBattle('h10');
+  tide.allies.forEach(u=>{u.hp-=60; u.rage=90; u.status.burn=2; u.status.breakArmor=2;});
+  const healed=ult(tide);
+  assert.equal(healed.hits.length,6); assert.equal(tide.hero.healing,360);
+  assert(tide.allies.every(u=>u.hp===u.maxHp && !u.status.burn && !u.status.breakArmor));
+  assert.equal(tide.hero.rage,0); assert(tide.allies.slice(1).every(u=>u.rage===100));
+  const night=freshBattle('h11');
+  night.enemies[4].hp=Math.round(night.enemies[4].maxHp*.55);
+  const execution=ult(night);
+  assert.deepEqual(execution.hits.map(h=>h.target),['e4','e4']);
+});
+test('chapter finales, tower milestones and the boss trial field Astra and five dedicated guards',()=>{
+  const s=S.fresh(); s.cleared=10; s.tower=30;
+  const enemyIds=D.enemies.map(e=>e.id);
+  const foes=spec=>B.create(s,spec).units.slice(6);
+  for(const [kind,stages] of [['campaign',[5,10]],['tower',[5,10,15,20,25,30]],['boss',[1]]]) {
+    for(const id of stages) {
+      const army=foes({kind,id});
+      assert(army.every(u=>enemyIds.includes(u.heroId)));
+      assert.equal(army[1].heroId,'enemy_boss_mech');
+      assert.equal(army[1].boss,true);
+      assert.equal(army.filter(u=>u.boss).length,1);
+      assert(army[1].maxHp>army[0].maxHp*1.5);
+    }
+  }
+  for(const kind of ['campaign','tower']) {
+    assert(foes({kind,id:1}).every(u=>!u.boss && enemyIds.includes(u.heroId)));
+  }
+  assert(foes({kind:'arena',id:1}).every(u=>!enemyIds.includes(u.heroId)));
+  const invalid=S.fresh();
+  invalid.owned.push('enemy_caster');
+  assert.throws(()=>S.validate(invalid),/存档/);
 });
 test('manual rage is held for player casts, skip and full playback agree, first clear rewards are credited once',()=>{
   const s=S.fresh(),spec={kind:'campaign',id:1};
@@ -288,7 +384,7 @@ test('ten-stage campaign is beatable through ordinary upgrades, three trials awa
   assert.throws(()=>B.create(s,{kind:'tower',id:3}));
   assert.throws(()=>B.create(s,{kind:'tower',id:31}));
   const boss=B.finish(B.create(s,{kind:'boss',id:1},seeded(47)));
-  assert(boss.units[6].boss);const total=boss.units.slice(0,6).reduce((sum,u)=>sum+u.damage,0);
+  assert(boss.units[7].boss);const total=boss.units.slice(0,6).reduce((sum,u)=>sum+u.damage,0);
   const loot=S.settle(s,boss);assert.equal(s.bossBest,total);
   assert.equal(loot.diamonds,D.bossThresholds.filter(n=>n<=total).length*100);
   const repeat=B.finish(B.create(s,{kind:'boss',id:1},seeded(47)));assert.equal(S.settle(s,repeat).diamonds,0);

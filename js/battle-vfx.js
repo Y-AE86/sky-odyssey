@@ -6,6 +6,19 @@
   const canvases=new Map();
   const bound=(value,min,max)=>Math.max(min,Math.min(max,value));
   const statuses=['status_shield','status_freeze','status_curse','status_heal_ring'];
+  // Reuse the original sheets and apply a sprite tint at draw time. Both
+  // entrances share the same donor textures and individual hit timing.
+  const variants={
+    h07:{atlas:'h02',projectile:'h01',tint:0xd5a7ff,layout:{groupScale:.55,stagger:65}},
+    h08:{atlas:'h05',projectile:'h05',tint:0xa4deff,layout:{mode:'group',scale:.30,groupScale:.52,stagger:72}},
+    h09:{atlas:'h04',projectile:'h04',tint:0xffad69,layout:{kind:'damage',mode:'group',scale:.32,groupScale:.60,stagger:68}},
+    h10:{atlas:'h03',projectile:'h03',tint:0xa9e8ff,layout:{groupScale:.53}},
+    h11:{atlas:'h06',projectile:'h06',tint:0xff99bb,layout:{scale:.44}},
+    enemy_boss_mech:{atlas:'h05',projectile:'h05',tint:0xc2aaff,layout:{mode:'group',scale:.30,groupScale:.52}},
+    enemy_vanguard:{atlas:'h04',projectile:'h04',tint:0xc4a8ff},
+    enemy_caster:{atlas:'h02',projectile:'h01',tint:0xc5a1ff},
+    enemy_striker:{atlas:'h06',projectile:'h05',tint:0xffb8ab}
+  };
 
   async function lightCanvas(url,sequence){
     if(!canvases.has(url)){
@@ -53,7 +66,8 @@
   function unitAnchor(n,w,h){
     // Use the body position in battle-camera space, including lunges and knockback.
     const body=n.sprite;
-    const height=body ? body.texture.orig.height*Math.abs(body.scale.y) : h*(n.boss?.285:.204)*n.depth;
+    const height=body ? body.texture.orig.height*Math.abs(body.scale.y) :
+      n.pose?.size ?? h*.204*n.magnification*n.depth;
     return {x:body?.x ?? (n.x+n.dx)*w, y:body?.y ?? (n.y+n.dy)*h, height};
   }
 
@@ -73,12 +87,13 @@
       this.rotationSeed=Math.floor(performance.now()*1000)>>>0;
     }
     preload(heroes){
+      this.ultimateKeys=['spark',...heroes];
       const pending=[];
-      for(const key of new Set(['spark',...heroes])){
+      for(const key of new Set(this.ultimateKeys.map(id=>variants[id]?.atlas || id))){
         const layout=Sky.art.battleVfx(key);
         if(layout)pending.push(this.load(key,layout));
       }
-      for(const key of new Set([...statuses,...heroes.map(hero=>'proj_'+hero)]))
+      for(const key of new Set([...statuses,...heroes.map(id=>'proj_'+(variants[id]?.projectile || id))]))
         if(Sky.art.battleArt(key))pending.push(this.load(key,null));
       return Promise.all(pending);
     }
@@ -120,9 +135,11 @@
       const opacity=alpha*(support ? supportOpacity : 1);
       sprite.anchor.set(.5,anchorY);
       sprite.alpha=opacity;
+      sprite.tint=atlas.tint ?? 0xffffff;
       sprite.rotation=rotation;
       sprite.visible=false;
       const info={key:atlas.key,heroId:this.nodes[actor].heroId,actor,target,targets,role,hitIndex,due,
+        artKey:atlas.artKey || atlas.key,tint:sprite.tint,
         source:atlas.source,startedAt:null,impactAt:null,renderedImpactAt:null,frame:null,frames:[],
         active:true,rotation,blendMode:sprite.blendMode,finisher,magnification:finisher?1.45:1};
       const entry={atlas,sprite,info,start,scale,alpha:opacity,impactClock:null};
@@ -133,8 +150,11 @@
       return entry;
     }
     plan(action,clock){
-      const actor=this.nodes[action.actor], atlas=this.atlases.get(actor.heroId);
-      if(!atlas)return null;
+      const actor=this.nodes[action.actor],variant=variants[actor.heroId];
+      const donor=this.atlases.get(variant?.atlas || actor.heroId);
+      if(!donor)return null;
+      const atlas=variant ? {...donor,key:actor.heroId,artKey:donor.key,tint:variant.tint,
+        layout:{...donor.layout,...variant.layout}} : donor;
       const {kind,mode,impactFrame,frameMs,stagger,scale,groupScale,alpha=1,groupAlpha=.86,impactHold=0}=atlas.layout;
       const targets=new Map();
       action.hits.forEach((hit,index)=>{
@@ -195,9 +215,10 @@
     launchBasic(action,clock,firstHitDue){
       if(this.disposed || action.kind!=='basic')return;
       const actor=this.nodes[action.actor],key='proj_'+actor.heroId;
+      const variant=variants[actor.heroId],artKey=variant ? 'proj_'+variant.projectile : key;
       const hit=action.hits.find(hit=>hit.kind==='damage' && this.nodes[hit.target].side!==actor.side);
-      if(!hit || !Sky.art.battleArt(key))return;
-      this.flights.add({key,actor:actor.key,target:hit.target,start:clock+80,end:clock+firstHitDue,
+      if(!hit || !this.artTextures.has(artKey))return;
+      this.flights.add({key,artKey,tint:variant?.tint ?? 0xffffff,actor:actor.key,target:hit.target,start:clock+80,end:clock+firstHitDue,
         sprite:null,origin:null,progress:0});
     }
     removeFlight(flight){
@@ -212,13 +233,14 @@
       for(const flight of this.flights){
         if(clock>=flight.end){this.removeFlight(flight);continue;}
         if(clock<flight.start)continue;
-        const art=this.artTextures.get(flight.key);
+        const art=this.artTextures.get(flight.artKey);
         if(!art)continue;
         const actor=this.nodes[flight.actor],target=this.nodes[flight.target];
         if(!flight.sprite){
           const origin=unitAnchor(actor,w,h),dir=actor.side==='ally'?1:-1;
           flight.origin={x:(origin.x+dir*origin.height*.16)/w,y:(origin.y-origin.height*.50)/h};
           flight.sprite=lightSprite(art.texture);
+          flight.sprite.tint=flight.tint;
           // Anchor at the leading tip. The tail stays behind the contact point on both sides.
           flight.sprite.anchor.set(.89,.5);
           this.layer.addChild(flight.sprite);
@@ -386,11 +408,12 @@
       for(const state of this.statuses.values())this.removeState(state);
     }
     inspect(){
-      return {ready:[...this.atlases.keys()],active:[...this.active].map(entry=>entry.info),last:this.last,
+      const ready=this.ultimateKeys?.filter(id=>this.atlases.has(variants[id]?.atlas || id)) || [];
+      return {ready,active:[...this.active].map(entry=>entry.info),last:this.last,
         artReady:[...this.artTextures.keys()],
         projectiles:[...this.flights].filter(f=>f.sprite).map(f=>({key:f.key,actor:f.actor,target:f.target,
           progress:f.progress,rotation:f.sprite.rotation,x:f.sprite.x,y:f.sprite.y,
-          source:this.artTextures.get(f.key).source,blendMode:f.sprite.blendMode})),
+          artKey:f.artKey,tint:f.tint,source:this.artTextures.get(f.artKey).source,blendMode:f.sprite.blendMode})),
         statuses:[...this.statuses.values()].map(s=>({key:s.key,target:s.target,phase:s.ending===null?'active':'release',
           rotation:s.sprite.rotation,perspective:s.view.scale.y/s.view.scale.x,source:s.art.source,blendMode:s.sprite.blendMode,
           x:s.view.x,y:s.view.y,layer:s.ground?'ground':'over'}))};

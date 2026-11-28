@@ -3,6 +3,7 @@
 
   const P = {};
   const money = value => Number(value).toLocaleString("zh-CN");
+  const percent = value => value.toLocaleString("zh-CN", {style:"percent"});
   const escape = value => String(value ?? "").replace(/[&<>"']/g, char =>
     ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"})[char]);
   const state = () => S.ui.state;
@@ -95,7 +96,7 @@
       '</span><h2>' + escape(h.name) + '</h2><div>' + escape(h.role) + ' <i></i> 战力 ' + money(S.Save.power(s,h.id)) + '</div></div>' +
       '<div class="pn-roster-panel pn-glass"><nav class="pn-tabs">' + subviews.map((x,i)=>tab(x,"roster-tab",i,i===P.rosterTab)).join("") +
       '</nav><div class="pn-roster-content">' + rosterPanel(h) + '</div></div>' +
-      '<div class="pn-hero-strip"><div class="pn-filters"><span>已拥有 ' + s.owned.length + ' / 8</span>' +
+      '<div class="pn-hero-strip"><div class="pn-filters"><span>已拥有 ' + s.owned.length + ' / ' + S.D.heroes.length + '</span>' +
       ["",...S.D.factions].map(x=>'<button type="button" ' + act("filter",x) + ' aria-pressed="' + (P.faction===x) + '" class="' + (P.faction===x?"on":"") + '">' + (x?factionBadge(x)+x:"全部") + '</button>').join("") +
       '</div><div class="pn-hero-list">' + (filtered.length ? filtered.map(x => '<button class="pn-hero-pick' + (x.id===h.id?' on':'') + '" aria-label="查看' + escape(x.name) + '" '+act("hero",x.id)+'>' + S.ui.frame(x.id) + (s.formation.includes(x.id)?'<i>上阵</i>':'') + '</button>').join("") : '<small>尚未获得此阵营星灵</small>') +
       '</div><div class="pn-formation-go">' + button("调整 6 人站位","formation") + '</div></div></section>';
@@ -129,20 +130,23 @@
   }
   function gacha() {
     const s=state(), featured=P.pool==="up", id=featured?"h01":"h02", h=hero(id), pity=s.pity[P.pool];
+    const preview=featured?['h01','h08','h11']:['h07','h09','h10'];
+    const {ur,ssr,up}=S.Save.poolRates;
     return '<section class="pn-page pn-gacha" aria-label="星穹召唤">' + header(titleNames.gacha,resource("diamond","星钻",s.diamonds)+resource("ticket","唤星券",s.tickets)) +
       '<div class="pn-gacha-action-art">' + photo(id,"poster") + '</div><div class="pn-feature"><div><strong>UR</strong><span>' + h.faction + '　·　' + escape(h.role) +
       '</span></div><h2>' + escape(h.name) + '</h2><span>' + escape(h.ult) + '</span></div>' +
       '<div class="pn-summon-panel pn-glass"><nav class="pn-tabs">'+tab("常驻星穹池","pool","standard",!featured)+tab("东煌限定 UP","pool","up",featured)+'</nav>' +
       '<div class="pn-pool-data"><div class="pn-inline-title"><div class="pn-pool-emblem">'+mark("orbit")+'</div><button aria-label="概率说明" title="概率说明" class="pn-question" '+act("rates")+'>?</button></div>' +
-      '<h2>' + (featured?"幽冥墨莲":"群星回响") + '</h2><p>' + (featured ? "UR 星灵中，幽冥墨姬占 75%。" : "四大阵营星灵常驻星穹。") + '</p>' +
-      '<div class="pn-featured-list" aria-label="核心星灵预览">'+['h01','h02','h03'].map(id=>'<div>'+S.ui.frame(id)+'<span>'+hero(id).name.split(' · ')[0]+'</span><small>'+hero(id).rarity+'</small></div>').join('')+'<div class="pn-rate-note"><span>基础概率</span><b>UR　2%</b><b>SSR　13%</b></div></div>'+
-      '<div class="pn-pity"><div><strong>UR 保底进度</strong><b>' + pity.ur + '<small> / 60</small></b></div>' + S.ui.bar(pity.ur/60*100,"cyan") + '<small>再召唤 ' + (60-pity.ur) + ' 次必得 UR　·　至多 ' + (10-pity.ssr) + ' 次获得 SSR 或以上</small></div>' +
+      '<h2>' + (featured?"幽冥墨莲":"群星回响") + '</h2><p>' + (featured ? "UR 星灵中，幽冥墨姬占 "+percent(up)+"。" : S.D.heroes.length+" 位星灵常驻星穹。") + '</p>' +
+      '<div class="pn-featured-list" aria-label="核心星灵预览">'+preview.map(id=>'<div>'+S.ui.frame(id)+'<span>'+hero(id).name.split(' · ')[0]+'</span><small>'+hero(id).rarity+'</small></div>').join('')+'<div class="pn-rate-note"><span>基础概率</span><b>UR　'+percent(ur)+'</b><b>SSR　'+percent(ssr)+'</b></div></div>'+
+      '<div class="pn-pity"><div><strong>UR 保底进度</strong><b>' + pity.ur + '<small> / 60</small></b></div>' + S.ui.bar(pity.ur/60*100,"cyan") + '<small>再召唤 ' + (60-pity.ur) + ' 次必得 UR</small></div>' +
       '<div class="pn-summon-buttons">' + button('单次召唤 <span class="pn-draw-cost">'+mark("ticket")+'×1</span>',"draw",1,"cyan") + button('十连召唤 <span class="pn-draw-cost">'+mark("ticket")+'×10</span>',"draw",10) + '</div><button class="pn-exchange-link" ' + act("exchange-dialog",1)+'>星钻兑券　' + mark("arrow") + '</button></div></div></section>';
   }
   function rates() {
+    const {ur,ssr,up}=S.Save.poolRates;
     return dialog("召唤概率", '<div class="pn-rates"><div class="pn-rate-values">' +
-      [["UR","2%"],["SSR","13%"],["SR","85%"]].map(([grade,rate])=>'<span><em>'+grade+'</em><b>'+rate+'</b></span>').join("") +
-      '</div><p>每 10 抽至少获得 1 位 SSR 或更高品质星灵，每 60 抽至少获得 1 位 UR。获得相应品质后，该项保底重新计数。</p><p>首次十连至少结识幽冥墨姬、冰灵或凌波玉笛中的一位，此保障全账户限一次。两个卡池分别累计常规保底。常驻池的 UR 星灵均分概率，东煌 UP 池的 UR 有 75% 为幽冥墨姬。已拥有的星灵会转为该角色碎片。</p></div>');
+      [["UR",ur],["SSR",ssr]].map(([grade,rate])=>'<span><em>'+grade+'</em><b>'+percent(rate)+'</b></span>').join("") +
+      '</div><p>两个卡池均可召唤全部 '+S.D.heroes.length+' 位星灵，分别累计 UR 保底。连续 59 抽未得 UR，第 60 抽必得 UR。获得 UR 后重计。</p><p>常驻池同品质星灵均分概率。东煌 UP 池的 UR 有 '+percent(up)+' 为幽冥墨姬，其余 UR 均分 '+percent(1-up)+'，SSR 均分该品质概率。首次十连至少获得幽冥墨姬、冰灵或凌波玉笛中的一位。重复获得的星灵会转为碎片。</p></div>');
   }
   function exchangeDialog() {
     const need=P.exchangeCount;
@@ -154,9 +158,9 @@
       '<div class="pn-reveal-light"></div><header><h2>召唤结果</h2><div class="pn-reveal-actions"><button '+act("skip")+(ready?' hidden':'')+' class="pn-skip">跳过动画 '+mark("arrow")+'</button>'+
       (one?'':'<button '+act("draw",10)+(ready?'':' hidden')+' aria-label="再抽十次，消耗十张唤星券" class="pn-repeat pn-button gold">再抽十次 <span class="pn-draw-cost">'+mark("ticket")+'×10</span></button>')+'</div></header>'+
       '<div class="pn-result-grid">' + P.draws.map((r,i)=>{
-        const h=hero(r.id), illustrated=S.D.illustrated.includes(r.id);
-        return '<div class="pn-result-card result-'+r.rarity.toLowerCase()+'" data-hero="'+r.id+'" style="--i:'+i+'"><div class="pn-result-front'+(illustrated?' illustrated':'')+'">'+
-          photo(r.id,illustrated?"poster":"chibi","pn-card-scene"+(illustrated?"":" phantom"))+'<small>'+r.rarity+'</small>'+S.ui.frame(r.id)+'<b>'+escape(h.name)+'</b><em class="'+(r.isNew?'is-new':'')+'">'+
+        const h=hero(r.id);
+        return '<div class="pn-result-card result-'+r.rarity.toLowerCase()+'" data-hero="'+r.id+'" style="--i:'+i+'"><div class="pn-result-front illustrated">'+
+          photo(r.id,"poster","pn-card-scene")+'<small>'+r.rarity+'</small>'+S.ui.frame(r.id)+'<b>'+escape(h.name)+'</b><em class="'+(r.isNew?'is-new':'')+'">'+
           (r.isNew?'NEW · 初次相遇':mark("shards")+' 碎片 ×'+r.shards)+'</em></div></div>';
       }).join("")+'</div>'+button("收下星灵","dismiss")+'</div>';
   }

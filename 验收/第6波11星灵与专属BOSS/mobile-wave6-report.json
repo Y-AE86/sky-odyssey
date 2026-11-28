@@ -1,0 +1,643 @@
+{
+  "name": "mobile",
+  "stage": {
+    "x": 79.828125,
+    "y": 0,
+    "width": 693.328125,
+    "height": 389.984375,
+    "dpr": 3,
+    "transform": "none",
+    "safeLeft": 44,
+    "safeRight": 35,
+    "vw": 844,
+    "vh": 390
+  },
+  "images": 128,
+  "lobby": {
+    "catalog": {
+      "h01": "assets/avatars/avatar_c07.png",
+      "h02": "assets/avatars/avatar_protag.png",
+      "h03": "assets/avatars/avatar_c15.png",
+      "h04": "assets/avatars/avatar_h04.png",
+      "h05": "assets/avatars/avatar_h05.png",
+      "h06": "assets/avatars/avatar_h06.png",
+      "h07": "assets/avatars/avatar_h07.png",
+      "h08": "assets/avatars/avatar_h08.png",
+      "h09": "assets/avatars/avatar_h09.png",
+      "h10": "assets/avatars/avatar_h10.png",
+      "h11": "assets/avatars/avatar_h11.png"
+    },
+    "board": {
+      "h07": {
+        "animation": "poster-breathe"
+      },
+      "h08": {
+        "path": "lobby_cg_h08.mp4",
+        "muted": true,
+        "width": 1916,
+        "height": 1080,
+        "duration": 5.041667
+      },
+      "h09": {
+        "animation": "poster-breathe"
+      },
+      "h10": {
+        "animation": "poster-breathe"
+      },
+      "h11": {
+        "animation": "poster-breathe"
+      }
+    }
+  },
+  "combat": {
+    "route": [
+      {
+        "key": "e3",
+        "heroId": "enemy_caster",
+        "x": 0.763,
+        "y": 0.512,
+        "mirror": false,
+        "sourceFacing": "left",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture"
+      },
+      {
+        "key": "e0",
+        "heroId": "enemy_vanguard",
+        "x": 0.614,
+        "y": 0.545,
+        "mirror": false,
+        "sourceFacing": "left",
+        "depth": 0.88,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture"
+      },
+      {
+        "key": "e4",
+        "heroId": "enemy_striker",
+        "x": 0.813,
+        "y": 0.654,
+        "mirror": false,
+        "sourceFacing": "left",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture"
+      },
+      {
+        "key": "e1",
+        "heroId": "enemy_vanguard",
+        "x": 0.6759999999999999,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "left",
+        "depth": 0.96,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture"
+      },
+      {
+        "key": "e5",
+        "heroId": "enemy_caster",
+        "x": 0.863,
+        "y": 0.796,
+        "mirror": false,
+        "sourceFacing": "left",
+        "depth": 1.04,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture"
+      },
+      {
+        "key": "e2",
+        "heroId": "enemy_striker",
+        "x": 0.738,
+        "y": 0.829,
+        "mirror": false,
+        "sourceFacing": "left",
+        "depth": 1.04,
+        "boss": false,
+        "magnification": 1,
+        "artwork": "original",
+        "source": "pixi-texture"
+      }
+    ],
+    "arena": {
+      "boss": {
+        "key": "e1",
+        "heroId": "enemy_boss_mech",
+        "x": 0.6759999999999999,
+        "y": 0.687,
+        "mirror": false,
+        "sourceFacing": "left",
+        "depth": 0.96,
+        "boss": true,
+        "magnification": 1.52,
+        "artwork": "original",
+        "source": "pixi-texture"
+      },
+      "enemies": [
+        {
+          "key": "e3",
+          "heroId": "enemy_caster",
+          "x": 0.783,
+          "y": 0.512,
+          "mirror": false,
+          "sourceFacing": "left",
+          "depth": 0.88,
+          "boss": false,
+          "magnification": 1,
+          "artwork": "original",
+          "source": "pixi-texture"
+        },
+        {
+          "key": "e0",
+          "heroId": "enemy_vanguard",
+          "x": 0.5559999999999999,
+          "y": 0.519,
+          "mirror": false,
+          "sourceFacing": "left",
+          "depth": 0.88,
+          "boss": false,
+          "magnification": 1,
+          "artwork": "original",
+          "source": "pixi-texture"
+        },
+        {
+          "key": "e4",
+          "heroId": "enemy_striker",
+          "x": 0.813,
+          "y": 0.654,
+          "mirror": false,
+          "sourceFacing": "left",
+          "depth": 0.96,
+          "boss": false,
+          "magnification": 1,
+          "artwork": "original",
+          "source": "pixi-texture"
+        },
+        {
+          "key": "e1",
+          "heroId": "enemy_boss_mech",
+          "x": 0.6759999999999999,
+          "y": 0.687,
+          "mirror": false,
+          "sourceFacing": "left",
+          "depth": 0.96,
+          "boss": true,
+          "magnification": 1.52,
+          "artwork": "original",
+          "source": "pixi-texture"
+        },
+        {
+          "key": "e5",
+          "heroId": "enemy_caster",
+          "x": 0.863,
+          "y": 0.796,
+          "mirror": false,
+          "sourceFacing": "left",
+          "depth": 1.04,
+          "boss": false,
+          "magnification": 1,
+          "artwork": "original",
+          "source": "pixi-texture"
+        },
+        {
+          "key": "e2",
+          "heroId": "enemy_vanguard",
+          "x": 0.738,
+          "y": 0.829,
+          "mirror": false,
+          "sourceFacing": "left",
+          "depth": 1.04,
+          "boss": false,
+          "magnification": 1,
+          "artwork": "original",
+          "source": "pixi-texture"
+        }
+      ]
+    },
+    "embedded": null,
+    "effects": {
+      "h07": {
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "impact": {
+          "key": "h07",
+          "heroId": "h07",
+          "actor": "a0",
+          "target": null,
+          "targets": [
+            "e0",
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e5"
+          ],
+          "role": "group",
+          "hitIndex": 0,
+          "due": 216,
+          "artKey": "h02",
+          "tint": 14002175,
+          "source": "png",
+          "startedAt": 23412.8,
+          "impactAt": 23626.1,
+          "renderedImpactAt": 23626.1,
+          "frame": 3,
+          "frames": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "active": true,
+          "rotation": 0,
+          "blendMode": 1,
+          "finisher": false,
+          "magnification": 1
+        },
+        "projectile": {
+          "key": "proj_h07",
+          "actor": "a0",
+          "target": "e0",
+          "progress": 0.9142857142857143,
+          "rotation": 0.2739212525912285,
+          "x": 375.39626670434814,
+          "y": 165.88744650524987,
+          "artKey": "proj_h01",
+          "tint": 14002175,
+          "source": "png",
+          "blendMode": 1
+        },
+        "voice": null
+      },
+      "h08": {
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8
+        ],
+        "impact": {
+          "key": "h08",
+          "heroId": "h08",
+          "actor": "a1",
+          "target": null,
+          "targets": [
+            "e0",
+            "e1",
+            "e2"
+          ],
+          "role": "group",
+          "hitIndex": 0,
+          "due": 216,
+          "artKey": "h05",
+          "tint": 10804991,
+          "source": "png",
+          "startedAt": 29666,
+          "impactAt": 29879.3,
+          "renderedImpactAt": 29879.3,
+          "frame": 3,
+          "frames": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "active": true,
+          "rotation": 0,
+          "blendMode": 1,
+          "finisher": false,
+          "magnification": 1
+        },
+        "projectile": {
+          "key": "proj_h08",
+          "actor": "a1",
+          "target": "e1",
+          "progress": 0.9902857142857101,
+          "rotation": 0.2000639572802304,
+          "x": 467.06179374627254,
+          "y": 211.81528385553565,
+          "artKey": "proj_h05",
+          "tint": 10804991,
+          "source": "png",
+          "blendMode": 1
+        },
+        "voice": {
+          "id": "h08",
+          "clip": "ult_h08.mp4",
+          "muted": false,
+          "rate": 1,
+          "start": 24571,
+          "duration": 5.041667,
+          "playedMs": 5091,
+          "audioBytes": 82018
+        }
+      },
+      "h09": {
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "impact": {
+          "key": "h09",
+          "heroId": "h09",
+          "actor": "a2",
+          "target": null,
+          "targets": [
+            "e0",
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e5"
+          ],
+          "role": "group",
+          "hitIndex": 0,
+          "due": 216,
+          "artKey": "h04",
+          "tint": 16756073,
+          "source": "png",
+          "startedAt": 32052.6,
+          "impactAt": 32252.5,
+          "renderedImpactAt": 32252.5,
+          "frame": 3,
+          "frames": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "active": true,
+          "rotation": 0,
+          "blendMode": 1,
+          "finisher": false,
+          "magnification": 1
+        },
+        "projectile": {
+          "key": "proj_h09",
+          "actor": "a2",
+          "target": "e2",
+          "progress": 0.9148571428571345,
+          "rotation": 0.1311622872844635,
+          "x": 483.7134935085603,
+          "y": 279.59449288141036,
+          "artKey": "proj_h04",
+          "tint": 16756073,
+          "source": "png",
+          "blendMode": 1
+        },
+        "voice": null
+      },
+      "h10": {
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "impact": {
+          "key": "h10",
+          "heroId": "h10",
+          "actor": "a3",
+          "target": null,
+          "targets": [
+            "a0",
+            "a1",
+            "a2",
+            "a3",
+            "a4",
+            "a5"
+          ],
+          "role": "group",
+          "hitIndex": 0,
+          "due": 288,
+          "artKey": "h03",
+          "tint": 11135231,
+          "source": "png",
+          "startedAt": 33999.1,
+          "impactAt": 34279.1,
+          "renderedImpactAt": 34279.1,
+          "frame": 4,
+          "frames": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "active": true,
+          "rotation": 0,
+          "blendMode": 1,
+          "finisher": false,
+          "magnification": 1
+        },
+        "projectile": {
+          "key": "proj_h10",
+          "actor": "a3",
+          "target": "e0",
+          "progress": 0.9902857142857101,
+          "rotation": 0.2033004037047207,
+          "x": 383.10006598032624,
+          "y": 168.51474129252577,
+          "artKey": "proj_h03",
+          "tint": 11135231,
+          "source": "png",
+          "blendMode": 1
+        },
+        "voice": null
+      },
+      "h11": {
+        "frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "impact": {
+          "key": "h11",
+          "heroId": "h11",
+          "actor": "a4",
+          "target": "e3",
+          "targets": null,
+          "role": "single",
+          "hitIndex": 0,
+          "due": 216,
+          "artKey": "h06",
+          "tint": 16751035,
+          "source": "png",
+          "startedAt": 35892.5,
+          "impactAt": 36119.1,
+          "renderedImpactAt": 36119.1,
+          "frame": 3,
+          "frames": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "active": true,
+          "rotation": 0,
+          "blendMode": 1,
+          "finisher": true,
+          "magnification": 1.45
+        },
+        "projectile": {
+          "key": "proj_h11",
+          "actor": "a4",
+          "target": "e1",
+          "progress": 0.9914285714285714,
+          "rotation": 0.5012480576340212,
+          "x": 467.8061580892939,
+          "y": 212.09837929394945,
+          "artKey": "proj_h06",
+          "tint": 16751035,
+          "source": "png",
+          "blendMode": 1
+        },
+        "voice": null
+      }
+    },
+    "skipped": {
+      "mediaEnded": false,
+      "cutSkipped": true,
+      "hit": {
+        "clock": 38039,
+        "actor": "a1",
+        "heroId": "h08",
+        "target": "e0",
+        "kind": "damage",
+        "amount": 137,
+        "ultimate": true,
+        "drawClock": 38039,
+        "cutVisible": false,
+        "labels": [
+          "−137"
+        ],
+        "counter": 137,
+        "procedural": false,
+        "effects": [
+          {
+            "key": "h08",
+            "heroId": "h08",
+            "actor": "a1",
+            "target": null,
+            "targets": [
+              "e0",
+              "e1",
+              "e2"
+            ],
+            "role": "group",
+            "hitIndex": 0,
+            "due": 216,
+            "artKey": "h05",
+            "tint": 10804991,
+            "source": "png",
+            "startedAt": 37839,
+            "impactAt": 38039,
+            "renderedImpactAt": 38039,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": false,
+            "magnification": 1
+          },
+          {
+            "key": "h08",
+            "heroId": "h08",
+            "actor": "a1",
+            "target": "e0",
+            "targets": null,
+            "role": "target",
+            "hitIndex": 0,
+            "due": 216,
+            "artKey": "h05",
+            "tint": 10804991,
+            "source": "png",
+            "startedAt": 37839,
+            "impactAt": 38039,
+            "renderedImpactAt": 38039,
+            "frame": 3,
+            "frames": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "active": true,
+            "rotation": 0,
+            "blendMode": 1,
+            "finisher": false,
+            "magnification": 1
+          }
+        ],
+        "camera": {
+          "zoom": 1.1153497012636195,
+          "x": -22.479713149736735,
+          "y": -28.85057608855186,
+          "kick": true,
+          "focus": 1,
+          "hitstopRemaining": 0
+        },
+        "impact": {
+          "actor": "a1",
+          "target": "e0",
+          "critical": false,
+          "finisher": false,
+          "hold": 0,
+          "sparks": 9,
+          "beat": 1,
+          "beats": 3
+        },
+        "kickPower": 0.0058
+      }
+    }
+  },
+  "errors": []
+}

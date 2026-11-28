@@ -1,0 +1,834 @@
+[
+  {
+    "path": "assets/audio/bgm_battle.mp3",
+    "sha256": "502d7aaf3dd40898c611cd4073a95ceedd1845873c1781655da24ace95f6b396"
+  },
+  {
+    "path": "assets/audio/bgm_lobby.mp3",
+    "sha256": "fdb0a514d8048e82bd1706ea078dec527fb4a1d06d4db957cfbbbaef0b4b6086"
+  },
+  {
+    "path": "assets/avatars/avatar_c07.png",
+    "sha256": "7ce7c63301c510f93f2bddae5d5de1531e51e114c53eb8787b14dc078787acbb",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/avatars/avatar_c15.png",
+    "sha256": "023330ba4ccaf2c49e32d4d17ff62ef732c2d2faf1f4e9010302777afbdfa683",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/avatars/avatar_h04.png",
+    "sha256": "f691c3fa742617026d26d2323fb521ee400bbd60e7c4779e30b33a7ba2a72003",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/avatars/avatar_h05.png",
+    "sha256": "446ea07db3186bc4939a329a1c9a73fbbfd67ff72416c15804102ccc94ea5029",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/avatars/avatar_h06.png",
+    "sha256": "4335d061061ffbf663790004149d3698518e8781e9f53279927076fc6d9fc861",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/avatars/avatar_h07.png",
+    "sha256": "1f2778e598e009860cafe3c88eb7c2d21167d9c37f0c6b03338c2511fde8af67",
+    "width": 420,
+    "height": 420
+  },
+  {
+    "path": "assets/avatars/avatar_h08.png",
+    "sha256": "69dadfc41fc45dc54b961eb2b7e41586f36234dc4dab6d7193c0bf014f5e26c7",
+    "width": 420,
+    "height": 420
+  },
+  {
+    "path": "assets/avatars/avatar_h09.png",
+    "sha256": "8a9a3b956951e0ce27ec561f3a4ec752fb15c385a48199987e53d9de3ee134c6",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/avatars/avatar_h10.png",
+    "sha256": "229294fa116e02aed88fdb50e8ec81149f6a4f2ddd349f066379ac5bb76b6469",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/avatars/avatar_h11.png",
+    "sha256": "61d06a39d2e7f72e3a6aae62e9e451c4a7440929e6c84b570e7ac474dc952c14",
+    "width": 420,
+    "height": 420
+  },
+  {
+    "path": "assets/avatars/avatar_protag.png",
+    "sha256": "e646fd4d637fea9d82bbe5ab39ac8a75f88d45130441817b93dfd477f7788036",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/badges/badge_resonance.png",
+    "sha256": "f0d089e6c93988f1e57a8516f98b4b7974bf0733e1abee4e8720cbc198b227e9",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/badges/faction_donghuang.png",
+    "sha256": "50cbcf7f66e2d03467274dc9d8948eca8ca2614631cc6440f43a04567a83f8b1",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/badges/faction_jiqiao.png",
+    "sha256": "95f0986015cac88d6278733b31f7149fea40555aaefd09e30820bdb3de952e9b",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/badges/faction_miying.png",
+    "sha256": "39d4020dad2d76d8d62eafe335245abfbb04653e7927648b0b66a462c0d19c96",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/badges/faction_shenghui.png",
+    "sha256": "61046e3db48585de3d3c1a2206692b8246fc9542fbca964db4b4c73e96d66c2c",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/badges/skill_awaken.png",
+    "sha256": "f6e7ef34d316e8dd1ccd5beebb2b979a1d8cebf802dbb92abd8617268e8ccaf4",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/badges/skill_basic.png",
+    "sha256": "f4691d25d2375e19652c2c25686f8882964d0b1eecf4035faad4ae437e6c7470",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/badges/skill_passive.png",
+    "sha256": "3f01eee8fb54de47697e1750a5ba1b056f7ec00e5f9efa5711de4469daec8294",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/badges/skill_ult.png",
+    "sha256": "0fb49205778724ce6876b4f5f620325710c3650215acf57563cb3e31265dd6d5",
+    "width": 440,
+    "height": 440
+  },
+  {
+    "path": "assets/banners/banner_arena.png",
+    "sha256": "ea9908972d9037e132f81a970af64db0f8b3b56f09324bd1230c0ef0889743a0",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/banners/banner_boss.png",
+    "sha256": "c12abe8f58ca30563c5abf90c95ac70e20c86f9030e40b27c6254b9229abb713",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/banners/banner_tower.png",
+    "sha256": "18415e42a235f53476b2d9a3e3e479f11cc7dbb70f58d84f3591f913228289cf",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/banners/tile_campaign.png",
+    "sha256": "32a9a293fe8684ed6ce2b19681690b5b43259e6240610ef04ddda20de2612ed9",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/banners/tile_event.png",
+    "sha256": "66a8a54db274d980c45b0e47e34d7f6c4b38486def299e52ba950313d5291ccb",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/banners/tile_idle_box.png",
+    "sha256": "5578bc5fbf3dc351a9b7f168931185f51cec700c6fc5337a29d9db7697a7fcef",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/banners/tile_shop.png",
+    "sha256": "4ff43eb40aff15a655cf784af8ef1c29ca35a7b556d272d1a20a4b723bffd83d",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/chibi/chibi_c07.png",
+    "sha256": "2d755db7e15ada571e96c59fdd5548ca843c605ec7f496825f19dbbe76f6ac77",
+    "width": 1079,
+    "height": 1081
+  },
+  {
+    "path": "assets/chibi/chibi_c15.png",
+    "sha256": "df7bf54115a2ea1e242022800de855cb1af89b4275276f2b9803b8f330cc2459",
+    "width": 946,
+    "height": 1198
+  },
+  {
+    "path": "assets/chibi/chibi_h04.png",
+    "sha256": "7872ef0b0593bddc7587c44d8f7a6fbd2b55cce6bfeb4d974e31e464c0f51667",
+    "width": 1033,
+    "height": 1239
+  },
+  {
+    "path": "assets/chibi/chibi_h05.png",
+    "sha256": "20f56bb1f8671f36edd6cec8ae6e2c734c5381bcd9bbccc84618a0d20860cc05",
+    "width": 1240,
+    "height": 1239
+  },
+  {
+    "path": "assets/chibi/chibi_h06.png",
+    "sha256": "71523194b036e413e9ed63ee93413c2b92c3a8fd2a61f06b9eb4ce7a0daf1cb7",
+    "width": 1125,
+    "height": 1239
+  },
+  {
+    "path": "assets/chibi/chibi_h07.png",
+    "sha256": "3287b5c592f983599ae0834ac897aa9db9ae3a18a628fb118639bd7bdafa0660",
+    "width": 1016,
+    "height": 1194
+  },
+  {
+    "path": "assets/chibi/chibi_h08.png",
+    "sha256": "6889c0e98adfb7161d482ca63e5d55f796593baf060d9be7598a8cb1c8229e48",
+    "width": 1013,
+    "height": 1272
+  },
+  {
+    "path": "assets/chibi/chibi_h09.png",
+    "sha256": "e64e31a4e7b192ef142d15ec8ef485a4897c0153d07d372e5c8dc01f50cb1228",
+    "width": 994,
+    "height": 1243
+  },
+  {
+    "path": "assets/chibi/chibi_h10.png",
+    "sha256": "e16f8705ad3fbc031ce987a3e984042a1e0f5555e8acefd182146ffc0bdffa9f",
+    "width": 1073,
+    "height": 1237
+  },
+  {
+    "path": "assets/chibi/chibi_h11.png",
+    "sha256": "8cbbebe9b746d868695c46cee4317fed6a56fa52695f8d46cf5f446049a6a71b",
+    "width": 884,
+    "height": 1216
+  },
+  {
+    "path": "assets/chibi/chibi_protag.png",
+    "sha256": "f9d8b28cdb7ffd0b98d4001804cce6b368948661e3644f02116a34b4dadc2e14",
+    "width": 1028,
+    "height": 1193
+  },
+  {
+    "path": "assets/chibi/enemy_boss_mech.png",
+    "sha256": "be7c45baeca93a0391e76c4caacbacac767c8cafaf6db198aa3dfcb7249c32ae",
+    "width": 1282,
+    "height": 1237
+  },
+  {
+    "path": "assets/chibi/enemy_caster.png",
+    "sha256": "0d87e65b8945663d2ecd731af8ac73bd99b86888bdd56f496f510503ce8397d7",
+    "width": 1156,
+    "height": 1248
+  },
+  {
+    "path": "assets/chibi/enemy_striker.png",
+    "sha256": "fc833a376396c0c1e52e0afa70e817fa39a0e82ca199b113680e2c590403427a",
+    "width": 1243,
+    "height": 1102
+  },
+  {
+    "path": "assets/chibi/enemy_vanguard.png",
+    "sha256": "291cf1fc15e08e7dffe9f9243023a0ebce5cadd96f459339b5906ecfd341e94c",
+    "width": 1192,
+    "height": 1152
+  },
+  {
+    "path": "assets/icons/icon_bag.png",
+    "sha256": "af53e1786a6c2c47c950022d225de0061920ce87b4c49d05fb32eb6c9c84b3fd",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/icons/icon_codex.png",
+    "sha256": "3d7a18cdb0ded755eda5527adb613847e8ef15a9b0233d8d7846528a5bc9afe6",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/icons/icon_formation.png",
+    "sha256": "940e60ffee317bb6892779a7e0dd9fd63d35d75147aada79e0237de930c8fb64",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/icons/icon_gacha.png",
+    "sha256": "6cd145adb5fb3ece5edfc926bfc98490d44f8af78215f24ee04571c2b2d71eec",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/icons/icon_quest.png",
+    "sha256": "e424599a7cd924c20c179a3c60c46da331fae1b70143bd69818291d589e7b544",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/icons/icon_reward.png",
+    "sha256": "518acb9d406e0ee191adb60e8e3853079879bc1d806d53a65a6232dabe87a3d4",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/icons/icon_roster.png",
+    "sha256": "8e2b46da53c75a9a65291f4b4a0d3de01f9fe8989dea25435efd6090ed5e56a4",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/icons/icon_settings.png",
+    "sha256": "d792e435288eaf63a4b589d0e1a2c93ba574afd017ae0a5929c5688c7c3ec195",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/icons/icon_shop.png",
+    "sha256": "ef528be7e42bce45d7bab6fd9ed7e08d8e5adbc50eeed2aaa2ba1f9541939e36",
+    "width": 380,
+    "height": 380
+  },
+  {
+    "path": "assets/items/gear_accessory_sr.png",
+    "sha256": "f776b222b84c00059826a668f22892fbe3137276cc09f1ec593691ab5c0307a1",
+    "width": 450,
+    "height": 450
+  },
+  {
+    "path": "assets/items/gear_accessory_ur.png",
+    "sha256": "f5c292815c20bce4aef12bb8636b583d5513f07ad9d57f60a90fce0fc859bf56",
+    "width": 450,
+    "height": 450
+  },
+  {
+    "path": "assets/items/gear_armor_sr.png",
+    "sha256": "51b0cd5a4b92d044c37d8462edc22e2d5dabfdfd6c3b826b0821a1c5289e5c8b",
+    "width": 452,
+    "height": 452
+  },
+  {
+    "path": "assets/items/gear_armor_ur.png",
+    "sha256": "b0da2d29975158aa4fa823c6f92c4001404617b5db6a08458cd47cc1b717363c",
+    "width": 462,
+    "height": 462
+  },
+  {
+    "path": "assets/items/gear_relic_sr.png",
+    "sha256": "ae736cfc070e750797e0f8807f3aac7a26ae3d3a487d5f7806ee5dbbcbe7f490",
+    "width": 450,
+    "height": 450
+  },
+  {
+    "path": "assets/items/gear_relic_ur.png",
+    "sha256": "d2100e327c0c75f207435050f3919efa73a64093fa17ca9d542261abaab092c8",
+    "width": 457,
+    "height": 457
+  },
+  {
+    "path": "assets/items/gear_weapon_sr.png",
+    "sha256": "184737a9a6f13ee4f162ccc5e243b5b7db79abdf651ec7916fb3a5218d75bd40",
+    "width": 450,
+    "height": 450
+  },
+  {
+    "path": "assets/items/gear_weapon_ur.png",
+    "sha256": "31f56306ac33110eca21030d45b20482aa844c64fa98cea13a7b28095333bd42",
+    "width": 452,
+    "height": 452
+  },
+  {
+    "path": "assets/items/item_chest.png",
+    "sha256": "a4bb90d058bda567970667f621aa4f80ca04936427ec2ef38a76e12aa45e0dba",
+    "width": 400,
+    "height": 400
+  },
+  {
+    "path": "assets/items/item_coin.png",
+    "sha256": "715f579ed85443d19feb4681cff1409d19751bd92c4c8ebe8256b0bf3e0ac2fd",
+    "width": 400,
+    "height": 400
+  },
+  {
+    "path": "assets/items/item_core.png",
+    "sha256": "050e339cd3d3c080416d0a5bf0693bb1c67c08630302954b2affe223b54a522c",
+    "width": 400,
+    "height": 400
+  },
+  {
+    "path": "assets/items/item_dew.png",
+    "sha256": "443ad5938040ee22887ac39ad703cb80d1636b0dcbb57eab399b229de9924567",
+    "width": 415,
+    "height": 415
+  },
+  {
+    "path": "assets/items/item_dust.png",
+    "sha256": "43deef68b50473a70a7b0106ff56cb9317e2435c533270e16585c618823d9f26",
+    "width": 400,
+    "height": 400
+  },
+  {
+    "path": "assets/items/item_gem.png",
+    "sha256": "c559601bcbdfd6df3f36265be02c264f2c8c653b17e62bbd26fa7ad7a79ee9eb",
+    "width": 400,
+    "height": 400
+  },
+  {
+    "path": "assets/items/item_shard.png",
+    "sha256": "8da9bb6bb04c3e7973d9a4385d34586dbfded92df47b5652da83b00caf3cf197",
+    "width": 400,
+    "height": 400
+  },
+  {
+    "path": "assets/items/item_stamina.png",
+    "sha256": "75d42ddc17e189befd809cedb68f709b8228578713883e0d9a8461a72aa0cedd",
+    "width": 400,
+    "height": 400
+  },
+  {
+    "path": "assets/items/item_ticket.png",
+    "sha256": "37f398175c038bca28b5d3145e723e12354499148cd3673e63924695dd901909",
+    "width": 400,
+    "height": 400
+  },
+  {
+    "path": "assets/posters/lobby_cg_c07.png",
+    "sha256": "1f2125127650c2ae571d8e3eedd6c12bc7daa6d2786fa14dd3f56b50ab63a0b7",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_c15.png",
+    "sha256": "bcb6272a2413dd1d8b1f793e10a8ebb6ce3663931c71d2f1e1a59c112cfee182",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_h04.png",
+    "sha256": "35f08303bb28ebe4b4c47a23321f2faaf66cbec3491cefdad303da1094c0d45a",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_h05.png",
+    "sha256": "72900d61ac3b662edce2fa1d9464aeaafe12180216fcb8231dc3418c18d714a2",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_h06.png",
+    "sha256": "b7d7296a4a6ea1a54282a74254f7d591821b9a9b4da12d1cd8ae3e764ff05cf7",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_h07.png",
+    "sha256": "de19d8e4b0f8fe7c90fa0049366147337ff4ac73e3fe56c7c09f7c8c83435d42",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_h08.png",
+    "sha256": "d65aa5edb39bad01dec2769bea7a6bba176870d7cf97f5dec6857cc2664486b1",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_h09.png",
+    "sha256": "099599ded5be3b29f7e11083a93171216d44cae34da9c430a8bd33748500ab2c",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_h10.png",
+    "sha256": "c3ed6f77876354051890325a011f7cfd85a9c7b25ab79296ae179127f321da4b",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_h11.png",
+    "sha256": "c45a845ad4a9d616d9a630940d77a250e6c184b34896dc5649c67df1ef9066f7",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/posters/lobby_cg_protag.png",
+    "sha256": "ee76bb9db8e317cdbd4699025966281bd2a35dd3114a8407993037f229577bc9",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/scenes/bg_battle.png",
+    "sha256": "fffecb985fc17cd4245fbbf21359bb3c6812e2aceaf192095d3e76e25448fc13",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/scenes/bg_battle_boss.png",
+    "sha256": "af4982a423e6308e9c664d132bfb750d8f00fb0bd20702b9814daa8574042777",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/scenes/bg_battle_ch2.png",
+    "sha256": "87be4482fb7c53cc4a592b9d82715bb1aa0ac62561951dc7296181e256fe17f2",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/scenes/bg_gacha.png",
+    "sha256": "05452da0057c592547c177f868e7dad361526ac3bb3f627c32033252fa73d77c",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/scenes/bg_roster.png",
+    "sha256": "b90c97b178865d5b77b382bd8af2de310f14fed861e9bba55f92b83d2d479129",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/scenes/bg_roster_alt.png",
+    "sha256": "72a639a7226df0fef4cf8a7a3b831fc9cb0f76e5a0a0b1fffdfe39e7decdee46",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/scenes/bg_worldmap.png",
+    "sha256": "a2145aef43ebd0bfeb5feee5d887723ea5240411724473100d6b6bb5b9f4fa77",
+    "width": 1672,
+    "height": 941
+  },
+  {
+    "path": "assets/ui/emblem_defeat.png",
+    "sha256": "8bd7a62322458291450aa9bcd43618f689b2a88407c8332ca3cb3a13f0ddcacd",
+    "width": 341,
+    "height": 349
+  },
+  {
+    "path": "assets/ui/emblem_mvp.png",
+    "sha256": "ef51ff52dbab97992d02d48b2a309760d814f1b21c6c08efc52f6e41db1d18ce",
+    "width": 291,
+    "height": 281
+  },
+  {
+    "path": "assets/ui/emblem_star.png",
+    "sha256": "e70b14a9257ec3d0225d20cc86947a95b7603382ed903c13c099f7052d8fa301",
+    "width": 221,
+    "height": 257
+  },
+  {
+    "path": "assets/ui/emblem_victory.png",
+    "sha256": "4f1ffafca275ba4ceaccdb0b253930cfecbf69ead9e1a4993a867e1460d8c0c7",
+    "width": 450,
+    "height": 363
+  },
+  {
+    "path": "assets/ui/frame_r.png",
+    "sha256": "49dfe33791979700ee30378d89534b74f7c91f968baa09a05247163b20ac0551",
+    "width": 620,
+    "height": 620
+  },
+  {
+    "path": "assets/ui/frame_sr.png",
+    "sha256": "d1581d488d2312ecacf1eb5f2af7cd3581a15e4e81527abb30f46d6f4eb9eb7f",
+    "width": 620,
+    "height": 620
+  },
+  {
+    "path": "assets/ui/frame_ssr.png",
+    "sha256": "b65006993843b943e2de90df56152142dd27ed2e008b11ef0bae8fd5bd2b961b",
+    "width": 620,
+    "height": 620
+  },
+  {
+    "path": "assets/ui/frame_ur.png",
+    "sha256": "329a5d93e6cee79efba72cd4eb9b7838bb05a651cd9740f9b5bbbf6cda0358c5",
+    "width": 620,
+    "height": 620
+  },
+  {
+    "path": "assets/ui/ui_badge_circle.png",
+    "sha256": "79cc8be04b344a0676650225a5c969508154bde542a1d4c23b56758444bdb9d6",
+    "width": 261,
+    "height": 281
+  },
+  {
+    "path": "assets/ui/ui_bar_cyan.png",
+    "sha256": "6a6a1e2f7f8302d304a0aab2dfb21d3615464f90d3b261a955684c79ee339613",
+    "width": 1628,
+    "height": 130
+  },
+  {
+    "path": "assets/ui/ui_bar_gold.png",
+    "sha256": "ac8565f334cb1f08234bc0086b8964c144bc15c477bda019e6af9e85bfa1e70f",
+    "width": 1628,
+    "height": 127
+  },
+  {
+    "path": "assets/ui/ui_btn_crimson.png",
+    "sha256": "b6e1bc56d7ec55c1d0c2e1f440d46068d302cc2c02f209bd5404de26bbd4f776",
+    "width": 418,
+    "height": 179
+  },
+  {
+    "path": "assets/ui/ui_btn_cyan.png",
+    "sha256": "2491ed9bd6e7007ce150e668efe0acb32581fcf044ce499f61c728a3d8b9a318",
+    "width": 416,
+    "height": 179
+  },
+  {
+    "path": "assets/ui/ui_btn_dark.png",
+    "sha256": "06e78ddbaee6711b21834e6ce7371ebc35195127a25b75fc4ddfbb8c574001f2",
+    "width": 403,
+    "height": 129
+  },
+  {
+    "path": "assets/ui/ui_btn_gold.png",
+    "sha256": "d43d2d6ec298c4a97ab9937d4db2ccae340f1202ebd17d740fa00d9788c543b0",
+    "width": 417,
+    "height": 171
+  },
+  {
+    "path": "assets/ui/ui_tab_active.png",
+    "sha256": "1215dccd3d4e9a23dfa2158433175f7bf8ae05ad7ecca826721aef8213a581c5",
+    "width": 659,
+    "height": 141
+  },
+  {
+    "path": "assets/ui/ui_tab_idle.png",
+    "sha256": "ea5536a7c170fce52332469ad4d9e86e8daaf84277a76cdde3058d30d518601d",
+    "width": 675,
+    "height": 112
+  },
+  {
+    "path": "assets/vfx/proj_h01.png",
+    "sha256": "05086ce39622e3873dba7f4a8155a9ef0ee9eff096100dd8c541317cecb6ead6",
+    "width": 593,
+    "height": 274
+  },
+  {
+    "path": "assets/vfx/proj_h02.png",
+    "sha256": "cfc84b32c65931b7dfd78050d75a14367cccc724421dfa130ea5a211be8c61c8",
+    "width": 611,
+    "height": 233
+  },
+  {
+    "path": "assets/vfx/proj_h03.png",
+    "sha256": "7b15e74ea8a45d8edc0283569383355aa1a49c0581defe1d2d4609adf01d06c3",
+    "width": 582,
+    "height": 277
+  },
+  {
+    "path": "assets/vfx/proj_h04.png",
+    "sha256": "9eed3f0772a7000e9a4c88576d00605e8c4d5d971ba0fa3fcdd7688cdb4c636f",
+    "width": 607,
+    "height": 249
+  },
+  {
+    "path": "assets/vfx/proj_h05.png",
+    "sha256": "fd9c2d19e890d02b29ff98a14ea17333c1eaf8340a61efc2f08f0f3a5df940c1",
+    "width": 612,
+    "height": 236
+  },
+  {
+    "path": "assets/vfx/proj_h06.png",
+    "sha256": "3085f317e9246316ba22e7911146cf8d107d57c63d0174e8c228fab7e9bbe5ac",
+    "width": 613,
+    "height": 212
+  },
+  {
+    "path": "assets/vfx/status_curse.png",
+    "sha256": "f8d9df5f69f8f7753ceea65e0bb49968bf1fe9f543f7604950e91735a4ec1d22",
+    "width": 534,
+    "height": 534
+  },
+  {
+    "path": "assets/vfx/status_freeze.png",
+    "sha256": "2d16b95ce57bf21b6b357041f1b1fbcb7edaab59d6db94f4d5488979800e9e82",
+    "width": 552,
+    "height": 552
+  },
+  {
+    "path": "assets/vfx/status_heal_ring.png",
+    "sha256": "8dfe84aceecc367ecd7b378fb2a9950eafad59635cb8b319a221b8bdc9e40f67",
+    "width": 547,
+    "height": 547
+  },
+  {
+    "path": "assets/vfx/status_shield.png",
+    "sha256": "b5ca4915226ab556ec3fd325e18ff9859d883fee3e9c99bfe914194a7921ab5f",
+    "width": 517,
+    "height": 517
+  },
+  {
+    "path": "assets/vfx/vfx_hit_spark.png",
+    "sha256": "ac2ce9d40bf74a7b8e78323328fc41a51849343630147481507ff72ac8a2c1eb",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/vfx/vfx_ult_h01.png",
+    "sha256": "1c4ce483ddde4ef95dc78cf8cf87c0d9823e3a0a1f081a5ebeb31340dc6467af",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/vfx/vfx_ult_h02.png",
+    "sha256": "5ace7906aa0dfe9f1b62be374c0e9a5fc1b9a66ec31fece83b5d0d377b745b61",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/vfx/vfx_ult_h03.png",
+    "sha256": "bc16cb26998c3c33cc1b0776ece7a45a5b650d9eedadd2e89d58ec013868426f",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/vfx/vfx_ult_h04.png",
+    "sha256": "c8179a1e9cb7f59f554ddb4f9054b219d2811cba97e092e2b9e9b9fca5634140",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/vfx/vfx_ult_h05.png",
+    "sha256": "ffcd87c9e7157ab4fde5a3b361144fd45841c286e2b6f170cbfb77bac55d324f",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/vfx/vfx_ult_h06.png",
+    "sha256": "4a5bcacf285e9db7b19e88352de5734d0447df445c427b6e9944d42035b7491f",
+    "width": 1254,
+    "height": 1254
+  },
+  {
+    "path": "assets/videos/lobby_cg_h01.mp4",
+    "sha256": "cc71052048ca2ca9903b80b47fd2466a400d2f3ccffe4288786d6700f90937d7"
+  },
+  {
+    "path": "assets/videos/lobby_cg_h02.mp4",
+    "sha256": "09e35b6ed3ebe870474655403648f72ad02eaf916e2aafa970c1d39d560e6313"
+  },
+  {
+    "path": "assets/videos/lobby_cg_h03.mp4",
+    "sha256": "bfcc3d2d4265e61ebacdc009459e93d141be524fe2416e812c5c056798d330e1"
+  },
+  {
+    "path": "assets/videos/lobby_cg_h04.mp4",
+    "sha256": "65b7fb99df45509adafdb2daf3ab66ef2bac5f6fdc2263ed0fa74846fd297b67"
+  },
+  {
+    "path": "assets/videos/lobby_cg_h05.mp4",
+    "sha256": "10f35663edfbd7a380a34e341f525136e55731148afa483c2defea099d44bec9"
+  },
+  {
+    "path": "assets/videos/lobby_cg_h06.mp4",
+    "sha256": "a93d2ed59c558cc7d18fde5ea9c6abc6601d0d5e93a43b83a5daa3ddd24776c7"
+  },
+  {
+    "path": "assets/videos/lobby_cg_h08.mp4",
+    "sha256": "de8f1697e9b2d666b2c291bdbea60fa56b1967c013bbdf30e0d620156b79b5e8"
+  },
+  {
+    "path": "assets/videos/ult_h01.mp4",
+    "sha256": "c21ad9862519b4d5334c16638eccb832dbea428457dbdfc955fdc69356b7a1a6"
+  },
+  {
+    "path": "assets/videos/ult_h02.mp4",
+    "sha256": "24e6dfbc31e2a3c24f4463b34a905ec34c4ad71c58d18aa9304110de1462f090"
+  },
+  {
+    "path": "assets/videos/ult_h03.mp4",
+    "sha256": "8ce693bbde0e2b8c3e9df1b4babb80f1cb2a7bc17ab1b66caceebb6dfc3970b0"
+  },
+  {
+    "path": "assets/videos/ult_h04.mp4",
+    "sha256": "e85d9ec84b19ecc1879373c2d10eae13e14a2b46b9814a37549290baa9c52204"
+  },
+  {
+    "path": "assets/videos/ult_h05.mp4",
+    "sha256": "3655748acdae0e94f87ac2189eac77f610576739c3e090554c70c59af251a82e"
+  },
+  {
+    "path": "assets/videos/ult_h06.mp4",
+    "sha256": "6e944f73ad1753e0da72b925bf9f1c58c59b5be63669055e448c2b7e227c735c"
+  },
+  {
+    "path": "assets/videos/ult_h08.mp4",
+    "sha256": "df59f0a7e39ee04108287df26a527f0f1b9a923e8c53f8710bdba45dae09186c"
+  },
+  {
+    "path": "assets/weapons/weapon_h01.png",
+    "sha256": "43ce47a39b87b109bcf758411a3cbbaf16bed3dfe337963c8f0ff10d8e87a8aa",
+    "width": 521,
+    "height": 521
+  },
+  {
+    "path": "assets/weapons/weapon_h02.png",
+    "sha256": "13afb67106aae8707753b6948f852e86c7c80525e3230c8a80a5d2a418b34160",
+    "width": 520,
+    "height": 520
+  },
+  {
+    "path": "assets/weapons/weapon_h03.png",
+    "sha256": "5a8bad332bf84889e1f706f5596145a6921c1df7f851260528e11cee564cd0d7",
+    "width": 520,
+    "height": 520
+  },
+  {
+    "path": "assets/weapons/weapon_h04.png",
+    "sha256": "d24d3e16c833293251a09e3507662bdc1cde97172d3d2e28b4e9d1933bac7db4",
+    "width": 520,
+    "height": 520
+  },
+  {
+    "path": "assets/weapons/weapon_h05.png",
+    "sha256": "77972d7c053b939d8fec9df99344a137bce66ae54037e1c2d25139ef2ffbe806",
+    "width": 520,
+    "height": 520
+  },
+  {
+    "path": "assets/weapons/weapon_h06.png",
+    "sha256": "dea3425a65b14b1f12fff14d6bc0c05ee24d77bbb47b05f7ab7ef8d7122b90e3",
+    "width": 520,
+    "height": 520
+  },
+  {
+    "path": "assets/weapons/weapon_h07.png",
+    "sha256": "4eab98c9f4efca40cb17a3bc0bc5ed682fe274c296e45418f0ff415aa002329b",
+    "width": 620,
+    "height": 620
+  },
+  {
+    "path": "assets/weapons/weapon_h08.png",
+    "sha256": "b81e891edae4bc5a31159a1df2ac206c0981b90ce5f0c8a2b97b135972f7ecdc",
+    "width": 620,
+    "height": 620
+  }
+]

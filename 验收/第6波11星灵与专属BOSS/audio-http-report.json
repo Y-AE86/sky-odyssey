@@ -1,0 +1,137 @@
+{
+  "name": "http",
+  "activation": "trusted pointer",
+  "lobby": {
+    "volume": 0.05293538461512101,
+    "paused": false,
+    "position": 0.15739,
+    "ready": 4,
+    "bytes": 11911,
+    "loop": true,
+    "src": "bgm_lobby.mp3"
+  },
+  "battle": {
+    "volume": 0.06560307692301115,
+    "paused": false,
+    "position": 0.152689,
+    "ready": 4,
+    "bytes": 11911,
+    "loop": true,
+    "src": "bgm_battle.mp3"
+  },
+  "visibility": {
+    "nativeLifecycleVisibility": false,
+    "eventDriven": true,
+    "paused": 0.759648,
+    "resumed": 0.824916
+  },
+  "volumeKeyboard": {
+    "music": 1,
+    "sound": 0.01
+  },
+  "videos": {
+    "natural": {
+      "file": "ult_h01.mp4",
+      "bytes": 12487,
+      "muted": false,
+      "duration": 3.041995
+    },
+    "skipped": {
+      "file": "ult_h03.mp4",
+      "bytes": 8164,
+      "muted": false,
+      "duration": 3.041995
+    },
+    "muted": {
+      "file": "ult_h01.mp4",
+      "bytes": 8458,
+      "muted": true,
+      "duration": 3.041995
+    }
+  },
+  "curves": {
+    "outbound": {
+      "overlapMs": 541.2000000001863,
+      "actualRampMs": 719,
+      "maxAbsoluteStep": 0.03396923076923077,
+      "first": {
+        "t": 4543.899999999907,
+        "l": 0.41322153846160453,
+        "b": 0.0467784615383955,
+        "d": false
+      },
+      "last": {
+        "t": 5085.100000000093,
+        "l": 0.026396923076989,
+        "b": 0.43360307692301103,
+        "d": false
+      },
+      "samples": 42
+    },
+    "inbound": {
+      "overlapMs": 561.5,
+      "actualRampMs": 644,
+      "maxAbsoluteStep": 0.01910769230769231,
+      "first": {
+        "t": 13482.600000000093,
+        "l": 0.029298461538526933,
+        "b": 0.4307015384614731,
+        "d": false
+      },
+      "last": {
+        "t": 14044.100000000093,
+        "l": 0.4350184615385277,
+        "b": 0.024981538461472313,
+        "d": false
+      },
+      "samples": 42
+    },
+    "natural": {
+      "downMs": 221.39999999990687,
+      "upMs": 403.1999999997206,
+      "samplingGap": {
+        "down": 0,
+        "up": 0
+      },
+      "minGain": 0.21999999999999997
+    },
+    "skipped": {
+      "downMs": 219,
+      "upMs": 400.39999999990687,
+      "samplingGap": {
+        "down": 0,
+        "up": 0
+      },
+      "minGain": 0.21999999999999997
+    },
+    "mutedFrames": 40
+  },
+  "compressors": 1,
+  "oscillatorStarts": 130,
+  "cues": [
+    "back",
+    "cast",
+    "collect",
+    "crit",
+    "heal",
+    "hit",
+    "lose",
+    "shield",
+    "slash",
+    "summon",
+    "tab",
+    "tap",
+    "ult_start",
+    "upgrade"
+  ],
+  "beforeReload": {
+    "powerSave": false,
+    "sound": false,
+    "poster": "h01",
+    "music": true,
+    "muted": true,
+    "musicVolume": 0.46,
+    "soundVolume": 1
+  },
+  "errors": []
+}

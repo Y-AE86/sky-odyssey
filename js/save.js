@@ -2,7 +2,15 @@
   'use strict';
   const {D} = globalThis.Sky;
   const KEY = 'sky_odyssey_save_v1';
-  const poolRates = {ur: 0.02, ssr: 0.13, up: 0.75};
+  const poolRates = {ur: 0.02, ssr: 0.98, up: 0.75};
+  const heroIds = new Set(D.heroes.map(hero=>hero.id));
+  const launchIds = new Set(['h01','h02','h03']);
+  const featured = D.hero('h01');
+  const urHeroes = D.heroes.filter(hero=>hero.rarity==='UR');
+  const otherUrHeroes = urHeroes.filter(hero=>hero!==featured);
+  const ssrHeroes = D.heroes.filter(hero=>hero.rarity==='SSR');
+  const expansionIds = ['h09','h10','h11'];
+  const heroFields = {stars:()=>1,shards:()=>0,equipment:()=>Array(4).fill(null)};
   const gearNames = [
     ['星铁短刃','星纹军刀','凛光长锋','群星之刃'], ['巡航轻甲','星纹软甲','天光重甲','星冠圣铠'],
     ['星图挂坠','流银指环','曙光星环','天穹之泪'], ['见习星盘','黄铜罗盘','航星仪','群星天球']
@@ -26,15 +34,14 @@
     return {uid:'g'+String(index).padStart(3,'0'), name:gearNames[slot][rank], slot, rarity:D.rarities[rank],level:0};
   }
   function fresh(now = Date.now()) {
-    const allIds = D.heroes.map(h => h.id);
-    const fields = fn => Object.fromEntries(allIds.map(id => [id, fn(id)]));
+    const fields = fn => Object.fromEntries([...heroIds].map(id => [id, fn()]));
     const bag = D.starter.map((id, i) => gear(i+1,i%4,0));
     for (let i=0; i<8; i++) bag.push(gear(7+i,i%4,i < 4 ? 1 : 2));
-    const equipment = fields(() => Array(4).fill(null));
+    const equipment = fields(heroFields.equipment);
     D.starter.forEach((id,i) => { equipment[id][bag[i].slot] = bag[i].uid; });
     return {version:1, diamonds:4800, coins:6000, tickets:30, cores:120, level:1,
-      owned:[...D.starter].sort(), formation:[...D.starter], stars:fields(() => 1),
-      shards:fields(() => 0), bag, equipment, cleared:0,tower:0,bossBest:0,arenaWins:0,
+      owned:[...D.starter].sort(), formation:[...D.starter], stars:fields(heroFields.stars),
+      shards:fields(heroFields.shards), bag, equipment, cleared:0,tower:0,bossBest:0,arenaWins:0,
       pity:{standard:{ur:0,ssr:0},up:{ur:0,ssr:0}}, firstTenDone:false,
       settings:{powerSave:false,sound:true,poster:'h01',...audioDefaults},
       welfare:false, daily:dailyRecord(now), event:{start:calendarDay(now),days:[]},
@@ -46,7 +53,7 @@
     valid(s && s.version === 1);
     resources.forEach(k => counter(s[k]));
     valid(integer(s.level,1,100));
-    valid(Array.isArray(s.owned) && s.owned.length>=6 && s.owned.length<=8 && s.owned.every(id => D.heroes.some(h => h.id===id)));
+    valid(Array.isArray(s.owned) && s.owned.length>=6 && s.owned.length<=heroIds.size && s.owned.every(id=>heroIds.has(id)));
     valid(new Set(s.owned).size === s.owned.length);
     valid(Array.isArray(s.formation) && s.formation.length===6 && new Set(s.formation).size===6 && s.formation.every(id=>s.owned.includes(id)));
     valid(Array.isArray(s.bag) && s.bag.length<=1000);
@@ -91,9 +98,22 @@
     if (s.daily.day !== dateOf(now)) s.daily=dailyRecord(now);
     return s.daily;
   }
+  function migrateLegacyRoster(s) {
+    const maps=Object.keys(heroFields);
+    if(s?.version!==1 || !Array.isArray(s.owned) ||
+       expansionIds.some(id=>s.owned.includes(id)) ||
+       !maps.every(key=>s[key] && typeof s[key]==='object' && !Array.isArray(s[key]) &&
+         expansionIds.every(id=>!Object.hasOwn(s[key],id)))) return;
+    // Keep the original hero IDs so stored gear, stars, shards and formation
+    // follow the replacements. Only the three newly added records need defaults.
+    for(const key of maps) {
+      for(const id of expansionIds) s[key][id]=heroFields[key]();
+    }
+  }
   function importJSON(json) {
     let s;
     try { s=JSON.parse(json); } catch { throw new Error('无法读取 JSON 存档'); }
+    migrateLegacyRoster(s);
     validate(s); refreshDaily(s); s.event ||= {start:calendarDay(Date.now()),days:[]};
     s.firstTenDone ??= false;
     s.settings={...audioDefaults,...s.settings};
@@ -252,25 +272,25 @@
     const pity=s.pity[pool], results=[];
     s.tickets-=n;
     for (let i=0; i<n; i++) {
-      const roll=rng();
-      let rarity= (pity.ur>=59 || roll<poolRates.ur) ? 'UR' :
-        ((pity.ssr>=9 || roll<poolRates.ur+poolRates.ssr) ? 'SSR' : 'SR');
-      const candidates=D.heroes.filter(h=>h.rarity===rarity);
-      let hero;
-      if (pool==='up' && rarity==='UR') hero=D.hero(rng()<poolRates.up ? 'h01' : 'h02');
-      else hero=candidates[Math.floor(rng()*candidates.length)];
+      const roll=rng(), selection=rng();
+      const rarity=pity.ur>=59 || roll<poolRates.ur ? 'UR' : 'SSR';
+      const candidates=rarity==='UR' ? urHeroes : ssrHeroes;
+      let hero=candidates[Math.floor(selection*candidates.length)];
+      if(pool==='up' && rarity==='UR') {
+        hero=selection<poolRates.up ? featured
+          : otherUrHeroes[Math.floor((selection-poolRates.up)/(1-poolRates.up)*otherUrHeroes.length)];
+      }
       // Apply the newcomer slot before inventory and pity so the displayed card,
       // credited shards and counter resets all describe the same pull.
-      if(n===10 && i===9 && !s.firstTenDone && rarity!=='UR' &&
-          !results.some(result=>['h01','h02','h03'].includes(result.id))) {
-        hero=D.hero('h03');
-        rarity=hero.rarity;
+      if(n===10 && i===9 && !s.firstTenDone && !launchIds.has(hero.id) &&
+          !results.some(result=>launchIds.has(result.id))) {
+        hero=D.hero(rarity==='UR'?'h02':'h03');
       }
-      const id=hero.id, isNew=!s.owned.includes(id), shards=isNew ? 0 : {SR:6,SSR:12,UR:24}[rarity];
+      const id=hero.id, isNew=!s.owned.includes(id), shards=isNew ? 0 : rarity==='UR' ? 24 : 12;
       if (isNew) s.owned.push(id);
       s.shards[id]+=shards;
       pity.ur = rarity==='UR' ? 0 : pity.ur+1;
-      pity.ssr=rarity==='SR' ? pity.ssr+1 : 0;
+      pity.ssr=0;
       results.push({id,rarity,isNew,shards});
     }
     if(n===10)s.firstTenDone=true;

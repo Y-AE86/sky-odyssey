@@ -3,14 +3,18 @@
   const Sky = window.Sky = window.Sky || {};
   const P = window.PIXI;
   const tau = Math.PI * 2;
-  const palette = {ink: 0xc18aff, ice: 0x8fefff, water: 0x69ebcd, light: 0xffdf87, gear: 0xffae61, blood: 0xff698f};
-  const melee = new Set(['h01','h06','h07','h08']);
+  const palette = {ink: 0xc18aff, ice: 0x8fefff, water: 0x69ebcd, light: 0xffdf87, gear: 0xffae61,
+    blood: 0xff698f, thunder: 0x75bfff, fire: 0xff8449};
+  const melee = new Set(['h01','h06','h08','h10','h11','enemy_vanguard']);
   const imageCache = new Map();
   // Width, height and midpoint between the boots in the standing PNG.
   // Weapons and trailing capes often shift the centre of the image away from the feet.
   const stances = {
     h01:[1079,1081,.54], h02:[1028,1193,.49], h03:[946,1198,.57],
-    h04:[1033,1239,.59], h05:[1240,1239,.52], h06:[1125,1239,.585]
+    h04:[1033,1239,.59], h05:[1240,1239,.52], h06:[1125,1239,.585],
+    h07:[1016,1194,.50], h08:[1013,1272,.60], h09:[994,1243,.52],
+    h10:[1073,1237,.49], h11:[884,1216,.52], enemy_boss_mech:[1282,1237,.54],
+    enemy_vanguard:[1192,1152,.47], enemy_caster:[1156,1248,.50], enemy_striker:[1243,1102,.46]
   };
   const clamp = n => Math.max(0, Math.min(1, n));
   // Flash inside the original silhouette, including thin hair and transparent weapons.
@@ -141,8 +145,20 @@
     constructor(host, units, powerSave) {
       this.host = host;
       this.powerSave = powerSave;
-      this.nodes = units.map(u => ({...bounds(u.slot,u.side),key:u.key,slot:u.slot,side:u.side,heroId:u.heroId,
-        boss:u.boss, hp:u.hp,maxHp:u.maxHp,shield:u.shield,rage:u.rage,status:{...u.status},sprite:null,dx:0,dy:0}));
+      const hasBoss=units.some(unit=>unit.boss);
+      this.nodes = units.map(u => {
+        const sourceFacing=u.heroId.startsWith('enemy_') ? 'left' : 'right';
+        const mirror=sourceFacing!==(u.side==='enemy' ? 'left' : 'right');
+        const position=bounds(u.slot,u.side);
+        // Keep both upper guards readable around the mech's wide wings.
+        if(hasBoss && u.side==='enemy'){
+          if(u.slot===0){position.x-=.058;position.y-=.026;}
+          if(u.slot===3)position.x+=.020;
+        }
+        return {...position,key:u.key,slot:u.slot,side:u.side,heroId:u.heroId,sourceFacing,mirror,
+          boss:u.boss,magnification:u.boss ? 1.52 : 1,hp:u.hp,maxHp:u.maxHp,shield:u.shield,rage:u.rage,
+          status:{...u.status},sprite:null,dx:0,dy:0};
+      });
       this.byKey = Object.fromEntries(this.nodes.map(n => [n.key,n]));
       this.nodes.sort((a,b) => a.y-b.y);
       this.camera = new BattleCamera();
@@ -241,18 +257,17 @@
         const fileImage=await getImage(Sky.art(id,'chibi'));
         const stance=stances[id];
         const original=stance && fileImage.naturalWidth===stance[0] && fileImage.naturalHeight===stance[1];
-        const phantom=Sky.art.isPhantom(id);
         const packed=original && (await offline)?.[id];
         let embeddedImage;
         if(packed) {
           try { embeddedImage=await getImage(packed); }
           catch { /* A damaged entry can still use the decoded local PNG. */ }
         }
-        const direct=location.protocol==='file:' && !phantom && !embeddedImage;
-        return {id,direct,phantom,stance:original && stance,img:embeddedImage || fileImage};
+        const direct=location.protocol==='file:' && !embeddedImage;
+        return {id,direct,stance:original && stance,img:embeddedImage || fileImage};
       }));
       if (this.disposed) return;
-      for(const {id,direct,phantom,stance,img} of sources) {
+      for(const {id,direct,stance,img} of sources) {
         let texture;
         if (this.app && !direct) {
           const base = new P.BaseTexture(img,{mipmap:P.MIPMAP_MODES.ON, scaleMode:P.SCALE_MODES.LINEAR, anisotropicLevel:8});
@@ -261,10 +276,9 @@
         }
         for(const n of this.nodes.filter(n => n.heroId === id)) {
           n.image = img;
-          n.phantom=phantom;
           n.footX=stance ? stance[2] : .5;
           n.footY=stance ? 1-16/img.naturalHeight : .985;
-          // All six illustrations have 16px of transparent padding on each edge.
+          // The standing PNGs leave 16px on each edge of the silhouette.
           n.heightFactor=stance ? .972/(1-32/img.naturalHeight) : 1;
           if (texture) {
             n.sprite = new P.Sprite(texture);
@@ -398,6 +412,10 @@
       n.hp = hit.hp; n.shield = hit.shield;
       if(hit.rage!==undefined)n.rage=hit.rage;
       if(hit.status)n.status={...hit.status};
+      if(hit.periodic){
+        this.effects.push({actor:hit.source || actor,target:n.key,element:'fire',periodic:true,start:clock,duration:330});
+        return;
+      }
       const damage=hit.kind==='damage', plan=ultimate ? this.ultimatePlan : null;
       const finisher=ultimate && !!meta.finisher;
       const progression=meta.beats>1?clamp((meta.beat-1)/(meta.beats-1)):0;
@@ -444,7 +462,13 @@
       const t=clamp((time-e.start)/e.duration), fade=1-t, color=palette[e.element] || palette.light;
       const dir=actor.side==='ally' ? 1 : -1, cx=(actor.x+actor.dx)*w,cy=(actor.y+actor.dy-.1)*h;
       const r=h*(e.ultimate ? .19 : .07), k=t*r;
-      if (!e.ultimate) {
+      if(e.periodic){
+        for(let i=0;i<3;i++){
+          const xx=x+(i-1)*r*.40,yy=y-t*r*.8+(i%2)*r*.36;
+          p.path([xx-r*.11,yy+r*.32,xx,yy+r*.11,xx+r*.09,yy-r*.30,xx+r*.18,yy+r*.03],
+            color,fade,h*.004*fade);
+        }
+      } else if (!e.ultimate) {
         p.path([x-dir*r*.7,y+r*.4,x+dir*r*.5*fade,y-r*.35],0xffefc5,fade,h*.005*fade);
       } else if (e.element==='ice') {
         for(let i=0;i<6;i++) {
@@ -601,9 +625,9 @@
       const x=(n.x+n.dx)*w+rx*recoil,y=(n.y+n.dy)*h+ry*recoil;
       const stretch=this.powerSave?0:push,tilt=rx*.12*stretch;
       const breath=this.powerSave?1:1+.007*Math.sin(clock/540+n.slot*1.8);
-      const size=h*(n.boss?.285:.204)*n.depth*breath*n.heightFactor;
+      const size=h*.204*n.magnification*n.depth*breath*n.heightFactor;
       const width=size*n.image.naturalWidth/n.image.naturalHeight;
-      const sign=n.side==='enemy'?-1:1,sx=sign*(1-.18*stretch),sy=1+.15*stretch;
+      const sign=n.mirror ? -1 : 1,sx=sign*(1-.18*stretch),sy=1+.15*stretch;
       const horizontal=width*Math.abs(sx)*Math.cos(tilt);
       const anchor=sign<0?1-n.footX:n.footX;
       const slant=-Math.sin(tilt)*size*sy;
@@ -654,7 +678,7 @@
         const lit=this.focus || this.previousFocus;
         const alpha=lit && !lit.has(n.key) ? 1-.65*(this.powerSave?Number(!!this.focus):cam.focus) : 1;
         const shadowWidth=size*.30*(1-Math.min(.30,Math.abs(n.dx)));
-        const shadowAlpha=n.side==='enemy' ? Math.max(.68,alpha) : alpha*(n.phantom ? .8 : 1);
+        const shadowAlpha=n.side==='enemy' ? Math.max(.68,alpha) : alpha;
         if(n.shadow) {
           n.shadow.position.set((n.x+n.dx)*w,(n.y+n.dy*.60)*h-1);
           n.shadow.scale.set(shadowWidth/100,size*.050/12);
@@ -707,8 +731,9 @@
         camera:{zoom:this.camera.zoom,x:this.camera.x,y:this.camera.y,kick:!!this.camera.kick,focus:this.camera.focus,
           hitstopRemaining:this.hitstopRemaining},impact:this.lastImpact||null,
         layers:this.app?['groundFxLayer','unitLayer','overFxLayer']:[],
-        stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,heroId:n.heroId,x:n.x,y:n.y,mirror:n.side==='enemy',depth:n.depth,
-          artwork:n.phantom?'phantom':'original',source:n.dom?'native-image':this.app?'pixi-texture':'canvas-image'})),textures:[...this.textures].map(([heroId,t])=>({heroId,
+        stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,heroId:n.heroId,x:n.x,y:n.y,mirror:n.mirror,
+          sourceFacing:n.sourceFacing,depth:n.depth,boss:n.boss,magnification:n.magnification,
+          artwork:'original',source:n.dom?'native-image':this.app?'pixi-texture':'canvas-image'})),textures:[...this.textures].map(([heroId,t])=>({heroId,
           width:t.baseTexture.realWidth,height:t.baseTexture.realHeight,mipmap:t.baseTexture.mipmap,scaleMode:t.baseTexture.scaleMode})),ready:!!this.ready,
         vfx,ultimateVfx:vfx};
     }

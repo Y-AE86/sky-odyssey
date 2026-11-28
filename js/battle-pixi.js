@@ -682,6 +682,7 @@
       this.action=null;
       this.ultimatePlan=null;
       if(clearEffects){
+        this.vfx?.stopVideoFx();
         this.effects.length=0;
         this.landings.length=0;
         this.bursts.length=0; this.lastImpact=null; this.hitstopRemaining=0;
@@ -997,7 +998,7 @@
         white:age<50,red:age>=50 && age<115,
         left:x-horizontal*anchor+Math.min(upper,lower),right:x+horizontal*(1-anchor)+Math.max(upper,lower)};
     }
-    render(time,effectClock=0) {
+    render(time,effectClock=0,speed=1) {
       if (!this.ready || this.disposed || !this.w) return;
       if (window.devicePixelRatio !== this.ratio) this.resize();
       const w=this.w,h=this.h, c=this.ctx;
@@ -1102,7 +1103,7 @@
       this.drewEffects=this.effects.length>0;
       for(const e of this.effects) this.effect(this.ink,e,time);
       if(this.app){
-        this.vfx?.draw(effectClock,time,w,h);
+        this.vfx?.draw(effectClock,time,w,h,speed);
         const grade=this.vfx?.drawScreenImpact(time,w,h) ?? 0;
         this.impulses?.draw(time,w,h,this.ratio,cam,grade);
         this.app.render();

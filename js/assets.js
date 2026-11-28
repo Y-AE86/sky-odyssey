@@ -23,6 +23,8 @@
     ? 'assets/videos/lobby_cg_'+id+'.mp4' : null;
   art.ultVideo = id => Sky.D.illustrated.includes(id) && Sky.ultVideoIds?.includes(id)
     ? 'assets/videos/ult_'+id+'.mp4' : null;
+  art.vfxVideo = id => Sky.D.illustrated.includes(id) && Sky.vfxVideoIds?.includes(id)
+    ? 'assets/videos/vfx_'+id+'.mp4' : null;
   art.domain = id => Sky.D.illustrated.includes(id) ? 'assets/domains/domain_'+id+'.png' : null;
   const ultimateLayout = {kind:'damage',mode:'single',impactFrame:3,frameMs:72,stagger:108,scale:.41,anchorY:.46};
   const effects = {

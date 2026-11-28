@@ -6,6 +6,27 @@
   const emberTailMs=500;
   const impactFrameMs=70;
   const crackKey='vfx_impact_crack';
+  const vfxVideoSpecs={
+    h01:{duration:2850,beats:[260,1080,1920],fadeIn:80,fadeOut:420},
+    h08:{duration:2850,beats:[200,1020,1860],fadeIn:80,fadeOut:420}
+  };
+  const videoKeyFragment=`
+    precision mediump float;
+    varying vec2 vTextureCoord;
+    uniform sampler2D uSampler;
+    uniform vec4 inputSize, outputFrame;
+    uniform float uAlpha, uFeather;
+    void main() {
+      vec4 c = texture2D(uSampler, vTextureCoord);
+      float peak = max(c.r, max(c.g, c.b));
+      float mask = smoothstep(0.032, 0.16, peak);
+      float nx = clamp((vTextureCoord.x * inputSize.x) / max(1.0, outputFrame.z), 0.0, 1.0);
+      float edge = smoothstep(0.0, uFeather, nx) * smoothstep(1.0, 1.0 - uFeather, nx);
+      float a = clamp((peak - 0.032) / 0.968, 0.0, 1.0) * mask;
+      vec3 rgb = max(c.rgb - vec3(0.024), 0.0) * 1.12 * mask;
+      float fade = edge * uAlpha;
+      gl_FragColor = vec4(rgb * fade, a * fade);
+    }`;
   const emberColors={ink:0xc18aff,ice:0x8fefff,water:0x69ebcd,light:0xffdf87,
     gear:0xffae61,blood:0xff698f,thunder:0x75bfff,fire:0xff8449};
   const canvases=new Map();
@@ -119,7 +140,25 @@
       this.statuses=new Map();
       this.last=null;
       this.screenImpact=null;
+      this.vfxVideos=new Map();
+      this.activeVideo=null;
+      this.videoSprite=null;
+      this.videoFilter=null;
       this.rotationSeed=Math.floor(performance.now()*1000)>>>0;
+    }
+    preloadVideoFx(id){
+      if(!this.screenLayer || location.protocol==='file:' || this.vfxVideos.has(id))return;
+      const src=Sky.art.vfxVideo?.(id);
+      if(!src)return;
+      const video=document.createElement('video');
+      video.defaultMuted=video.muted=video.playsInline=true;
+      video.preload='auto';
+      video.crossOrigin='anonymous';
+      const entry={id,src,video,failed:false,base:null,texture:null};
+      video.addEventListener('error',()=>{entry.failed=true;});
+      video.src=src;
+      video.load();
+      this.vfxVideos.set(id,entry);
     }
     preload(heroes){
       this.ultimateKeys=['spark',...heroes];
@@ -130,6 +169,7 @@
       }
       for(const key of new Set([...statuses,...heroes.map(id=>'proj_'+(variants[id]?.projectile || id))]))
         if(Sky.art.battleArt(key))pending.push(this.load(key,null));
+      for(const id of new Set(heroes))this.preloadVideoFx(id);
       return Promise.all(pending);
     }
     async load(key,layout){
@@ -215,6 +255,31 @@
       if(!targets.size)return null;
       const firstHit=targets.keys().next().value;
       const lastIndex=[...targets.keys()].at(-1);
+      const videoEntry=this.vfxVideos.get(actor.heroId);
+      const spec=vfxVideoSpecs[actor.heroId];
+      if(videoEntry && spec && !videoEntry.failed && videoEntry.video.readyState>=3 && videoEntry.video.videoWidth>0){
+        const hitIndices=[...targets.keys()];
+        const beats=spec.beats;
+        const hitTimeMap=new Map();
+        if(hitIndices.length===1){
+          hitTimeMap.set(hitIndices[0],beats[beats.length-1]);
+        }else if(hitIndices.length===beats.length){
+          hitIndices.forEach((idx,i)=>hitTimeMap.set(idx,beats[i]));
+        }else{
+          const first=beats[0],last=beats[beats.length-1];
+          hitIndices.forEach((idx,i)=>{
+            const t=i/(hitIndices.length-1);
+            hitTimeMap.set(idx,Math.round(first+(last-first)*t));
+          });
+        }
+        let prevHit=beats[0];
+        const due=action.hits.map((hit,index)=>{
+          if(hitTimeMap.has(index)){prevHit=hitTimeMap.get(index);return prevHit;}
+          return prevHit+(hit.kind==='heal'?108:36);
+        });
+        this.playVideoFx(videoEntry,actor.side==='enemy',clock,spec);
+        return {due,duration:spec.duration,firstHit,byHit:new Map(),targets,videoVfx:actor.heroId};
+      }
       const windup=impactFrame*frameMs;
       let attackNumber=0,lastHit=windup;
       const due=action.hits.map((hit,index)=>{
@@ -241,6 +306,72 @@
         for(const [index,target] of targets)add(index,mode==='projectile'?'projectile':'target',target,null,scale,alpha);
       }
       return {due,duration,firstHit,byHit,targets};
+    }
+    playVideoFx(entry,mirror,clock,spec){
+      this.stopVideoFx();
+      const {video}=entry;
+      try{
+        if(!entry.texture){
+          const resource=new P.VideoResource(video,{autoPlay:false,autoLoad:true,updateFPS:0});
+          entry.base=new P.BaseTexture(resource,{mipmap:P.MIPMAP_MODES.OFF,scaleMode:P.SCALE_MODES.LINEAR});
+          if(video.videoWidth && video.videoHeight)entry.base.setRealSize(video.videoWidth,video.videoHeight);
+          entry.texture=new P.Texture(entry.base);
+        }
+        if(!this.videoFilter){
+          this.videoFilter=new P.Filter(undefined,videoKeyFragment,{uAlpha:1,uFeather:.04});
+        }
+        if(!this.videoSprite){
+          this.videoSprite=new P.Sprite(entry.texture);
+          this.videoSprite.anchor.set(.5);
+          this.videoSprite.eventMode='none';
+          this.videoSprite.filters=[this.videoFilter];
+          this.screenLayer.addChild(this.videoSprite);
+        }else{
+          this.videoSprite.texture=entry.texture;
+          this.videoSprite.visible=true;
+        }
+        video.muted=true;
+        video.currentTime=0;
+        video.play().catch(()=>{this.stopVideoFx();});
+        this.activeVideo={entry,video,mirror,start:clock,spec,heroId:entry.id};
+        this.screenLayer.visible=true;
+      }catch{
+        entry.failed=true;
+        this.stopVideoFx();
+      }
+    }
+    stopVideoFx(){
+      if(this.activeVideo){
+        try{this.activeVideo.video.pause();this.activeVideo.video.currentTime=0;}catch{}
+        this.activeVideo=null;
+      }
+      if(this.videoSprite)this.videoSprite.visible=false;
+      if(this.screenLayer && !this.screenImpact?.visible)this.screenLayer.visible=false;
+    }
+    drawVideoFx(clock,w,h,speed=1){
+      const active=this.activeVideo;
+      if(!active || !this.videoSprite || !this.videoFilter)return;
+      const {entry,video,mirror,start,spec}=active;
+      const age=Math.max(0,clock-start);
+      if(age>=spec.duration || video.ended || entry.failed){
+        this.stopVideoFx();
+        return;
+      }
+      const targetRate=bound(speed,.5,4);
+      if(Math.abs(video.playbackRate-targetRate)>.01)video.playbackRate=targetRate;
+      if(video.readyState>=2){
+        try{entry.base?.update();}catch{entry.failed=true;this.stopVideoFx();return;}
+      }
+      const vw=video.videoWidth || 1280, vh=video.videoHeight || 720;
+      const cover=Math.max(w/vw,h/vh);
+      this.videoSprite.position.set(w/2,h/2);
+      this.videoSprite.scale.set((mirror?-1:1)*cover,cover);
+      this.videoSprite.filterArea=new P.Rectangle(0,0,w,h);
+      const alpha=smooth(0,spec.fadeIn,age)*(1-smooth(spec.duration-spec.fadeOut,spec.duration,age));
+      this.videoFilter.uniforms.uAlpha=alpha;
+      this.videoFilter.uniforms.uFeather=.038;
+      this.videoSprite.visible=alpha>.005;
+      this.screenLayer.visible=this.videoSprite.visible;
     }
     impact(entries,clock,time){
       for(const entry of entries || []){
@@ -537,10 +668,11 @@
       burst.view.destroy({children:true,texture:false,baseTexture:false});
       this.embers.delete(burst);
     }
-    draw(clock,time,w,h){
+    draw(clock,time,w,h,speed=1){
       if(this.disposed)return;
       this.drawStates(clock,w,h);
       this.drawFlights(clock,w,h);
+      this.drawVideoFx(clock,w,h,speed);
       for(const entry of this.active){
         if(clock<entry.start)continue;
         const {atlas,frames,sprite,next,info,impactClock}=entry;
@@ -592,6 +724,11 @@
       this.active.delete(entry);
     }
     clear(){
+      this.stopVideoFx();
+      if(this.videoSprite){
+        this.videoSprite.destroy();
+        this.videoSprite=null;
+      }
       if(this.screenSprites){
         for(const sprite of Object.values(this.screenSprites))sprite.destroy();
         this.screenLayer.visible=false;
@@ -608,6 +745,8 @@
     inspect(){
       const ready=this.ultimateKeys?.filter(id=>this.atlases.has(variants[id]?.atlas || id)) || [];
       return {ready,active:[...this.active].map(entry=>entry.info),last:this.last,
+        vfxVideos:[...this.vfxVideos.values()].filter(v=>!v.failed && v.video.readyState>=2).map(v=>v.id),
+        activeVideo:this.activeVideo ? {heroId:this.activeVideo.heroId,mirror:this.activeVideo.mirror} : null,
         embers:[...this.embers].map(({key,actor,count,visible,tint,startedAt,atlasEndedAt,remainingMs})=>
           ({key,actor,count,visible,tint,startedAt,atlasEndedAt,remainingMs})),
         artReady:[...this.artTextures.keys()],
@@ -621,6 +760,14 @@
     destroy(){
       this.disposed=true;
       this.clear();
+      this.videoFilter?.destroy();
+      this.videoFilter=null;
+      for(const entry of this.vfxVideos.values()){
+        try{entry.video.pause();entry.video.removeAttribute('src');entry.video.load();}catch{}
+        entry.texture?.destroy();
+        entry.base?.destroy();
+      }
+      this.vfxVideos.clear();
       for(const {base,frames,renderFrames=frames} of this.atlases.values()){
         for(let i=0;i<frames.length;i++){
           if(renderFrames[i]!==frames[i])renderFrames[i].destroy();

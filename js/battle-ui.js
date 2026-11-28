@@ -481,7 +481,7 @@
       s.due+=Math.max(1,Math.floor((now+.25-s.due)/period)+1)*period;
       advance(s,Math.min(300,gap),now);
       if(s.phase!=='result') {
-        s.scene.render(now,s.effectClock);
+        s.scene.render(now,s.effectClock,s.speed);
         placeNumbers(s);
         if(s.scene.ready) {s.presentedFrames++; s.renderedMs+=gap;}
       }

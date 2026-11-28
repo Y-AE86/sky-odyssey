@@ -23,7 +23,7 @@ body:has(.battle-page.spotlight) #bleed:has(.battle-domain[data-phase="active"])
   position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;
   animation:domain-reveal var(--domain-in) ease-out both;
 }
-.battle-domain img {display:block; width:100%; height:100%; object-fit:cover; animation:domain-drift 1.6s ease-out both;}
+.battle-domain img {display:block; width:100%; height:100%; object-fit:cover; animation:domain-drift 3.1s ease-out both;}
 .battle-domain::after {
   content:""; position:absolute; inset:0;
   background:radial-gradient(ellipse at 50% 53%,transparent 34%,#090e2487 100%);

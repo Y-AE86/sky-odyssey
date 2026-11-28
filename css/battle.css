@@ -173,7 +173,7 @@ body:has(.battle-page.spotlight) #bleed[data-page="battle"]::after {opacity:1; t
   background-clip:text; -webkit-background-clip:text;
 }
 .battle-hits {
-  position:absolute; top:103%; right:0; color:#ffedbd; letter-spacing:.14em;
+  position:absolute; top:calc(100% + .5cqw); right:0; color:#ffedbd; letter-spacing:.14em;
   font:italic 700 .96cqw/1 Georgia,var(--display); -webkit-text-stroke:max(1px,.13cqw) #331d27; paint-order:stroke fill;
 }
 .battle-total[hidden] {display:none;}

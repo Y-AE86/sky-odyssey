@@ -1,0 +1,12 @@
+{
+  "games": 200,
+  "actions": 11968,
+  "hits": 16866,
+  "draws": 13740,
+  "equal": true,
+  "sha256": {
+    "js/data.js": "1c57bc5ce0d713118eaf1e83562d87c70d04c0479e08b94d934e7d7081f8336c",
+    "js/save.js": "ff1764ddfc26de963cdf2ab32cd54f86a9cdeb3f7731d9ff0ba84fff4fee3748",
+    "js/battle-engine.js": "f4c4070097a23d6fda361c3b53f3ade45b14bd8491a95a359f116f8f09ba582e"
+  }
+}

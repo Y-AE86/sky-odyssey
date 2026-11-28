@@ -1,0 +1,95 @@
+{
+  "name": "canvas",
+  "baseline": false,
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "renderer": "canvas2d",
+  "resolution": 1,
+  "canvas": [
+    1280,
+    720
+  ],
+  "gpu": null,
+  "perf": {
+    "quiet": {
+      "intervals": 53,
+      "fps": 58.45,
+      "p50Ms": 13.4,
+      "p95Ms": 26.7,
+      "p99Ms": 40,
+      "maxMs": 40,
+      "above25Ms": 14,
+      "above50Ms": 0,
+      "submitP95Ms": 1.3
+    },
+    "active": null,
+    "filter": null
+  },
+  "impactSamples": [
+    {
+      "amount": 161,
+      "at": 3599.9,
+      "drawAt": 3599.9,
+      "info": null,
+      "filters": 0
+    },
+    {
+      "amount": 162,
+      "at": 3719.8,
+      "drawAt": 3719.8,
+      "info": null,
+      "filters": 0
+    },
+    {
+      "amount": 164,
+      "at": 3826.5,
+      "drawAt": 3826.5,
+      "info": null,
+      "filters": 0
+    }
+  ],
+  "captures": {},
+  "cleanup": {
+    "settled": {
+      "filters": null,
+      "active": 0,
+      "atlas": 0,
+      "embers": 0
+    },
+    "destroyed": {
+      "disposed": true,
+      "cameraDetached": true,
+      "noEmbers": true,
+      "canvasRemoved": true
+    }
+  },
+  "blends": {
+    "example": null,
+    "frames": 0,
+    "sparkFrames": 0
+  },
+  "embers": {
+    "firstTail": [],
+    "sampledTailMs": 0
+  },
+  "shader": {
+    "peakFilters": 0,
+    "peakPasses": 0,
+    "peakOffsets": 0,
+    "chromaticClearMs": null,
+    "shockwaveClearMs": null,
+    "simultaneousFrames": 0
+  },
+  "fallback": true,
+  "errors": []
+}

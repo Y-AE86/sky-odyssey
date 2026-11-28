@@ -15,13 +15,20 @@ const out=option('out',null),selected=option('case',null);
 const vfxOnly=args.includes('--vfx-only');
 const hudOnly=args.includes('--hud-only');
 const wave6Only=args.includes('--wave6-only');
+const upgradeBaseline=args.includes('--vfx-upgrade-baseline');
+const effectsUpgrade=upgradeBaseline || args.includes('--vfx-upgrade');
 const {exerciseHud,checkPowerHud}=require('./battle-hud.cjs');
+const {runVfxUpgrade}=require('./vfx-upgrade.cjs');
 const chrome=option('chrome',process.env.CHROME_PATH);
 const presets=[
   {name:'desktop',width:1280,height:720,dpr:1,full:true},
   {name:'retina',width:1440,height:900,dpr:2,full:true},
   {name:'mobile',width:844,height:390,dpr:3,mobile:true,full:true},
   {name:'file',width:1280,height:720,dpr:1,file:true,full:true},
+  ...effectsUpgrade && !upgradeBaseline ? [
+    {name:'power',width:1280,height:720,dpr:1,full:true},
+    {name:'canvas',width:1280,height:720,dpr:1,full:true}
+  ] : [],
   {name:'1080p',width:1920,height:1080,dpr:1,full:true,extra:true},
   {name:'qhd',width:2560,height:1440,dpr:1,full:true,extra:true},
   {name:'4k',width:3840,height:2160,dpr:1,full:true,extra:true}
@@ -1269,6 +1276,21 @@ async function exerciseFullVfx(p,spec) {
   assert.deepEqual(Object.keys(atlases).sort(),[...ids].sort());
   const results={spark,atlases};
   for(const id of leads){
+    if(id==='h01')await p.evaluate(()=>{
+      const cast=Sky.Battle.cast;
+      Sky.Battle.cast=(fight,slot)=>{
+        const actor=fight.units.find(u=>u.side==='ally' && u.slot===slot);
+        if(actor?.heroId==='h01' && actor.hp>0 && actor.rage===100 && !actor.status.freeze){
+          Sky.Battle.cast=cast;
+          // The opening basic can already have consumed the fixture's first
+          // shield. Give the real cast target a live shield immediately here.
+          const opponents=fight.units.filter(u=>u.side==='enemy' && u.hp>0);
+          const target=Sky.Battle.standardTarget(actor,opponents);
+          target.shield=Math.max(target.shield,90);
+        }
+        return cast(fight,slot);
+      };
+    });
     const media=await queueVfxCast(p,formation.indexOf(id),id,false);
     await waitAuthoredHits(p,id,screenshotsAt[id]);
     await screenshot(p,spec,'full-vfx-'+id);
@@ -1351,23 +1373,26 @@ async function exerciseVfxSpeeds(p,spec) {
     });
     assertVfxPeak(trace.hit,'h06','single',3,spec);
     const ratios=[];
+    let clockInput=0;
     for(let i=1;i<trace.frames.length;i++){
       const next=trace.frames[i],previous=trace.frames[i-1],wall=next.drawClock-previous.drawClock;
-      // Browser suspension discards time over 300 ms by design.
+      // Mirror the real ticker's cap when checking the game clock. Wall time is
+      // still reported below so a delayed browser presentation remains visible.
+      clockInput+=Math.min(300,wall);
       if(wall>1 && wall<290)ratios.push((next.effectClock-previous.effectClock)/wall);
     }
     const first=trace.frames[0],last=trace.frames.at(-1),hold=trace.hit.impact.hold;
     const wall=last.drawClock-first.drawClock,played=last.effectClock-first.effectClock;
     // A hit deliberately draws at its exact cue. Any unused fraction of that
     // render tick resumes after hitstop, so individual intervals can exceed 1×.
-    const measured=(played+hold)/wall;
+    const measured=(played+hold)/clockInput;
     assert(ratios.length>=2 && ratios.every(rate=>rate>=0) && Math.abs(measured-expected)<expected*.13,
-      JSON.stringify({expected,measured,played,hold,wall,ratios}));
+      JSON.stringify({expected,measured,played,hold,wall,clockInput,ratios}));
     const voice=trace.voice,expectedMs=[3000,1900,1250][expected-1];
     assert(voice?.playedMs>0 && !voice.muted && voice.audioBytes>0 && Math.abs(voice.playedMs-expectedMs)<300,
       'natural end of the voiced cinematic at '+expected+'×: '+JSON.stringify(voice));
     rates.push({selected:expected,measured:+measured.toFixed(3),hold,voice,
-      frames:trace.frames.map(frame=>frame.frame),renderMs:Math.round(wall)});
+      frames:trace.frames.map(frame=>frame.frame),renderMs:Math.round(wall),clockInputMs:Math.round(clockInput)});
     await settleVfxFixture(p);
   }
   return rates;
@@ -1794,12 +1819,21 @@ async function replacementCheck(browser) {
     const origin='http://127.0.0.1:'+server.address().port;
     const reports=[];
     const chosen=presets.filter(x=>selected ? selected.split(',').includes(x.name) : !x.extra);
-    const replacements=!vfxOnly && !hudOnly && !wave6Only && (!selected || selected.split(',').includes('replacement'));
+    const replacements=!vfxOnly && !hudOnly && !wave6Only && !effectsUpgrade &&
+      (!selected || selected.split(',').includes('replacement'));
     assert(chosen.length||replacements,'unknown --case');
     for(const spec of chosen) {
-      const result=await (wave6Only?runWave6Focus:vfxOnly||hudOnly?runVfxFocus:run)(browser,origin,spec);
+      if(spec.name==='canvas'){
+        await browser.close();
+        browser=await chromium.launch({...config,args:[...config.args,'--disable-webgl']});
+      }
+      const result=effectsUpgrade ?
+        await runVfxUpgrade(browser,origin,spec,{baseline:upgradeBaseline,root,out},
+          {action,panel,battle,geometry,startFullVfxFixture,screenshot,queueVfxCast}) :
+        await (wave6Only?runWave6Focus:vfxOnly||hudOnly?runVfxFocus:run)(browser,origin,spec);
       reports.push(result);console.log(JSON.stringify(result));
-      if(out)fs.writeFileSync(path.join(out,spec.name+(wave6Only?'-wave6':hudOnly?'-hud':vfxOnly?'-vfx':'')+'-report.json'),JSON.stringify(result,null,2));
+      if(out)fs.writeFileSync(path.join(out,spec.name+(effectsUpgrade ?
+        upgradeBaseline?'-before':'-after' : wave6Only?'-wave6':hudOnly?'-hud':vfxOnly?'-vfx':'')+'-report.json'),JSON.stringify(result,null,2));
     }
     if(replacements)await replacementCheck(browser);
   } finally {await browser?.close();await new Promise(resolve=>server.close(resolve));}

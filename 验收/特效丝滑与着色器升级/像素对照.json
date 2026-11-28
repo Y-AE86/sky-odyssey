@@ -1,0 +1,96 @@
+{
+  "bossWhiteFlash": {
+    "before": {
+      "roi": [
+        878,
+        284,
+        956,
+        452
+      ],
+      "totalPixels": 13104,
+      "countAtLeastRGB": {
+        "213": 9680,
+        "220": 8742,
+        "225": 6597,
+        "230": 4424,
+        "235": 2625,
+        "240": 1291
+      }
+    },
+    "after": {
+      "roi": [
+        878,
+        284,
+        956,
+        452
+      ],
+      "totalPixels": 13104,
+      "countAtLeastRGB": {
+        "213": 4176,
+        "220": 2974,
+        "225": 2305,
+        "230": 1754,
+        "235": 1330,
+        "240": 977
+      }
+    }
+  },
+  "shockwaveSamePoseOnOff": {
+    "whole": {
+      "roi": [
+        0,
+        0,
+        1280,
+        720
+      ],
+      "changedAtLeast8": 28990,
+      "meanRgbDelta": 1.3388205295138889
+    },
+    "target": {
+      "roi": [
+        750,
+        230,
+        1070,
+        590
+      ],
+      "changedAtLeast8": 15972,
+      "meanRgbDelta": 3.4965277777777777
+    },
+    "upperHud": {
+      "roi": [
+        920,
+        8,
+        1280,
+        60
+      ],
+      "changedAtLeast8": 0,
+      "meanRgbDelta": 0.0
+    },
+    "bottomHud": {
+      "roi": [
+        348,
+        610,
+        940,
+        720
+      ],
+      "changedAtLeast8": 3768,
+      "meanRgbDelta": 1.67993447993448
+    }
+  },
+  "groupHealing": {
+    "before": {
+      "kind": "heal",
+      "value": "156",
+      "text": "1 次施加",
+      "gap": 1.609375,
+      "top": "55.5px"
+    },
+    "after": {
+      "kind": "heal",
+      "value": "156",
+      "text": "1 次施加",
+      "gap": 6.390625,
+      "top": "60.2812px"
+    }
+  }
+}

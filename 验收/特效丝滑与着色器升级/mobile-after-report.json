@@ -1,0 +1,240 @@
+{
+  "name": "mobile",
+  "baseline": false,
+  "stage": {
+    "x": 79.828125,
+    "y": 0,
+    "width": 693.328125,
+    "height": 389.984375,
+    "dpr": 3,
+    "transform": "none",
+    "safeLeft": 44,
+    "safeRight": 35,
+    "vw": 844,
+    "vh": 390
+  },
+  "renderer": "pixi-webgl",
+  "resolution": 3,
+  "canvas": [
+    2079,
+    1170
+  ],
+  "gpu": "ANGLE (Intel, Intel(R) UHD Graphics 770 (0x00004680) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "perf": {
+    "quiet": {
+      "intervals": 52,
+      "fps": 54.93,
+      "p50Ms": 13.4,
+      "p95Ms": 40,
+      "p99Ms": 40.1,
+      "maxMs": 40.1,
+      "above25Ms": 16,
+      "above50Ms": 0,
+      "submitP95Ms": 1
+    },
+    "active": {
+      "intervals": 68,
+      "fps": 47.67,
+      "p50Ms": 26.6,
+      "p95Ms": 39.9,
+      "p99Ms": 40,
+      "maxMs": 40,
+      "above25Ms": 35,
+      "above50Ms": 0,
+      "submitP95Ms": 1.7
+    },
+    "filter": {
+      "intervals": 22,
+      "fps": 50.01,
+      "p50Ms": 13.4,
+      "p95Ms": 39.9,
+      "p99Ms": 40,
+      "maxMs": 40,
+      "above25Ms": 9,
+      "above50Ms": 0,
+      "submitP95Ms": 1.8
+    }
+  },
+  "impactSamples": [
+    {
+      "amount": 161,
+      "at": 4063.9,
+      "drawAt": 4063.9,
+      "info": {
+        "key": "h01",
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "blend": 0,
+        "impactAt": 4063.9,
+        "renderedImpactAt": 4063.9,
+        "source": "png"
+      },
+      "filters": 2
+    },
+    {
+      "amount": 162,
+      "at": 4157.2,
+      "drawAt": 4157.2,
+      "info": {
+        "key": "h01",
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "blend": 0,
+        "impactAt": 4157.2,
+        "renderedImpactAt": 4157.2,
+        "source": "png"
+      },
+      "filters": 2
+    },
+    {
+      "amount": 164,
+      "at": 4263.8,
+      "drawAt": 4263.8,
+      "info": {
+        "key": "h01",
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "blend": 0,
+        "impactAt": 4263.8,
+        "renderedImpactAt": 4263.8,
+        "source": "png"
+      },
+      "filters": 2
+    }
+  ],
+  "captures": {
+    "shockwave-split": {
+      "name": "shockwave-split",
+      "now": 7370.4,
+      "clock": 868.599999999441,
+      "filters": 2,
+      "filterState": {
+        "active": [
+          "shockwave",
+          "chromatic"
+        ],
+        "shockwave": {
+          "x": 510.3430380471401,
+          "y": 207.48021917142836,
+          "radius": 28.282305389538173,
+          "amplitude": 3.2986557720685306,
+          "progress": 0.15346153846153707,
+          "duration": 260
+        },
+        "chromatic": {
+          "offset": 0.4724252152597676,
+          "progress": 0.39899999999999636,
+          "duration": 100
+        }
+      },
+      "embers": [],
+      "atlas": [
+        {
+          "frame": 4,
+          "sub": 0.5,
+          "blend": 0.12261962890625004,
+          "nextFrame": 5,
+          "scale": 0.38361452003539537,
+          "angle": 0.007363505820192889,
+          "startedAt": 6943.7,
+          "alpha": 0.6580352783203125,
+          "nextAlpha": 0.09196472167968753,
+          "blendMode": 1
+        },
+        {
+          "frame": 3,
+          "sub": 0,
+          "blend": 0,
+          "nextFrame": 4,
+          "scale": 0.5955012631578946,
+          "angle": 0,
+          "startedAt": 7063.7,
+          "alpha": 1,
+          "nextAlpha": 0,
+          "blendMode": 1
+        }
+      ],
+      "bossWhite": true,
+      "boss": {
+        "x": 530.91357421875,
+        "y": 116.5447769165039,
+        "width": 127.14495849609375,
+        "height": 161.09868621826172
+      }
+    },
+    "roster": {
+      "mask": "linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 69%, rgba(0, 0, 0, 0) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 17%)",
+      "composition": "intersect, intersect"
+    }
+  },
+  "cleanup": {
+    "settled": {
+      "filters": null,
+      "active": 0,
+      "atlas": 0,
+      "embers": 0
+    },
+    "destroyed": {
+      "disposed": true,
+      "cameraDetached": true,
+      "noEmbers": true,
+      "canvasRemoved": true
+    }
+  },
+  "blends": {
+    "example": {
+      "frame": 0,
+      "sub": 0.5569444444444431,
+      "blend": 0.2258050763884991,
+      "nextFrame": 1,
+      "scale": 0.3786299458399787,
+      "angle": -0.009913024155443356,
+      "startedAt": 3837.2,
+      "alpha": 0.5806461927086257,
+      "nextAlpha": 0.1693538072913743,
+      "blendMode": 1
+    },
+    "frames": 40,
+    "sparkFrames": 43
+  },
+  "embers": {
+    "firstTail": [
+      {
+        "key": "h01",
+        "actor": "a1",
+        "count": 18,
+        "visible": 18,
+        "tint": 12684031,
+        "startedAt": 4477.2,
+        "atlasEndedAt": 4770.5,
+        "remainingMs": 500
+      }
+    ],
+    "sampledTailMs": 493.3
+  },
+  "shader": {
+    "peakFilters": 2,
+    "peakPasses": 1,
+    "peakOffsets": 4.2,
+    "chromaticClearMs": 106.7,
+    "shockwaveClearMs": 266.7,
+    "simultaneousFrames": 11
+  },
+  "fallback": false,
+  "errors": []
+}

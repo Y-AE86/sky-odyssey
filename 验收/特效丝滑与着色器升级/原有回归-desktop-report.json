@@ -1,0 +1,3028 @@
+{
+  "name": "desktop",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "normal": {
+    "spark": {
+      "clock": 2806.7,
+      "actor": "a2",
+      "heroId": "h06",
+      "target": "e2",
+      "kind": "damage",
+      "amount": 159,
+      "ultimate": false,
+      "drawClock": 2806.7,
+      "cutVisible": false,
+      "labels": [
+        "−159"
+      ],
+      "counter": 0,
+      "procedural": false,
+      "effects": [
+        {
+          "key": "spark",
+          "heroId": "h06",
+          "actor": "a2",
+          "target": "e2",
+          "targets": null,
+          "role": "spark",
+          "hitIndex": 0,
+          "due": 255,
+          "artKey": "spark",
+          "tint": 16777215,
+          "source": "png",
+          "startedAt": 2806.7,
+          "impactAt": 2806.7,
+          "renderedImpactAt": 2806.7,
+          "frame": 0,
+          "frames": [
+            0
+          ],
+          "active": true,
+          "rotation": -0.10155548132024705,
+          "blendMode": 1,
+          "finisher": false,
+          "magnification": 1,
+          "sub": 0,
+          "blend": 0,
+          "nextFrame": 1,
+          "scale": 0.34427712918660286,
+          "angle": -0.10155548132024705,
+          "alpha": 1,
+          "nextAlpha": 0
+        }
+      ],
+      "camera": {
+        "zoom": 1.02,
+        "x": -7.040000000000012,
+        "y": -6.390000000000007,
+        "kick": true,
+        "focus": 0,
+        "hitstopRemaining": 43,
+        "filters": {
+          "active": [],
+          "shockwave": null,
+          "chromatic": null
+        }
+      },
+      "impact": {
+        "actor": "a2",
+        "target": "e2",
+        "critical": false,
+        "finisher": false,
+        "hold": 43,
+        "sparks": 8,
+        "beat": 0,
+        "beats": 1
+      },
+      "kickPower": 0.0045
+    },
+    "atlases": {
+      "spark": {
+        "frameMs": 51,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h01": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h02": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h04": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h06": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h05": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      },
+      "h03": {
+        "frameMs": 72,
+        "cornerAlpha": 0,
+        "frames": [
+          [
+            0,
+            0,
+            418,
+            418
+          ],
+          [
+            418,
+            0,
+            418,
+            418
+          ],
+          [
+            836,
+            0,
+            418,
+            418
+          ],
+          [
+            0,
+            418,
+            418,
+            418
+          ],
+          [
+            418,
+            418,
+            418,
+            418
+          ],
+          [
+            836,
+            418,
+            418,
+            418
+          ],
+          [
+            0,
+            836,
+            418,
+            418
+          ],
+          [
+            418,
+            836,
+            418,
+            418
+          ],
+          [
+            836,
+            836,
+            418,
+            418
+          ]
+        ]
+      }
+    },
+    "h01": {
+      "media": {
+        "clip": "ult_h01.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "audioBytes": 7725
+      },
+      "hits": [
+        {
+          "clock": 3500.1,
+          "actor": "a3",
+          "heroId": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 84,
+          "ultimate": true,
+          "drawClock": 3500.1,
+          "cutVisible": false,
+          "labels": [
+            "暴击−84"
+          ],
+          "counter": 84,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h01",
+              "heroId": "h01",
+              "actor": "a3",
+              "target": "e0",
+              "targets": null,
+              "role": "single",
+              "hitIndex": 0,
+              "due": 216,
+              "artKey": "h01",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 3286.8,
+              "impactAt": 3500.1,
+              "renderedImpactAt": 3500.1,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.758197894736842,
+              "angle": 0,
+              "alpha": 0.75,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1331688836233136,
+            "x": -60.19656007131906,
+            "y": -27.94144626179066,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 72,
+            "filters": {
+              "active": [
+                "shockwave",
+                "chromatic"
+              ],
+              "shockwave": {
+                "x": 772.3634350224021,
+                "y": 325.24133231895905,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": {
+                "offset": 4.2,
+                "progress": 0,
+                "duration": 100
+              }
+            }
+          },
+          "impact": {
+            "actor": "a3",
+            "target": "e0",
+            "critical": true,
+            "finisher": false,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 1,
+            "beats": 3
+          },
+          "kickPower": 0.009
+        },
+        {
+          "clock": 3606.7,
+          "actor": "a3",
+          "heroId": "h01",
+          "target": "a3",
+          "kind": "damage",
+          "amount": 27,
+          "ultimate": true,
+          "drawClock": 3606.7,
+          "cutVisible": false,
+          "labels": [
+            "−27"
+          ],
+          "counter": 84,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "spark",
+              "heroId": "h01",
+              "actor": "a3",
+              "target": "a3",
+              "targets": null,
+              "role": "spark",
+              "hitIndex": 1,
+              "due": 252,
+              "artKey": "spark",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 3606.7,
+              "impactAt": 3606.7,
+              "renderedImpactAt": 3606.7,
+              "frame": 0,
+              "frames": [
+                0
+              ],
+              "active": true,
+              "rotation": 0.2688175589358434,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 1,
+              "scale": 0.34427712918660286,
+              "angle": 0.2688175589358434,
+              "alpha": 1,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1331332992978134,
+            "x": -60.174844239945514,
+            "y": -28.633839314251087,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 772.359006396147,
+                "y": 324.5378484475256,
+                "radius": 113.7918875532111,
+                "amplitude": 1.9542706392394649,
+                "progress": 0.40999999999999964,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a3",
+            "target": "a3",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 9,
+            "beat": 0,
+            "beats": 3
+          },
+          "kickPower": 0.0058
+        },
+        {
+          "clock": 3673.4,
+          "actor": "a3",
+          "heroId": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 160,
+          "ultimate": true,
+          "drawClock": 3673.4,
+          "cutVisible": false,
+          "labels": [
+            "−160"
+          ],
+          "counter": 244,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h01",
+              "heroId": "h01",
+              "actor": "a3",
+              "target": "e0",
+              "targets": null,
+              "role": "single",
+              "hitIndex": 2,
+              "due": 324,
+              "artKey": "h01",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 3406.7,
+              "impactAt": 3673.4,
+              "renderedImpactAt": 3673.4,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.758197894736842,
+              "angle": 0,
+              "alpha": 0.75,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1330514187057716,
+            "x": -60.12487546564551,
+            "y": -28.322091442216127,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 772.3488159953288,
+                "y": 324.8240760150172,
+                "radius": 168.8500097853781,
+                "amplitude": 0.8544086316908844,
+                "progress": 0.6665384615384622,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a3",
+            "target": "e0",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 11,
+            "beat": 2,
+            "beats": 3
+          },
+          "kickPower": 0.0068
+        },
+        {
+          "clock": 3780,
+          "actor": "a3",
+          "heroId": "h01",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 165,
+          "ultimate": true,
+          "drawClock": 3780,
+          "cutVisible": false,
+          "labels": [
+            "−165"
+          ],
+          "counter": 409,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h01",
+              "heroId": "h01",
+              "actor": "a3",
+              "target": "e0",
+              "targets": null,
+              "role": "single",
+              "hitIndex": 3,
+              "due": 432,
+              "artKey": "h01",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 3500.1,
+              "impactAt": 3780,
+              "renderedImpactAt": 3780,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": true,
+              "magnification": 1.45,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 1.0993869473684208,
+              "angle": 0,
+              "alpha": 1,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1329046675516177,
+            "x": -60.03531852526021,
+            "y": -27.86452767899854,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 72,
+            "filters": {
+              "active": [
+                "shockwave",
+                "chromatic"
+              ],
+              "shockwave": {
+                "x": 772.3305521669406,
+                "y": 325.4150872232693,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": {
+                "offset": 4.2,
+                "progress": 0,
+                "duration": 100
+              }
+            }
+          },
+          "impact": {
+            "actor": "a3",
+            "target": "e0",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 3,
+            "beats": 3
+          },
+          "kickPower": 0.009
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "h02": {
+      "media": {
+        "clip": "ult_h02.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "audioBytes": 8642
+      },
+      "hits": [
+        {
+          "clock": 4940.1,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e0",
+          "kind": "damage",
+          "amount": 178,
+          "ultimate": true,
+          "drawClock": 4940.1,
+          "cutVisible": false,
+          "labels": [
+            "−178"
+          ],
+          "counter": 178,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": null,
+              "targets": [
+                "e0",
+                "e1",
+                "e2",
+                "e3",
+                "e4",
+                "e5"
+              ],
+              "role": "group",
+              "hitIndex": 0,
+              "due": 216,
+              "artKey": "h02",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 4713.4,
+              "impactAt": 4940.1,
+              "renderedImpactAt": 4940.1,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.9431242105263157,
+              "angle": 0,
+              "alpha": 0.79,
+              "nextAlpha": 0
+            },
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e0",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 0,
+              "due": 216,
+              "artKey": "h02",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 4713.4,
+              "impactAt": 4940.1,
+              "renderedImpactAt": 4940.1,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.4623157894736842,
+              "angle": 0,
+              "alpha": 0.58,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1313534729852752,
+            "x": -59.08868038735448,
+            "y": -55.6022867173271,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 1014.1399184916453,
+                "y": 403.06001303779124,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e0",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 9,
+            "beat": 1,
+            "beats": 4
+          },
+          "kickPower": 0.0058
+        },
+        {
+          "clock": 5006.8,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e1",
+          "kind": "damage",
+          "amount": 174,
+          "ultimate": true,
+          "drawClock": 5006.8,
+          "cutVisible": false,
+          "labels": [
+            "−174"
+          ],
+          "counter": 352,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e1",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 1,
+              "due": 296,
+              "artKey": "h02",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 4806.8,
+              "impactAt": 5006.8,
+              "renderedImpactAt": 5006.8,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.4623157894736842,
+              "angle": 0,
+              "alpha": 0.58,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.13133059983246,
+            "x": -59.07472172655279,
+            "y": -54.5125765440566,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 1014.1321791399921,
+                "y": 404.14045020035087,
+                "radius": 77.61365762686401,
+                "amplitude": 2.7325877946105046,
+                "progress": 0.2565384615384608,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e1",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 10,
+            "beat": 2,
+            "beats": 4
+          },
+          "kickPower": 0.006466666666666667
+        },
+        {
+          "clock": 5086.7,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e2",
+          "kind": "damage",
+          "amount": 173,
+          "ultimate": true,
+          "drawClock": 5086.7,
+          "cutVisible": false,
+          "labels": [
+            "−173"
+          ],
+          "counter": 525,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e2",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 2,
+              "due": 376,
+              "artKey": "h02",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 4873.4,
+              "impactAt": 5086.7,
+              "renderedImpactAt": 5086.7,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.4623157894736842,
+              "angle": 0,
+              "alpha": 0.58,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1313293074672892,
+            "x": -59.07393304266656,
+            "y": -53.894769206215926,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 1014.1317418557837,
+                "y": 404.7577336000983,
+                "radius": 147.7517512670475,
+                "amplitude": 1.2610341996788494,
+                "progress": 0.5638461538461518,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e2",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 10,
+            "beat": 2,
+            "beats": 4
+          },
+          "kickPower": 0.006466666666666667
+        },
+        {
+          "clock": 5166.8,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e3",
+          "kind": "damage",
+          "amount": 229,
+          "ultimate": true,
+          "drawClock": 5166.8,
+          "cutVisible": false,
+          "labels": [
+            "−229"
+          ],
+          "counter": 754,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e3",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 3,
+              "due": 456,
+              "artKey": "h02",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 4953.4,
+              "impactAt": 5166.8,
+              "renderedImpactAt": 5166.8,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.4623157894736842,
+              "angle": 0,
+              "alpha": 0.58,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1313496240556566,
+            "x": -59.08633152432581,
+            "y": -55.224753154276556,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 1014.1386161692218,
+                "y": 403.4359862053044,
+                "radius": 205.76187443047812,
+                "amplitude": 0.2133448061204573,
+                "progress": 0.8719230769230762,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e3",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 12,
+            "beat": 3,
+            "beats": 4
+          },
+          "kickPower": 0.007133333333333333
+        },
+        {
+          "clock": 5246.7,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e4",
+          "kind": "damage",
+          "amount": 205,
+          "ultimate": true,
+          "drawClock": 5246.7,
+          "cutVisible": false,
+          "labels": [
+            "暴击−205"
+          ],
+          "counter": 959,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e4",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 4,
+              "due": 536,
+              "artKey": "h02",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 5020.1,
+              "impactAt": 5246.7,
+              "renderedImpactAt": 5246.7,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.4623157894736842,
+              "angle": 0,
+              "alpha": 0.58,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1313911067942255,
+            "x": -59.11164694461301,
+            "y": -54.24899277284054,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 72,
+            "filters": {
+              "active": [
+                "chromatic"
+              ],
+              "shockwave": null,
+              "chromatic": {
+                "offset": 4.2,
+                "progress": 0,
+                "duration": 100
+              }
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e4",
+            "critical": true,
+            "finisher": false,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 3,
+            "beats": 4
+          },
+          "kickPower": 0.009
+        },
+        {
+          "clock": 5406.7,
+          "actor": "a4",
+          "heroId": "h02",
+          "target": "e5",
+          "kind": "damage",
+          "amount": 229,
+          "ultimate": true,
+          "drawClock": 5406.7,
+          "cutVisible": false,
+          "labels": [
+            "−229"
+          ],
+          "counter": 1188,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h02",
+              "heroId": "h02",
+              "actor": "a4",
+              "target": "e5",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 5,
+              "due": 616,
+              "artKey": "h02",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 5100.1,
+              "impactAt": 5406.7,
+              "renderedImpactAt": 5406.7,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": true,
+              "magnification": 1.45,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.670357894736842,
+              "angle": 0,
+              "alpha": 0.58,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.101435365104347,
+            "x": -57.34238446444363,
+            "y": -41.60633929671007,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 72,
+            "filters": {
+              "active": [
+                "shockwave",
+                "chromatic"
+              ],
+              "shockwave": {
+                "x": 1184.5606337669533,
+                "y": 511.4685945832882,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": {
+                "offset": 4.2,
+                "progress": 0,
+                "duration": 100
+              }
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e5",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0.009
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "h03": {
+      "media": {
+        "clip": "ult_h03.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "audioBytes": 7792
+      },
+      "hits": [
+        {
+          "clock": 6580,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a0",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 6580,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 245,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": null,
+              "targets": [
+                "a0",
+                "a1",
+                "a2",
+                "a3",
+                "a4",
+                "a5"
+              ],
+              "role": "group",
+              "hitIndex": 0,
+              "due": 288,
+              "artKey": "h03",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 6300,
+              "impactAt": 6580,
+              "renderedImpactAt": 6580,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 5,
+              "scale": 0.8287923444976076,
+              "angle": 0,
+              "alpha": 0.559,
+              "nextAlpha": 0
+            },
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a0",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 0,
+              "due": 288,
+              "artKey": "h03",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 6300,
+              "impactAt": 6580,
+              "renderedImpactAt": 6580,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 5,
+              "scale": 0.4504306220095694,
+              "angle": 0,
+              "alpha": 0.44849999999999995,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.115,
+            "x": -38.86134796249189,
+            "y": -57.85080000000001,
+            "kick": false,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 308.66185203750814,
+                "y": 480.42659999999995,
+                "radius": 12.959999999999999,
+                "amplitude": 3.024,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e5",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0
+        },
+        {
+          "clock": 6633.3,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a1",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 6633.3,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 490,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a1",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 1,
+              "due": 343,
+              "artKey": "h03",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 6353.3,
+              "impactAt": 6633.3,
+              "renderedImpactAt": 6633.3,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 5,
+              "scale": 0.4504306220095694,
+              "angle": 0,
+              "alpha": 0.44849999999999995,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.115,
+            "x": -38.8336333814882,
+            "y": -57.85080000000001,
+            "kick": false,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 308.68956661851183,
+                "y": 480.42659999999995,
+                "radius": 65.01654870801724,
+                "amplitude": 2.168273806343837,
+                "progress": 0.2050000000000007,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e5",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0
+        },
+        {
+          "clock": 6686.7,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a2",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 6686.7,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 735,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a2",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 2,
+              "due": 398,
+              "artKey": "h03",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 6406.7,
+              "impactAt": 6686.7,
+              "renderedImpactAt": 6686.7,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 5,
+              "scale": 0.4504306220095694,
+              "angle": 0,
+              "alpha": 0.44849999999999995,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.115,
+            "x": -38.811019485111956,
+            "y": -57.85080000000001,
+            "kick": false,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 308.7121805148881,
+                "y": 480.42659999999995,
+                "radius": 113.87985961407267,
+                "amplitude": 1.4057450302289882,
+                "progress": 0.4103846153846147,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e5",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0
+        },
+        {
+          "clock": 6740,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a3",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 6740,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 980,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a3",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 3,
+              "due": 453,
+              "artKey": "h03",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 6473.4,
+              "impactAt": 6740,
+              "renderedImpactAt": 6740,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 5,
+              "scale": 0.4504306220095694,
+              "angle": 0,
+              "alpha": 0.44849999999999995,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.115,
+            "x": -38.79374066266314,
+            "y": -57.85080000000001,
+            "kick": false,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 308.7294593373369,
+                "y": 480.42659999999995,
+                "radius": 158.51680393514462,
+                "amplitude": 0.7566071346284237,
+                "progress": 0.6153846153846154,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e5",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0
+        },
+        {
+          "clock": 6806.7,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a4",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 6806.7,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 1225,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a4",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 4,
+              "due": 508,
+              "artKey": "h03",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 6513.4,
+              "impactAt": 6806.7,
+              "renderedImpactAt": 6806.7,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 5,
+              "scale": 0.4504306220095694,
+              "angle": 0,
+              "alpha": 0.44849999999999995,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.115,
+            "x": -38.78197600628414,
+            "y": -57.85080000000001,
+            "kick": false,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 308.7412239937159,
+                "y": 480.42659999999995,
+                "radius": 205.76187443047812,
+                "amplitude": 0.15360826040672926,
+                "progress": 0.8719230769230762,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a4",
+            "target": "e5",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0
+        },
+        {
+          "clock": 6873.4,
+          "actor": "a5",
+          "heroId": "h03",
+          "target": "a5",
+          "kind": "heal",
+          "amount": 245,
+          "ultimate": true,
+          "drawClock": 6873.4,
+          "cutVisible": false,
+          "labels": [
+            "+245"
+          ],
+          "counter": 1470,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h03",
+              "heroId": "h03",
+              "actor": "a5",
+              "target": "a5",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 5,
+              "due": 563,
+              "artKey": "h03",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 6566.7,
+              "impactAt": 6873.4,
+              "renderedImpactAt": 6873.4,
+              "frame": 4,
+              "frames": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": true,
+              "magnification": 1.45,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 5,
+              "scale": 0.6531244019138757,
+              "angle": 0,
+              "alpha": 0.44849999999999995,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1333058502045508,
+            "x": -60.28014583949471,
+            "y": -67.53928111670959,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 65,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 86.23363447494961,
+                "y": 581.9809677525225,
+                "radius": 12.959999999999999,
+                "amplitude": 3.024,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a5",
+            "target": "a5",
+            "critical": false,
+            "finisher": true,
+            "hold": 65,
+            "sparks": 0,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0.009
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "h04": {
+      "media": {
+        "clip": "ult_h04.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "audioBytes": 9431
+      },
+      "hits": [
+        {
+          "clock": 7980,
+          "actor": "a0",
+          "heroId": "h04",
+          "target": "a0",
+          "kind": "shield",
+          "amount": 228,
+          "ultimate": true,
+          "drawClock": 7980,
+          "cutVisible": false,
+          "labels": [
+            "盾 +228"
+          ],
+          "counter": 228,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h04",
+              "heroId": "h04",
+              "actor": "a0",
+              "target": "a0",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 0,
+              "due": 216,
+              "artKey": "h04",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 7766.6,
+              "impactAt": 7980,
+              "renderedImpactAt": 7980,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.5405167464114833,
+              "angle": 0,
+              "alpha": 0.45499999999999996,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.115,
+            "x": -39.500902410549315,
+            "y": -45.555600000000005,
+            "kick": false,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 511.39829758945075,
+                "y": 323.2764951504324,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a5",
+            "target": "a5",
+            "critical": false,
+            "finisher": true,
+            "hold": 65,
+            "sparks": 0,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0
+        },
+        {
+          "clock": 8046.6,
+          "actor": "a0",
+          "heroId": "h04",
+          "target": "a1",
+          "kind": "shield",
+          "amount": 228,
+          "ultimate": true,
+          "drawClock": 8046.6,
+          "cutVisible": false,
+          "labels": [
+            "盾 +228"
+          ],
+          "counter": 456,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h04",
+              "heroId": "h04",
+              "actor": "a0",
+              "target": "a1",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 1,
+              "due": 281,
+              "artKey": "h04",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 7820,
+              "impactAt": 8046.6,
+              "renderedImpactAt": 8046.6,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.5405167464114833,
+              "angle": 0,
+              "alpha": 0.45499999999999996,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.115,
+            "x": -39.562347458490194,
+            "y": -45.555600000000005,
+            "kick": false,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 511.33685254150987,
+                "y": 323.2764951504324,
+                "radius": 77.52043746223596,
+                "amplitude": 2.7346378274414094,
+                "progress": 0.25615384615384756,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a5",
+            "target": "a5",
+            "critical": false,
+            "finisher": true,
+            "hold": 65,
+            "sparks": 0,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0
+        },
+        {
+          "clock": 8099.9,
+          "actor": "a0",
+          "heroId": "h04",
+          "target": "a2",
+          "kind": "shield",
+          "amount": 228,
+          "ultimate": true,
+          "drawClock": 8099.9,
+          "cutVisible": false,
+          "labels": [
+            "盾 +228"
+          ],
+          "counter": 684,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h04",
+              "heroId": "h04",
+              "actor": "a0",
+              "target": "a2",
+              "targets": null,
+              "role": "target",
+              "hitIndex": 2,
+              "due": 346,
+              "artKey": "h04",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 7886.7,
+              "impactAt": 8099.9,
+              "renderedImpactAt": 8099.9,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": true,
+              "magnification": 1.45,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.7837492822966508,
+              "angle": 0,
+              "alpha": 0.45499999999999996,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1317871635788912,
+            "x": -59.35334612618294,
+            "y": -53.70715270244596,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 65,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 320.20279705163404,
+                "y": 538.4583901557944,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a0",
+            "target": "a2",
+            "critical": false,
+            "finisher": true,
+            "hold": 65,
+            "sparks": 0,
+            "beat": 3,
+            "beats": 3
+          },
+          "kickPower": 0.009
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "h05": {
+      "media": {
+        "clip": "ult_h05.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "audioBytes": 7386
+      },
+      "hits": [
+        {
+          "clock": 9206.6,
+          "actor": "a1",
+          "heroId": "h05",
+          "target": "e4",
+          "kind": "damage",
+          "amount": 125,
+          "ultimate": true,
+          "drawClock": 9206.6,
+          "cutVisible": false,
+          "labels": [
+            "−125"
+          ],
+          "counter": 125,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h05",
+              "heroId": "h05",
+              "actor": "a1",
+              "target": "e4",
+              "targets": null,
+              "role": "projectile",
+              "hitIndex": 0,
+              "due": 216,
+              "artKey": "h05",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 9006.6,
+              "impactAt": 9206.6,
+              "renderedImpactAt": 9206.6,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.5917642105263157,
+              "angle": 0,
+              "alpha": 0.81,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1317045210776482,
+            "x": -59.3029123861571,
+            "y": -56.62828390935731,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 1144.4497865942146,
+                "y": 398.2660344800267,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a1",
+            "target": "e4",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 9,
+            "beat": 1,
+            "beats": 4
+          },
+          "kickPower": 0.0058
+        },
+        {
+          "clock": 9313.3,
+          "actor": "a1",
+          "heroId": "h05",
+          "target": "e5",
+          "kind": "damage",
+          "amount": 127,
+          "ultimate": true,
+          "drawClock": 9313.3,
+          "cutVisible": false,
+          "labels": [
+            "−127"
+          ],
+          "counter": 252,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h05",
+              "heroId": "h05",
+              "actor": "a1",
+              "target": "e5",
+              "targets": null,
+              "role": "projectile",
+              "hitIndex": 1,
+              "due": 324,
+              "artKey": "h05",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 9100,
+              "impactAt": 9313.3,
+              "renderedImpactAt": 9313.3,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.5917642105263157,
+              "angle": 0,
+              "alpha": 0.81,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1018513894912134,
+            "x": -57.59142493491954,
+            "y": -43.776109648454835,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 1114.407590066203,
+                "y": 399.11859250552834,
+                "radius": 113.87985961407186,
+                "amplitude": 1.9524236530958343,
+                "progress": 0.4103846153846112,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a1",
+            "target": "e5",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 10,
+            "beat": 2,
+            "beats": 4
+          },
+          "kickPower": 0.006466666666666667
+        },
+        {
+          "clock": 9419.9,
+          "actor": "a1",
+          "heroId": "h05",
+          "target": "e1",
+          "kind": "damage",
+          "amount": 109,
+          "ultimate": true,
+          "drawClock": 9419.9,
+          "cutVisible": false,
+          "labels": [
+            "−109"
+          ],
+          "counter": 361,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h05",
+              "heroId": "h05",
+              "actor": "a1",
+              "target": "e1",
+              "targets": null,
+              "role": "projectile",
+              "hitIndex": 2,
+              "due": 432,
+              "artKey": "h05",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 9206.6,
+              "impactAt": 9419.9,
+              "renderedImpactAt": 9419.9,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": false,
+              "magnification": 1,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.5917642105263157,
+              "angle": 0,
+              "alpha": 0.81,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1338240858876114,
+            "x": -59.62414235778851,
+            "y": -57.08524810080447,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 1146.3830601728805,
+                "y": 398.661040013497,
+                "radius": 197.34482114557693,
+                "amplitude": 0.3483753456841104,
+                "progress": 0.8203846153846126,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a1",
+            "target": "e1",
+            "critical": false,
+            "finisher": false,
+            "hold": 0,
+            "sparks": 12,
+            "beat": 3,
+            "beats": 4
+          },
+          "kickPower": 0.007133333333333333
+        },
+        {
+          "clock": 9539.9,
+          "actor": "a1",
+          "heroId": "h05",
+          "target": "e3",
+          "kind": "damage",
+          "amount": 126,
+          "ultimate": true,
+          "drawClock": 9539.9,
+          "cutVisible": false,
+          "labels": [
+            "−126"
+          ],
+          "counter": 487,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h05",
+              "heroId": "h05",
+              "actor": "a1",
+              "target": "e3",
+              "targets": null,
+              "role": "projectile",
+              "hitIndex": 3,
+              "due": 540,
+              "artKey": "h05",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 9313.3,
+              "impactAt": 9539.9,
+              "renderedImpactAt": 9539.9,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": true,
+              "magnification": 1.45,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 0.8580581052631577,
+              "angle": 0,
+              "alpha": 0.81,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1322505163202592,
+            "x": -59.63611360474399,
+            "y": -57.473027376022266,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 72,
+            "filters": {
+              "active": [
+                "shockwave",
+                "chromatic"
+              ],
+              "shockwave": {
+                "x": 1100.657710947226,
+                "y": 284.61830854405787,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": {
+                "offset": 4.2,
+                "progress": 0,
+                "duration": 100
+              }
+            }
+          },
+          "impact": {
+            "actor": "a1",
+            "target": "e3",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 4,
+            "beats": 4
+          },
+          "kickPower": 0.009
+        }
+      ],
+      "framesSeen": [
+        0,
+        null,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "h06": {
+      "media": {
+        "clip": "ult_h06.mp4",
+        "duration": 3.041995,
+        "muted": false,
+        "audioBytes": 7892
+      },
+      "hits": [
+        {
+          "clock": 10646.5,
+          "actor": "a2",
+          "heroId": "h06",
+          "target": "e5",
+          "kind": "damage",
+          "amount": 395,
+          "ultimate": true,
+          "drawClock": 10646.5,
+          "cutVisible": false,
+          "labels": [
+            "−395"
+          ],
+          "counter": 395,
+          "procedural": false,
+          "effects": [
+            {
+              "key": "h06",
+              "heroId": "h06",
+              "actor": "a2",
+              "target": "e5",
+              "targets": null,
+              "role": "single",
+              "hitIndex": 0,
+              "due": 216,
+              "artKey": "h06",
+              "tint": 16777215,
+              "source": "png",
+              "startedAt": 10433.2,
+              "impactAt": 10646.5,
+              "renderedImpactAt": 10646.5,
+              "frame": 3,
+              "frames": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "active": true,
+              "rotation": 0,
+              "blendMode": 1,
+              "finisher": true,
+              "magnification": 1.45,
+              "sub": 0,
+              "blend": 0,
+              "nextFrame": 4,
+              "scale": 1.0993869473684208,
+              "angle": 0,
+              "alpha": 1,
+              "nextAlpha": 0
+            }
+          ],
+          "camera": {
+            "zoom": 1.1029984489942373,
+            "x": -58.40637221020824,
+            "y": -68.19173539639358,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 72,
+            "filters": {
+              "active": [
+                "shockwave",
+                "chromatic"
+              ],
+              "shockwave": {
+                "x": 1185.4108060565034,
+                "y": 483.03562157207307,
+                "radius": 12.959999999999999,
+                "amplitude": 4.2,
+                "progress": 0,
+                "duration": 260
+              },
+              "chromatic": {
+                "offset": 4.2,
+                "progress": 0,
+                "duration": 100
+              }
+            }
+          },
+          "impact": {
+            "actor": "a2",
+            "target": "e5",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 1,
+            "beats": 1
+          },
+          "kickPower": 0.009
+        },
+        {
+          "clock": 10819.9,
+          "actor": "a2",
+          "heroId": "h06",
+          "target": "a2",
+          "kind": "heal",
+          "amount": 158,
+          "ultimate": true,
+          "drawClock": 10819.9,
+          "cutVisible": false,
+          "labels": [
+            "+158"
+          ],
+          "counter": 395,
+          "procedural": false,
+          "effects": [],
+          "camera": {
+            "zoom": 1.115,
+            "x": -59.098115940433225,
+            "y": -75.73023525699739,
+            "kick": true,
+            "focus": 1,
+            "hitstopRemaining": 0,
+            "filters": {
+              "active": [
+                "shockwave"
+              ],
+              "shockwave": {
+                "x": 1198.2528395681445,
+                "y": 481.4949390669344,
+                "radius": 168.92628193027284,
+                "amplitude": 0.8529800608304113,
+                "progress": 0.6669230769230755,
+                "duration": 260
+              },
+              "chromatic": null
+            }
+          },
+          "impact": {
+            "actor": "a2",
+            "target": "e5",
+            "critical": false,
+            "finisher": true,
+            "hold": 72,
+            "sparks": 14,
+            "beat": 1,
+            "beats": 1
+          },
+          "kickPower": 0.009
+        }
+      ],
+      "framesSeen": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "speeds": [
+    {
+      "selected": 1,
+      "measured": 1,
+      "hold": 72,
+      "voice": {
+        "id": "h06",
+        "clip": "ult_h06.mp4",
+        "muted": false,
+        "rate": 1,
+        "start": 12134.400000000373,
+        "duration": 3.041995,
+        "playedMs": 3092,
+        "audioBytes": 49943
+      },
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "renderMs": 667,
+      "clockInputMs": 667
+    },
+    {
+      "selected": 2,
+      "measured": 2,
+      "hold": 72,
+      "voice": {
+        "id": "h06",
+        "clip": "ult_h06.mp4",
+        "muted": false,
+        "rate": 1.5789473684210527,
+        "start": 17215.900000000373,
+        "duration": 3.041995,
+        "playedMs": 2001,
+        "audioBytes": 49943
+      },
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "renderMs": 334,
+      "clockInputMs": 334
+    },
+    {
+      "selected": 3,
+      "measured": 3,
+      "hold": 72,
+      "voice": {
+        "id": "h06",
+        "clip": "ult_h06.mp4",
+        "muted": false,
+        "rate": 2.4,
+        "start": 21212.400000000373,
+        "duration": 3.041995,
+        "playedMs": 1345,
+        "audioBytes": 49943
+      },
+      "frames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "renderMs": 200,
+      "clockInputMs": 200
+    }
+  ],
+  "offlinePackRequests": 0,
+  "powerSave": {
+    "hits": [
+      {
+        "clock": 1641.7,
+        "actor": "a5",
+        "heroId": "h06",
+        "target": "e2",
+        "kind": "damage",
+        "amount": 159,
+        "ultimate": false,
+        "drawClock": 1641.7,
+        "cutVisible": false,
+        "labels": [
+          "−159"
+        ],
+        "counter": 0,
+        "procedural": true,
+        "effects": [],
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0,
+          "filters": {
+            "active": [],
+            "shockwave": null,
+            "chromatic": null
+          }
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "e2",
+          "critical": false,
+          "finisher": false,
+          "hold": 0,
+          "sparks": 0,
+          "beat": 0,
+          "beats": 1
+        },
+        "kickPower": 0
+      },
+      {
+        "clock": 2081.8,
+        "actor": "a5",
+        "heroId": "h06",
+        "target": "e3",
+        "kind": "damage",
+        "amount": 411,
+        "ultimate": true,
+        "drawClock": 2081.8,
+        "cutVisible": false,
+        "labels": [
+          "暴击−411"
+        ],
+        "counter": 411,
+        "procedural": true,
+        "effects": [],
+        "camera": {
+          "zoom": 1,
+          "x": 0,
+          "y": 0,
+          "kick": false,
+          "focus": 0,
+          "hitstopRemaining": 0,
+          "filters": {
+            "active": [],
+            "shockwave": null,
+            "chromatic": null
+          }
+        },
+        "impact": {
+          "actor": "a5",
+          "target": "e3",
+          "critical": true,
+          "finisher": true,
+          "hold": 0,
+          "sparks": 0,
+          "beat": 1,
+          "beats": 1
+        },
+        "kickPower": 0
+      }
+    ],
+    "requests": 0
+  },
+  "errors": []
+}

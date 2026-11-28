@@ -1,0 +1,220 @@
+{
+  "name": "desktop",
+  "baseline": true,
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "renderer": "pixi-webgl",
+  "resolution": 1,
+  "canvas": [
+    1280,
+    720
+  ],
+  "gpu": "ANGLE (Intel, Intel(R) UHD Graphics 770 (0x00004680) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "perf": {
+    "quiet": null,
+    "active": {
+      "intervals": 52,
+      "fps": 53.43,
+      "p50Ms": 13.4,
+      "p95Ms": 33.5,
+      "p99Ms": 66.6,
+      "maxMs": 66.6,
+      "above25Ms": 15,
+      "above50Ms": 2
+    },
+    "filter": null
+  },
+  "impactSamples": [
+    {
+      "amount": 160,
+      "at": 2850.1,
+      "drawAt": 2850.1,
+      "info": {
+        "key": "h01",
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "impactAt": 2850.1,
+        "renderedImpactAt": 2850.1,
+        "source": "png"
+      },
+      "filters": 0
+    },
+    {
+      "amount": 171,
+      "at": 2956.7,
+      "drawAt": 2956.7,
+      "info": {
+        "key": "h01",
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "impactAt": 2956.7,
+        "renderedImpactAt": 2956.7,
+        "source": "png"
+      },
+      "filters": 0
+    },
+    {
+      "amount": 157,
+      "at": 3130,
+      "drawAt": 3130,
+      "info": {
+        "key": "h01",
+        "frame": 3,
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "impactAt": 3130,
+        "renderedImpactAt": 3130,
+        "source": "png"
+      },
+      "filters": 0
+    }
+  ],
+  "captures": {
+    "boss-flash": {
+      "name": "boss-flash",
+      "now": 6543.3,
+      "clock": 1234.500000000373,
+      "filters": 0,
+      "filterState": null,
+      "embers": [],
+      "atlas": [
+        {
+          "frame": 0,
+          "startedAt": 6543.3,
+          "alpha": 1,
+          "blendMode": 1
+        }
+      ],
+      "bossWhite": true,
+      "boss": {
+        "x": 808.62060546875,
+        "y": 240.26699829101562,
+        "width": 217.0352783203125,
+        "height": 274.9939880371094
+      }
+    },
+    "shockwave-split": {
+      "name": "shockwave-split",
+      "now": 7783.3,
+      "clock": 2086.2000000003727,
+      "filters": 0,
+      "filterState": null,
+      "embers": [],
+      "atlas": [
+        {
+          "frame": 4,
+          "startedAt": 7410,
+          "alpha": 0.75,
+          "blendMode": 1
+        },
+        {
+          "frame": 3,
+          "startedAt": 7516.6,
+          "alpha": 1,
+          "blendMode": 1
+        }
+      ],
+      "bossWhite": false,
+      "boss": {
+        "x": 828.7044067382812,
+        "y": 216.99807739257812,
+        "width": 233.26812744140625,
+        "height": 295.5617980957031
+      }
+    },
+    "ember-tail": {
+      "name": "ember-tail",
+      "now": 8556.6,
+      "clock": 2608.9000000003734,
+      "filters": 0,
+      "filterState": null,
+      "embers": [],
+      "atlas": [],
+      "bossWhite": false,
+      "boss": {
+        "x": 759.6264038085938,
+        "y": 266.7735290527344,
+        "width": 241.94866943359375,
+        "height": 233.45596313476562
+      }
+    },
+    "heal": {
+      "kind": "heal",
+      "value": "156",
+      "text": "1 次施加",
+      "gap": 1.609375,
+      "top": "55.5px"
+    },
+    "h10-heal-total": {
+      "name": "h10-heal-total",
+      "now": 9183.2,
+      "clock": 2976.9000000003734,
+      "filters": 0,
+      "filterState": null,
+      "embers": [],
+      "atlas": [],
+      "bossWhite": false,
+      "boss": {
+        "x": 790.699951171875,
+        "y": 272.9103698730469,
+        "width": 248.609375,
+        "height": 239.88278198242188
+      }
+    }
+  },
+  "cleanup": {
+    "settled": {
+      "filters": null,
+      "active": 0,
+      "atlas": 0,
+      "embers": 0
+    },
+    "destroyed": {
+      "disposed": true,
+      "cameraDetached": true,
+      "noEmbers": true,
+      "canvasRemoved": true
+    }
+  },
+  "blends": {
+    "example": null,
+    "frames": 0,
+    "sparkFrames": 0
+  },
+  "embers": {
+    "firstTail": [],
+    "sampledTailMs": 0
+  },
+  "shader": {
+    "peakFilters": 0,
+    "peakPasses": 0,
+    "peakOffsets": 0,
+    "simultaneousFrames": 0
+  },
+  "fallback": false,
+  "errors": []
+}

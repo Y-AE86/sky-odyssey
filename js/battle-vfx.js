@@ -3,8 +3,15 @@
   const Sky=window.Sky, P=window.PIXI;
   const cells=3, cell=418, size=cells*cell;
   const supportOpacity=.65;
+  const emberTailMs=500;
+  const emberColors={ink:0xc18aff,ice:0x8fefff,water:0x69ebcd,light:0xffdf87,
+    gear:0xffae61,blood:0xff698f,thunder:0x75bfff,fire:0xff8449};
   const canvases=new Map();
   const bound=(value,min,max)=>Math.max(min,Math.min(max,value));
+  const smooth=(start,end,value)=>{
+    const t=bound((value-start)/(end-start),0,1);
+    return t*t*(3-2*t);
+  };
   const statuses=['status_shield','status_freeze','status_curse','status_heal_ring'];
   // Reuse the original sheets and apply a sprite tint at draw time. Both
   // entrances share the same donor textures and individual hit timing.
@@ -19,6 +26,27 @@
     enemy_caster:{atlas:'h02',projectile:'h01',tint:0xc5a1ff},
     enemy_striker:{atlas:'h06',projectile:'h05',tint:0xffb8ab}
   };
+
+  function lightBounds(rgba,tileX,tileY){
+    let left=cell-1,right=0,top=cell-1,bottom=0;
+    // The outer texel of each cell is cleared by lightCanvas.
+    for(let y=1;y<cell-1;y++){
+      const row=((tileY+y)*size+tileX)*4+3;
+      let first=1;
+      while(first<cell-1 && !rgba[row+first*4])first++;
+      if(first===cell-1)continue;
+      if(first<left)left=first;
+      if(y<top)top=y;
+      bottom=y;
+      let last=cell-2;
+      while(last>right && !rgba[row+last*4])last--;
+      if(last>right)right=last;
+    }
+    if(bottom===0)return {x:2,y:2,width:2,height:2};
+    // Keep two transparent texels around the visible light for linear sampling.
+    const x=Math.max(0,left-2), y=Math.max(0,top-2);
+    return {x,y,width:Math.min(cell,right+3)-x,height:Math.min(cell,bottom+3)-y};
+  }
 
   async function lightCanvas(url,sequence){
     if(!canvases.has(url)){
@@ -48,7 +76,9 @@
           ctx.clearRect(edge-1,0,2,size);
           ctx.clearRect(0,edge-1,size,2);
         }
-        return canvas;
+        const bounds=sequence ? Array.from({length:cells*cells},(_,i)=>
+          lightBounds(rgba,i%cells*cell,Math.floor(i/cells)*cell)) : null;
+        return {canvas,bounds};
       })();
       canvases.set(url,pending);
       pending.catch(()=>canvases.delete(url));
@@ -81,6 +111,7 @@
       this.atlases=new Map();
       this.artTextures=new Map();
       this.active=new Set();
+      this.embers=new Set();
       this.flights=new Set();
       this.statuses=new Map();
       this.last=null;
@@ -104,7 +135,7 @@
         const url=layout ? (offline ? await Sky.art.loadOfflineVfx(key) : layout.src) :
           (offline ? await Sky.art.loadOfflineBattleArt(key) : Sky.art.battleArt(key));
         if(!url || this.disposed)return;
-        const canvas=await lightCanvas(url,!!layout);
+        const {canvas,bounds}=await lightCanvas(url,!!layout);
         if(this.disposed)return;
         base=new P.BaseTexture(canvas,{mipmap:P.MIPMAP_MODES.OFF,scaleMode:P.SCALE_MODES.LINEAR});
         this.renderer.texture.bind(base);
@@ -123,30 +154,43 @@
         }
         const frames=Array.from({length:cells*cells},(_,i)=>new P.Texture(base,new P.Rectangle(
           i%cells*cell,Math.floor(i/cells)*cell,cell,cell)));
-        this.atlases.set(key,{key,layout,base,frames,source});
+        const orig=new P.Rectangle(0,0,cell,cell);
+        const renderFrames=frames.map((frame,i)=>{
+          const {x,y,width,height}=bounds[i];
+          if(width===cell && height===cell)return frame;
+          const trim=new P.Rectangle(x,y,width,height);
+          const uv=new P.Rectangle(frame.frame.x+x,frame.frame.y+y,width,height);
+          return new P.Texture(base,uv,orig,trim);
+        });
+        this.atlases.set(key,{key,layout,base,frames,renderFrames,source});
       }catch{
         base?.destroy();
       }
     }
     create(atlas,{actor,target=null,targets=null,role,hitIndex,due,start,scale,alpha=1,rotation=0,finisher=false}){
-      const sprite=lightSprite(atlas.frames[0]);
+      const frames=atlas.renderFrames || atlas.frames;
+      const sprite=lightSprite(frames[0]);
+      const next=lightSprite(frames[0]);
       const {kind,anchorY}=atlas.layout;
       const support=kind==='heal' || kind==='shield';
       const opacity=alpha*(support ? supportOpacity : 1);
-      sprite.anchor.set(.5,anchorY);
-      sprite.alpha=opacity;
-      sprite.tint=atlas.tint ?? 0xffffff;
-      sprite.rotation=rotation;
-      sprite.visible=false;
+      for(const frame of [sprite,next]){
+        frame.anchor.set(.5,anchorY);
+        frame.tint=atlas.tint ?? 0xffffff;
+        frame.visible=false;
+      }
       const info={key:atlas.key,heroId:this.nodes[actor].heroId,actor,target,targets,role,hitIndex,due,
         artKey:atlas.artKey || atlas.key,tint:sprite.tint,
         source:atlas.source,startedAt:null,impactAt:null,renderedImpactAt:null,frame:null,frames:[],
-        active:true,rotation,blendMode:sprite.blendMode,finisher,magnification:finisher?1.45:1};
-      const entry={atlas,sprite,info,start,scale,alpha:opacity,impactClock:null};
+        active:true,rotation,blendMode:sprite.blendMode,finisher,magnification:finisher?1.45:1,
+        sub:0,blend:0,nextFrame:null,scale:0,angle:rotation,alpha:0,nextAlpha:0};
+      const layer=support ? this.groundLayer : this.layer;
+      const targetNodes=targets ? targets.map(id=>this.nodes[id]) : [this.nodes[target]];
+      const entry={atlas,frames,sprite,next,info,layer,targetNodes,start,scale,support,alpha:opacity,impactClock:null};
       this.active.add(entry);
       // Support flare cores radiate behind the silhouette. The persistent shield
       // shell still sits in front, keeping its outline without adding a second core to the face.
-      (support ? this.groundLayer : this.layer).addChild(sprite);
+      layer.addChild(sprite,next);
       return entry;
     }
     plan(action,clock){
@@ -177,6 +221,8 @@
         const finisher=index===lastIndex && role!=='group';
         const entry=this.create(atlas,{actor:action.actor,target,targets:keys,role,hitIndex:index,finisher,
           due:due[index],start:clock+due[index]-windup,scale:magnification,alpha});
+        // Start one shower during the final flare, then carry it past the whole cast.
+        entry.emberPending=finisher;
         if(!byHit.has(index))byHit.set(index,[]);
         byHit.get(index).push(entry);
         duration=Math.max(duration,due[index]+(atlas.frames.length-impactFrame)*frameMs+impactHold);
@@ -343,31 +389,109 @@
       }
     }
     position(entry,clock,w,h){
-      const {info,sprite,atlas}=entry;
+      const {info,sprite,next,atlas,targetNodes}=entry;
       const {ground,impactFrame,frameMs}=atlas.layout;
       const actor=this.nodes[info.actor];
-      const nodes=info.targets ? info.targets.map(id=>this.nodes[id]) : [this.nodes[info.target]];
       let x=0,y=0;
-      for(const n of nodes){
+      for(const n of targetNodes){
         const body=unitAnchor(n,w,h);
         x+=body.x;
         y+=ground?body.y:body.y-body.height*.48;
       }
-      x/=nodes.length; y/=nodes.length;
+      x/=targetNodes.length; y/=targetNodes.length;
+      const buildup=bound((clock-entry.start)/Math.max(1,impactFrame*frameMs),0,1);
       let direction=1;
       if(info.role==='projectile'){
         direction=actor.side==='ally' ? -1 : 1;
         if(entry.impactClock===null){
-          const t=bound((clock-entry.start)/(impactFrame*frameMs),0,1);
           const origin=unitAnchor(actor,w,h), ax=origin.x, ay=origin.y-origin.height*.50;
-          x=ax+(x-ax)*t;
-          y=ay+(y-ay)*t-Math.sin(t*Math.PI)*h*.025;
+          x=ax+(x-ax)*buildup;
+          y=ay+(y-ay)*buildup-Math.sin(buildup*Math.PI)*h*.025;
         }
       }
-      sprite.position.set(x,y);
-      const buildup=info.frame / Math.max(1,impactFrame);
-      const scale=h*entry.scale/cell*(info.finisher ? 1+.45*bound(buildup,0,1) : 1);
-      sprite.scale.set(direction*scale,scale);
+      let scale=h*entry.scale/cell, rotation=info.rotation;
+      if(entry.impactClock===null){
+        scale*=(1-.055*buildup)*(info.finisher ? 1+.45*smooth(0,1,buildup) : 1);
+        rotation-=direction*.018*Math.sin(buildup*Math.PI);
+      }else{
+        const age=Math.max(0,clock-entry.impactClock);
+        const settle=smooth(80,(atlas.frames.length-impactFrame)*frameMs,age);
+        const amplitude=entry.support ? .10 : info.role==='spark' ? .24 : .16;
+        const rebound=amplitude*Math.exp(-age/90)*(.46+Math.sin(age/30));
+        scale*=info.magnification*(1+rebound+settle*.11);
+        rotation+=direction*(.027*Math.sin(age/42)*Math.exp(-age/118)+settle*.085);
+      }
+      sprite.position.set(x,y); next.position.set(x,y);
+      sprite.scale.set(direction*scale,scale); next.scale.set(direction*scale,scale);
+      sprite.rotation=next.rotation=rotation;
+      info.scale=scale; info.angle=rotation;
+    }
+    spawnEmbers(entry,time,w,h){
+      entry.emberPending=false;
+      if(!this.emberTexture){
+        const canvas=document.createElement('canvas');
+        canvas.width=canvas.height=24;
+        const ctx=canvas.getContext('2d');
+        const glow=ctx.createRadialGradient(12,12,0,12,12,12);
+        glow.addColorStop(0,'#fff');
+        glow.addColorStop(.26,'#ffffffe8');
+        glow.addColorStop(.55,'#ffffff64');
+        glow.addColorStop(1,'#ffffff00');
+        ctx.fillStyle=glow;
+        ctx.fillRect(0,0,24,24);
+        const base=new P.BaseTexture(canvas,{mipmap:P.MIPMAP_MODES.OFF,scaleMode:P.SCALE_MODES.LINEAR});
+        this.emberTexture=new P.Texture(base);
+      }
+      const {info,sprite}=entry;
+      const caster=Sky.D.hero(info.heroId);
+      const tint=entry.atlas.tint ?? emberColors[caster.element] ?? emberColors.light;
+      const count=entry.support ? 14 : entry.atlas.layout.mode==='group' ? 22 : 18;
+      const view=new P.Container();
+      view.eventMode='none';
+      const shift=(1+this.nodes[info.actor].slot)*.63+info.hitIndex*.41;
+      const particles=Array.from({length:count},(_,index)=>{
+        // Golden-angle spacing and analytic variation are independent of both RNG streams.
+        const angle=shift+index*2.39996;
+        const spread=.76+.24*Math.sin(index*5.74+shift);
+        const x=Math.cos(angle), y=Math.sin(angle);
+        const light=lightSprite(this.emberTexture);
+        light.tint=tint; light.visible=false;
+        view.addChild(light);
+        return {light,x,y,spread,delay:(index*31)%94,size:4+spread*6,phase:index*1.93};
+      });
+      const burst={key:info.key,actor:info.actor,count,tint,visible:0,view,particles,
+        x:sprite.x/w,y:sprite.y/h,startedAt:time,atlasEndedAt:null,remainingMs:null};
+      entry.emberBurst=burst;
+      this.embers.add(burst);
+      entry.layer.addChild(view);
+    }
+    drawEmbers(time,w,h){
+      for(const burst of this.embers){
+        const {atlasEndedAt,particles,startedAt}=burst;
+        const tail=atlasEndedAt===null ? 0 : bound((time-atlasEndedAt)/emberTailMs,0,1);
+        burst.remainingMs=atlasEndedAt===null ? null : emberTailMs*(1-tail);
+        if(tail>=1){this.removeEmbers(burst);continue;}
+        const envelope=1-smooth(0,1,tail);
+        const age=time-startedAt;
+        let visible=0;
+        burst.view.position.set(burst.x*w,burst.y*h);
+        for(const {light,x,y,spread,delay,size,phase} of particles){
+          if(age<delay)continue;
+          const t=(age-delay)/1000, travel=1-Math.exp(-3.5*t);
+          light.position.set(h*x*spread*(.036+.14*travel),
+            h*(y*spread*(.026+.089*travel)-.038*t+.016*t*t));
+          const scale=h*size/(720*24);
+          light.scale.set(scale*(1-.34*tail)*(1-.22*Math.abs(y)),scale*(1-.37*tail));
+          light.alpha=envelope*smooth(0,.065,t)*(.70+.26*Math.sin(17*t+phase));
+          light.visible=true;
+          visible++;
+        }
+        burst.visible=visible;
+      }
+    }
+    removeEmbers(burst){
+      burst.view.destroy({children:true,texture:false,baseTexture:false});
+      this.embers.delete(burst);
     }
     draw(clock,time,w,h){
       if(this.disposed)return;
@@ -375,41 +499,67 @@
       this.drawFlights(clock,w,h);
       for(const entry of this.active){
         if(clock<entry.start)continue;
-        const {atlas,sprite,info,impactClock}=entry;
+        const {atlas,frames,sprite,next,info,impactClock}=entry;
         const {impactFrame,frameMs,impactHold=0}=atlas.layout;
-        const frame=impactClock===null ? bound(Math.floor((clock-entry.start)/frameMs),0,impactFrame-1) :
-          impactFrame+Math.floor(Math.max(0,clock-impactClock-impactHold)/frameMs);
+        const phase=(impactClock===null ? clock-entry.start : Math.max(0,clock-impactClock-impactHold))/frameMs;
+        const localFrame=impactClock===null ? bound(Math.floor(phase),0,impactFrame-1) : Math.floor(phase);
+        const frame=impactClock===null ? localFrame : impactFrame+localFrame;
         const fade=entry.fadeAt===undefined?1:1-bound((clock-entry.fadeAt)/82,0,1);
-        if(frame>=atlas.frames.length || !fade){this.remove(entry);continue;}
-        sprite.alpha=entry.alpha*fade;
+        if(frame>=atlas.frames.length || !fade){
+          if(fade && entry.emberPending && info.renderedImpactAt!==null)this.spawnEmbers(entry,time,w,h);
+          this.remove(entry,time);
+          continue;
+        }
+        const sub=bound(phase-localFrame,0,1-Number.EPSILON);
+        const last=frame===atlas.frames.length-1;
+        // Never crossfade an unreached impact into the preceding cell. After the hit
+        // the authored hold leaves sub at zero until the original frame clock resumes.
+        const canBlend=!last && (impactClock!==null || frame+1<impactFrame);
+        const blend=canBlend ? smooth(.36,1,sub) : 0;
+        const alpha=entry.alpha*fade*(last ? 1-smooth(.04,1,sub) : 1);
+        info.sub=sub; info.blend=blend; info.nextFrame=canBlend ? frame+1 : null;
+        sprite.alpha=info.alpha=alpha*(1-blend);
+        next.alpha=info.nextAlpha=alpha*blend;
         if(info.startedAt===null)info.startedAt=time;
         if(frame!==info.frame){
           info.frame=frame;
           info.frames.push(frame);
-          sprite.texture=atlas.frames[frame];
+          sprite.texture=frames[frame];
+          if(canBlend)next.texture=frames[frame+1];
         }
         sprite.visible=true;
+        next.visible=blend>0;
         this.position(entry,clock,w,h);
+        if(entry.emberPending && impactClock!==null && frame>=Math.max(5,impactFrame+1))
+          this.spawnEmbers(entry,time,w,h);
       }
+      this.drawEmbers(time,w,h);
     }
     presented(time){
       for(const {atlas,info} of this.active)
         if(info.frame===atlas.layout.impactFrame && info.renderedImpactAt===null)
           info.renderedImpactAt=time;
     }
-    remove(entry){
+    remove(entry,time){
       entry.sprite.destroy();
+      entry.next.destroy();
+      if(entry.emberBurst && time!==undefined)entry.emberBurst.atlasEndedAt=time;
       entry.info.active=false;
       this.active.delete(entry);
     }
     clear(){
       for(const entry of this.active)this.remove(entry);
+      for(const burst of this.embers)this.removeEmbers(burst);
+      this.emberTexture?.destroy(true);
+      this.emberTexture=null;
       for(const flight of this.flights)this.removeFlight(flight);
       for(const state of this.statuses.values())this.removeState(state);
     }
     inspect(){
       const ready=this.ultimateKeys?.filter(id=>this.atlases.has(variants[id]?.atlas || id)) || [];
       return {ready,active:[...this.active].map(entry=>entry.info),last:this.last,
+        embers:[...this.embers].map(({key,actor,count,visible,tint,startedAt,atlasEndedAt,remainingMs})=>
+          ({key,actor,count,visible,tint,startedAt,atlasEndedAt,remainingMs})),
         artReady:[...this.artTextures.keys()],
         projectiles:[...this.flights].filter(f=>f.sprite).map(f=>({key:f.key,actor:f.actor,target:f.target,
           progress:f.progress,rotation:f.sprite.rotation,x:f.sprite.x,y:f.sprite.y,
@@ -421,8 +571,11 @@
     destroy(){
       this.disposed=true;
       this.clear();
-      for(const {base,frames} of this.atlases.values()){
-        for(const frame of frames)frame.destroy();
+      for(const {base,frames,renderFrames=frames} of this.atlases.values()){
+        for(let i=0;i<frames.length;i++){
+          if(renderFrames[i]!==frames[i])renderFrames[i].destroy();
+          frames[i].destroy();
+        }
         base.destroy();
       }
       this.atlases.clear();

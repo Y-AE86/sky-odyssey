@@ -6,6 +6,7 @@
   const palette = {ink: 0xc18aff, ice: 0x8fefff, water: 0x69ebcd, light: 0xffdf87, gear: 0xffae61,
     blood: 0xff698f, thunder: 0x75bfff, fire: 0xff8449};
   const melee = new Set(['h01','h06','h08','h10','h11','enemy_vanguard']);
+  const execution = new Set(['h01','h06','h11']);
   const imageCache = new Map();
   // Width, height and midpoint between the boots in the standing PNG.
   // Weapons and trailing capes often shift the centre of the image away from the feet.
@@ -17,6 +18,154 @@
     enemy_vanguard:[1192,1152,.47], enemy_caster:[1156,1248,.50], enemy_striker:[1243,1102,.46]
   };
   const clamp = n => Math.max(0, Math.min(1, n));
+  const shockwaveMs=260, chromaticMs=100;
+  // Filter coordinates describe the captured rectangle in CSS pixels. inputSize
+  // and inputClamp are supplied by Pixi for the actual DPR and pooled texture.
+  const impactFragment=`
+    precision highp float;
+    varying vec2 vTextureCoord;
+    uniform sampler2D uSampler;
+    uniform vec4 inputSize, inputClamp, outputFrame;
+    uniform vec2 uCenter, uSplitCenter, uSplitExtentInv;
+    uniform float uRadius, uWidth, uAmplitude, uGlint, uSplit;
+
+    void main() {
+      vec2 uv = vTextureCoord;
+      vec2 pixel = uv * inputSize.xy;
+      float band = 0.0;
+      float edge = 0.0;
+      if (uAmplitude > 0.0) {
+        vec2 delta = pixel + outputFrame.xy - uCenter;
+        float radiusSquared = dot(delta, delta);
+        float inner = max(0.0, uRadius - uWidth);
+        float outer = uRadius + uWidth;
+        if (radiusSquared >= inner * inner && radiusSquared < outer * outer) {
+          float distance = sqrt(radiusSquared);
+          float ring = (distance - uRadius) / uWidth;
+          band = 1.0 - smoothstep(0.15, 1.0, abs(ring));
+          vec2 room = min(pixel, outputFrame.zw - pixel);
+          edge = smoothstep(1.0, 15.0, min(room.x, room.y));
+          float bend = sin(ring * 3.14159) * band * edge * uAmplitude;
+          uv -= delta / max(distance, 1.0) * bend * inputSize.zw;
+        }
+      }
+      uv = clamp(uv, inputClamp.xy, inputClamp.zw);
+      vec4 color = texture2D(uSampler, uv);
+      if (uSplit > 0.0) {
+        vec2 d = (pixel + outputFrame.xy - uSplitCenter) * uSplitExtentInv;
+        float ellipse = dot(d, d);
+        if (ellipse < 1.0) {
+          float room = min(uv.x - inputClamp.x, inputClamp.z - uv.x) * inputSize.x;
+          float weight = (1.0 - smoothstep(0.38, 1.0, ellipse)) * smoothstep(0.0, 9.0, room);
+          vec2 split = vec2(uSplit * weight * inputSize.z, 0.0);
+          color.r = mix(color.r, texture2D(uSampler, clamp(uv + split, inputClamp.xy, inputClamp.zw)).r, 0.78);
+          color.b = mix(color.b, texture2D(uSampler, clamp(uv - split, inputClamp.xy, inputClamp.zw)).b, 0.78);
+          color.a = max(color.a, max(color.r, color.b));
+        }
+      }
+      // The backdrop is a CSS layer. A faint specular glint keeps the ripple
+      // visible in transparent space, while the captured actors actually refract.
+      float glint = band * band * uGlint * edge * (1.0 - color.a);
+      gl_FragColor = color + vec4(vec3(0.72, 0.88, 1.0) * glint, glint);
+    }`;
+
+  class CameraImpulses {
+    constructor(layer, renderer) {
+      this.layer=layer;
+      this.area=new P.Rectangle();
+      const create=()=>new P.Filter(undefined,impactFragment,{
+        uCenter:new Float32Array(2),uSplitCenter:new Float32Array(2),uSplitExtentInv:new Float32Array(2),
+        uRadius:0,uWidth:1,uAmplitude:0,uGlint:0,uSplit:0
+      });
+      this.shockwaveFilter=create();
+      this.chromaticFilter=create();
+      // Both variants share the same program. Compile before the first impact.
+      renderer.shader.bind(this.shockwaveFilter,true);
+    }
+    shockwave(time,targets,ground) {
+      this.wave={time,targets,ground};
+    }
+    chromatic(time,target) {
+      this.split={time,target};
+    }
+    draw(time,w,h,dpr,cam) {
+      if(!this.wave && !this.split) return;
+      if(this.wave && time-this.wave.time>=shockwaveMs)this.wave=null;
+      if(this.split && time-this.split.time>=chromaticMs)this.split=null;
+      if(!this.wave && !this.split){this.detach();return;}
+
+      // Fuse simultaneous effects in one full-density pass. Each filter can also
+      // run independently, with its inactive branch skipped inside the shader.
+      const filter=this.wave ? this.shockwaveFilter : this.chromaticFilter;
+      const u=filter.uniforms;
+      if(this.wave) {
+        const wave=this.wave, t=clamp((time-wave.time)/shockwaveMs);
+        if(wave.targets) {
+          let x=0,y=0;
+          for(const target of wave.targets) {
+            const point=target.pose;
+            x+=point ? point.x/w : target.x+target.dx;
+            const height=point ? point.size/h : .204*target.magnification*target.depth;
+            y+=(point ? point.y/h : target.y+target.dy)-(wave.ground?0:height*.48);
+          }
+          wave.originX=x/wave.targets.length;
+          wave.originY=y/wave.targets.length;
+          wave.targets=null;
+        }
+        const strength=wave.ground?.72:1;
+        wave.x=u.uCenter[0]=wave.originX*w*cam.zoom+cam.x;
+        wave.y=u.uCenter[1]=wave.originY*h*cam.zoom+cam.y;
+        wave.radius=u.uRadius=h*(.018+.29*(1-(1-t)**1.25));
+        wave.amplitude=u.uAmplitude=4.2*strength*(1-t)**1.45;
+        u.uWidth=Math.max(8,h*.026);
+        u.uGlint=.11*strength*(1-t)**1.5;
+        wave.progress=t;
+      }else u.uAmplitude=u.uGlint=0;
+      if(this.split) {
+        const target=this.split.target, pose=target.pose;
+        const size=pose?.size ?? h*.204*target.magnification*target.depth;
+        const width=pose?.width ?? size;
+        // Only the contact and its surrounding flare need the two extra samples.
+        // Keep the rest of the camera clear, including unrelated faces.
+        u.uSplitCenter[0]=(pose?.x ?? (target.x+target.dx)*w)*cam.zoom+cam.x;
+        u.uSplitCenter[1]=((pose?.y ?? (target.y+target.dy)*h)-size*.48)*cam.zoom+cam.y;
+        u.uSplitExtentInv[0]=1/(Math.max(width*.86+24,h*.18)*cam.zoom);
+        u.uSplitExtentInv[1]=1/(Math.max(size*.79+20,h*.18)*cam.zoom);
+        const t=clamp((time-this.split.time)/chromaticMs);
+        this.split.offset=u.uSplit=4.2*Math.exp(-4.2*t)*(1-t);
+        this.split.progress=t;
+      }else u.uSplit=0;
+      filter.resolution=dpr;
+      this.area.width=w;
+      this.area.height=h;
+      if(this.current!==filter) {
+        this.layer.filterArea=this.area;
+        this.layer.filters=[filter];
+        this.current=filter;
+      }
+    }
+    detach() {
+      if(!this.current)return;
+      this.layer.filters=null;
+      this.layer.filterArea=null;
+      this.current=null;
+    }
+    inspect() {
+      const {wave,split}=this, active=[];
+      if(wave)active.push('shockwave');
+      if(split)active.push('chromatic');
+      return {active,shockwave:wave ? {x:wave.x,y:wave.y,radius:wave.radius,amplitude:wave.amplitude,
+        progress:wave.progress,duration:shockwaveMs} : null,
+        chromatic:split ? {offset:split.offset,progress:split.progress,duration:chromaticMs} : null};
+    }
+    destroy() {
+      this.detach();
+      this.wave=this.split=null;
+      this.shockwaveFilter.destroy();
+      this.chromaticFilter.destroy();
+    }
+  }
+
   // Flash inside the original silhouette, including thin hair and transparent weapons.
   if (P) {
     class ActorShader extends P.BatchShaderGenerator {
@@ -31,7 +180,7 @@
           void main(){
             vec4 base=actorPixel(vTextureCoord);
             if(vColor.r >= vColor.a*.02){gl_FragColor=base*vColor;return;}
-            gl_FragColor=vec4(mix(base.rgb,vec3(1.,.98,.94)*base.a,.88),base.a)*vColor.a;
+            gl_FragColor=vec4(mix(base.rgb,vec3(1.,.98,.94)*base.a,.71),base.a)*vColor.a;
           }`);
       }
     }
@@ -204,8 +353,8 @@
         this.sparkInk=new Paint(this.sparks,null);
         this.overlay = new P.Graphics();
         this.overFxLayer.addChild(this.overlay,this.sparks);
-        this.battleCamera.addChild(this.shadows,this.groundFxLayer,this.unitLayer,this.overFxLayer,this.flags);
-        this.app.stage.addChild(this.battleCamera);
+        this.battleCamera.addChild(this.shadows,this.groundFxLayer,this.unitLayer,this.overFxLayer);
+        this.app.stage.addChild(this.battleCamera,this.flags);
         if(!powerSave)this.vfx=new Sky.BattleVfx(this.overFxLayer,this.app.renderer,this.byKey,this.groundFxLayer);
         this.app.ticker.maxFPS = powerSave ? 30 : 60;
         this.ink = new Paint(this.overlay,null);
@@ -215,6 +364,7 @@
         this.ctx = fresh.getContext('2d');
         this.shadowInk = this.ink = new Paint(null,this.ctx);
       }
+      if(this.app && !powerSave)this.impulses=new CameraImpulses(this.battleCamera,this.app.renderer);
       this.resize();
       this.observer = new ResizeObserver(() => this.resize());
       this.observer.observe(host);
@@ -336,6 +486,7 @@
     }
     beginAction(action,clock) {
       this.actionStart=clock; this.trailIndex=0;
+      this.openingImpact=true;
       const n=this.byKey[action.actor], target=this.byKey[action.hits[0]?.target];
       if(!target)return;
       if(action.kind==='basic')this.vfx?.launchBasic(action,clock,this.basicHitMs);
@@ -403,6 +554,8 @@
         this.groundRings?.clear(); this.sparks?.clear();
         this.overlay?.clear();
         this.vfx?.destroy();
+        this.impulses?.destroy();
+        this.impulses=null;
       }
       for(const n of this.nodes){n.dx=n.dy=0;if(clearEffects)n.reaction=null;}
     }
@@ -418,6 +571,18 @@
       }
       const damage=hit.kind==='damage', plan=ultimate ? this.ultimatePlan : null;
       const finisher=ultimate && !!meta.finisher;
+      const entries=plan?.byHit.get(index);
+      const attacker=this.byKey[actor];
+      if(this.impulses && ultimate && (damage ? n.side!==attacker.side : n.side===attacker.side)) {
+        if(this.openingImpact || finisher) {
+          const group=entries?.find(entry=>entry.info.role==='group');
+          this.impulses.shockwave(clock,group ? group.info.targets.map(key=>this.byKey[key]) : [n],
+            !damage && hit.kind==='heal');
+        }
+        if(damage && (hit.crit || finisher || (this.openingImpact && execution.has(attacker.heroId))))
+          this.impulses.chromatic(clock,n);
+        this.openingImpact=false;
+      }
       const progression=meta.beats>1?clamp((meta.beat-1)/(meta.beats-1)):0;
       if(damage){
         const source=this.byKey[hit.source || actor];
@@ -446,7 +611,7 @@
           this.lastImpact={actor,target:n.key,critical:false,finisher,hold:65,sparks:0,beat:meta.beat,beats:meta.beats};
         }
       }
-      if(plan)this.vfx.impact(plan.byHit.get(index),effectClock,clock);
+      if(plan)this.vfx.impact(entries,effectClock,clock);
       const covered=plan && (plan.targets.has(index) || !damage);
       if(!covered){
         const spark=damage && (!ultimate || plan) && this.vfx?.spark(actor,n.key,index,due,effectClock,clock);
@@ -652,6 +817,7 @@
       cam.update(this.feedbackClock,w,h,left,right);
       if(this.app){
         this.battleCamera.position.set(cam.x,cam.y); this.battleCamera.scale.set(cam.zoom);
+        this.flags.position.set(cam.x,cam.y); this.flags.scale.set(cam.zoom);
         if(this.domLayer.childElementCount)this.domLayer.style.transform='translate('+cam.x+'px,'+cam.y+'px) scale('+cam.zoom+')';
       }else{c.translate(cam.x,cam.y);c.scale(cam.zoom,cam.zoom);}
       if(this.rimStart!=null){
@@ -720,16 +886,18 @@
       for(const e of this.effects) this.effect(this.ink,e,time);
       if(this.app){
         this.vfx?.draw(effectClock,time,w,h);
+        this.impulses?.draw(time,w,h,this.ratio,cam);
         this.app.render();
         this.vfx?.presented(time);
       }
     }
     inspect() {
-      const vfx=this.vfx?.inspect() || {ready:[],active:[],last:null,artReady:[],projectiles:[],statuses:[]};
+      const vfx=this.vfx?.inspect() || {ready:[],active:[],last:null,artReady:[],projectiles:[],statuses:[],embers:[]};
       vfx.procedural=[...new Set(this.effects.filter(e=>e.ultimate).map(e=>this.byKey[e.actor].heroId))];
       return {renderer:this.app?'pixi-webgl':'canvas2d',resolution:this.ratio, canvas:[this.canvas.width,this.canvas.height],
         camera:{zoom:this.camera.zoom,x:this.camera.x,y:this.camera.y,kick:!!this.camera.kick,focus:this.camera.focus,
-          hitstopRemaining:this.hitstopRemaining},impact:this.lastImpact||null,
+          hitstopRemaining:this.hitstopRemaining,filters:this.impulses?.inspect() || {active:[],shockwave:null,chromatic:null}},
+        impact:this.lastImpact||null,
         layers:this.app?['groundFxLayer','unitLayer','overFxLayer']:[],
         stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,heroId:n.heroId,x:n.x,y:n.y,mirror:n.mirror,
           sourceFacing:n.sourceFacing,depth:n.depth,boss:n.boss,magnification:n.magnification,
@@ -742,6 +910,8 @@
       this.rim.remove();
       this.observer.disconnect();
       if(this.app) {
+        this.impulses?.destroy();
+        this.impulses=null;
         this.vfx?.destroy();
         this.app.destroy(true,{children:true,texture:false,baseTexture:false});
         for(const shape of Object.values(this.shadowShapes||{}))shape.destroy();

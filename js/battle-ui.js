@@ -221,19 +221,14 @@
     },hold);
   }
   function beginCutin(s) {
-    if(!s.scene.hasCinema){showCutin(s);return;}
-    s.phase='cutin';
-    shatter(s,'enter',Sky.scene(s.backdrop.dataset.scene));
-    s.cutinEntryTimer=setTimeout(()=>{
-      if(current===s && s.phase==='cutin')showCutin(s);
-    },mirrorTime-28);
+    showCutin(s);
   }
   function showCutin(s) {
     const image=posterImage(s,s.hero.id);
     const hero=s.hero, element=document.createElement('div');
     const media=s.videos.get(hero.id);
     const dedicated=media?.ultimate && !media.ultimate.failed;
-    element.className='battle-cutin'+(s.scene.hasCinema?' cine-glass':'');
+    element.className='battle-cutin';
     element.dataset.hero=hero.id;
     const poster=image.src, hasPoster=image.complete && image.naturalWidth>0;
     if(hasPoster)element.classList.add('has-poster');
@@ -250,11 +245,7 @@
     const complete=()=>{
       if(!active())return;
       clearCutin(s);
-      if(s.scene.hasCinema){
-        const art=s.domains.get(hero.id)?.image;
-        shatter(s,'exit',art?.complete && art.naturalWidth ? art.src : Sky.scene(s.backdrop.dataset.scene));
-        openDomain(s,hero.id);
-      }
+      if(s.scene.hasCinema)openDomain(s,hero.id);
       startImpact(s);
     };
     element.querySelector('.battle-cut-skip').addEventListener('click',complete,{once:true});

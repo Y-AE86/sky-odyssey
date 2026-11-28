@@ -169,9 +169,7 @@ async function readCut(p,id,{fallback=false}={}){
 
 function measureTrace(trace,id,spec){
   const frames=trace.frames;
-  const entrance=frames.find(frame=>frame.shatter?.direction==='enter');
   const cutStart=frames.find(frame=>frame.cut?.hero===id);
-  const exit=frames.find(frame=>frame.shatter?.direction==='exit');
   const active=frames.filter(frame=>frame.domain?.id===id && frame.domain.phase==='active');
   const fading=frames.filter(frame=>frame.domain?.id===id && frame.domain.phase==='fading');
   const fadesGone=frames.find(frame=>fading.length && frame.time>fading[0].time && !frame.domain);
@@ -180,10 +178,7 @@ function measureTrace(trace,id,spec){
   assert(active.length && fading.length && fadesGone, id+' domain lifecycle was painted');
   const hold=fading[0].time-active[0].time;
   const fade=fadesGone.time-fading[0].time;
-  assert(entrance?.shatter.crack && entrance.shatter.bits>=8 && cutStart && exit?.shatter.crack);
-  assert(cutStart.time-entrance.time>=130 && cutStart.time-entrance.time<=320,
-    'entrance starts before the video: '+(cutStart.time-entrance.time));
-  assert(Math.abs(exit.time-active[0].time)<=80,'outgoing shatter connects to the domain');
+  assert(cutStart && frames.every(frame=>!frame.shatter),'shatter transition disabled');
   assert(hold>=1350 && hold<=2250,'domain active '+hold);
   assert(fade>=230 && fade<=440,'domain fade '+fade);
   assert(active.some(frame=>frame.domain.opacity>=.97));
@@ -210,7 +205,7 @@ function measureTrace(trace,id,spec){
     effect.cinemaScale<=1.35 && (effect.role==='group'||effect.finisher))));
   return {duration:hold,fade,source,pulseDuration:first.fx.duration,
     presentedMs:off.time-first.time,activeFrames:cracked.length,impact:first.fx,
-    shatter:{leadMs:cutStart.time-entrance.time,exitToDomainMs:active[0].time-exit.time},
+    shatter:false,
     cutinCount:frames.filter(frame=>frame.cut?.hero===id).length};
 }
 
@@ -316,16 +311,10 @@ async function runDomainCinema(browser,origin,spec,{root,out},helpers){
         await start();
         await p.evaluate(installSceneProbe);
         await p.waitForFunction(()=>Sky.battlePage.inspect().vfx.artReady.includes('vfx_impact_crack'));
-        if(spec.name==='desktop')await call({kind:'shatter',direction:'enter'});
         await cast('h01');
-        if(spec.name==='desktop')await capture('cinema-shatter-enter');
         const {cut}=await readCut(p,'h01');
-        await call(spec.name==='desktop'?{kind:'shatter',direction:'exit'}:{kind:'impact'});
+        await call({kind:'impact'});
         await cut.locator('.battle-cut-skip').click();
-        if(spec.name==='desktop'){
-          await capture('cinema-shatter-exit');
-          await call({kind:'impact'});
-        }
         const frame=await capture('cinema-impact');
         assert(frame.fx.visible && frame.hud.flags && frame.layering?.beforeFlags);
         await call({kind:'domain',hero:'h01'});

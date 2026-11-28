@@ -16,18 +16,20 @@ const vfxOnly=args.includes('--vfx-only');
 const hudOnly=args.includes('--hud-only');
 const wave6Only=args.includes('--wave6-only');
 const actorUpgrade=args.includes('--actor-upgrade');
+const domainCinema=args.includes('--domain-cinema');
 const upgradeBaseline=args.includes('--vfx-upgrade-baseline');
 const effectsUpgrade=upgradeBaseline || args.includes('--vfx-upgrade');
 const {exerciseHud,checkPowerHud}=require('./battle-hud.cjs');
 const {runVfxUpgrade}=require('./vfx-upgrade.cjs');
 const {runActorUpgrade}=require('./actor-upgrade.cjs');
+const {runDomainCinema}=require('./domain-cinema.cjs');
 const chrome=option('chrome',process.env.CHROME_PATH);
 const presets=[
   {name:'desktop',width:1280,height:720,dpr:1,full:true},
   {name:'retina',width:1440,height:900,dpr:2,full:true},
   {name:'mobile',width:844,height:390,dpr:3,mobile:true,full:true},
   {name:'file',width:1280,height:720,dpr:1,file:true,full:true},
-  ...(effectsUpgrade && !upgradeBaseline || actorUpgrade) ? [
+  ...(effectsUpgrade && !upgradeBaseline || actorUpgrade || domainCinema) ? [
     {name:'power',width:1280,height:720,dpr:1,full:true},
     {name:'canvas',width:1280,height:720,dpr:1,full:true}
   ] : [],
@@ -83,7 +85,7 @@ const mobileEdges=new WeakMap();
 const wave2Checks=new WeakMap();
 const wave4Checks=new WeakMap();
 const vfxPaths={...Object.fromEntries(leads.map(id=>[id,'assets/vfx/vfx_ult_'+id+'.png'])),spark:'assets/vfx/vfx_hit_spark.png'};
-const battleArtPaths=Object.fromEntries([...leads.map(id=>'proj_'+id),'status_shield','status_freeze','status_curse','status_heal_ring']
+const battleArtPaths=Object.fromEntries([...leads.map(id=>'proj_'+id),'status_shield','status_freeze','status_curse','status_heal_ring','vfx_impact_crack']
   .map(key=>[key,'assets/vfx/'+key+'.png']));
 const factionStems={东煌:'donghuang',圣辉:'shenghui',机巧:'jiqiao',秘影:'miying'};
 
@@ -1182,7 +1184,7 @@ async function exerciseVfxCutSkip(p,spec) {
   await battle(p,'return').click();await action(p,'home').click();
   return {...trace,heal,frames,settled:true};
 }
-async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,statuses=false,encounter='boss'}) {
+async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,statuses=false,encounter='boss',enemyRage=false}) {
   const fixture=await p.evaluate(({formation,powerSave,encounter})=>{
     const save=Sky.Save.fresh();
     save.owned=Sky.D.heroes.map(hero=>hero.id);
@@ -1199,12 +1201,12 @@ async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,sta
     await panel(p,'stage',encounter).click();
     enter=panel(p,'start-route',encounter);
   }else{
-    await action(p,'trials').click();await panel(p,'trial','boss').click();
-    enter=panel(p,'start-trial','boss');
+    await action(p,'trials').click();await panel(p,'trial',encounter).click();
+    enter=panel(p,'start-trial',encounter);
   }
   // Leave numeric resolution and target choice to the engine. Give the team
   // enough turns to exercise every cast in isolation without early settlement.
-  await enter.evaluate((button,{shield,statuses})=>{
+  await enter.evaluate((button,{shield,statuses,enemyRage})=>{
     const create=Sky.Battle.create;
     try {
       let seed=72;
@@ -1215,6 +1217,7 @@ async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,sta
           unit.maxHp=Math.max(4500,unit.maxHp);
           unit.hp=unit.side==='ally'?3300:unit.maxHp;
           if(unit.side==='ally')unit.rage=100;
+          else if(enemyRage)unit.rage=100;
         }
         if(shield)fight.units.find(unit=>unit.key==='e0').shield=90;
         // Reproduce a mid-round encounter. Real engine hits, turn expiry and cleansing
@@ -1232,7 +1235,7 @@ async function startFullVfxFixture(p,{formation,powerSave=false,shield=false,sta
       };
       button.click();
     } finally {Sky.Battle.create=create;}
-  },{shield,statuses});
+  },{shield,statuses,enemyRage});
   await battle(p,'auto').click();
   await p.waitForFunction(()=>Sky.battlePage.inspect()?.ready,null,{timeout:45000});
 }
@@ -1840,7 +1843,7 @@ async function replacementCheck(browser) {
     const origin='http://127.0.0.1:'+server.address().port;
     const reports=[];
     const chosen=presets.filter(x=>selected ? selected.split(',').includes(x.name) : !x.extra);
-    const replacements=!vfxOnly && !hudOnly && !wave6Only && !effectsUpgrade && !actorUpgrade &&
+    const replacements=!vfxOnly && !hudOnly && !wave6Only && !effectsUpgrade && !actorUpgrade && !domainCinema &&
       (!selected || selected.split(',').includes('replacement'));
     assert(chosen.length||replacements,'unknown --case');
     for(const spec of chosen) {
@@ -1848,13 +1851,16 @@ async function replacementCheck(browser) {
         await browser.close();
         browser=await chromium.launch({...config,args:[...config.args,'--disable-webgl']});
       }
-      const result=actorUpgrade ? await runActorUpgrade(browser,origin,spec,{root,out},
+      const result=domainCinema ? await runDomainCinema(browser,origin,spec,{root,out},
+        {action,panel,battle,geometry,startFullVfxFixture,screenshot,importProgress,
+          verifyBattleArt:p=>verifyVfxPack(p,'offlineBattleArt',battleArtPaths)}) : actorUpgrade ?
+        await runActorUpgrade(browser,origin,spec,{root,out},
         {action,panel,battle,geometry,startFullVfxFixture,screenshot,queueVfxCast,checkEmbedded}) : effectsUpgrade ?
         await runVfxUpgrade(browser,origin,spec,{baseline:upgradeBaseline,root,out},
           {action,panel,battle,geometry,startFullVfxFixture,screenshot,queueVfxCast}) :
         await (wave6Only?runWave6Focus:vfxOnly||hudOnly?runVfxFocus:run)(browser,origin,spec);
       reports.push(result);console.log(JSON.stringify(result));
-      if(out)fs.writeFileSync(path.join(out,spec.name+(actorUpgrade?'-actor':effectsUpgrade ?
+      if(out)fs.writeFileSync(path.join(out,spec.name+(domainCinema?'-cinema':actorUpgrade?'-actor':effectsUpgrade ?
         upgradeBaseline?'-before':'-after' : wave6Only?'-wave6':hudOnly?'-hud':vfxOnly?'-vfx':'')+'-report.json'),JSON.stringify(result,null,2));
     }
     if(replacements)await replacementCheck(browser);

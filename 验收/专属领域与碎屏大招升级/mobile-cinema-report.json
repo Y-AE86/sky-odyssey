@@ -1,0 +1,651 @@
+{
+  "name": "mobile",
+  "stage": {
+    "x": 79.828125,
+    "y": 0,
+    "width": 693.328125,
+    "height": 389.984375,
+    "dpr": 3,
+    "transform": "none",
+    "safeLeft": 44,
+    "safeRight": 35,
+    "vw": 844,
+    "vh": 390
+  },
+  "renderer": "pixi-webgl",
+  "resolution": 3,
+  "fallback": false,
+  "lobbyNewRequests": 0,
+  "requestedDomains": [
+    "domain_h01.png",
+    "domain_h02.png",
+    "domain_h04.png",
+    "domain_h06.png",
+    "domain_h08.png",
+    "domain_h10.png"
+  ],
+  "crackRequests": 3,
+  "weapons": {
+    "h01": {
+      "file": "weapon_h01.png",
+      "size": [
+        521,
+        521
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "忘川墨镰",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h02": {
+      "file": "weapon_h02.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "霜华星杖",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h03": {
+      "file": "weapon_h03.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "潮生玉笛",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h04": {
+      "file": "weapon_h04.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "白昼圣盾",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h05": {
+      "file": "weapon_h05.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "双子铳星",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h06": {
+      "file": "weapon_h06.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "赤月棘刃",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h07": {
+      "file": "weapon_h07.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "星渊浑天星杖",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h08": {
+      "file": "weapon_h08.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "苍雷弧光太刀",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h09": {
+      "file": "weapon_h09.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "离火焚天凤枪",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h10": {
+      "file": "weapon_h10.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "月潮琉璃剑",
+      "bonus": "生命 +6%\n攻击 +6%"
+    },
+    "h11": {
+      "file": "weapon_h11.png",
+      "size": [
+        520,
+        520
+      ],
+      "box": [
+        146.546875,
+        146.546875
+      ],
+      "fit": "contain",
+      "center": [
+        -0.0078125,
+        -0.0078125
+      ],
+      "title": "暗冕鸦羽棘镰",
+      "bonus": "生命 +6%\n攻击 +6%"
+    }
+  },
+  "rally": {
+    "h01": {
+      "cut": {
+        "bounds": [
+          79.828125,
+          0,
+          693.328125,
+          389.984375
+        ],
+        "stage": [
+          79.828125,
+          0,
+          693.328125,
+          389.984375
+        ],
+        "media": "ultimate",
+        "video": {
+          "name": "ult_h01.mp4",
+          "duration": 3.041995,
+          "muted": false
+        },
+        "canvasBackground": "url(\"http://127.0.0.1:58361/assets/scenes/bg_battle_boss.png\")",
+        "sides": [
+          {
+            "matte": true,
+            "mask": "linear-gradient(to right, rgb(0, 0, 0) 79.8281px, rgba(0, 0, 0, 0) 79.8281px, rgba(0, 0, 0, 0) calc(100% - 70.8438px), rgb(0, 0, 0) calc(100% - 70.8438px))"
+          }
+        ]
+      },
+      "duration": 1449.8999999999996,
+      "fade": 316.6999999999998,
+      "source": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 0.0770607,
+        "sizing": "cover",
+        "zoom": 1.00045
+      },
+      "pulseDuration": 70,
+      "presentedMs": 83.30000000000018,
+      "activeFrames": 5,
+      "impact": {
+        "startedAt": 5782.8,
+        "duration": 70,
+        "endedAt": null,
+        "visible": true,
+        "frame": 1,
+        "mirror": false,
+        "epicenter": [
+          0.635,
+          0.5
+        ],
+        "source": "png",
+        "blendMode": 1,
+        "alpha": 0.95
+      },
+      "shatter": {
+        "leadMs": 200,
+        "exitToDomainMs": 0
+      },
+      "cutinCount": 13
+    }
+  },
+  "shots": {
+    "cinema-impact": {
+      "time": 8453.6,
+      "supported": true,
+      "fx": {
+        "startedAt": 8453.6,
+        "duration": 70,
+        "endedAt": null,
+        "visible": true,
+        "frame": 1,
+        "mirror": false,
+        "epicenter": [
+          0.635,
+          0.5
+        ],
+        "source": "png",
+        "blendMode": 1,
+        "alpha": 0.95
+      },
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.02325
+      },
+      "shatter": null,
+      "cut": null,
+      "active": [
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 4,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": 8270.3
+        },
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1.28,
+          "finisher": true,
+          "target": "e0",
+          "impactAt": 8453.6
+        }
+      ],
+      "hud": {
+        "flags": 12,
+        "float": 3,
+        "total": "497",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave",
+        "chromatic"
+      ],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      }
+    },
+    "cinema-domain-h01": {
+      "time": 9053.7,
+      "supported": true,
+      "fx": {
+        "startedAt": 8453.6,
+        "duration": 70,
+        "endedAt": 9053.7,
+        "visible": false,
+        "frame": 1,
+        "mirror": false,
+        "epicenter": [
+          0.635,
+          0.5
+        ],
+        "source": "png",
+        "blendMode": 1,
+        "alpha": 0.95
+      },
+      "domain": {
+        "id": "h01",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h01.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.02342
+      },
+      "shatter": null,
+      "cut": null,
+      "active": [
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 4,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": 8270.3
+        },
+        {
+          "hero": "h01",
+          "role": "single",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1.28,
+          "finisher": true,
+          "target": "e0",
+          "impactAt": 8453.6
+        }
+      ],
+      "hud": {
+        "flags": 12,
+        "float": 3,
+        "total": "497",
+        "cards": 6
+      },
+      "filters": [],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      }
+    },
+    "cinema-domain-h02": {
+      "time": 11470.3,
+      "supported": true,
+      "fx": {
+        "startedAt": 8453.6,
+        "duration": 70,
+        "endedAt": 9053.7,
+        "visible": false,
+        "frame": 1,
+        "mirror": false,
+        "epicenter": [
+          0.635,
+          0.5
+        ],
+        "source": "png",
+        "blendMode": 1,
+        "alpha": 0.95
+      },
+      "domain": {
+        "id": "h02",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h02.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.01013
+      },
+      "shatter": {
+        "direction": "exit",
+        "age": 204.17200012803073,
+        "crack": true,
+        "bits": 9
+      },
+      "cut": null,
+      "active": [
+        {
+          "hero": "h02",
+          "role": "group",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1.32,
+          "finisher": false,
+          "target": null,
+          "impactAt": 11470.3
+        },
+        {
+          "hero": "h02",
+          "role": "target",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": 11470.3
+        },
+        {
+          "hero": "h02",
+          "role": "target",
+          "frame": 1,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e1",
+          "impactAt": null
+        },
+        {
+          "hero": "h02",
+          "role": "target",
+          "frame": 0,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e2",
+          "impactAt": null
+        }
+      ],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "178",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave"
+      ],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      }
+    },
+    "cinema-domain-h08": {
+      "time": 14403.7,
+      "supported": true,
+      "fx": {
+        "startedAt": 12620.4,
+        "duration": 70,
+        "endedAt": 12703.7,
+        "visible": false,
+        "frame": 5,
+        "mirror": false,
+        "epicenter": [
+          0.635,
+          0.5
+        ],
+        "source": "png",
+        "blendMode": 1,
+        "alpha": 0.014678136528361202
+      },
+      "domain": {
+        "id": "h08",
+        "phase": "active",
+        "size": [
+          1672,
+          941
+        ],
+        "source": "domain_h08.png",
+        "bounds": [
+          0,
+          0,
+          844,
+          390
+        ],
+        "opacity": 1,
+        "sizing": "cover",
+        "zoom": 1.00973
+      },
+      "shatter": {
+        "direction": "exit",
+        "age": 195.86199996881248,
+        "crack": true,
+        "bits": 9
+      },
+      "cut": null,
+      "active": [
+        {
+          "hero": "h08",
+          "role": "group",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1.32,
+          "finisher": false,
+          "target": null,
+          "impactAt": 14403.7
+        },
+        {
+          "hero": "h08",
+          "role": "target",
+          "frame": 3,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e0",
+          "impactAt": 14403.7
+        },
+        {
+          "hero": "h08",
+          "role": "target",
+          "frame": 2,
+          "source": "png",
+          "cinemaScale": 1,
+          "finisher": false,
+          "target": "e1",
+          "impactAt": null
+        },
+        {
+          "hero": "h08",
+          "role": "target",
+          "frame": 1,
+          "source": "png",
+          "cinemaScale": 1.28,
+          "finisher": true,
+          "target": "e2",
+          "impactAt": null
+        }
+      ],
+      "hud": {
+        "flags": 12,
+        "float": 1,
+        "total": "139",
+        "cards": 6
+      },
+      "filters": [
+        "shockwave"
+      ],
+      "layering": {
+        "stage": true,
+        "beforeFlags": true
+      }
+    }
+  },
+  "embedded": null,
+  "errors": []
+}

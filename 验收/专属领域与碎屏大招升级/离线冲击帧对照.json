@@ -1,0 +1,334 @@
+{
+  "offlineOriginals": 11,
+  "reports": [
+    {
+      "visible": [
+        {
+          "t": 3397.2,
+          "shade": 0.5,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.91,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 3418,
+          "shade": 0.5,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.91,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 3430.5,
+          "shade": 0.4452703755705929,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.8103920835384791,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 3447.2,
+          "shade": 0.19997743053907668,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.3639589235811196,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 3463.9,
+          "shade": 0.007288629737608132,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.0132653061224468,
+          "shock": true,
+          "chromatic": true
+        }
+      ],
+      "maxScale": {
+        "group": 1.32,
+        "target": 1.28
+      },
+      "impact": {
+        "startedAt": 3397.2,
+        "duration": 70,
+        "endedAt": 3480.5,
+        "visible": false,
+        "frame": 5,
+        "mirror": false,
+        "epicenter": [
+          0.635,
+          0.5
+        ],
+        "source": "embedded",
+        "blendMode": 1,
+        "alpha": 0.01384839650145545
+      },
+      "supportHits": 0,
+      "artReady": [
+        "status_shield",
+        "status_freeze",
+        "status_curse",
+        "status_heal_ring",
+        "proj_h01",
+        "proj_h04",
+        "proj_h02",
+        "proj_h05",
+        "proj_h03",
+        "vfx_impact_crack"
+      ],
+      "heroId": "h02",
+      "side": "ally",
+      "shieldedFinal": false,
+      "external": 0,
+      "errors": []
+    },
+    {
+      "visible": [
+        {
+          "t": 2019.9,
+          "shade": 0.5,
+          "xscale": -0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.91,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 2036.6,
+          "shade": 0.5,
+          "xscale": -0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.91,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 2053.3,
+          "shade": 0.4442055667388766,
+          "xscale": -0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.8084541314647555,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 2070,
+          "shade": 0.19838424320630565,
+          "xscale": -0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.3610593226354763,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 2086.6,
+          "shade": 0.007288629737610075,
+          "xscale": -0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.013265306122450337,
+          "shock": true,
+          "chromatic": true
+        }
+      ],
+      "maxScale": {
+        "group": 1.32,
+        "target": 1.28
+      },
+      "impact": {
+        "startedAt": 2019.9,
+        "duration": 70,
+        "endedAt": 2103.2,
+        "visible": false,
+        "frame": 5,
+        "mirror": true,
+        "epicenter": [
+          0.365,
+          0.5
+        ],
+        "source": "embedded",
+        "blendMode": 1,
+        "alpha": 0.013848396501459142
+      },
+      "supportHits": 0,
+      "artReady": [
+        "status_shield",
+        "status_freeze",
+        "status_curse",
+        "status_heal_ring",
+        "proj_h01",
+        "proj_h04",
+        "proj_h02",
+        "proj_h05",
+        "proj_h03",
+        "vfx_impact_crack"
+      ],
+      "heroId": "enemy_boss_mech",
+      "side": "enemy",
+      "shieldedFinal": false,
+      "external": 0,
+      "errors": []
+    },
+    {
+      "visible": [],
+      "maxScale": {
+        "group": 1,
+        "target": 1
+      },
+      "impact": null,
+      "supportHits": 6,
+      "artReady": [
+        "status_shield",
+        "status_freeze",
+        "status_curse",
+        "status_heal_ring",
+        "proj_h01",
+        "proj_h04",
+        "proj_h02",
+        "proj_h05",
+        "proj_h03",
+        "vfx_impact_crack"
+      ],
+      "heroId": "h03",
+      "side": "ally",
+      "shieldedFinal": false,
+      "external": 0,
+      "errors": []
+    },
+    {
+      "visible": [
+        {
+          "t": 2588,
+          "shade": 0.5,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": false,
+          "grades": 0.91,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 2604.6,
+          "shade": 0.5,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": false,
+          "grades": 0.91,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 2621.3,
+          "shade": 0.4452703755705929,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": false,
+          "grades": 0.8103920835384791,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 2638,
+          "shade": 0.19997743053907668,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": false,
+          "grades": 0.3639589235811196,
+          "shock": true,
+          "chromatic": true
+        },
+        {
+          "t": 2654.6,
+          "shade": 0.007725335014928947,
+          "xscale": 0.7655502392344498,
+          "width": 1280,
+          "height": 720,
+          "sequence": true,
+          "stageFinisher": true,
+          "grades": 0.014060109727170684,
+          "shock": true,
+          "chromatic": true
+        }
+      ],
+      "maxScale": {
+        "group": 1.32,
+        "target": 1.28
+      },
+      "impact": {
+        "startedAt": 2588,
+        "duration": 70,
+        "endedAt": 2671.3,
+        "visible": false,
+        "frame": 5,
+        "mirror": false,
+        "epicenter": [
+          0.635,
+          0.5
+        ],
+        "source": "embedded",
+        "blendMode": 1,
+        "alpha": 0.014678136528364999
+      },
+      "supportHits": 0,
+      "artReady": [
+        "status_shield",
+        "status_freeze",
+        "status_curse",
+        "status_heal_ring",
+        "proj_h01",
+        "proj_h04",
+        "proj_h02",
+        "proj_h05",
+        "proj_h03",
+        "vfx_impact_crack"
+      ],
+      "heroId": "h02",
+      "side": "ally",
+      "shieldedFinal": true,
+      "external": 0,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "canvas",
+  "stage": {
+    "x": 0,
+    "y": 0,
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "transform": "none",
+    "safeLeft": 0,
+    "safeRight": 0,
+    "vw": 1280,
+    "vh": 720
+  },
+  "renderer": "canvas2d",
+  "resolution": 1,
+  "fallback": true,
+  "lobbyNewRequests": 0,
+  "requestedDomains": [],
+  "crackRequests": 0,
+  "weapons": null,
+  "rally": {},
+  "shots": {
+    "cinema-fallback": {
+      "time": 2433.9,
+      "supported": false,
+      "fx": null,
+      "domain": null,
+      "shatter": null,
+      "cut": null,
+      "active": [],
+      "hud": {
+        "flags": 0,
+        "float": 1,
+        "total": "163",
+        "cards": 6
+      },
+      "filters": [],
+      "layering": null
+    }
+  },
+  "embedded": null,
+  "errors": []
+}

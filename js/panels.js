@@ -75,8 +75,11 @@
         }).join("") + '</div></div>';
     }
     if (P.rosterTab === 2) {
-      const special = Boolean(h.weapon);
-      return '<div class="pn-weapon"><div class="pn-weapon-emblem">' + (special ? photo(h.id,"weapon") : mark("blade")) + '</div><div class="pn-weapon-copy"><p>' + (special ? '已共鸣 · '+h.rarity : "通用武装") + '</p><h2>' + escape(special ? h.weapon : "基础武装") + '</h2><p>' + escape(special ? h.weaponDesc : "通过四格星装提升战斗属性。") + '</p>' + (special ? '<div class="pn-weapon-bonus"><span>生命 <b>+6%</b></span><span>攻击 <b>+6%</b></span></div>' : "") + '</div></div>';
+      const bonus=percent(h.weaponBonus);
+      return '<div class="pn-weapon"><div class="pn-weapon-emblem">' + photo(h.id,"weapon") +
+        '</div><div class="pn-weapon-copy"><p>已共鸣 · ' + h.rarity + '</p><h2>' + escape(h.weapon) +
+        '</h2><p>共鸣常驻，生命与攻击加成已计入面板。</p><div class="pn-weapon-bonus">' +
+        '<span>生命 <b>+' + bonus + '</b></span><span>攻击 <b>+' + bonus + '</b></span></div></div></div>';
     }
     const selected = h.skills[P.skill];
     return '<div class="pn-skills"><div class="pn-skill-row">' + skillTypes.map(([icon,label],i) =>

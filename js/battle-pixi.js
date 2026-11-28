@@ -45,7 +45,7 @@
     uniform sampler2D uSampler;
     uniform vec4 inputSize, inputClamp, outputFrame;
     uniform vec2 uCenter, uSplitCenter, uSplitExtentInv;
-    uniform float uRadius, uWidth, uAmplitude, uGlint, uSplit;
+    uniform float uRadius, uWidth, uAmplitude, uGlint, uSplit, uImpactGrade;
 
     void main() {
       vec2 uv = vTextureCoord;
@@ -84,6 +84,11 @@
       // The backdrop is a CSS layer. A faint specular glint keeps the ripple
       // visible in transparent space, while the captured actors actually refract.
       float glint = band * band * uGlint * edge * (1.0 - color.a);
+      if (uImpactGrade > 0.0) {
+        float luma = dot(color.rgb, vec3(0.2126, 0.7152, 0.0722)) / max(0.0001, color.a);
+        float silver = smoothstep(0.19, 0.78, luma) * color.a;
+        color.rgb = mix(color.rgb, vec3(silver), uImpactGrade);
+      }
       gl_FragColor = color + vec4(vec3(0.72, 0.88, 1.0) * glint, glint);
     }`;
 
@@ -93,7 +98,7 @@
       this.area=new P.Rectangle();
       const create=()=>new P.Filter(undefined,impactFragment,{
         uCenter:new Float32Array(2),uSplitCenter:new Float32Array(2),uSplitExtentInv:new Float32Array(2),
-        uRadius:0,uWidth:1,uAmplitude:0,uGlint:0,uSplit:0
+        uRadius:0,uWidth:1,uAmplitude:0,uGlint:0,uSplit:0,uImpactGrade:0
       });
       this.shockwaveFilter=create();
       this.chromaticFilter=create();
@@ -106,16 +111,17 @@
     chromatic(time,target) {
       this.split={time,target};
     }
-    draw(time,w,h,dpr,cam) {
-      if(!this.wave && !this.split) return;
+    draw(time,w,h,dpr,cam,grade=0) {
+      if(!this.wave && !this.split && !grade){this.detach();return;}
       if(this.wave && time-this.wave.time>=shockwaveMs)this.wave=null;
       if(this.split && time-this.split.time>=chromaticMs)this.split=null;
-      if(!this.wave && !this.split){this.detach();return;}
+      if(!this.wave && !this.split && !grade){this.detach();return;}
 
       // Fuse simultaneous effects in one full-density pass. Each filter can also
       // run independently, with its inactive branch skipped inside the shader.
       const filter=this.wave ? this.shockwaveFilter : this.chromaticFilter;
       const u=filter.uniforms;
+      u.uImpactGrade=grade;
       if(this.wave) {
         const wave=this.wave, t=clamp((time-wave.time)/shockwaveMs);
         if(wave.targets) {
@@ -434,8 +440,15 @@
         this.overlay = new P.Graphics();
         this.overFxLayer.addChild(this.overlay,this.sparks);
         this.battleCamera.addChild(this.shadows,this.groundFxLayer,this.unitLayer,this.overFxLayer);
-        this.app.stage.addChild(this.battleCamera,this.flags);
-        if(!powerSave)this.vfx=new Sky.BattleVfx(this.overFxLayer,this.app.renderer,this.byKey,this.groundFxLayer);
+        this.app.stage.addChild(this.battleCamera);
+        if(!powerSave){
+          this.screenFxLayer = new P.Container();
+          this.screenFxLayer.eventMode='none';
+          this.screenFxLayer.visible=false;
+          this.app.stage.addChild(this.screenFxLayer);
+          this.vfx=new Sky.BattleVfx(this.overFxLayer,this.app.renderer,this.byKey,this.groundFxLayer,this.screenFxLayer);
+        }
+        this.app.stage.addChild(this.flags);
         this.app.ticker.maxFPS = powerSave ? 30 : 60;
         this.ink = new Paint(this.overlay,null);
       } catch (err) {
@@ -454,6 +467,7 @@
       this.observer = new ResizeObserver(() => this.resize());
       this.observer.observe(host);
     }
+    get hasCinema() {return !!this.vfx && !this.disposed;}
     resize() {
       this.w = this.host.clientWidth;
       this.h = this.host.clientHeight;
@@ -603,6 +617,9 @@
       this.action=action;
       this.openingImpact=true;
       const n=this.byKey[action.actor], target=this.byKey[action.hits[0]?.target];
+      this.impactHit=this.hasCinema && action.kind==='ultimate' ?
+        action.hits.findLastIndex(hit=>hit.kind==='damage' && hit.amount>0 && !hit.periodic &&
+          this.byKey[hit.target]?.side!==n.side) : -1;
       if(!target)return;
       if(action.kind==='basic')this.vfx?.launchBasic(action,clock,this.basicHitMs);
       if(action.kind==='ultimate' && !this.powerSave){
@@ -697,13 +714,15 @@
       const finisher=ultimate && !!meta.finisher;
       const entries=plan?.byHit.get(index);
       const attacker=this.byKey[actor];
+      const screenHit=ultimate && damage && n.side!==attacker.side && index===this.impactHit;
+      if(screenHit)this.vfx?.showScreenImpact(attacker.side,clock);
       if(this.impulses && ultimate && (damage ? n.side!==attacker.side : n.side===attacker.side)) {
-        if(this.openingImpact || finisher) {
+        if(this.openingImpact || finisher || screenHit) {
           const group=entries?.find(entry=>entry.info.role==='group');
           this.impulses.shockwave(clock,group ? group.info.targets.map(key=>this.byKey[key]) : [n],
             !damage && hit.kind==='heal');
         }
-        if(damage && (hit.crit || finisher || (this.openingImpact && execution.has(attacker.heroId))))
+        if(damage && (hit.crit || finisher || screenHit || (this.openingImpact && execution.has(attacker.heroId))))
           this.impulses.chromatic(clock,n);
         this.openingImpact=false;
       }
@@ -1085,7 +1104,8 @@
       for(const e of this.effects) this.effect(this.ink,e,time);
       if(this.app){
         this.vfx?.draw(effectClock,time,w,h);
-        this.impulses?.draw(time,w,h,this.ratio,cam);
+        const grade=this.vfx?.drawScreenImpact(time,w,h) ?? 0;
+        this.impulses?.draw(time,w,h,this.ratio,cam,grade);
         this.app.render();
         this.vfx?.presented(time);
       }
@@ -1098,6 +1118,7 @@
         camera:{zoom:this.camera.zoom,x:this.camera.x,y:this.camera.y,kick:!!this.camera.kick,focus:this.camera.focus,
           hitstopRemaining:this.hitstopRemaining,filters:this.impulses?.inspect() || {active:[],shockwave:null,chromatic:null}},
         impact:this.lastImpact||null,
+        cinema:{supported:this.hasCinema,impact:this.vfx?.screenImpact||null},
         layers:this.app?['groundFxLayer','unitLayer','overFxLayer']:[],
         stage:[this.w,this.h],positions:this.nodes.map(n=>({key:n.key,heroId:n.heroId,x:n.x,y:n.y,mirror:n.mirror,
           sourceFacing:n.sourceFacing,depth:n.depth,boss:n.boss,magnification:n.magnification,

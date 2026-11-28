@@ -139,12 +139,101 @@
     }
     return s.posters.get(id);
   }
+  const mirrorTime=220, domainIn=180, domainHold=1450, domainOut=320;
+  const mirrors=[
+    ['0 0,40% 0,63.5% 50%,0 29%','-11%','-15%','-5deg'],
+    ['40% 0,75% 0,63.5% 50%','1%','-19%','4deg'],
+    ['75% 0,100% 0,100% 34%,63.5% 50%','12%','-13%','6deg'],
+    ['100% 34%,100% 100%,63.5% 50%','19%','3%','-6deg'],
+    ['100% 100%,66% 100%,63.5% 50%','9%','17%','6deg'],
+    ['66% 100%,27% 100%,63.5% 50%','-3%','17%','-4deg'],
+    ['27% 100%,0 100%,0 64%,63.5% 50%','-15%','9%','7deg'],
+    ['0 64%,0 29%,63.5% 50%','-17%','3%','-4deg']
+  ];
+  function clearShatter(s) {
+    clearTimeout(s.mirrorTimer);
+    s.shatter?.remove();
+    s.shatter=null;
+  }
+  function shatter(s,direction,src) {
+    clearShatter(s);
+    const ms=direction==='enter'?mirrorTime:Math.max(92,mirrorTime/s.speed);
+    const imageUrl=path=>'url("'+new URL(path,document.baseURI).href+'")';
+    const layer=s.shatter=document.createElement('div');
+    layer.className='battle-shatter';
+    layer.dataset.direction=direction;
+    layer.setAttribute('aria-hidden','true');
+    layer.style.setProperty('--mirror-time',ms+'ms');
+    layer.style.setProperty('--mirror-art',imageUrl(src));
+    layer.style.setProperty('--impact-crack',imageUrl(Sky.art.impactCrack));
+    for(const [shape,x,y,angle] of mirrors) {
+      const pane=document.createElement('i');
+      pane.style.cssText='--pane:polygon('+shape+');--pane-x:'+x+';--pane-y:'+y+';--pane-angle:'+angle;
+      layer.append(pane);
+    }
+    const cracks=document.createElement('span');
+    cracks.className='battle-shatter-crack';
+    layer.append(cracks);
+    s.root.append(layer);
+    s.mirrorTimer=setTimeout(()=>clearShatter(s),ms+30);
+  }
+  function prepareDomains(s) {
+    if(!s.scene.hasCinema)return;
+    for(const {heroId} of s.battle.units.filter(unit=>unit.side==='ally')){
+      const src=Sky.art.domain(heroId);
+      if(!src)continue;
+      const image=new Image();
+      image.alt=''; image.decoding='async'; image.src=src;
+      const decoded=image.decode().then(()=>image,()=>null);
+      s.domains.set(heroId,{image,decoded});
+    }
+  }
+  function clearDomain(s) {
+    const domain=s.domain;
+    if(!domain)return;
+    clearTimeout(domain.timer);
+    domain.layer?.remove();
+    s.domain=null;
+  }
+  function openDomain(s,id) {
+    const entry=s.domains.get(id);
+    if(!entry)return;
+    clearDomain(s);
+    const domain=s.domain={id,start:performance.now()};
+    entry.decoded.then(image=>{
+      if(!image || current!==s || domain!==s.domain || domain.exiting)return;
+      const layer=domain.layer=document.createElement('div');
+      layer.className='battle-domain'; layer.dataset.hero=id; layer.dataset.phase='active';
+      layer.style.setProperty('--domain-in',domainIn+'ms');
+      layer.style.setProperty('--domain-out',domainOut+'ms');
+      layer.append(image);
+      s.backdrop.append(layer);
+    });
+  }
+  function endDomain(s) {
+    const domain=s.domain;
+    if(!domain || domain.timer)return;
+    const hold=Math.max(400,domainHold-(performance.now()-domain.start));
+    domain.timer=setTimeout(()=>{
+      domain.exiting=true;
+      if(domain.layer)domain.layer.dataset.phase='fading';
+      domain.timer=setTimeout(()=>clearDomain(s),domainOut);
+    },hold);
+  }
+  function beginCutin(s) {
+    if(!s.scene.hasCinema){showCutin(s);return;}
+    s.phase='cutin';
+    shatter(s,'enter',Sky.scene(s.backdrop.dataset.scene));
+    s.cutinEntryTimer=setTimeout(()=>{
+      if(current===s && s.phase==='cutin')showCutin(s);
+    },mirrorTime-28);
+  }
   function showCutin(s) {
     const image=posterImage(s,s.hero.id);
     const hero=s.hero, element=document.createElement('div');
     const media=s.videos.get(hero.id);
     const dedicated=media?.ultimate && !media.ultimate.failed;
-    element.className='battle-cutin';
+    element.className='battle-cutin'+(s.scene.hasCinema?' cine-glass':'');
     element.dataset.hero=hero.id;
     const poster=image.src, hasPoster=image.complete && image.naturalWidth>0;
     if(hasPoster)element.classList.add('has-poster');
@@ -161,6 +250,11 @@
     const complete=()=>{
       if(!active())return;
       clearCutin(s);
+      if(s.scene.hasCinema){
+        const art=s.domains.get(hero.id)?.image;
+        shatter(s,'exit',art?.complete && art.naturalWidth ? art.src : Sky.scene(s.backdrop.dataset.scene));
+        openDomain(s,hero.id);
+      }
       startImpact(s);
     };
     element.querySelector('.battle-cut-skip').addEventListener('click',complete,{once:true});
@@ -225,7 +319,10 @@
     Sky.ui.cinematic(null);
   }
   function releaseVideos(s){
+    clearTimeout(s.cutinEntryTimer);
     clearCutin(s);
+    clearShatter(s);
+    clearDomain(s);
     for(const {ultimate,lobby} of s.videos.values()){
       ultimate?.release();
       lobby?.release();
@@ -309,7 +406,7 @@
     s.scene.byKey[unit.key].rage=unit.rage;
     s.round.textContent=String(action.round).padStart(2,'0');
     if(action.kind==='ultimate')Sky.sound('ult_start');
-    if(action.kind==='ultimate' && unit.side==='ally') showCutin(s);
+    if(action.kind==='ultimate' && unit.side==='ally') beginCutin(s);
     else startImpact(s);
     refreshUI(s);
   }
@@ -375,7 +472,10 @@
     if(progress===1) {
       s.scene.resetMotion(); s.root.classList.remove('spotlight');
       s.phase='ready'; s.duration=ultimate?185:75; s.elapsed=0;
-      if(ultimate && s.hitsShown)hideTotal(s,true);
+      if(ultimate){
+        if(s.hitsShown)hideTotal(s,true);
+        if(s.scene.byKey[a.actor].side==='ally')endDomain(s);
+      }
       sync(s);
     }
   }
@@ -511,7 +611,7 @@
     const powerSave=ui.state.settings.powerSave;
     const backdrop=document.getElementById('bleed');
     const scene=new Sky.BattleScene(root.querySelector('.battle-stage'),battle.units,powerSave,backdrop.dataset.scene);
-    const s={root,battle,scene,backdrop,powerSave,auto:true,speed:1,queued:new Set(),posters:new Map(),videos:new Map(),phase:'loading',elapsed:0,effectClock:0,hudClock:0,carry:0,labels:[],duration:450,
+    const s={root,battle,scene,backdrop,powerSave,auto:true,speed:1,queued:new Set(),posters:new Map(),videos:new Map(),domains:new Map(),phase:'loading',elapsed:0,effectClock:0,hudClock:0,carry:0,labels:[],duration:450,
       cards:[...root.querySelectorAll('.battle-card')],autoButton:root.querySelector('[data-battle="auto"]'),speedButton:root.querySelector('[data-battle="speed"]'),
       round:root.querySelector('.battle-round strong'),total:root.querySelector('.battle-total'),
       ribbons:Object.fromEntries([...root.querySelectorAll('.battle-skill')].map(el=>[el.dataset.side,el])),
@@ -519,6 +619,7 @@
     current=s;
     root.addEventListener('click',e=>click(s,e));
     sync(s);
+    prepareDomains(s);
     for(const id of ui.state.formation){
       posterImage(s,id);
       if(powerSave)continue;

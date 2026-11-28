@@ -4,6 +4,8 @@
   const cells=3, cell=418, size=cells*cell;
   const supportOpacity=.65;
   const emberTailMs=500;
+  const impactFrameMs=70;
+  const crackKey='vfx_impact_crack';
   const emberColors={ink:0xc18aff,ice:0x8fefff,water:0x69ebcd,light:0xffdf87,
     gear:0xffae61,blood:0xff698f,thunder:0x75bfff,fire:0xff8449};
   const canvases=new Map();
@@ -102,9 +104,10 @@
   }
 
   class BattleVfx {
-    constructor(layer,renderer,nodes,groundLayer){
+    constructor(layer,renderer,nodes,groundLayer,screenLayer){
       this.layer=layer;
       this.groundLayer=groundLayer || layer;
+      this.screenLayer=screenLayer;
       this.renderer=renderer;
       this.nodes=nodes;
       this.units=Object.values(nodes);
@@ -115,6 +118,7 @@
       this.flights=new Set();
       this.statuses=new Map();
       this.last=null;
+      this.screenImpact=null;
       this.rotationSeed=Math.floor(performance.now()*1000)>>>0;
     }
     preload(heroes){
@@ -126,6 +130,7 @@
       }
       for(const key of new Set([...statuses,...heroes.map(id=>'proj_'+(variants[id]?.projectile || id))]))
         if(Sky.art.battleArt(key))pending.push(this.load(key,null));
+      if(this.screenLayer)pending.push(this.load(crackKey,null));
       return Promise.all(pending);
     }
     async load(key,layout){
@@ -174,6 +179,7 @@
       const {kind,anchorY}=atlas.layout;
       const support=kind==='heal' || kind==='shield';
       const opacity=alpha*(support ? supportOpacity : 1);
+      const cinemaScale=kind==='damage' && this.screenLayer ? role==='group' ? 1.32 : finisher ? 1.28 : 1 : 1;
       for(const frame of [sprite,next]){
         frame.anchor.set(.5,anchorY);
         frame.tint=atlas.tint ?? 0xffffff;
@@ -183,10 +189,11 @@
         artKey:atlas.artKey || atlas.key,tint:sprite.tint,
         source:atlas.source,startedAt:null,impactAt:null,renderedImpactAt:null,frame:null,frames:[],
         active:true,rotation,blendMode:sprite.blendMode,finisher,magnification:finisher?1.45:1,
-        sub:0,blend:0,nextFrame:null,scale:0,angle:rotation,alpha:0,nextAlpha:0};
+        sub:0,blend:0,nextFrame:null,scale:0,cinemaScale,angle:rotation,alpha:0,nextAlpha:0};
       const layer=support ? this.groundLayer : this.layer;
       const targetNodes=targets ? targets.map(id=>this.nodes[id]) : [this.nodes[target]];
-      const entry={atlas,frames,sprite,next,info,layer,targetNodes,start,scale,support,alpha:opacity,impactClock:null};
+      const entry={atlas,frames,sprite,next,info,layer,targetNodes,start,scale:scale*cinemaScale,support,
+        alpha:opacity,impactClock:null};
       this.active.add(entry);
       // Support flare cores radiate behind the silhouette. The persistent shield
       // shell still sits in front, keeping its outline without adding a second core to the face.
@@ -246,6 +253,45 @@
         entry.info.impactAt=time;
         if(entry.info.role!=='spark')this.last=entry.info;
       }
+    }
+    showScreenImpact(side,time){
+      const art=this.artTextures.get(crackKey);
+      if(!art || !this.screenLayer)return;
+      if(!this.screenSprites){
+        const shade=new P.Sprite(P.Texture.WHITE);
+        shade.tint=0x07080b;
+        const crack=lightSprite(art.texture);
+        const flash=new P.Sprite(P.Texture.WHITE);
+        flash.blendMode=P.BLEND_MODES.ADD;
+        this.screenLayer.addChild(shade,crack,flash);
+        this.screenSprites={shade,crack,flash};
+      }
+      const mirror=side==='enemy';
+      this.screenImpact={startedAt:time,duration:impactFrameMs,endedAt:null,visible:true,frame:0,mirror,
+        epicenter:[mirror?.365:.635,.5],source:art.source,blendMode:this.screenSprites.crack.blendMode,alpha:0};
+      this.screenLayer.visible=true;
+    }
+    drawScreenImpact(time,w,h){
+      const impact=this.screenImpact;
+      if(!impact?.visible)return 0;
+      const age=time-impact.startedAt;
+      if(age>=impact.duration){
+        impact.visible=false;
+        impact.endedAt=time;
+        this.screenLayer.visible=false;
+        return 0;
+      }
+      const {shade,crack,flash}=this.screenSprites;
+      const envelope=1-smooth(.34,1,age/impact.duration);
+      shade.width=flash.width=w;
+      shade.height=flash.height=h;
+      shade.alpha=.5*envelope;
+      crack.position.set(w/2,h/2);
+      crack.scale.set((impact.mirror?-1:1)*w/crack.texture.width,h/crack.texture.height);
+      crack.alpha=impact.alpha=.95*envelope;
+      flash.alpha=.09*(1-smooth(0,19,age));
+      impact.frame++;
+      return .91*envelope;
     }
     spark(actor,target,index,due,clock,time){
       this.landBasic(actor,target);
@@ -548,6 +594,12 @@
       this.active.delete(entry);
     }
     clear(){
+      if(this.screenSprites){
+        for(const sprite of Object.values(this.screenSprites))sprite.destroy();
+        this.screenLayer.visible=false;
+        this.screenSprites=null;
+      }
+      this.screenImpact=null;
       for(const entry of this.active)this.remove(entry);
       for(const burst of this.embers)this.removeEmbers(burst);
       this.emberTexture?.destroy(true);

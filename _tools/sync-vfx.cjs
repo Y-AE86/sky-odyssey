@@ -10,7 +10,7 @@ const files = fs.readdirSync(directory,{withFileTypes:true})
   .filter(file => file.isFile()).map(file => file.name).sort();
 for(const name of files) {
   const id = name==='vfx_hit_spark.png' ? 'spark' : /^vfx_ult_(h0[1-6])\.png$/.exec(name)?.[1];
-  const single = /^(proj_h0[1-6]|status_(?:shield|freeze|curse|heal_ring))\.png$/.exec(name)?.[1];
+  const single = /^(proj_h0[1-6]|status_(?:shield|freeze|curse|heal_ring)|vfx_impact_crack)\.png$/.exec(name)?.[1];
   if(!id && !single) continue;
   const png = fs.readFileSync(path.join(directory,name));
   (id ? entries : fieldArt)[id || single] = 'data:image/png;base64,'+png.toString('base64');

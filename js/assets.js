@@ -23,6 +23,7 @@
     ? 'assets/videos/lobby_cg_'+id+'.mp4' : null;
   art.ultVideo = id => Sky.D.illustrated.includes(id) && Sky.ultVideoIds?.includes(id)
     ? 'assets/videos/ult_'+id+'.mp4' : null;
+  art.domain = id => Sky.D.illustrated.includes(id) ? 'assets/domains/domain_'+id+'.png' : null;
   const ultimateLayout = {kind:'damage',mode:'single',impactFrame:3,frameMs:72,stagger:108,scale:.41,anchorY:.46};
   const effects = {
     h01:{},
@@ -38,8 +39,9 @@
   art.battleVfx = key => Object.hasOwn(effects,key) ? effects[key] : null;
   art.ultimateVfx = id => id==='spark' ? null : art.battleVfx(id);
   const fieldArt = new Set([...Object.keys(effects).filter(id=>id!=='spark').map(id=>'proj_'+id),
-    'status_shield','status_freeze','status_curse','status_heal_ring']);
+    'status_shield','status_freeze','status_curse','status_heal_ring','vfx_impact_crack']);
   art.battleArt = key => fieldArt.has(key) ? 'assets/vfx/'+key+'.png' : null;
+  art.impactCrack = art.battleArt('vfx_impact_crack');
   // Classic scripts also work when the player opens index.html through file:.
   function assetScript(src,key) {
     let pending;

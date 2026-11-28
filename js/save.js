@@ -184,7 +184,9 @@
   function stats(s,id) {
     const h = D.hero(id);
     const grow = 1+(s.level-1)*.075+(s.stars[id]-1)*.105;
-    const native = h.weapon ? 1.06 : 1;
+    // The five Wave 6 profiles use final calibrated HP and attack. Normalize
+    // the included resonance before applying the active weapon multiplier.
+    const native = (1+h.weaponBonus)/(1+h.baseWeaponBonus);
     const passive = s.stars[id]>=3 ? 1.08 : 1;
     let hp=h.hp*grow, atk=h.atk*grow, def=h.def*grow;
     for (const uid of s.equipment[id]) {

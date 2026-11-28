@@ -64,6 +64,9 @@ test('八人旧档保留望舒和希露的原角色编号、星级、星装、�
   assert.equal(loaded.formation[0],'h07'); assert.equal(loaded.formation[1],'h08');
   assert.deepEqual([loaded.equipment.h07,loaded.equipment.h08],[wang,xi]);
   assert.deepEqual([loaded.stars.h07,loaded.shards.h07,loaded.stars.h08,loaded.shards.h08],[3,15,2,21]);
+  assert.deepEqual([S.stats(loaded,'h07'),S.stats(loaded,'h08')],[
+    {hp:1698,atk:242,def:86,speed:101},{hp:1672,atk:146,def:95,speed:87}
+  ]);
   assert.deepEqual(loaded.pity.standard,{ur:53,ssr:7});
   for(const id of ['h09','h10','h11']) {
     assert.equal(loaded.stars[id],1); assert.equal(loaded.shards[id],0);
@@ -123,11 +126,20 @@ function ult(fixture) {
   return e;
 }
 
-test('independent starters, shared team level, equipment, gems and tickets',()=>{
+test('independent starters, native weapon resonance, shared team level and equipment',()=>{
   const s=S.fresh(now),other=S.fresh(now);
   assert.deepEqual(s.formation,D.starter);
   assert.equal(new Set(s.formation).size,6);
   assert.deepEqual([s.tickets,s.diamonds,s.settings.powerSave],[30,4800,false]);
+  const weapons=['忘川墨镰','霜华星杖','潮生玉笛','白昼圣盾','双子铳星','赤月棘刃',
+    '星渊浑天星杖','苍雷弧光太刀','离火焚天凤枪','月潮琉璃剑','暗冕鸦羽棘镰'];
+  assert.deepEqual(D.heroes.map(h=>h.weapon),weapons);
+  assert(D.heroes.every(h=>h.weaponBonus===.06));
+  // Compare pre-Wave 8 final profiles, including starter gear on h08.
+  assert.deepEqual(D.illustrated.map(id=>{const {hp,atk}=S.stats(s,id);return [hp,atk];}),[
+    [1121,195],[1124,187],[1283,159],[1611,147],[1039,179],[1177,179],
+    [1160,149],[1520,132],[1040,180],[1110,141],[1050,179]
+  ]);
   const before=s.owned.map(id=>S.stats(s,id));
   const cost=S.upgradeCost(s);
   S.upgrade(s);

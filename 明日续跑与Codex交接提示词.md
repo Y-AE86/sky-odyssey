@@ -1,6 +1,6 @@
 # 《浮空星途》回家换电脑续跑 & Codex 交接总手册（2026-11-28 晚更新）
 
-> 所有今日已完成的工程升级、验收实拍、10 张专属必杀领域原画、全屏碎屏冲击裂纹、6 把新精抠专武、6 张墨姬/冰灵战斗动作图及工具脚本均已分类归档并完整推送至 GitHub 分支 **`dev/sky-odyssey`**（严禁操作 `main` 分支，严禁动《仙途》`xiantu-collab`）。
+> 所有今日已完成的工程升级、验收实拍、11 张全员专属必杀领域原画、全屏碎屏冲击裂纹、6 把新精抠专武、6 张墨姬/冰灵战斗动作图及工具脚本均已分类归档并完整推送至 GitHub 分支 **`dev/sky-odyssey`**（严禁操作 `main` 分支，严禁动《仙途》`xiantu-collab`）。
 
 ---
 
@@ -27,7 +27,7 @@ git -c http.version=HTTP/1.1 clone -b dev/sky-odyssey https://github.com/Y-AE86/
 
 ## 二、回家直接复制发给 Codex 的「Wave 8 电影级大招 + 5 新专武提示词」
 
-> 注：如果回家后你想先补上唯一漏存的 `domain_h10.png`（下方第三节 A 有现成提示词），可以先补图入库再发给 Codex；也可以**直接发下面这段给 Codex 开跑**（代码会自动识别 `domain_h10.png`，暂缺时先优雅借用同属月夜水镜风的 `domain_h03.png`，后续补图即自动生效无需改代码）。
+> 注：全员 11 位星灵的专属暗场必杀领域原画（`domain_h01.png`～`domain_h11.png`）已 100% 齐备入库，直接复制下面这段发给 Codex 开跑 Wave 8 即可！
 
 ```markdown
 请在当前 `dev/sky-odyssey` 分支上，实装《浮空星途》**Wave 8「电影级专属必杀领域切屏 + 碎镜转场 + 70ms 黑白碎屏冲击帧 + 全屏尺度爆发 + 5 位新女神本命专武」**。严禁修改 `main` 分支、严禁改动任何已有 PNG/MP3/MP4 资产字节、严禁改动战斗数值和随机种子（`h07~h11` 补齐专武展示与名称，**注意保持 16 项核心测试与 200 场同种子数值规则完全自洽，必要时同步核对 `tests/core.cjs` 预期**），所有浏览器验收全程 `--mute-audio` 静音运行。
@@ -43,7 +43,7 @@ git -c http.version=HTTP/1.1 clone -b dev/sky-odyssey https://github.com/Y-AE86/
 
 ### 二、《龙族》同款大招演出管线升级（`js/battle-pixi.js`、`js/battle-vfx.js`、`js/battle-ui.js`、`css/battle.css`、`js/assets.js`）
 仓库已入库：
-- 10 张 1672×941 专属暗场领域原画：`assets/domains/domain_h01.png`～`domain_h09.png`、`domain_h11.png`（`h10` 暂未入库时先回退至 `domain_h03.png`，并设计成清单/按需自动识别 `domain_h10.png` 避免 404）；
+- 11 张全员 1672×941 专属暗场领域原画：`assets/domains/domain_h01.png`～`domain_h11.png`（全员 11 位星灵一一对应，无须借图回退）；
 - 1 张 1672×941 纯黑 `#000000` 全屏碎屏冲击裂纹：`assets/vfx/vfx_impact_crack.png`（震中位于 `(0.635, 0.50)`，天然契合我方攻击敌方阵营）。
 
 请将我方满怒释放必杀的演出升级为四段无缝电影级连招（`powerSave` 省电和 Canvas2D 降级自动跳过重型遮罩与冲击帧保持流畅）：
@@ -75,20 +75,13 @@ git -c http.version=HTTP/1.1 clone -b dev/sky-odyssey https://github.com/Y-AE86/
 
 | 优先级 | 缺口项目 | 当前状态 | 补齐后怎么接入 |
 | :--- | :--- | :--- | :--- |
-| **P1（仅缺 1 张）** | `h10 汐月·瑶光` 专属领域原画（`domain_h10.png`） | 已完成 10/11（`h01~h09, h11` 齐备），只漏存 `h10` | 丢进 `raw_art/` → 归档进 `raw_art/domains/` 并无损复制到 `assets/domains/domain_h10.png` |
 | **P1（4 张白底）** | 首发队剩余 4 位「战斗三动作图」（`h03/h04/h05/h08`） | `h01/h02` 已实装 4 态；其余 4 位首发待生图 | 丢进 `raw_art/` → 精抠进 `assets/chibi/chibi_hXX_{windup,atk,hurt}.png` → 跑 `node _tools/sync-chibi.cjs` 即自动生效！ |
 | **P2（4 支可灵）** | 最后 4 支 5 秒有声战斗大招（`ult_h07/09/10/11.mp4`） | `h01~h06, h08` 共 7 支已实装，剩 4 支待生成 | 放入 `assets/videos/` → 跑 `node _tools/sync-videos.cjs` 即自动生效！ |
 | **P3（可选精修）** | ① 商业真打击短音效 6 个（`sfx_slash/cast/hit/crit/shield/heal.mp3`）<br>② 《浮空星途》鎏金艺术字 Logo 1 张<br>③ 剩余 5 位非首发角色（`h06/h07/h09/h10/h11`）三动作图<br>④ 远期可选：核心主力升级 Spine 2D 骨骼动画（PixiJS 原生支持 `pixi-spine`） | 均已有现成热插拔接口或优雅兜底 | 真音效跑 `node _tools/sync-audio.cjs` 热替换 |
 
 ---
 
-### A. 唯一漏存的 1 张领域图：`domain_h10` 汐月·瑶光（GPT 16:9）
-```text
-二次元商业幻想手游必杀技全屏领域背景（16:9 横版，纯场景，绝对不要任何人物、剪影或文字）。
-主题「月潮归息」：静谧深海蓝黑色的星夜苍穹，上半屏高悬一轮清透银白残月与环形月华剑纹光圈，海面卷起微弱晶蓝星光潮汐波纹；下半屏为极暗深蓝星空海面，整体深暗清冷治愈（15%～28%亮度），日系仙侠二次元电影级精绘。
-```
-
-### B. 首发队剩下 4 位的「战斗三动作白底图」（GPT 16:9，务必上传对应参考图垫图）
+### A. 首发队剩下 4 位的「战斗三动作白底图」（GPT 16:9，务必上传对应参考图垫图）
 
 #### 1. `h03 凌波玉笛`（垫参考图：`assets/chibi/chibi_c15.png`）
 ```text
@@ -130,7 +123,7 @@ git -c http.version=HTTP/1.1 clone -b dev/sky-odyssey https://github.com/Y-AE86/
 全身完整不裁切头顶、刀尖与双脚，外轮廓清晰深色勾线，纯白背景零杂色。
 ```
 
-### C. 可灵补齐最后 4 支「5 秒有声战斗大招」提示词（省积分：不做主城动态）
+### B. 可灵补齐最后 4 支「5 秒有声战斗大招」提示词（省积分：不做主城动态）
 
 > **统一设置**：**720p** ｜ 动态范围 **`标准`**（别勾 HDR）｜ 时长 **`5s`** ｜ **只放「首帧」1 张图**（中间帧/尾帧全空）｜ **开启声音**。
 > 生成下载后，重命名为 `ult_h07.mp4` / `ult_h09.mp4` / `ult_h10.mp4` / `ult_h11.mp4` 放进 `assets/videos/`（并在 `raw_art/videos/` 留一份中文名归档），跑 `node _tools/sync-videos.cjs` 即刻自动生效！
@@ -175,9 +168,8 @@ git -c http.version=HTTP/1.1 clone -b dev/sky-odyssey https://github.com/Y-AE86/
 
 ## 四、后续研发路线图（清晰排期）
 
-1. **【今晚第一棒 · Wave 8 工程实装（Codex）】**：直接发上面第二节提示词，实装 10（+1）张专属暗场必杀领域切屏、碎镜转场、70ms 黑白碎屏冲击帧、全屏尺度手绘爆发、以及 `h07～h11` 5 把新本命专武，完成后双推 GitHub + Cloudflare `https://sky.xiaoye-workbench.cn/`。
+1. **【今晚第一棒 · Wave 8 工程实装（Codex）】**：直接发上面第二节提示词，实装全员 11 张专属暗场必杀领域切屏、碎镜转场、70ms 黑白碎屏冲击帧、全屏尺度手绘爆发、以及 `h07～h11` 5 把新本命专武，完成后双推 GitHub + Cloudflare `https://sky.xiaoye-workbench.cn/`。
 2. **【Wave 9 · 补齐最后细节】**：
-   - 补存最后 1 张 `domain_h10.png`（汐月·瑶光）；
    - 生出首发队剩下 4 位（`h03/h04/h05/h08`）三动作图并跑 `node _tools/sync-chibi.cjs`（全员 6 人首发全会蓄力/挥斩/受击！）；
    - 可灵补齐最后 4 支 5 秒有声大招（`ult_h07/09/10/11.mp4`）并跑 `node _tools/sync-videos.cjs`（全员 11 人有声必杀毕业！）。
 3. **【Wave 10 · 体验与视听抛光（可选）】**：
@@ -197,7 +189,7 @@ git -c http.version=HTTP/1.1 clone -b dev/sky-odyssey https://github.com/Y-AE86/
 | **11 位女神 1:1 头像** | `assets/avatars/avatar_protag/c07/c15/h04~h11.png` | `raw_art/avatars/01_~11_*_头像_1x1.png` |
 | **11 位女神站立 + 多动作 Q 版** | `assets/chibi/chibi_*.png` + `chibi_h01/h02_{windup,atk,hurt}.png` | `raw_art/chibi/01_~02_*_战斗三动作原图.png` + `04_~11_*` |
 | **专属 BOSS + 3 反派** | `assets/chibi/enemy_boss_mech/vanguard/caster/striker.png` | `raw_art/enemies/01_~04_*_1x1.png` |
-| **10 张专属必杀领域（缺 h10）** | `assets/domains/domain_h01~h09,h11.png` | `raw_art/domains/01_~09,11_*.png` |
+| **11 张全员专属必杀领域** | `assets/domains/domain_h01~h11.png` | `raw_art/domains/01_~11_*.png` |
 | **11 把本命专武（+1 备用星典）** | `assets/weapons/weapon_h01~h11.png` + `weapon_grimoire_reserve.png` | `raw_art/weapons/`（含新旧 2×3 原合图） |
 | **场景 / 磁贴 / 9 纹章 / UI** | `assets/scenes/` · `banners/` · `badges/` · `ui/` · `icons/` · `items/` | `raw_art/scenes/` · `banners/` · `ui_sheets/` |
 | **18 张手绘黑底特效（含碎屏）** | `assets/vfx/vfx_ult_h01~h06`, `vfx_hit_spark`, `vfx_impact_crack`, `proj_*`, `status_*` | `raw_art/vfx/` |
